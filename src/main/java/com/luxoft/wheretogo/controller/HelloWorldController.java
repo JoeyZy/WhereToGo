@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class HelloWorldController { 
+public class HelloWorldController {
 
     @RequestMapping("/hello")
-    public String hello(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+    public String hello(@RequestParam(value = "names", required = true, defaultValue = "HelloWorld") String name, Model model) {
         model.addAttribute("name", name);
         return "/WEB-INF/views/helloworld.jsp";
     }

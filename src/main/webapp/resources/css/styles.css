@@ -1,0 +1,42 @@
+#header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px;
+}
+
+#navigation-left {
+    background-coloe: #eeeeee;
+    width: 100px;
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
+}
+
+#section {
+    padding: 5px;
+    display: inline-block;
+}
+
+#footer {
+    background-color: black;
+    color: white;
+    clear: both;
+    text-align: center;
+    padding: 5px;
+    display: block;
+}
+
+#menu {
+    list-style-type: none;
+}
+
+#menu li {
+    background-color: black;
+    display: inline;
+}
+
+#menu li a {
+    color: white;
+}
+
