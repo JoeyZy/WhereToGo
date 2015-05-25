@@ -15,16 +15,7 @@
     <jsp:invoke fragment="navigationTop"/>
 </div>
 <div id="body">
-    <div id="navigation-left">
-        <div><h3 style="margin-bottom: -10px">Events:</h3></div>
-        <ul id="events-list">
-            <li>Nature</li>
-            <li>Movie</li>
-            <li>Theatre</li>
-            <li>Pub</li>
-            <li>Sport</li>
-        </ul>
-    </div>
+    <jsp:include page="/categories"/>
     <jsp:doBody/>
 </div>
 <div id="footer">
