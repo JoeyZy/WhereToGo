@@ -13,7 +13,7 @@
     </jsp:attribute>
     <jsp:body>
         <div id="section">
-            <div id="page-title"><h2>Nature</h2></div>
+            <div id="page-title"><h2>Welcome!!!</h2></div>
             <p>
                 Go to nowhere to do nothing!
             </p>

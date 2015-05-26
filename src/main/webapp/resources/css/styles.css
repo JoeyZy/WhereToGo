@@ -33,10 +33,12 @@
 
 #menu li {
     background-color: black;
+    padding: 5px 25px 5px 25px;
     display: inline;
 }
 
 #menu li a {
     color: white;
+    text-decoration: none;
 }
 

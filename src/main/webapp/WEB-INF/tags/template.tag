@@ -19,7 +19,7 @@
     <jsp:doBody/>
 </div>
 <div id="footer">
-    Thanks!
+    Thanks (c)
 </div>
 </body>
 </html>
