@@ -28,4 +28,10 @@ public class MainController {
 		return "/WEB-INF/views/categories.jsp";
 	}
 
+	@RequestMapping("/event")
+	public String category(@RequestParam(value = "name", required = true) String name, Model model) {
+		model.addAttribute("category", categoryRepository.getByName(name));
+		return "/WEB-INF/views/event.jsp";
+	}
+
 }

@@ -1,3 +1,7 @@
+body {
+    margin: 0 auto;
+    max-width: 1024px;
+}
 #header {
     background-color: black;
     color: white;
@@ -6,8 +10,7 @@
 }
 
 #navigation-left {
-    background-coloe: #eeeeee;
-    width: 100px;
+    width: 15%;
     display: inline-block;
     padding: 5px;
     vertical-align: top;
@@ -16,6 +19,8 @@
 #section {
     padding: 5px;
     display: inline-block;
+    min-height: 75%;
+    width: 72%;
 }
 
 #footer {
@@ -39,6 +44,20 @@
 
 #menu li a {
     color: white;
-    text-decoration: none;
 }
+
+li a {
+    text-decoration: none;
+    text-overflow: ellipsis;
+}
+
+ul {
+    cursor: pointer;
+}
+
+#event {
+    padding-left: 10px;
+    list-style: none;
+}
+
 

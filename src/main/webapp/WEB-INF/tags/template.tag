@@ -9,10 +9,15 @@
 </head>
 <body>
 <div id="header">
-    <jsp:invoke fragment="header"/>
+    <h1>Events!</h1>
 </div>
 <div id="navigation-top">
-    <jsp:invoke fragment="navigationTop"/>
+    <ul id="menu">
+        <li><a href="/hello">Home</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#ratings">Ratings</a></li>
+    </ul>
 </div>
 <div id="body">
     <jsp:include page="/categories"/>

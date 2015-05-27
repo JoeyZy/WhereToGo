@@ -6,4 +6,6 @@ public abstract class AbstractRepository<T> {
 	public abstract List<T> findAll();
 
 	public abstract T getById(int id);
+
+	public abstract T getByName(String name);
 }
