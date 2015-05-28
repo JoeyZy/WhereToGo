@@ -10,10 +10,8 @@
 <body>
 <div id="header">
     <h1>Events!</h1>
-</div>
-<div id="navigation-top">
     <ul id="menu">
-        <li><a href="/hello">Home</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#statistics">Statistics</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#ratings">Ratings</a></li>

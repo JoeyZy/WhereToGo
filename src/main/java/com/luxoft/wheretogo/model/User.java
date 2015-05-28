@@ -3,7 +3,7 @@ package com.luxoft.wheretogo.model;
 import lombok.Data;
 
 @Data
-public class User {
+public class User extends Model {
 
 	private int id;
 	private String login;

@@ -6,8 +6,8 @@
     <div><h3 style="margin-bottom: -10px">Events:</h3></div>
     <ul>
         <c:forEach var="category" items="${categories}">
-            <li class="drop-menu">
-                ${category.name}
+            <li>
+                <span class="drop-list">${category.name}</span>
                 <ul id="event">
                     <c:forEach var="event" items="${category.events}">
                         <li>
@@ -21,7 +21,8 @@
     </ul>
 </div>
 <script>
-    $("li").click(function() {
+    $("li").click(function () {
         $(this).find('#event').slideToggle();
     });
+    $("li").find('#event').hide();
 </script>

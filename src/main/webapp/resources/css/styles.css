@@ -2,11 +2,13 @@ body {
     margin: 0 auto;
     max-width: 1024px;
 }
+
 #header {
-    background-color: black;
+    background: url("../images/events-background.jpg");
+    background-size: cover;
     color: white;
     text-align: center;
-    padding: 5px;
+    padding: 10px 0px 0px 0px;
 }
 
 #navigation-left {
@@ -33,11 +35,13 @@ body {
 }
 
 #menu {
+    background: rgba(0, 0, 0, 0.5);
     list-style-type: none;
+    margin: 0;
+    padding: 5px;
 }
 
 #menu li {
-    background-color: black;
     padding: 5px 25px 5px 25px;
     display: inline;
 }
@@ -46,12 +50,11 @@ body {
     color: white;
 }
 
-li a {
+a {
     text-decoration: none;
-    text-overflow: ellipsis;
 }
 
-ul {
+.drop-list {
     cursor: pointer;
 }
 

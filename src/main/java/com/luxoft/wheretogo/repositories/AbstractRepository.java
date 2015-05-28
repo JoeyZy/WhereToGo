@@ -1,11 +1,38 @@
 package com.luxoft.wheretogo.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractRepository<T> {
-	public abstract List<T> findAll();
+import com.luxoft.wheretogo.model.Model;
 
-	public abstract T getById(int id);
+public abstract class AbstractRepository<T extends Model> {
 
-	public abstract T getByName(String name);
+	protected List<T> elementsList = new ArrayList<>();
+	private Class<T> clazz;
+
+	public AbstractRepository(Class<T> clazz) {
+		this.clazz = clazz;
+	}
+
+	public List<T> findAll() {
+		return elementsList;
+	}
+
+	public T getById(int id) {
+		for (T t : elementsList) {
+			if (t.getId() == id) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public T getByName(String name) {
+		for (T t : elementsList) {
+			if (t.getName().equals(name)) {
+				return t;
+			}
+		}
+		return null;
+	}
 }

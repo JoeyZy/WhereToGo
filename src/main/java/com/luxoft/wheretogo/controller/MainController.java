@@ -16,6 +16,10 @@ public class MainController {
 	@Qualifier("categories")
 	private AbstractRepository categoryRepository;
 
+	@Autowired
+	@Qualifier("events")
+	private AbstractRepository eventRepository;
+
 	@RequestMapping("/hello")
 	public String hello(@RequestParam(value = "name", required = false, defaultValue = "HelloWorld") String name, Model model) {
 		model.addAttribute("name", name);
@@ -29,9 +33,8 @@ public class MainController {
 	}
 
 	@RequestMapping("/event")
-	public String category(@RequestParam(value = "name", required = true) String name, Model model) {
-		model.addAttribute("category", categoryRepository.getByName(name));
+	public String event(@RequestParam(value = "name", required = true) String name, Model model) {
+		model.addAttribute("event", eventRepository.getByName(name));
 		return "/WEB-INF/views/event.jsp";
 	}
-
 }
