@@ -18,6 +18,10 @@ public abstract class AbstractRepository<T extends Model> {
 		return elementsList;
 	}
 
+	public void add(T element) {
+		elementsList.add(element);
+	}
+
 	public T getById(int id) {
 		for (T t : elementsList) {
 			if (t.getId() == id) {

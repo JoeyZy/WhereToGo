@@ -37,4 +37,9 @@ public class MainController {
 		model.addAttribute("event", eventRepository.getByName(name));
 		return "/WEB-INF/views/event.jsp";
 	}
+
+	@RequestMapping("/addCategory")
+	public String event() {
+		return "/WEB-INF/views/addCategory.jsp";
+	}
 }

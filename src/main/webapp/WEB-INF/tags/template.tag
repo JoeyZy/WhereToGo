@@ -11,7 +11,7 @@
 <div id="header">
     <h1>Events!</h1>
     <ul id="menu">
-        <li><a href="#home">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="#statistics">Statistics</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#ratings">Ratings</a></li>
@@ -19,7 +19,9 @@
 </div>
 <div id="body">
     <jsp:include page="/categories"/>
-    <jsp:doBody/>
+    <div id="section">
+        <jsp:doBody/>
+    </div>
 </div>
 <div id="footer">
     Thanks (c)
