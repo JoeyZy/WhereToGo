@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.model;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class Category extends Model {
@@ -19,4 +19,5 @@ public class Category extends Model {
 		this.name = name;
 		this.events = events;
 	}
+
 }

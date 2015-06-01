@@ -1,4 +1,5 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8" %>
+<%@attribute name="head" fragment="true" %>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="navigationTop" fragment="true" %>
 <%@attribute name="navigationLeft" fragment="true" %>
@@ -6,6 +7,10 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+    <script src="resources/jquery/jquery-2.1.4.js"></script>
+    <script src="../../resources/js/ListAnimation.js"></script>
+    <!-- Custom css and javascript for one page -->
+    <jsp:invoke fragment="head"/>
 </head>
 <body>
 <div id="header">

@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(document).ready(function () {
     $("li").click(function () {
         $(this).find('#event').slideToggle();
     });

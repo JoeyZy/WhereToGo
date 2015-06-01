@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.model;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class Event extends Model {
@@ -24,6 +24,10 @@ public class Event extends Model {
 		this.description = description;
 		this.organizer = organizer;
 		this.comers = comers;
+	}
+
+	public String toString() {
+		return id + ", " + category.getName() + ", " + name + ", " + description + ", " + organizer + ", " + comers.toString();
 	}
 
 }

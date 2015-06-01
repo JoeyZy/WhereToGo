@@ -1,14 +1,14 @@
 package com.luxoft.wheretogo.repositories;
 
+import com.luxoft.wheretogo.model.Model;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.luxoft.wheretogo.model.Model;
 
 public abstract class AbstractRepository<T extends Model> {
 
 	protected List<T> elementsList = new ArrayList<>();
-	private Class<T> clazz;
+	private Class<T> clazz; //NOPMD
 
 	public AbstractRepository(Class<T> clazz) {
 		this.clazz = clazz;

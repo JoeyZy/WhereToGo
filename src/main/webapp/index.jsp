@@ -8,7 +8,7 @@
             </p>
 
             <div>
-                <form action="/addCategory">
+                <form action="/addEvent">
                     <input type="submit" value="+ Event">
                 </form>
             </div>
