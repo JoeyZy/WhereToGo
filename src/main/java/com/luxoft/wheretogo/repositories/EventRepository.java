@@ -9,10 +9,6 @@ import java.util.List;
 @Repository("events")
 public class EventRepository extends AbstractRepository<Event> {
 
-	{
-		elementsList = (List<Event>) DB.db.get("events");
-	}
-
 	public EventRepository() {
 		super(Event.class);
 	}

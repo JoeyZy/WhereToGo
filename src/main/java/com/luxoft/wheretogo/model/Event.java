@@ -1,33 +1,45 @@
 package com.luxoft.wheretogo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
+@EqualsAndHashCode(callSuper = false)
 @Data
+@Entity
+@Table(name = "events")
 public class Event extends Model {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private Category category;
+
 	private String name;
+
+	private String category;
+
 	private String description;
-	private User organizer;
-	private List<User> comers;
+
+	private String owner;
 
 	public Event() {
 	}
 
-	public Event(int id, Category category, String name, String description, User organizer, List<User> comers) {
+	public Event(int id, String category, String name, String description, String owner) {
 		this.id = id;
 		this.category = category;
 		this.name = name;
 		this.description = description;
-		this.organizer = organizer;
-		this.comers = comers;
+		this.owner = owner;
 	}
 
 	public String toString() {
-		return id + ", " + category.getName() + ", " + name + ", " + description + ", " + organizer + ", " + comers.toString();
+		return id + ", " + category + ", " + name + ", " + description + ", " + owner;
 	}
 
 }

@@ -28,7 +28,7 @@ public class DB {
 
 		/* Events */
 		List<Event> events = new ArrayList<>();
-		User organizer = new User(0, "test", "test", "Ivan", "Ivanov");
+		String organizer = "Ivanov";
 		List<User> comers = new ArrayList<>();
 		comers.add(new User(1, "test2", "test2", "Andrey", "Andreyev"));
 		comers.add(new User(2, "test3", "test3", "Anton", "Antonov"));
@@ -39,10 +39,10 @@ public class DB {
 						null,
 						"Mission: Impossible",
 						"Mission: Impossible is a 1996 American action spy film directed by Brian De Palma, produced by and starring Tom Cruise. Based on the television series of the same name, the plot follows Ethan Hunt (Cruise) and his mission to uncover the mole who has framed him for the murders of his entire IMF team. Work on the script had begun early with filmmaker Sydney Pollack on board, before De Palma, Steven Zaillian, David Koepp, and Robert Towne were brought in. Mission: Impossible went into pre-production without a shooting script. De Palma came up with some action sequences, but Koepp and Towne were dissatisfied with the story that led up to those events.",
-						organizer, comers);
+						organizer);
 		categories.get(1).getEvents().add(event);
 		events.add(event);
-		event.setCategory(categories.get(1));
+		event.setCategory("Movie");
 
 		db.put("events", events);
 

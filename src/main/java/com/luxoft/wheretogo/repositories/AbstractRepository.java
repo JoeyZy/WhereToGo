@@ -1,6 +1,8 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.model.Model;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,11 @@ public abstract class AbstractRepository<T extends Model> {
 		return elementsList;
 	}
 
+	@Autowired
+	private SessionFactory sessionFactory;
+
 	public void add(T element) {
-		elementsList.add(element);
+		sessionFactory.getCurrentSession().persist(element);
 	}
 
 	public T getById(int id) {

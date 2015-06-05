@@ -12,15 +12,11 @@
             </tr>
             <tr>
                 <td><b>Category:</b></td>
-                <td>${event.category.name}</td>
+                <td>${event.category}</td>
             </tr>
             <tr>
                 <td><b>Organizer:</b></td>
-                <td>${event.organizer.name} ${event.organizer.lastName}</td>
-            </tr>
-            <tr>
-                <td><b>Category:</b></td>
-                <td>${event.category.name}</td>
+                <td>${event.owner} ${event.owner.lastName}</td>
             </tr>
         </table>
 
@@ -28,13 +24,5 @@
         <b>Description:</b>
 
         <p>${event.description}</p>
-        <c:if test="${not empty event.comers}">
-            <ul>
-                <h3><b>Should be there:</b></h3>
-                <c:forEach var="comer" items="${event.comers}">
-                    <li>${comer.name} ${comer.lastName}</li>
-                </c:forEach>
-            </ul>
-        </c:if>
     </jsp:body>
 </t:template>
