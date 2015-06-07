@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td><b>Organizer:</b></td>
-                <td>${event.owner} ${event.owner.lastName}</td>
+                <td>${event.owner}</td>
             </tr>
         </table>
 

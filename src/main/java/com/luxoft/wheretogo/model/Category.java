@@ -2,13 +2,21 @@ package com.luxoft.wheretogo.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "categories")
 public class Category extends Model {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	private String name;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categories")
 	private List<Event> events;
 
 	public Category() {

@@ -9,34 +9,31 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * Created by vkutsovol on 04.06.15.
- */
 @Service
 @Transactional
-public class EventServiceImpl implements EventService {
+public class EventsServiceImpl implements EventsService {
 
 	@Autowired
 	@Qualifier("events")
-	private AbstractRepository<Event> eventRepository;
+	private AbstractRepository<Event> eventsRepository;
 
 	@Override
 	public void addEvent(Event event) {
-		eventRepository.add(event);
+		eventsRepository.add(event);
 	}
 
 	@Override
 	public List<Event> findAll() {
-		return eventRepository.findAll();
+		return eventsRepository.findAll();
 	}
 
 	@Override
-	public Event getById(int id) {
-		return eventRepository.getById(id);
+	public Event getById(int eventId) {
+		return eventsRepository.getById(eventId);
 	}
 
 	@Override
 	public Event getByName(String eventName) {
-		return eventRepository.getByName(eventName);
+		return eventsRepository.getByName(eventName);
 	}
 }

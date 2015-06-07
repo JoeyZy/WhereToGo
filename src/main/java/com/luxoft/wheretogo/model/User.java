@@ -2,20 +2,36 @@ package com.luxoft.wheretogo.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
+
 @Data
+@Entity
+@Table(name = "users")
 public class User extends Model {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	private String login;
+
 	private String password;
-	private String name;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
 	private String lastName;
 
-	public User(int id, String login, String password, String name, String lastName) {
+	public User() {
+
+	}
+
+	public User(int id, String login, String password, String firstName, String lastName) {
 		this.id = id;
 		this.login = login;
 		this.password = password;
-		this.name = name;
+		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 

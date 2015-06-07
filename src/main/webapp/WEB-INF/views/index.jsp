@@ -15,6 +15,12 @@
             <div>
                 <input type="submit" value="Take me somewhere!">
             </div>
+
+            <div>
+                <form action="/addUser">
+                    <input type="submit" value="+ User">
+                </form>
+            </div>
         </div>
     </jsp:body>
 </t:template>
