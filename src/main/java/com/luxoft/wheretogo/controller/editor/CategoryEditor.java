@@ -1,11 +1,12 @@
 package com.luxoft.wheretogo.controller.editor;
 
-import com.luxoft.wheretogo.model.Category;
-import com.luxoft.wheretogo.repositories.CategoriesRepository;
+import java.beans.PropertyEditorSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.beans.PropertyEditorSupport;
+import com.luxoft.wheretogo.model.Category;
+import com.luxoft.wheretogo.repositories.CategoriesRepository;
 
 @Component
 public class CategoryEditor extends PropertyEditorSupport {

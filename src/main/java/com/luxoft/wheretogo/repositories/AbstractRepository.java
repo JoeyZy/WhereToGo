@@ -1,11 +1,12 @@
 package com.luxoft.wheretogo.repositories;
 
-import com.luxoft.wheretogo.model.Model;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import com.luxoft.wheretogo.model.Model;
 
 public abstract class AbstractRepository<T extends Model> {
 

@@ -1,7 +1,8 @@
 package com.luxoft.wheretogo.repositories;
 
-import com.luxoft.wheretogo.model.User;
 import org.springframework.stereotype.Repository;
+
+import com.luxoft.wheretogo.model.User;
 
 @Repository("users")
 public class UsersRepository extends AbstractRepository<User> {

@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.service;
 
-import com.luxoft.wheretogo.model.Event;
-
 import java.util.List;
+
+import com.luxoft.wheretogo.model.Event;
 
 public interface EventsService {
 
@@ -13,6 +13,5 @@ public interface EventsService {
 	Event getById(int eventId);
 
 	Event getByName(String eventName);
-
 
 }

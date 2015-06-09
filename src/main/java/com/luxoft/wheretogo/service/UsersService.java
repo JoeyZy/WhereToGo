@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.service;
 
-import com.luxoft.wheretogo.model.User;
-
 import java.util.List;
+
+import com.luxoft.wheretogo.model.User;
 
 public interface UsersService {
 

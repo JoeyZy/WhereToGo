@@ -1,9 +1,17 @@
 package com.luxoft.wheretogo.model;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -26,6 +34,10 @@ public class Category extends Model {
 		this.id = id;
 		this.name = name;
 		this.events = events;
+	}
+
+	public String toString() {
+		return name;
 	}
 
 }

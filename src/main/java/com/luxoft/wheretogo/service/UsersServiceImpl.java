@@ -1,13 +1,15 @@
 package com.luxoft.wheretogo.service;
 
-import com.luxoft.wheretogo.model.User;
-import com.luxoft.wheretogo.repositories.AbstractRepository;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import com.luxoft.wheretogo.model.User;
+import com.luxoft.wheretogo.repositories.AbstractRepository;
 
 @Service
 @Transactional
@@ -16,7 +18,6 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	@Qualifier("users")
 	private AbstractRepository<User> usersRepository;
-
 
 	@Override
 	public void addUser(User user) {

@@ -1,5 +1,15 @@
 package com.luxoft.wheretogo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.luxoft.wheretogo.controller.editor.CategoryEditor;
 import com.luxoft.wheretogo.model.Category;
 import com.luxoft.wheretogo.model.Event;
@@ -7,11 +17,6 @@ import com.luxoft.wheretogo.model.User;
 import com.luxoft.wheretogo.service.CategoriesService;
 import com.luxoft.wheretogo.service.EventsService;
 import com.luxoft.wheretogo.service.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
@@ -59,7 +64,6 @@ public class MainController {
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 	public String addEvent(@ModelAttribute("event") Event event, Model model) {
-		event.setOwner("(te)");
 		eventsService.addEvent(event);
 		return "event";
 	}
