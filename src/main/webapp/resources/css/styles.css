@@ -1,14 +1,23 @@
+* {
+    /*border: 1px dashed #f00;*/
+}
+
 body {
     margin: 0 auto;
     max-width: 1024px;
+}
+
+#welcome {
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
 }
 
 #header {
     background: url("../images/events-background.jpg");
     background-size: cover;
     color: white;
-    text-align: center;
-    padding: 10px 0px 0px 0px;
+    padding: 0px;
 }
 
 #navigation-left {
@@ -34,15 +43,24 @@ body {
     display: block;
 }
 
+#login {
+    display: inline-block;
+    float: right;
+}
+
+#login a {
+    color: white;
+}
+
 #menu {
     background: rgba(0, 0, 0, 0.5);
     list-style-type: none;
-    margin: 0;
+    margin: 0px;
     padding: 5px;
 }
 
 #menu li {
-    padding: 5px 25px 5px 25px;
+    margin: 5px 25px 5px 25px;
     display: inline;
 }
 
@@ -50,9 +68,13 @@ body {
     color: white;
 }
 
+#menu li #login-box {
+    color: white;
+}
+
 a {
     text-decoration: none;
-    color: black;
+    color: #00c6ff;
 }
 
 .drop-list {

@@ -1,62 +1,11 @@
-a {
-    text-decoration: none;
-    color: #00c6ff;
-}
-
-h1 {
-    font: 10px normal Arial, Helvetica, sans-serif;
-    padding: 20px;
-    margin: 0;
-    text-align: center;
-}
-
-h1 small {
-    font: 10px normal Arial, Helvetica, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    line-height: 5em;
-    display: block;
-}
-
-h2 {
-    /*color: #bbb;*/
-    /*font-size: 3em;*/
-    /*text-align: center;*/
-    /*text-shadow: 0 1px 3px #161616;*/
-}
-
 #content {
     float: left;
     width: 100%;
 }
 
-.post {
-    padding-bottom: 0px;
-    width: 30px;
-}
-
-.btn-sign {
-    width: 100px;
-    padding: 20px;
-    border-radius: 5px;
-    background: -moz-linear-gradient(center top, #00c6ff, #018eb6);
-    background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#ffffff));
-    background: -o-linear-gradient(top, #00c6ff, #018eb6);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#00c6ff', EndColorStr='#018eb6');
-    text-align: center;
-    font-size: 10px;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.btn-sign a {
-    color: #fff;
-    text-shadow: 0 1px 2px #161616;
-}
-
 #mask {
     display: none;
-    background: #000;
+    background: #fff;
     position: fixed;
     left: 0;
     top: 0;
@@ -68,7 +17,7 @@ h2 {
 
 .login-popup {
     display: none;
-    background: #333;
+    background: #ffffff;
     padding: 10px;
     border: 2px solid #ddd;
     float: left;
@@ -110,12 +59,12 @@ form.signin p, form.signin span {
 }
 
 form.signin .textbox input {
-    background: #666666;
+    background: #ffffff;
     border-bottom: 1px solid #333;
     border-left: 1px solid #000;
     border-right: 1px solid #333;
     border-top: 1px solid #000;
-    color: #fff;
+    color: #000;
     border-radius: 3px 3px 3px 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -126,12 +75,12 @@ form.signin .textbox input {
 
 form.signin input:-moz-placeholder {
     color: #bbb;
-    text-shadow: 0 0 2px #000;
+    text-shadow: 0 0 2px #fff;
 }
 
 form.signin input::-webkit-input-placeholder {
     color: #bbb;
-    text-shadow: 0 0 2px #000;
+    text-shadow: 0 0 2px #fff;
 }
 
 .button {
