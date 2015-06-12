@@ -35,4 +35,33 @@ $(document).ready(function () {
     });
     return false;
   });
+  $('.signin').submit(function() {
+    var login = $('username').val();
+    var password = $('password').val();
+    var firstName = "";
+    var lastName = "";
+
+    var json = { "login" : login, "password" : password, "firstName" : firstName, "lastName" : lastName, "events" : '' };
+    $.ajax({
+      url: $('.signin').attr("action"),
+      data: JSON.stringify(json),
+      type: "POST",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+      },
+      success: function(user) {
+        var respContent = "";
+
+        respContent += "<span>";
+        respContent += user.firstName + " ";
+        respContent += user.lastName;
+        respContent += "</span>";
+
+        $('a.close').click();
+        $(".login-window").html(respContent);
+      }
+    })
+    event.preventDefault();
+  })
 });

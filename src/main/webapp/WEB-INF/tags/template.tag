@@ -8,8 +8,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="resources/css/loginForm.css">
-    <script src="resources/jquery/jquery-2.1.4.js"></script>
-    <script src="resources/js/ListAnimation.js"></script>
+    <script src="/resources/jquery/jquery-2.1.4.js"></script>
+    <script src="/resources/js/mainPage.js"></script>
     <!-- Custom css and javascript for one page -->
     <jsp:invoke fragment="head"/>
 </head>
