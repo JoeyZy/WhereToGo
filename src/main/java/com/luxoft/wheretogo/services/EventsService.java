@@ -1,10 +1,10 @@
-package com.luxoft.wheretogo.repositories;
+package com.luxoft.wheretogo.services;
 
 import java.util.List;
 
 import com.luxoft.wheretogo.models.Event;
 
-public interface EventsRepository {
+public interface EventsService {
 
 	void add(Event event);
 

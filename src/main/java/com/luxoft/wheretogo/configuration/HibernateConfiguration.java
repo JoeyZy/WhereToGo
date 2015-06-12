@@ -27,7 +27,7 @@ public class HibernateConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan("com.luxoft.wheretogo.model");
+		sessionFactory.setPackagesToScan("com.luxoft.wheretogo.models");
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}

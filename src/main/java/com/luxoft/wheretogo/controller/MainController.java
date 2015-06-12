@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.luxoft.wheretogo.controller.editor.CategoryEditor;
-import com.luxoft.wheretogo.model.Category;
-import com.luxoft.wheretogo.model.Event;
-import com.luxoft.wheretogo.model.User;
-import com.luxoft.wheretogo.service.CategoriesService;
-import com.luxoft.wheretogo.service.EventsService;
-import com.luxoft.wheretogo.service.UsersService;
+import com.luxoft.wheretogo.models.Category;
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.services.CategoriesService;
+import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.UsersService;
 
 @Controller
 public class MainController {
@@ -50,8 +50,8 @@ public class MainController {
 	}
 
 	@RequestMapping("/event")
-	public String event(@RequestParam(value = "name", required = true) String name, Model model) {
-		model.addAttribute("event", eventsService.getByName(name));
+	public String event(@RequestParam(value = "id", required = true) int id, Model model) {
+		model.addAttribute("event", eventsService.findById(id));
 		return "event";
 	}
 
@@ -64,7 +64,7 @@ public class MainController {
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 	public String addEvent(@ModelAttribute("event") Event event, Model model) {
-		eventsService.addEvent(event);
+		eventsService.add(event);
 		return "event";
 	}
 
@@ -72,12 +72,12 @@ public class MainController {
 	public String addUser(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("categories", categoriesService.findAll());
-		return "addUser";
+		return "add";
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user, Model model) {
-		usersService.addUser(user);
+		usersService.add(user);
 		return "index";
 	}
 }

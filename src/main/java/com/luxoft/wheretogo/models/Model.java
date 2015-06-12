@@ -1,4 +1,4 @@
-package com.luxoft.wheretogo.model;
+package com.luxoft.wheretogo.models;
 
 import lombok.Data;
 

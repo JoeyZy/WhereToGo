@@ -1,10 +1,10 @@
-package com.luxoft.wheretogo.repositories;
+package com.luxoft.wheretogo.services;
 
 import java.util.List;
 
 import com.luxoft.wheretogo.models.User;
 
-public interface UsersRepository {
+public interface UsersService {
 
 	void add(User user);
 
@@ -13,4 +13,5 @@ public interface UsersRepository {
 	User findById(int userId);
 
 	User findByLogin(String userLogin);
+
 }

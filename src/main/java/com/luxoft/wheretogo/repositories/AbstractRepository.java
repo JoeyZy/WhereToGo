@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.luxoft.wheretogo.model.Model;
+import com.luxoft.wheretogo.models.Model;
 
 public abstract class AbstractRepository<T extends Model> {
 
@@ -18,30 +19,22 @@ public abstract class AbstractRepository<T extends Model> {
 		this.clazz = clazz;
 	}
 
-	public List<T> findAll() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(clazz);
+	protected List<T> findAll() {
+		Criteria criteria = getCriteria();
 		return criteria.list();
 	}
 
-	public void add(T element) {
-		sessionFactory.getCurrentSession().persist(element);
+	protected void add(T object) {
+		sessionFactory.getCurrentSession().persist(object);
 	}
 
-	public T getById(int id) {
-		for (T t : findAll()) {
-			if (t.getId() == id) {
-				return t;
-			}
-		}
-		return null;
+	protected T findByProperty(String property, Object value) {
+		Criteria criteria = getCriteria();
+		criteria.add(Restrictions.eq(property, value));
+		return (T) criteria.uniqueResult();
 	}
 
-	public T getByName(String name) {
-		for (T t : findAll()) {
-			if (t.getName().equals(name)) {
-				return t;
-			}
-		}
-		return null;
+	private Criteria getCriteria() {
+		return sessionFactory.getCurrentSession().createCriteria(clazz);
 	}
 }
