@@ -1,15 +1,13 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.luxoft.wheretogo.models.Model;
+import java.util.List;
 
-public abstract class AbstractRepository<T extends Model> {
+public abstract class AbstractRepository<T> {
 
 	private final Class<T> clazz;
 	@Autowired

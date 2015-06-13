@@ -36,12 +36,10 @@ $(document).ready(function () {
     return false;
   });
   $('.signin').submit(function() {
-    var login = $('username').val();
-    var password = $('password').val();
-    var firstName = "";
-    var lastName = "";
+    var login = $('#username').val();
+    var password = $('#password').val();
 
-    var json = { "login" : login, "password" : password, "firstName" : firstName, "lastName" : lastName, "events" : '' };
+    var json = {"login":login,"password":password};
     $.ajax({
       url: $('.signin').attr("action"),
       data: JSON.stringify(json),
@@ -51,6 +49,10 @@ $(document).ready(function () {
         xhr.setRequestHeader("Content-Type", "application/json");
       },
       success: function(user) {
+        if (user.length == 0) {
+          alert("Wrong user name");
+          return;
+        }
         var respContent = "";
 
         respContent += "<span>";
@@ -61,7 +63,7 @@ $(document).ready(function () {
         $('a.close').click();
         $(".login-window").html(respContent);
       }
-    })
+    });
     event.preventDefault();
   })
 });

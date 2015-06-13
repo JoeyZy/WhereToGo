@@ -1,27 +1,16 @@
 package com.luxoft.wheretogo.models;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
 @Table(name = "events")
-public class Event extends Model {
+public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +42,7 @@ public class Event extends Model {
 	}
 
 	public String toString() {
-		return id + ", " + category + ", " + name + ", " + description + ", " + owner.getName();
+		return id + ", " + category + ", " + name + ", " + description + ", " + owner.getFirstName();
 	}
 
 }

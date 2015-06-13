@@ -1,15 +1,5 @@
 package com.luxoft.wheretogo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.luxoft.wheretogo.controller.editor.CategoryEditor;
 import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Event;
@@ -17,6 +7,13 @@ import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
@@ -39,7 +36,7 @@ public class MainController {
 	}
 
 	@RequestMapping("/")
-	public String homePage() {
+	public String homePage(HttpServletRequest request) {
 		return "index";
 	}
 
