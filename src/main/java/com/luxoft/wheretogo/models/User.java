@@ -1,8 +1,11 @@
 package com.luxoft.wheretogo.models;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -13,8 +16,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Size(min=2, max=30)
 	private String login;
 
+	@Size(min=2, max=30)
 	private String password;
 
 	@Column(name = "first_name")
@@ -22,6 +27,10 @@ public class User {
 
 	@Column(name = "last_name")
 	private String lastName;
+
+	@NotEmpty
+	@Email
+	private String email;
 
 	public User() {
 

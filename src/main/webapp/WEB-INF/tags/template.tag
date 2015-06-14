@@ -21,7 +21,9 @@
         <li><a href="#statistics">Statistics</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#ratings">Ratings</a></li>
+        <li><a href="/addUser">Registration</a></li>
         <jsp:include page="../views/loginForm.jsp"/>
+
     </ul>
 </div>
 <div id="body">
@@ -33,8 +35,8 @@
         <jsp:doBody/>
     </div>
 </div>
-<div id="footer">
-    Thanks (c)
-</div>
+<%--<div id="footer">--%>
+    <%--Thanks (c)--%>
+<%--</div>--%>
 </body>
 </html>

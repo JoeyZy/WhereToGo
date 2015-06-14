@@ -2,7 +2,7 @@
 <t:template>
     <jsp:body>
         <div id="section">
-            <div id="page-title"><h3>Welcome!!!</h3></div>
+            <div id="page-title"><h2>Welcome!!!</h2></div>
             <p>
                 Go to nowhere to do nothing!
             </p>
@@ -16,11 +16,6 @@
                 <input type="submit" value="Take me somewhere!">
             </div>
 
-            <div>
-                <form action="/addUser">
-                    <input type="submit" value="+ User">
-                </form>
-            </div>
         </div>
     </jsp:body>
 </t:template>

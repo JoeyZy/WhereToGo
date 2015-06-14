@@ -23,9 +23,24 @@ public class UserController {
 	@ResponseBody
 	public User login(@RequestBody User user, HttpServletRequest request) {
 		User sessionUser = usersService.findByLogin(user.getLogin());
+		if (!sessionUser.getPassword().equals(user.getPassword())) {
+			return null;
+		}
 		request.getSession().setAttribute("user", sessionUser);
 
-		return usersService.findByLogin(user.getLogin());
+		return sessionUser;
 	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean logout(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user != null) {
+			request.getSession().setAttribute("user", null);
+		}
+		return true;
+	}
+
+
 
 }
