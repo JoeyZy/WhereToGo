@@ -9,7 +9,7 @@
 
             <div>
                 <form action="/addEvent">
-                    <input type="submit" value="+ Event">
+                    <input id="add-event-btn" type="submit" value="+ Event">
                 </form>
             </div>
             <div>

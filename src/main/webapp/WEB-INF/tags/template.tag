@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/loginForm.css">
     <script src="/resources/jquery/jquery-2.1.4.js"></script>
     <script src="/resources/js/mainPage.js"></script>
-    <!-- Custom css and javascript for one page -->
+    <!-- Custom css and javascript -->
     <jsp:invoke fragment="head"/>
 </head>
 <body>

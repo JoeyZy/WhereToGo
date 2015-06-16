@@ -1,5 +1,6 @@
 <%--@elvariable id="category" type="com.luxoft.wheretogo.models.Category"--%>
 <%--@elvariable id="event" type="com.luxoft.wheretogo.models.Event"--%>
+<%--@elvariable id="event" type="com.luxoft.wheretogo.models.User"--%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:template>
@@ -19,12 +20,18 @@
         <form:form commandName="event">
             <table>
                 <tr>
+                    <td>Owner:</td>
+                    <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
+                </tr>
+                <tr>
                     <td>Name:</td>
                     <td><form:input path="name"/></td>
                 </tr>
                 <tr>
                     <td>Category:</td>
-                    <td><form:input path="category"/></td>
+                    <td><form:select path="category">
+                        <form:options items="${categories}" itemValue="id"
+                                      itemLabel="name"></form:options></form:select>
                     </td>
                 </tr>
                 <tr>
