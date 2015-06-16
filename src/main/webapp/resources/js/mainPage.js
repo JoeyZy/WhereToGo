@@ -94,6 +94,10 @@ $(document).ready(function () {
 });
 
 function updateElements() {
+	$('#username').val('root');
+	$('#password').val('root');
+
+
 	var user = "";
 	$.ajax({
 		type: "GET",

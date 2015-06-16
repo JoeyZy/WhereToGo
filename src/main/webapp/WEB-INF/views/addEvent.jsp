@@ -29,9 +29,9 @@
                 </tr>
                 <tr>
                     <td>Category:</td>
-                    <td><form:select path="category">
+                    <td><form:select path="categories" multiple="true">
                         <form:options items="${categories}" itemValue="id"
-                                      itemLabel="name"></form:options></form:select>
+                                      itemLabel="name"/></form:select>
                     </td>
                 </tr>
                 <tr>

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = false)
@@ -16,9 +18,8 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Size(min = 2, max = 30)
 	private String name;
-
-	private String category;
 
 	private String description;
 
@@ -33,16 +34,8 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(int id, String category, String name, String description, User owner) {
-		this.id = id;
-		this.category = category;
-		this.name = name;
-		this.description = description;
-		this.owner = owner;
-	}
-
 	public String toString() {
-		return id + ", " + category + ", " + name + ", " + description + ", " + owner.getFirstName();
+		return id + ", " + ", " + name + ", " + description + ", " + owner.getFirstName();
 	}
 
 }
