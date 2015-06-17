@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -34,7 +34,7 @@ public class MainController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(List.class, "categories", categoryEditor);
+		binder.registerCustomEditor(Set.class, "categories", categoryEditor);
 //		binder.registerCustomEditor(User.class, new UserEditor());
 	}
 

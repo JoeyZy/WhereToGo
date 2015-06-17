@@ -1,10 +1,9 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
+import com.luxoft.wheretogo.models.User;
 import org.springframework.stereotype.Repository;
 
-import com.luxoft.wheretogo.models.User;
+import java.util.List;
 
 @Repository
 public class UsersRepositoryImpl extends AbstractRepository<User> implements UsersRepository {

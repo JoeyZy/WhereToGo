@@ -1,10 +1,9 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
+import com.luxoft.wheretogo.models.Event;
 import org.springframework.stereotype.Repository;
 
-import com.luxoft.wheretogo.models.Event;
+import java.util.List;
 
 @Repository
 public class EventsRepositoryImpl extends AbstractRepository<Event> implements EventsRepository {
@@ -13,8 +12,8 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 		super(Event.class);
 	}
 
-	public void add(Event object) {
-		super.add(object);
+	public void add(Event event) {
+		super.add(event);
 	}
 
 	@Override

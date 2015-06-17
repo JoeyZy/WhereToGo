@@ -1,14 +1,12 @@
 package com.luxoft.wheretogo.services;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.repositories.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.repositories.EventsRepository;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional

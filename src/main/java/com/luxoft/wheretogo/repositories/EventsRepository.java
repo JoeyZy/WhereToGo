@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
 import com.luxoft.wheretogo.models.Event;
+
+import java.util.List;
 
 public interface EventsRepository {
 

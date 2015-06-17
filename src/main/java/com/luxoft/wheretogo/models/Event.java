@@ -1,17 +1,21 @@
 package com.luxoft.wheretogo.models;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
-import java.util.List;
 
-@EqualsAndHashCode(callSuper = false)
-@Data
 @Entity
 @Table(name = "events")
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"id", "name"})
+@ToString(of = {"id", "name"})
 public class Event {
 
 	@Id
@@ -23,19 +27,15 @@ public class Event {
 
 	private String description;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner")
 	private User owner;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> categories;
+	private Set<Category> categories;
 
 	public Event() {
-	}
-
-	public String toString() {
-		return id + ", " + ", " + name + ", " + description + ", " + owner.getFirstName();
 	}
 
 }

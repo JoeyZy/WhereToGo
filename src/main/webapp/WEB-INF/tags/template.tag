@@ -36,7 +36,7 @@
     </div>
 </div>
 <%--<div id="footer">--%>
-    <%--Thanks (c)--%>
+<%--Thanks (c)--%>
 <%--</div>--%>
 </body>
 </html>

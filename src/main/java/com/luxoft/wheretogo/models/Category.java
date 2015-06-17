@@ -1,13 +1,19 @@
 package com.luxoft.wheretogo.models;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "categories")
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"id", "name"})
+@ToString(of = {"id", "name"})
 public class Category {
 
 	@Id
@@ -16,20 +22,10 @@ public class Category {
 
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categories")
-	private List<Event> events;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
+	private Set<Event> events;
 
 	public Category() {
-	}
-
-	public Category(int id, String name, List<Event> events) {
-		this.id = id;
-		this.name = name;
-		this.events = events;
-	}
-
-	public String toString() {
-		return name;
 	}
 
 }

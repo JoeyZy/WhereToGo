@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.services;
 
-import java.util.List;
-
 import com.luxoft.wheretogo.models.Category;
+
+import java.util.List;
 
 public interface CategoriesService {
 

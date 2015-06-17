@@ -1,10 +1,9 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
+import com.luxoft.wheretogo.models.Category;
 import org.springframework.stereotype.Repository;
 
-import com.luxoft.wheretogo.models.Category;
+import java.util.List;
 
 @Repository
 public class CategoriesRepositoryImpl extends AbstractRepository<Category> implements CategoriesRepository {
