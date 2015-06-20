@@ -1,3 +1,7 @@
+INSERT INTO `categories` VALUES (1, 'Nature'), (2, 'Movie'), (3, 'Theatre'), (4, 'Pub'), (5, 'Sport'), (6, 'Other');
+INSERT INTO `users` VALUES (1, 'root@gmail.com', 'Root', 'Root', 'root', 'root');
+
+
 CREATE DATABASE IF NOT EXISTS `wheretogo` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `wheretogo`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)

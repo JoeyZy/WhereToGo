@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 @Component
 public class CategoryEditor extends CustomCollectionEditor {
@@ -15,7 +15,7 @@ public class CategoryEditor extends CustomCollectionEditor {
 	private CategoriesService categoriesService;
 
 	public CategoryEditor() {
-		super(Set.class);
+		super(List.class);
 	}
 
 	@Override

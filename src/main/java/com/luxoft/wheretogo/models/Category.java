@@ -5,8 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -23,7 +29,7 @@ public class Category {
 	private String name;
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
-	private Set<Event> events;
+	private List<Event> events;
 
 	public Category() {
 	}

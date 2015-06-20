@@ -11,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Set;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -34,7 +37,7 @@ public class MainController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Set.class, "categories", categoryEditor);
+		binder.registerCustomEditor(List.class, "categories", categoryEditor);
 //		binder.registerCustomEditor(User.class, new UserEditor());
 	}
 
@@ -63,7 +66,11 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public String addEvent(@ModelAttribute("event") Event event, HttpServletRequest request) {
+	public String addEvent(@Valid Event event, BindingResult result, HttpServletRequest request, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("categories", categoriesService.findAll());
+			return "addEvent";
+		}
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		eventsService.add(event);
 		return "event";

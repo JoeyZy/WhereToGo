@@ -6,12 +6,24 @@
 <t:template>
     <jsp:attribute name="head">
         <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
+        <link rel="stylesheet" href="../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
         <script src="resources/jquery/jquery-ui.js"></script>
+        <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
         <script>
             $(document).ready(function () {
-                $("#date").datepicker({
-                    dateFormat: "dd-mm-yy"
-                });
+                var startDateTextBox = $('#start');
+                var endDateTextBox = $('#end');
+
+                $.timepicker.datetimeRange(
+                        startDateTextBox,
+                        endDateTextBox,
+                        {
+                            dateFormat: 'dd M yy',
+                            timeFormat: 'HH:mm',
+                            start: {}, // start picker options
+                            end: {} // end picker options
+                        }
+                );
             });
         </script>
     </jsp:attribute>
@@ -26,6 +38,7 @@
                 <tr>
                     <td>Name:</td>
                     <td><form:input path="name"/></td>
+                    <td><form:errors path="name"/></td>
                 </tr>
                 <tr>
                     <td>Category:</td>
@@ -33,10 +46,23 @@
                         <form:options items="${categories}" itemValue="id"
                                       itemLabel="name"/></form:select>
                     </td>
+                    <td><form:errors path="categories"/></td>
                 </tr>
                 <tr>
                     <td>Description:</td>
                     <td><form:textarea path="description"/></td>
+                    <td><form:errors path="description"/></td>
+
+                </tr>
+                <tr>
+                    <td>Start:</td>
+                    <td><form:input id="start" path="startDateTime"/></td>
+                    <td><form:errors path="startDateTime"/></td>
+                </tr>
+                <tr>
+                    <td>End:</td>
+                    <td><form:input id="end" path="endDateTime"/></td>
+                    <td><form:errors path="endDateTime"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" value="Add event"/></td>

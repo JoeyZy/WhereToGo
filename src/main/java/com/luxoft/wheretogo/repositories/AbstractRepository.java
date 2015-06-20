@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.repositories;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,6 +34,6 @@ public abstract class AbstractRepository<T> {
 	}
 
 	private Criteria getCriteria() {
-		return sessionFactory.getCurrentSession().createCriteria(clazz);
+		return sessionFactory.getCurrentSession().createCriteria(clazz).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	}
 }
