@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.controller;
 
 import com.luxoft.wheretogo.controller.editor.CategoryEditor;
+import com.luxoft.wheretogo.controller.editor.UserEditor;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.services.CategoriesService;
@@ -34,11 +35,13 @@ public class MainController {
 
 	@Autowired
 	private CategoryEditor categoryEditor;
+	@Autowired
+	private UserEditor userEditor;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(List.class, "categories", categoryEditor);
-//		binder.registerCustomEditor(User.class, new UserEditor());
+		binder.registerCustomEditor(User.class, userEditor);
 	}
 
 	@RequestMapping("/")
@@ -53,15 +56,23 @@ public class MainController {
 	}
 
 	@RequestMapping("/event")
-	public String event(@RequestParam(value = "id", required = true) int id, Model model) {
+	public String event(@RequestParam(value = "id", required = true) int id, Model model, HttpServletRequest request) {
+		Event event = eventsService.findById(id);
+		model.addAttribute("currentUserIsParticipant", event.getParticipants().contains(request.getSession().getAttribute("user")));
 		model.addAttribute("event", eventsService.findById(id));
 		return "event";
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.GET)
-	public String createEvent(Model model) {
+	public String createEvent(@RequestParam(value = "eventId", required = false) Integer eventId, Model model) {
 		model.addAttribute("event", new Event());
 		model.addAttribute("categories", categoriesService.findAll());
+		if (eventId != null) {
+			Event event = eventsService.findById(eventId);
+			if (event != null) {
+				model.addAttribute("event", event);
+			}
+		}
 		return "addEvent";
 	}
 
@@ -73,6 +84,7 @@ public class MainController {
 		}
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		eventsService.add(event);
+		model.addAttribute("currentUserIsParticipant", event.getParticipants().contains(request.getSession().getAttribute("user")));
 		return "event";
 	}
 
@@ -91,5 +103,23 @@ public class MainController {
 
 		usersService.add(user);
 		return "index";
+	}
+
+	@RequestMapping(value = "/addEventToUser")
+	public String addUserToEvent(@RequestParam(value = "eventId", required = true) Integer eventId, Model model, HttpServletRequest request) {
+		Event event = eventsService.findById(eventId);
+		event.getParticipants().add((User) request.getSession().getAttribute("user"));
+		eventsService.add(event);
+		model.addAttribute("currentUserIsParticipant", event.getParticipants().contains(request.getSession().getAttribute("user")));
+		model.addAttribute("event", event);
+		return "event";
+	}
+
+	@RequestMapping(value = "/userInfo")
+	public String user(@RequestParam(value = "id", required = true) int userId, Model model) {
+		User user = usersService.findById(userId);
+		model.addAttribute("user", user);
+//		user.getEvents();
+		return "user";
 	}
 }

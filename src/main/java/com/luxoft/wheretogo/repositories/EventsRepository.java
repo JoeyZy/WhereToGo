@@ -12,4 +12,6 @@ public interface EventsRepository {
 
 	Event findById(int eventId);
 
+	Event findByName(String eventName);
+
 }

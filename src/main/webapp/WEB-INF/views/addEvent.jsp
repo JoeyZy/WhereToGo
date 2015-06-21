@@ -1,8 +1,9 @@
 <%--@elvariable id="category" type="com.luxoft.wheretogo.models.Category"--%>
 <%--@elvariable id="event" type="com.luxoft.wheretogo.models.Event"--%>
-<%--@elvariable id="event" type="com.luxoft.wheretogo.models.User"--%>
+<%--@elvariable id="user" type="com.luxoft.wheretogo.models.User"--%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:template>
     <jsp:attribute name="head">
         <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
@@ -32,13 +33,15 @@
         <form:form commandName="event">
             <table>
                 <tr>
-                    <td>Owner:</td>
-                    <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
-                </tr>
-                <tr>
                     <td>Name:</td>
                     <td><form:input path="name"/></td>
                     <td><form:errors path="name"/></td>
+                </tr>
+                <tr>
+                    <td>Owner:</td>
+                    <form:input path="owner" value="${sessionScope.user.id}" type="hidden"/>
+                    <td>${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
+                    <td><form:errors path="owner"/></td>
                 </tr>
                 <tr>
                     <td>Category:</td>
@@ -64,8 +67,9 @@
                     <td><form:input id="end" path="endDateTime"/></td>
                     <td><form:errors path="endDateTime"/></td>
                 </tr>
+                <c:set var="subvmitButtonText"/>
                 <tr>
-                    <td colspan="2"><input type="submit" value="Add event"/></td>
+                    <td colspan="2"><input type="submit" value="${not empty event ? "Edit event" : "Add event"}"/></td>
                 </tr>
             </table>
         </form:form>

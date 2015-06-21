@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.repositories.EventsRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,13 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public void add(Event event) {
+		Event existingEvent = findByName(event.getName());
+		if (existingEvent != null) {
+			event.setId(existingEvent.getId());
+			if (event.getParticipants() == null) {
+				event.setParticipants(existingEvent.getParticipants());
+			}
+		}
 		eventsRepository.add(event);
 	}
 
@@ -27,6 +35,19 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public Event findById(int eventId) {
-		return eventsRepository.findById(eventId);
+		Event event = eventsRepository.findById(eventId);
+		if (event != null) {
+			Hibernate.initialize(event.getParticipants());
+		}
+		return event;
+	}
+
+	@Override
+	public Event findByName(String eventName) {
+		Event event = eventsRepository.findByName(eventName);
+		if (event != null) {
+			Hibernate.initialize(event.getParticipants());
+		}
+		return event;
 	}
 }

@@ -12,4 +12,6 @@ public interface EventsService {
 
 	Event findById(int eventId);
 
+	Event findByName(String eventName);
+
 }

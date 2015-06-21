@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.repositories.UsersRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,11 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public User findById(int userId) {
-		return usersRepository.findById(userId);
+		User user = usersRepository.findById(userId);
+		if (user != null) {
+			Hibernate.initialize(user.getEvents());
+		}
+		return user;
 	}
 
 	@Override

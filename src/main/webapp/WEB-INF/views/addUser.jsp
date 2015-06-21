@@ -1,4 +1,4 @@
-<%--@elvariable id="event" type="com.luxoft.wheretogo.models.User"--%>
+<%--@elvariable id="user" type="com.luxoft.wheretogo.models.User"--%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <t:template>

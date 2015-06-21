@@ -62,7 +62,11 @@ $(document).ready(function () {
                 $('#user-first-name').text(user.firstName);
                 $('#user-last-name').text(user.lastName);
                 $('.login-link').hide();
-                $('.logout-link').show();
+                $('.logout-box').show();
+                location.reload();
+            },
+            error: function () {
+                alert("ERROR!");
             },
             complete: function () {
                 updateElements();
@@ -77,7 +81,7 @@ $(document).ready(function () {
             success: function (success) {
                 if (success) {
                     $('.login-link').show();
-                    $('.logout-link').hide();
+                    $('.logout-box').hide();
                     return;
                 }
                 alert("logout error");
@@ -113,7 +117,7 @@ function updateElements() {
         $('.login-link').hide();
         $('#add-event-btn').prop('disabled', false);
     } else {
-        $('.logout-link').hide();
+        $('.logout-box').hide();
         $('#add-event-btn').prop('disabled', true);
     }
 }

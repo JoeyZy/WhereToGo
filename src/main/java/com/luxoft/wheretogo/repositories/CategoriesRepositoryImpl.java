@@ -19,7 +19,7 @@ public class CategoriesRepositoryImpl extends AbstractRepository<Category> imple
 
 	@Override
 	public List<Category> findAll() {
-		return super.findAll();
+		return super.findAll("id");
 	}
 
 	@Override

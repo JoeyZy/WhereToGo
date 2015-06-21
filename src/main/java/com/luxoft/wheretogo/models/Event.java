@@ -18,10 +18,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -40,7 +41,7 @@ public class Event {
 
 	private String description;
 
-	@NotEmpty
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner")
 	private User owner;
@@ -50,9 +51,9 @@ public class Event {
 	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private List<User> participants;
+	private Set<User> participants;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDateTime;

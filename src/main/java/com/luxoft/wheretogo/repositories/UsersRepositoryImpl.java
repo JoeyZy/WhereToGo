@@ -13,13 +13,16 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	}
 
 	@Override
-	public void add(User object) {
-		super.add(object);
+	public void add(User user) {
+		if (findByLogin(user.getLogin()) == null) {
+			super.add(user);
+		}
+		super.update(user);
 	}
 
 	@Override
 	public List<User> findAll() {
-		return super.findAll();
+		return super.findAll(null);
 	}
 
 	@Override

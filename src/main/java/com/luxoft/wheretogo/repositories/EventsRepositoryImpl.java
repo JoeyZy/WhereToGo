@@ -13,16 +13,24 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 	}
 
 	public void add(Event event) {
-		super.add(event);
+		if (findByName(event.getName()) == null) {
+			super.add(event);
+		}
+		super.update(event);
 	}
 
 	@Override
 	public List<Event> findAll() {
-		return super.findAll();
+		return super.findAll("id");
 	}
 
 	@Override
 	public Event findById(int eventId) {
 		return super.findByProperty("id", eventId);
+	}
+
+	@Override
+	public Event findByName(String eventName) {
+		return super.findByProperty("name", eventName);
 	}
 }
