@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -55,10 +56,8 @@ public class Event {
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> participants;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date startDateTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDateTime;
 
 	public Event() {

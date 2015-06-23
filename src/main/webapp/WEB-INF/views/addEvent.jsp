@@ -4,6 +4,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:template>
     <jsp:attribute name="head">
         <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
@@ -19,7 +20,7 @@
                         startDateTextBox,
                         endDateTextBox,
                         {
-                            dateFormat: 'dd M yy',
+                            dateFormat: 'dd/mm/yy',
                             timeFormat: 'HH:mm',
                             start: {}, // start picker options
                             end: {} // end picker options
@@ -59,12 +60,14 @@
                 </tr>
                 <tr>
                     <td>Start:</td>
-                    <td><form:input id="start" path="startDateTime"/></td>
+                    <fmt:formatDate value="${event.startDateTime}" var="startDateTime" pattern="dd/MM/yyyy HH:mm" />
+                    <td><form:input id="start" path="startDateTime" value="${startDateTime}"/></td>
                     <td><form:errors path="startDateTime"/></td>
                 </tr>
                 <tr>
                     <td>End:</td>
-                    <td><form:input id="end" path="endDateTime"/></td>
+                    <fmt:formatDate value="${event.endDateTime}" var="endDateTime" pattern="dd/MM/yyyy HH:mm" />
+                    <td><form:input id="end" path="endDateTime" value="${endDateTime}"/></td>
                     <td><form:errors path="endDateTime"/></td>
                 </tr>
                 <c:set var="subvmitButtonText"/>

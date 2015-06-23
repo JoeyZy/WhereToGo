@@ -3,6 +3,7 @@
 <%--@elvariable id="user" type="com.luxoft.wheretogo.models.User"--%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:template>
     <jsp:body>
         <h1></h1>
@@ -17,11 +18,13 @@
             </tr>
             <tr>
                 <td><b>Begin:</b></td>
-                <td>${event.startDateTime}</td>
+                <fmt:formatDate value="${event.startDateTime}" var="startDateTime" pattern="dd/MM/yyyy HH:mm" />
+                <td>${startDateTime}</td>
             </tr>
             <tr>
                 <td><b>End:</b></td>
-                <td>${event.endDateTime}</td>
+                <fmt:formatDate value="${event.endDateTime}" var="endDateTime" pattern="dd/MM/yyyy HH:mm" />
+                <td>${endDateTime}</td>
             </tr>
         </table>
 

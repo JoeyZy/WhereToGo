@@ -1,13 +1,14 @@
 package com.luxoft.wheretogo.controller;
 
-import com.luxoft.wheretogo.controller.editor.CategoryEditor;
-import com.luxoft.wheretogo.controller.editor.UserEditor;
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.User;
-import com.luxoft.wheretogo.services.CategoriesService;
-import com.luxoft.wheretogo.services.EventsService;
-import com.luxoft.wheretogo.services.UsersService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
+import com.luxoft.wheretogo.controller.editor.CategoryEditor;
+import com.luxoft.wheretogo.controller.editor.UserEditor;
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.services.CategoriesService;
+import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.UsersService;
 
 @Controller
 public class MainController {
@@ -42,6 +47,9 @@ public class MainController {
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(List.class, "categories", categoryEditor);
 		binder.registerCustomEditor(User.class, userEditor);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				dateFormat, false));
 	}
 
 	@RequestMapping("/")
@@ -84,7 +92,8 @@ public class MainController {
 		}
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		eventsService.add(event);
-		model.addAttribute("currentUserIsParticipant", event.getParticipants().contains(request.getSession().getAttribute("user")));
+		model.addAttribute("currentUserIsParticipant",
+				(event.getParticipants() != null) && (event.getParticipants().contains(request.getSession().getAttribute("user"))));
 		return "event";
 	}
 
@@ -119,7 +128,7 @@ public class MainController {
 	public String user(@RequestParam(value = "id", required = true) int userId, Model model) {
 		User user = usersService.findById(userId);
 		model.addAttribute("user", user);
-//		user.getEvents();
+		//		user.getEvents();
 		return "user";
 	}
 }
