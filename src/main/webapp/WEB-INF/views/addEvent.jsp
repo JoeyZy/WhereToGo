@@ -7,10 +7,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:template>
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
-        <link rel="stylesheet" href="../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
+        <link rel="stylesheet" href="resources/jquery/jquery-ui.css">
+        <link rel="stylesheet" href="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
         <script src="resources/jquery/jquery-ui.js"></script>
         <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
+        <style>
+            div.ui-datepicker {
+                font-size:15px;
+            }
+        </style>
         <script>
             $(document).ready(function () {
                 var startDateTextBox = $('#start');
