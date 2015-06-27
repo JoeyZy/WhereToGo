@@ -25,6 +25,7 @@
                         startDateTextBox,
                         endDateTextBox,
                         {
+                            minDate: 0,
                             dateFormat: 'dd/mm/yy',
                             timeFormat: 'HH:mm',
                             start: {}, // start picker options

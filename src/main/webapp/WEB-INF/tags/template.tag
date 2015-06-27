@@ -6,6 +6,14 @@
 <%@attribute name="footer" fragment="true" %>
 <html>
 <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
     <link rel="stylesheet" type="text/css" href="resources/css/loginForm.css">
     <script src="/resources/jquery/jquery-2.1.4.js"></script>
