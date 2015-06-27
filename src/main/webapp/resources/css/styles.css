@@ -17,7 +17,7 @@ body {
     background: url("../images/events-background.jpg");
     background-size: cover;
     color: white;
-    padding: 0px;
+    padding: 0;
 }
 
 #navigation-left {

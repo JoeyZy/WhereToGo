@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:template>
     <jsp:body>
-        <h2>User data:</h2>
+        <h3>User data:</h3>
         <table>
             <tr>
                 <td>Login:</td>
