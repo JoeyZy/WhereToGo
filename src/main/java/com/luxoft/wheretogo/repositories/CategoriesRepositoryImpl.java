@@ -23,7 +23,7 @@ public class CategoriesRepositoryImpl extends AbstractRepository<Category> imple
 	}
 
 	@Override
-	public Category findById(int categoryId) {
+	public Category findById(long categoryId) {
 		return super.findByProperty("id", categoryId);
 	}
 }

@@ -23,8 +23,8 @@
             </tr>
             <tr>
                 <td><b>End:</b></td>
-                <fmt:formatDate value="${event.endDateTime}" var="endDateTime" pattern="dd/MM/yyyy HH:mm" />
-                <td>${endDateTime}</td>
+                <%--<fmt:formatDate value="${event.endDateTime}" var="endDateTime" pattern="dd/MM/yyyy HH:mm" />--%>
+                <td>${event.endDateTime}</td>
             </tr>
         </table>
 
