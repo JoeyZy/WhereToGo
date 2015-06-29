@@ -249,13 +249,13 @@ $(function () {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
                         container.find('h3').text(event.name);
-                        container.find('p').text(event.description);
-                        container.find('#owner').html(event.owner.firstName);
-                        container.find('#owner').attr("contenteditable", true);
+                        container.find('#description').text(event.description);
+                        container.find('#owner').val(event.owner.firstName);
+                        container.find('#owner').attr('readonly', 'readonly');
                         var startDate = moment(new Date(event.startDateTime)).format('DD/MM/YYYY HH:mm');
-                        container.find('#start').html(startDate);
+                        container.find('#start').val(startDate);
                         var endDate = moment(new Date(event.endDateTime)).format('DD/MM/YYYY HH:mm');
-                        container.find('#end').html(endDate);
+                        container.find('#end').val(endDate);
                     });
                 }
             });
