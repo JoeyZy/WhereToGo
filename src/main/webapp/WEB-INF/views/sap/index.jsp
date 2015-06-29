@@ -14,7 +14,7 @@
 <body>
 
 	<header class="compact">
-		<h1><a href="#">Events!</a></h1>
+		<h1><a class="home" href="#">Events!</a></h1>
 	</header>
 
 	<div class="main-content">
@@ -77,6 +77,20 @@
 			<div class="preview-large">
 				<h3>Single event view</h3>
 				<%--<img src=""/>--%>
+				<table>
+					<tr>
+						<td><b>Owner:</b></td>
+						<td id="owner"></td>
+					</tr>
+					<tr>
+						<td><b>Start:</b></td>
+						<td id="start"></td>
+					</tr>
+					<tr>
+						<td><b>End:</b></td>
+						<td id="end"></td>
+					</tr>
+				</table>
 				<p></p>
 
 				<span class="close">x</span>
@@ -93,6 +107,7 @@
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+	<script src="../../../resources/js/moment.js"></script>
 	<script src="../../../resources/js/script.js"></script>
 
 

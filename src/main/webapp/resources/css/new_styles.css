@@ -382,6 +382,11 @@ header h2.tzine a{
 	line-height: 23px;
 	padding: 50px 45px;
 }
+.preview-large table{
+	line-height: 23px;
+	padding: 50px 45px;
+	text-align: left;
+}
 
 .close{
 	position: absolute;
