@@ -11,6 +11,20 @@ h1, h3 {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+button {
+    border-radius: 2px;
+    background-color: #4BC34B;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+
+    width: 95px;
+    height: 32px;
+}
+
 /*-----------------
 	The Header
 ------------------*/
@@ -137,17 +151,6 @@ header h2.tzine a {
 }
 
 .filters button {
-    border-radius: 2px;
-    background-color: #4BC34B;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
-    border: 0;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 13px;
-    cursor: pointer;
-
-    width: 95px;
-    height: 32px;
     margin-top: 10px;
 }
 
@@ -262,17 +265,7 @@ header h2.tzine a {
 /* Price and order button */
 
 .events-list button {
-    border-radius: 2px;
     background-color: #87bae1;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
-    border: 0;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 13px;
-    cursor: pointer;
-
-    width: 95px;
-    height: 32px;
 }
 
 .events-list .event-price {
@@ -385,13 +378,23 @@ header h2.tzine a {
     text-align: left;
 }
 
+.edit {
+    background: url("../images/edit.png") no-repeat center;
+    position: absolute;
+    right: 57px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
 .close {
+    background: url("../images/close.png") no-repeat center;
     position: absolute;
     right: 25px;
     top: 15px;
-
-    font-size: 28px;
-    color: #555;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
 }
 
@@ -419,12 +422,12 @@ header h2.tzine a {
 
 .event-information {
     padding: 20px 0;
+    text-align: left;
+    width: 600px;
+    margin: 0 auto;
 }
 
 .event-information ul {
-    width: 600px;
-    margin: 0 auto;
-    text-align: left;
     list-style: none outside;
     padding: 0;
 }
@@ -457,4 +460,14 @@ header h2.tzine a {
     height: 100%;
     padding: 5px 8px;
     border: none;
+}
+.event-information-div {
+    margin: 0 auto;
+    text-align: left;
+    width: 600px;
+}
+
+.event-information button {
+    background-color: #87bae1;
+    margin: 12px;
 }

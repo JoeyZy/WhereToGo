@@ -1,29 +1,20 @@
 <!DOCTYPE html>
 <html>
-
 <head lang="en">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-
     <title>Events!</title>
-
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
     <link href="../../../resources/css/new_styles.css" rel="stylesheet">
 </head>
-
 <body>
-
 <header class="compact">
     <h1><a class="home" href="#">Events!</a></h1>
 </header>
-
 <div class="main-content">
-
     <div class="all-events page">
-
         <div class="filters">
             <form>
-
                 <div class="filter-criteria">
                     <span>Category</span>
                     <label><input type="checkbox" name="category" value="nature">Nature</label>
@@ -33,18 +24,14 @@
                     <label><input type="checkbox" name="category" value="sport">Sport</label>
                     <label><input type="checkbox" name="category" value="other">Other</label>
                 </div>
-
                 <div class="filter-criteria">
                     <span>Date</span>
                     <label><input type="checkbox" value="1" name="camera">Today</label>
                     <label><input type="checkbox" value="7" name="camera">Week</label>
                     <label><input type="checkbox" value="30" name="camera">Month</label>
                 </div>
-
                 <button>Clear filters</button>
-
             </form>
-
         </div>
 
         <ul class="events-list">
@@ -65,19 +52,13 @@
             </li>
             {{/each}}
             </script>
-             
         </ul>
 
     </div>
-
-
     <div class="single-event page">
-
         <div class="overlay"></div>
-
         <div class="preview-large">
-            <h3>Single event view</h3>
-            <%--<img src=""/>--%>
+            <h3></h3>
             <form class="event-information">
                 <ul>
                     <li>
@@ -97,25 +78,19 @@
                         <textarea id="description" title="Description:"></textarea>
                     </li>
                 </ul>
+                <button>I'll be there!</button>
             </form>
-
-            <span class="close">x</span>
+            <span class="edit"></span>
+            <span class="close"></span>
         </div>
-
     </div>
-
     <div class="error page">
         <h3>Sorry, something went wrong :(</h3>
     </div>
-
 </div>
-
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="../../../resources/js/moment.js"></script>
 <script src="../../../resources/js/script.js"></script>
-
-
 </body>
 </html>

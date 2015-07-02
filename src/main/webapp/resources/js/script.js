@@ -75,6 +75,8 @@ $(function () {
 
     singleeventPage.on('click', function (e) {
 
+        e.preventDefault();
+
         if (singleeventPage.hasClass('visible')) {
 
             var clicked = $(e.target);
