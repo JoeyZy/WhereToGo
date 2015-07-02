@@ -52,7 +52,7 @@
             <div>
                 <form action="/addEventToUser">
                     <input id="eventId" name="eventId" type="hidden" value="${event.id}">
-                    <input id="add-event-btn" type="submit" value="+ 1">
+                    <input id="add-event-btn" type="submit" value="I'll be there">
                 </form>
             </div>
         </c:if>
