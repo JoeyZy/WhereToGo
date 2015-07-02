@@ -52,7 +52,7 @@ public class MainController {
 				dateFormat, false));
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/*")
 	public String homePage(HttpServletRequest request) {
 		return "index";
 	}

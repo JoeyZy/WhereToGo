@@ -17,9 +17,9 @@ public class NewDesignController {
 	@Autowired
 	private EventsService eventsService;
 
-	@RequestMapping("*")
+	@RequestMapping("/*")
 	public String init() {
-		return "sap/index";
+		return "spa/index";
 	}
 
 	@RequestMapping("/events")

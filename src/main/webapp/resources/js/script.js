@@ -136,7 +136,7 @@ $(function () {
                 filters = {};
                 checkboxes.prop('checked', false);
 
-                rendereventsPage(events);
+                renderEventsPage(events);
             },
 
             // Single events page.
@@ -208,17 +208,17 @@ $(function () {
     }
 
     // This function receives an object containing all the event we want to show.
-    function rendereventsPage(data) {
+    function renderEventsPage(data) {
 
         var page = $('.all-events'),
-            allevents = $('.all-events .events-list > li');
+            allEvents = $('.all-events .events-list > li');
 
         // Hide all the events in the events list.
-        allevents.addClass('hidden');
+        allEvents.addClass('hidden');
 
         // Iterate over all of the events.
         // If their ID is somewhere in the data object remove the hidden class to reveal them.
-        allevents.each(function () {
+        allEvents.each(function () {
 
             var that = $(this);
 
@@ -343,9 +343,9 @@ $(function () {
 
         });
 
-        // Call the rendereventsPage.
+        // Call the renderEventsPage.
         // As it's argument give the object with filtered events.
-        rendereventsPage(results);
+        renderEventsPage(results);
     }
 
 

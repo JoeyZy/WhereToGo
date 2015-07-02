@@ -196,6 +196,7 @@ header h2.tzine a {
 
 .events-list > li.hidden {
     opacity: 0.2;
+    display: none;
     pointer-events: none;
 }
 
