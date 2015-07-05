@@ -87,6 +87,12 @@ $(function () {
                 createQueryHash(filters);
             }
 
+            if (clicked.hasClass('edit')) {
+                singleeventPage.find('#description').toggleClass('editable');
+                singleeventPage.find('#start').toggleClass('editable');
+                singleeventPage.find('#end').toggleClass('editable');
+            }
+
         }
 
     });

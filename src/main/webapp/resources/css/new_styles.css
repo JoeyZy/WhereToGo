@@ -471,3 +471,7 @@ header h2.tzine a {
     background-color: #87bae1;
     margin: 12px;
 }
+
+.event-information li .editable {
+    box-shadow: 0 0 10px #9ecaed;
+}
