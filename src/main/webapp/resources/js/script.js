@@ -68,6 +68,28 @@ $(function () {
         window.location.hash = '#';
     });
 
+    // Login page
+
+    var loginPage = $('.login-page');
+
+    loginPage.on('click', function (e) {
+
+        e.preventDefault();
+
+        if (loginPage.hasClass('visible')) {
+
+            var clicked = $(e.target);
+
+            // If the close button or the background are clicked go to the previous page.
+            if (clicked.hasClass('close') || clicked.hasClass('overlay')) {
+                // Change the url hash with the last used filters.
+                createQueryHash(filters);
+            }
+
+        }
+
+    });
+
 
     // Single event page buttons
 

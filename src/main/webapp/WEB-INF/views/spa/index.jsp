@@ -59,6 +59,7 @@
         <div class="overlay"></div>
         <div class="preview-large">
             <h3></h3>
+
             <form class="event-information">
                 <ul>
                     <li>
@@ -82,6 +83,25 @@
             </form>
             <span class="edit"></span>
             <span class="close"></span>
+        </div>
+    </div>
+
+    <div class="login-page">
+        <div class="overlay"></div>
+        <div class="login">
+            <form class="login-data">
+                <ul>
+                    <li>
+                        <label>Login:</label>
+                        <input id="user"/>
+                    </li>
+                    <li>
+                        <label>Password:</label>
+                        <input type="password" id="password"/>
+                    </li>
+                </ul>
+                <button id="login-button">Log in</button>
+            </form>
         </div>
     </div>
     <div class="error page">

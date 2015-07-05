@@ -35,13 +35,12 @@ header {
     left: 0;
     right: 0;
 
-    height: 40px;
     z-index: 100;
 
     background-color: #282b2c;
     padding: 20px 40px;
     color: #fff;
-    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
 }
 
 header a {
@@ -49,22 +48,66 @@ header a {
     text-decoration: none;
 }
 
-header h2.tzine {
-    float: right;
-    opacity: 0.9;
-}
-
-header h2.tzine:hover {
-    opacity: 1;
-}
-
-header h2.tzine a {
-    font-size: 13px;
-    text-transform: uppercase;
+header h1 {
     display: inline-block;
-    padding: 12px 18px;
-    border-radius: 3px;
-    background-color: #5895DB;
+}
+
+.login {
+    box-sizing: border-box;
+    position: fixed;
+    left: 50%;
+    margin-left: -150px;
+    top: 50%;
+    margin-top: -200px;
+    pointer-events: none;
+
+    border-radius: 6px;
+    background-color: #ffffff;
+
+    z-index: 102;
+    transition: 0.4s;
+    width: 300px;
+    opacity: 0;
+
+    padding: 20px;
+}
+
+.login-page.visible .login {
+    opacity: 1;
+    transition: 1.4s;
+    pointer-events: auto;
+}
+
+.login-data ul {
+    list-style: none outside;
+}
+
+.login-data li {
+    padding: 5px 8px;
+    text-align: left;
+}
+
+.login-data label {
+    display: block;
+    text-align: left;
+ }
+
+.login-data input {
+    width: 94%;
+    text-align: left;
+    box-shadow: 0 0 10px #9ecaed;
+    padding: 5px 8px;
+    border: none;
+    margin-right: 5px;
+}
+
+.login-page.visible .overlay {
+    height: 100%;
+}
+
+#login-button {
+    float: left;
+    margin: 8px;
 }
 
 @media (max-width: 500px) {
@@ -324,6 +367,7 @@ header h2.tzine a {
     background-color: #282b2c;
     transition: 0.6s;
     z-index: 100;
+    opacity: 0.5;
 }
 
 .single-event.visible .overlay {
@@ -336,7 +380,7 @@ header h2.tzine a {
     /*height: 550px;*/
     position: fixed;
     left: 50%;
-    margin-left: -375px;
+    margin-left: -380px;
     top: 50%;
     margin-top: -275px;
     pointer-events: none;
