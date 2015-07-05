@@ -27,7 +27,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User findById(int userId) {
+	public User findById(long userId) {
 		User user = usersRepository.findById(userId);
 		if (user != null) {
 			Hibernate.initialize(user.getEvents());
@@ -37,6 +37,10 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public User findByLogin(String userLogin) {
-		return usersRepository.findByLogin(userLogin);
+		User user = usersRepository.findByLogin(userLogin);
+		if (user != null) {
+			Hibernate.initialize(user.getEvents());
+		}
+		return user;
 	}
 }

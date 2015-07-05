@@ -25,7 +25,7 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 	}
 
 	@Override
-	public Event findById(int eventId) {
+	public Event findById(long eventId) {
 		return super.findByProperty("id", eventId);
 	}
 

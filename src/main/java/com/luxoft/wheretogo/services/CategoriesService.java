@@ -10,6 +10,6 @@ public interface CategoriesService {
 
 	List<Category> findAll();
 
-	Category findById(int categoryId);
+	Category findById(long categoryId);
 
 }

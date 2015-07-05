@@ -12,10 +12,6 @@
                     <input id="add-event-btn" type="submit" value="+ Event">
                 </form>
             </div>
-            <div>
-                <input type="submit" value="Take me somewhere!">
-            </div>
-
         </div>
     </jsp:body>
 </t:template>

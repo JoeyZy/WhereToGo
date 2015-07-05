@@ -10,7 +10,7 @@ public interface EventsRepository {
 
 	List<Event> findAll();
 
-	Event findById(int eventId);
+	Event findById(long eventId);
 
 	Event findByName(String eventName);
 

@@ -10,6 +10,6 @@ public interface CategoriesRepository {
 
 	List<Category> findAll();
 
-	Category findById(int categoryId);
+	Category findById(long categoryId);
 
 }

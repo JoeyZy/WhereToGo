@@ -78,7 +78,7 @@
                 </tr>
                 <c:set var="subvmitButtonText"/>
                 <tr>
-                    <td colspan="2"><input type="submit" value="${not empty event ? "Edit event" : "Add event"}"/></td>
+                    <td colspan="2"><input type="submit" value="${not empty event.owner ? "Edit event" : "Add event"}"/></td>
                 </tr>
             </table>
         </form:form>

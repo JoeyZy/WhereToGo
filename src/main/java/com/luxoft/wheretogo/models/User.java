@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,12 +31,13 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@Column(unique = true)
 	@Size(min = 2, max = 30)
 	private String login;
 
+	@JsonIgnore
 	@Size(min = 2, max = 30)
 	private String password;
 
@@ -56,6 +58,16 @@ public class User {
 	private Set<Event> events;
 
 	public User() {
+	}
+
+	@JsonIgnore
+	public String getPassword() {
+		return password;
+	}
+
+	@JsonProperty
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
