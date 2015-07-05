@@ -26,7 +26,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	}
 
 	@Override
-	public User findById(int userId) {
+	public User findById(long userId) {
 		return super.findByProperty("id", userId);
 	}
 

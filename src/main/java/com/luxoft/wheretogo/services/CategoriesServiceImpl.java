@@ -26,7 +26,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 	}
 
 	@Override
-	public Category findById(int categoryId) {
+	public Category findById(long categoryId) {
 		return categoriesRepository.findById(categoryId);
 	}
 }

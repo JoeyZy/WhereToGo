@@ -2,7 +2,7 @@
 <%--@elvariable id="event" type="com.luxoft.wheretogo.models.Event"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-    <div><h3>Events:</h3></div>
+    <div><h3>Categories:</h3></div>
     <ul>
         <c:forEach var="category" items="${categories}">
             <li>

@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +25,11 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	private String name;
 
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
 	private List<Event> events;
 
