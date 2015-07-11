@@ -141,7 +141,7 @@ public class MainController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public User login(@RequestBody User user, HttpServletRequest request) {
-		User sessionUser = usersService.findByLogin(user.getLogin());
+		User sessionUser = usersService.findByLogin(user.getEmail());
 		if (sessionUser == null || !sessionUser.getPassword().equals(user.getPassword())) {
 			return null;
 		}

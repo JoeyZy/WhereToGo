@@ -7,9 +7,9 @@
         <form:form commandName="user">
             <table>
                 <tr>
-                    <td>Login:</td>
-                    <td><form:input path="login"/></td>
-                    <td><form:errors path="login"/></td>
+                    <td>Email:</td>
+                    <td><form:input path="email"/></td>
+                    <td><form:errors path="email"/></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
@@ -25,11 +25,6 @@
                     <td>Last Name:</td>
                     <td><form:input path="lastName"/></td>
                     <td><form:errors path="lastName"/></td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td><form:input path="email"/></td>
-                    <td><form:errors path="email"/></td>
                 </tr>
                 <tr>
                     <td colspan="2"><input type="submit" value="Add user"/></td>

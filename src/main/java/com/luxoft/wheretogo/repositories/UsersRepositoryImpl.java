@@ -14,7 +14,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 
 	@Override
 	public void add(User user) {
-		if (findByLogin(user.getLogin()) == null) {
+		if (findByLogin(user.getEmail()) == null) {
 			super.add(user);
 		}
 		super.update(user);
@@ -32,7 +32,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 
 	@Override
 	public User findByLogin(String userLogin) {
-		return super.findByProperty("login", userLogin);
+		return super.findByProperty("email", userLogin);
 	}
 
 }

@@ -5,13 +5,14 @@
 
 body {
     font: normal 16px Arial, Helvetica, sans-serif;
+    padding:50px;
 }
 
 h1, h3 {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-button {
+/*button {
     border-radius: 2px;
     background-color: #4BC34B;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
@@ -23,92 +24,11 @@ button {
 
     width: 95px;
     height: 32px;
-}
+}*/
 
 /*-----------------
 	The Header
 ------------------*/
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    z-index: 100;
-
-    background-color: #282b2c;
-    padding: 20px 40px;
-    color: #fff;
-    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
-}
-
-header a {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-header h1 {
-    display: inline-block;
-}
-
-.login {
-    box-sizing: border-box;
-    position: fixed;
-    left: 50%;
-    margin-left: -150px;
-    top: 50%;
-    margin-top: -200px;
-    pointer-events: none;
-
-    border-radius: 6px;
-    background-color: #ffffff;
-
-    z-index: 102;
-    transition: 0.4s;
-    width: 300px;
-    opacity: 0;
-
-    padding: 20px;
-}
-
-.login-page.visible .login {
-    opacity: 1;
-    transition: 1.4s;
-    pointer-events: auto;
-}
-
-.login-data ul {
-    list-style: none outside;
-}
-
-.login-data li {
-    padding: 5px 8px;
-    text-align: left;
-}
-
-.login-data label {
-    display: block;
-    text-align: left;
- }
-
-.login-data input {
-    width: 94%;
-    text-align: left;
-    box-shadow: 0 0 10px #9ecaed;
-    padding: 5px 8px;
-    border: none;
-    margin-right: 5px;
-}
-
-.login-page.visible .overlay {
-    height: 100%;
-}
-
-#login-button {
-    float: left;
-    margin: 8px;
-}
 
 @media (max-width: 500px) {
 
@@ -130,8 +50,9 @@ header h1 {
 .main-content {
     box-sizing: border-box;
     text-align: center;
-    margin: 125px auto 60px;
-    padding: 0 40px;
+    margin: 30px 40px 60px;
+    /*padding: 0 40px;*/
+    position: relative;
 }
 
 .main-content h3 {
@@ -185,8 +106,9 @@ header h1 {
 
 .filters label {
     display: block;
-    line-height: 1.4;
+    line-height: 1.0;
     font-size: 15px;
+    font-weight: normal;
 }
 
 .filters label input {
@@ -364,10 +286,11 @@ header h1 {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #282b2c;
+    background-color: #000000;
+    /*background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');*/
     transition: 0.6s;
     z-index: 100;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 .single-event.visible .overlay {
@@ -376,16 +299,15 @@ header h1 {
 
 .preview-large {
     box-sizing: border-box;
-    width: 760px;
-    /*height: 550px;*/
-    position: fixed;
-    left: 50%;
-    margin-left: -380px;
-    top: 50%;
-    margin-top: -275px;
+    margin: 0 auto;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    /*margin-left: -380px;*/
+    top: 0;
+    right: 0;
+    /*margin-top: -275px;*/
     pointer-events: none;
-
-    border-radius: 6px;
     background-color: #ffffff;
 
     z-index: 102;
@@ -518,4 +440,41 @@ header h1 {
 
 .event-information li .editable {
     box-shadow: 0 0 10px #9ecaed;
+}
+
+/*Login*/
+
+#login-dp{
+    min-width: 300px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
 }

@@ -4,12 +4,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <title>Events!</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
     <link href="../../../resources/css/new_styles.css" rel="stylesheet">
 </head>
 <body>
-<header class="compact">
-    <h1><a class="home" href="#">Events!</a></h1>
+<header>
+    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Events!</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Ratings</a></li>
+                    <li><a href="#">Gallery</a></li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span
+                                class="caret"></span></a>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form class="form" role="form" method="post" action="login"
+                                              accept-charset="UTF-8" id="login-nav">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail2"
+                                                       placeholder="Email address" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword2"
+                                                       placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="bottom text-center">
+                                        New here ? <a href="#"><b>Join Us</b></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
 <div class="main-content">
     <div class="all-events page">
@@ -30,7 +92,7 @@
                     <label><input type="checkbox" value="7" name="camera">Week</label>
                     <label><input type="checkbox" value="30" name="camera">Month</label>
                 </div>
-                <button>Clear filters</button>
+                <button class="btn btn-primary">Clear filters</button>
             </form>
         </div>
 
@@ -46,8 +108,7 @@
                     <li><span>Begin: </span>{{startTime}}</li>
                     <li><span>End: </span>{{endTime}}</li>
                 </ul>
-                <button>Open event</button>
-                <%--<p class="event-price">{{price}}$</p>--%>
+                <button class="btn btn-primary">Open event</button>
                 <div class="highlight"></div>
             </li>
             {{/each}}
@@ -79,29 +140,10 @@
                         <textarea id="description" title="Description:"></textarea>
                     </li>
                 </ul>
-                <button>I'll be there!</button>
+                <button class="btn btn-primary">I'll be there!</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>
-        </div>
-    </div>
-
-    <div class="login-page">
-        <div class="overlay"></div>
-        <div class="login">
-            <form class="login-data">
-                <ul>
-                    <li>
-                        <label>Login:</label>
-                        <input id="user"/>
-                    </li>
-                    <li>
-                        <label>Password:</label>
-                        <input type="password" id="password"/>
-                    </li>
-                </ul>
-                <button id="login-button">Log in</button>
-            </form>
         </div>
     </div>
     <div class="error page">
@@ -110,7 +152,11 @@
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="../../../resources/js/moment.js"></script>
 <script src="../../../resources/js/script.js"></script>
+<script>
+    $('.dropdown-toggle').dropdown();
+</script>
 </body>
 </html>

@@ -7,8 +7,8 @@
         <h3>User data:</h3>
         <table>
             <tr>
-                <td>Login:</td>
-                <td>${user.login}</td>
+                <td>Email:</td>
+                <td>${user.email}</td>
             </tr>
             <tr>
                 <td>First Name:</td>
@@ -17,10 +17,6 @@
             <tr>
                 <td>Last Name:</td>
                 <td>${user.lastName}</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>${user.email}</td>
             </tr>
         </table>
         <b>Events:</b>

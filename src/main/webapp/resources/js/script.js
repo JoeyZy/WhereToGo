@@ -70,7 +70,7 @@ $(function () {
 
     // Login page
 
-    var loginPage = $('.login-page');
+    var loginPage = $('.authentication');
 
     loginPage.on('click', function (e) {
 
@@ -93,13 +93,13 @@ $(function () {
 
     // Single event page buttons
 
-    var singleeventPage = $('.single-event');
+    var singleEventPage = $('.single-event');
 
-    singleeventPage.on('click', function (e) {
+    singleEventPage.on('click', function (e) {
 
         e.preventDefault();
 
-        if (singleeventPage.hasClass('visible')) {
+        if (singleEventPage.hasClass('visible')) {
 
             var clicked = $(e.target);
 
@@ -110,9 +110,9 @@ $(function () {
             }
 
             if (clicked.hasClass('edit')) {
-                singleeventPage.find('#description').toggleClass('editable');
-                singleeventPage.find('#start').toggleClass('editable');
-                singleeventPage.find('#end').toggleClass('editable');
+                singleEventPage.find('#description').toggleClass('editable');
+                singleEventPage.find('#start').toggleClass('editable');
+                singleEventPage.find('#end').toggleClass('editable');
             }
 
         }
@@ -154,6 +154,7 @@ $(function () {
         var temp = url.split('/')[0];
 
         // Hide whatever page is currently shown.
+        //$('.main-content .page').removeClass('visible');
         $('.main-content .page').removeClass('visible');
 
 
@@ -175,7 +176,7 @@ $(function () {
                 // Get the index of which event we want to show and call the appropriate function.
                 var index = url.split('#event/')[1].trim();
 
-                renderSingleeventPage(index, events);
+                renderSingleEventPage(index, events);
             },
 
             // Page with filtered events
@@ -234,7 +235,14 @@ $(function () {
             var eventIndex = $(this).data('index');
 
             window.location.hash = 'event/' + eventIndex;
-        })
+        });
+
+        var header = $('header');
+
+        header.find('.login-link').on('click', function (e) {
+            e.preventDefault();
+            window.location.hash = 'login/';
+        });
     }
 
     // This function receives an object containing all the event we want to show.
@@ -268,7 +276,7 @@ $(function () {
 
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
-    function renderSingleeventPage(index, data) {
+    function renderSingleEventPage(index, data) {
 
         var page = $('.single-event'),
             container = $('.preview-large');

@@ -40,10 +40,10 @@ $(document).ready(function () {
         return false;
     });
     $('.signin').submit(function () {
-        var login = $('#username').val();
+        var email = $('#username').val();
         var password = $('#password').val();
 
-        var json = {"login": login, "password": password};
+        var json = {"email": email, "password": password};
         $.ajax({
             url: $('.signin').attr("action"),
             data: JSON.stringify(json),
@@ -98,7 +98,7 @@ $(document).ready(function () {
 });
 
 function updateElements() {
-    $('#username').val('root');
+    $('#username').val('root@gmail.com');
     $('#password').val('root');
 
 
