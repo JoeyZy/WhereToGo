@@ -4,19 +4,56 @@ $(function () {
 
     // 	An array containing objects with information about the events.
     var events = [],
-        filters = {};
+        filters = {},
+        user = "";
 
+    $('.home').click(function () {
+        loadEvents();
+    });
 
-    //	Event handlers for frontend navigation
-
-    //	Checkbox filtering
-
-    $('.home').click(function() {
-       loadEvents();
+    $('.userInfo').click(function (e) {
+        alert('ololo');
+        e.preventDefault();
     });
 
     var checkboxes = $('.all-events input[type=checkbox]');
 
+    var loginForm = $('#login-nav');
+
+    // Login handler
+
+    loginForm.submit(function (e) {
+        var email = loginForm.find("#userEmail").val();
+        var password = loginForm.find("#userPassword").val();
+        var json = {"email": email, "password": password};
+
+        $.ajax({
+            url: loginForm.attr("action"),
+            data: JSON.stringify(json),
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            },
+            success: function (sessionUser) {
+                if (sessionUser.length == 0) {
+                    alert('Wrong credentials');
+                    return;
+                }
+                setUser(sessionUser);
+            },
+            error: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
+        e.preventDefault();
+    });
+
+    //	Event handlers for frontend navigation
+    //	Checkbox filtering
     checkboxes.click(function () {
 
         var that = $(this),
@@ -68,31 +105,7 @@ $(function () {
         window.location.hash = '#';
     });
 
-    // Login page
-
-    var loginPage = $('.authentication');
-
-    loginPage.on('click', function (e) {
-
-        e.preventDefault();
-
-        if (loginPage.hasClass('visible')) {
-
-            var clicked = $(e.target);
-
-            // If the close button or the background are clicked go to the previous page.
-            if (clicked.hasClass('close') || clicked.hasClass('overlay')) {
-                // Change the url hash with the last used filters.
-                createQueryHash(filters);
-            }
-
-        }
-
-    });
-
-
     // Single event page buttons
-
     var singleEventPage = $('.single-event');
 
     singleEventPage.on('click', function (e) {
@@ -120,9 +133,6 @@ $(function () {
     });
 
 
-    // These are called on page load
-
-    loadEvents();
     // Get data about our events from events.json.
     function loadEvents() {
         $.getJSON("events", function (data) {
@@ -407,5 +417,40 @@ $(function () {
         }
 
     }
+
+    function setUser(sessionUser) {
+        user = sessionUser;
+        $('.userInfo').text(user.firstName + " " + user.lastName);
+        $('.dropdown').toggle();
+    }
+
+    function checkSession() {
+        if (user.length != 0) {
+            return;
+        }
+        $.ajax({
+            url: "/user",
+            type: "GET",
+            success: function (sessionUser) {
+                if (sessionUser.length == 0) {
+                    return;
+                }
+                setUser(sessionUser);
+            },
+            error: function () {
+
+            },
+            complete: function () {
+
+            }
+        });
+    }
+
+    function refreshPage() {
+        loadEvents();
+        checkSession();
+    }
+
+    refreshPage();
 
 });
