@@ -4,9 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
     <title>Events!</title>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
     <link href="../../../resources/css/new_styles.css" rel="stylesheet">
@@ -30,12 +28,12 @@
                     <li><a href="#">Ratings</a></li>
                     <li><a href="#">Gallery</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+<%--                <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
-                </form>
+                </form>--%>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="userInfo" href="/user"></a></li>
                     <li class="dropdown">
@@ -57,12 +55,12 @@
                                                        placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                                <button type="submit" class="btn btn-info btn-block">Sign in</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-12 bottom">
-                                        <button class="btn btn-primary btn-block">Register</button>
+                                        <button class="btn btn-info btn-block">Register</button>
                                     </div>
                                 </div>
                             </li>
@@ -92,7 +90,7 @@
                     <label><input type="checkbox" value="7" name="camera">Week</label>
                     <label><input type="checkbox" value="30" name="camera">Month</label>
                 </div>
-                <button class="btn btn-primary">Clear filters</button>
+                <button class="btn btn-info">Clear filters</button>
             </form>
         </div>
 
@@ -108,7 +106,7 @@
                     <li><span>Begin: </span>{{startTime}}</li>
                     <li><span>End: </span>{{endTime}}</li>
                 </ul>
-                <button class="btn btn-primary">Open event</button>
+                <button class="btn btn-info">Open event</button>
                 <div class="highlight"></div>
             </li>
             {{/each}}
@@ -137,11 +135,12 @@
                     </li>
                     <li>
                         <label><b>Description:</b></label>
-                        <textarea id="description" title="Description:"></textarea>
+                        <div contentEditable="true" id="description" title="Description:"></div>
                     </li>
                 </ul>
-                <button class="btn btn-primary">I'll be there!</button>
+                <button class="btn btn-info">I'll be there!</button>
             </form>
+            <button class="btn btn-success apply-btn">Apply changes</button>
             <span class="edit"></span>
             <span class="close"></span>
         </div>

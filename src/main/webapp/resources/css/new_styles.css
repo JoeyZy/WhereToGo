@@ -12,24 +12,6 @@ h1, h3 {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
-/*button {
-    border-radius: 2px;
-    background-color: #4BC34B;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
-    border: 0;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 13px;
-    cursor: pointer;
-
-    width: 95px;
-    height: 32px;
-}*/
-
-/*-----------------
-	The Header
-------------------*/
-
 @media (max-width: 500px) {
 
     header {
@@ -344,6 +326,15 @@ h1, h3 {
     text-align: left;
 }
 
+.apply-btn {
+    position: absolute;
+    right: 89px;
+    top: 15px;
+    height: 32px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
 .edit {
     background: url("../images/edit.png") no-repeat center;
     position: absolute;
@@ -352,6 +343,7 @@ h1, h3 {
     width: 32px;
     height: 32px;
     cursor: pointer;
+    visibility: hidden;
 }
 
 .close {
@@ -415,17 +407,19 @@ h1, h3 {
 .event-information input {
     height: 20px;
     width: 74%;
-    padding: 5px 8px;
+    padding: 12px;
     border: none;
 }
 
-.event-information textarea {
+.event-information #description {
+    padding: 3px;
     display: block;
+    clear: both;
     width: 100%;
     resize: none;
     height: 100%;
-    padding: 5px 8px;
     border: none;
+    outline: none;
 }
 .event-information-div {
     margin: 0 auto;
@@ -439,6 +433,7 @@ h1, h3 {
 }
 
 .event-information li .editable {
+    border: 1px solid #87bae1;;
     box-shadow: 0 0 10px #9ecaed;
 }
 
