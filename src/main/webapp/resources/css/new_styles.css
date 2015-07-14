@@ -58,15 +58,27 @@ h1, h3 {
 
 /*	Filter Form	*/
 
+.nav-left {
+    width: 190px;
+    position: absolute;
+}
+
+.btn-add-event {
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .filters {
     box-sizing: border-box;
     padding: 5px 30px 30px;
-    width: 190px;
     background-color: #FFF;
     border: 1px solid #DBE3E7;
     border-radius: 3px;
     box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
-    position: fixed;
+    position: relative;
     text-align: left;
     color: #2B2E31;
     opacity: 0;
@@ -103,10 +115,6 @@ h1, h3 {
 
 /*	events List	*/
 
-.all-events h3 {
-    opacity: 0;
-}
-
 .events-list {
     list-style: none;
     margin-left: 225px;
@@ -118,8 +126,7 @@ h1, h3 {
 }
 
 .all-events.visible .events-list,
-.all-events.visible .filters,
-.all-events.visible h3 {
+.all-events.visible .filters {
     opacity: 1;
     transition: 1s;
     pointer-events: auto;
@@ -381,7 +388,7 @@ h1, h3 {
 .event-information {
     padding: 20px 0;
     text-align: left;
-    width: 600px;
+    width: 70%;
     margin: 0 auto;
 }
 

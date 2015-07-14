@@ -119,7 +119,6 @@ $(function () {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
         // Hide whatever page is currently shown.
-        //$('.main-content .page').removeClass('visible');
         $('.main-content .page').removeClass('visible');
         var map = {
             // The "Homepage".
@@ -134,6 +133,10 @@ $(function () {
                 // Get the index of which event we want to show and call the appropriate function.
                 var index = url.split('#event/')[1].trim();
                 renderSingleEventPage(index, events);
+            },
+            // Add event
+            '#addEvent': function() {
+                renderSingleEventPage();
             },
             // Page with filtered events
             '#filter': function () {
@@ -184,6 +187,10 @@ $(function () {
             e.preventDefault();
             window.location.hash = 'login/';
         });
+        $('.btn-add-event').on('click', function(e) {
+            e.preventDefault();
+            window.location.hash = 'addEvent/';
+        });
     }
 
     // This function receives an object containing all the event we want to show.
@@ -213,27 +220,50 @@ $(function () {
         var page = $('.single-event'),
             container = $('.preview-large');
         // Find the wanted event by iterating the data object and searching for the chosen index.
-        if (data.length) {
+        if (typeof data != 'undefined' && data.length) {
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
                         if (user.email === event.owner.email) {
                             container.find('.edit').css('visibility', 'visible');
                         }
-                        container.find('h3').text(event.name);
-                        container.find('#description').html(event.description);
-                        container.find('#owner').val(event.owner.firstName);
-                        container.find('#owner').attr('readonly', 'readonly');
-                        var startDate = moment(new Date(event.startDateTime)).format('DD/MM/YYYY HH:mm');
-                        container.find('#start').val(startDate);
-                        var endDate = moment(new Date(event.endDateTime)).format('DD/MM/YYYY HH:mm');
-                        container.find('#end').val(endDate);
+                        populateSinglePageEventPage(container, event);
                     });
+                    var actionButton = container.find(".btn-action");
+                    actionButton.addClass('btn-info');
+                    actionButton.html("I'll be there");
                 }
             });
+        } else {
+            populateSinglePageEventPage(container);
+            var actionButton = container.find(".btn-action");
+            actionButton.addClass('btn-info');
+            actionButton.html("Apply");
         }
         // Show the page.
         page.addClass('visible');
+
+        function populateSinglePageEventPage(container, event) {
+            if (typeof event != 'undefined') {
+                container.find('h3').text(event.name);
+                container.find('#description').html(event.description);
+                container.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
+                var startDate = moment(new Date(event.startDateTime)).format('DD/MM/YYYY HH:mm');
+                container.find('#start').val(startDate);
+                var endDate = moment(new Date(event.endDateTime)).format('DD/MM/YYYY HH:mm');
+                container.find('#end').val(endDate);
+            } else {
+                container.find('.event-information').trigger("reset");
+                container.find('#description').empty();
+                if (typeof user != 'undefined') {
+                    container.find('#owner').val(user.firstName + " " + user.lastName);
+                }
+            }
+
+            function makeDataEditable() {
+
+            }
+        }
     }
 
     // Find and render the filtered data results. Arguments are:
@@ -334,8 +364,7 @@ $(function () {
             success: function (sessionUser) {
                 if (sessionUser.length == 0) {
                     return;
-                }
-                setUser(sessionUser);
+                }                setUser(sessionUser);
             },
             error: function () {
             },

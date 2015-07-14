@@ -28,12 +28,12 @@
                     <li><a href="#">Ratings</a></li>
                     <li><a href="#">Gallery</a></li>
                 </ul>
-<%--                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                </form>--%>
+                <%--                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Search</button>
+                                </form>--%>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="userInfo" href="/user"></a></li>
                     <li class="dropdown">
@@ -43,7 +43,8 @@
                             <li>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <form class="form" role="form" method="post" accept-charset="UTF-8" action="/login" id="login-nav">
+                                        <form class="form" role="form" method="post" accept-charset="UTF-8"
+                                              action="/login" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
@@ -73,26 +74,30 @@
 </header>
 <div class="main-content">
     <div class="all-events page">
-        <div class="filters">
-            <form>
-                <div class="filter-criteria">
-                    <span>Category</span>
-                    <label><input type="checkbox" name="category" value="nature">Nature</label>
-                    <label><input type="checkbox" name="category" value="movie">Movie</label>
-                    <label><input type="checkbox" name="category" value="theatre">Theatre</label>
-                    <label><input type="checkbox" name="category" value="pub">Pub</label>
-                    <label><input type="checkbox" name="category" value="sport">Sport</label>
-                    <label><input type="checkbox" name="category" value="other">Other</label>
-                </div>
-                <div class="filter-criteria">
-                    <span>Date</span>
-                    <label><input type="checkbox" value="1" name="camera">Today</label>
-                    <label><input type="checkbox" value="7" name="camera">Week</label>
-                    <label><input type="checkbox" value="30" name="camera">Month</label>
-                </div>
-                <button class="btn btn-info">Clear filters</button>
-            </form>
+        <div class="nav-left">
+            <button class="btn btn-success .btn-block btn-add-event">Add event</button>
+            <div class="filters">
+                <form>
+                    <div class="filter-criteria">
+                        <span>Category</span>
+                        <label><input type="checkbox" name="category" value="nature">Nature</label>
+                        <label><input type="checkbox" name="category" value="movie">Movie</label>
+                        <label><input type="checkbox" name="category" value="theatre">Theatre</label>
+                        <label><input type="checkbox" name="category" value="pub">Pub</label>
+                        <label><input type="checkbox" name="category" value="sport">Sport</label>
+                        <label><input type="checkbox" name="category" value="other">Other</label>
+                    </div>
+                    <div class="filter-criteria">
+                        <span>Date</span>
+                        <label><input type="checkbox" value="1" name="camera">Today</label>
+                        <label><input type="checkbox" value="7" name="camera">Week</label>
+                        <label><input type="checkbox" value="30" name="camera">Month</label>
+                    </div>
+                    <button class="btn btn-info">Clear filters</button>
+                </form>
+            </div>
         </div>
+
 
         <ul class="events-list">
             <script id="events-template" type="x-handlebars-template">​
@@ -106,14 +111,15 @@
                     <li><span>Begin: </span>{{startTime}}</li>
                     <li><span>End: </span>{{endTime}}</li>
                 </ul>
-                <button class="btn btn-info">Open event</button>
+                <button class="btn btn-info ">Open event</button>
                 <div class="highlight"></div>
             </li>
             {{/each}}
             </script>
         </ul>
 
-    </div>
+    </
+    >
     <div class="single-event page">
         <div class="overlay"></div>
         <div class="preview-large">
@@ -123,7 +129,7 @@
                 <ul>
                     <li>
                         <label><b>Owner:</b></label>
-                        <input id="owner"/>
+                        <input id="owner" readonly/>
                     </li>
                     <li>
                         <label><b>Start:</b></label>
@@ -135,12 +141,12 @@
                     </li>
                     <li>
                         <label><b>Description:</b></label>
+
                         <div contentEditable="true" id="description" title="Description:"></div>
                     </li>
                 </ul>
-                <button class="btn btn-info">I'll be there!</button>
+                <button class="btn btn-action btn-info"></button>
             </form>
-            <button class="btn btn-success apply-btn">Apply changes</button>
             <span class="edit"></span>
             <span class="close"></span>
         </div>
