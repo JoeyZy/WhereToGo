@@ -6,6 +6,7 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.services.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +42,14 @@ public class NewDesignController {
 	@ResponseBody
 	public User getSessionUser(HttpServletRequest request) {
 		return (User) request.getSession().getAttribute("user");
+	}
+
+	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
+	@ResponseBody
+	public Event addEvent(@RequestBody Event event, HttpServletRequest request) {
+		event.setOwner((User) request.getSession().getAttribute("user"));
+		eventsService.add(event);
+		return null;
 	}
 
 

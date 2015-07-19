@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
+    <link rel="stylesheet" href="../../../resources/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="../../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="../../../resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
     <link href="../../../resources/css/new_styles.css" rel="stylesheet">
 </head>
 <body>
@@ -21,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Events!</a>
+                <a class="navbar-brand home" href="#">Events!</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -75,7 +78,7 @@
 <div class="main-content">
     <div class="all-events page">
         <div class="nav-left">
-            <button class="btn btn-success .btn-block btn-add-event">Add event</button>
+            <button class="btn btn-success btn-block btn-add-event">Add event</button>
             <div class="filters">
                 <form>
                     <div class="filter-criteria">
@@ -89,9 +92,9 @@
                     </div>
                     <div class="filter-criteria">
                         <span>Date</span>
-                        <label><input type="checkbox" value="1" name="camera">Today</label>
-                        <label><input type="checkbox" value="7" name="camera">Week</label>
-                        <label><input type="checkbox" value="30" name="camera">Month</label>
+                        <label><input type="checkbox" value="1" name="date">Today</label>
+                        <label><input type="checkbox" value="7" name="date">Week</label>
+                        <label><input type="checkbox" value="30" name="date">Month</label>
                     </div>
                     <button class="btn btn-info">Clear filters</button>
                 </form>
@@ -117,19 +120,35 @@
             {{/each}}
             </script>
         </ul>
+    </div>
 
-    </
-    >
     <div class="single-event page">
         <div class="overlay"></div>
         <div class="preview-large">
-            <h3></h3>
+            <input id="title"/>
 
             <form class="event-information">
                 <ul>
                     <li>
                         <label><b>Owner:</b></label>
                         <input id="owner" readonly/>
+                    </li>
+                    <li>
+                        <label><b>Category:</b></label>
+                        <select id="categories" multiple="multiple">
+                            <option value="asdf">Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+                            <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>      <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>      <option>Mustard</option>
+                            <option>Ketchup</option>
+                            <option>Relish</option>
+
+
+                        </select>
                     </li>
                     <li>
                         <label><b>Start:</b></label>
@@ -158,7 +177,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../../../resources/jquery/jquery-ui.js"></script>
+<script src="../../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="../../../resources/js/moment.js"></script>
+<script type="text/javascript" src="../../../resources/multiselect-plugin/js/bootstrap-multiselect.js"></script>
 <script src="../../../resources/js/script.js"></script>
 <script>
     $('.dropdown-toggle').dropdown();

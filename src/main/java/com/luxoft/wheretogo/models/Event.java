@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -55,8 +56,10 @@ public class Event {
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> participants;
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm")
 	private Date startDateTime;
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm")
 	private Date endDateTime;
 
 	public Event() {

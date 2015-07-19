@@ -91,9 +91,6 @@ $(function () {
             }
             if (clicked.hasClass('edit')) {
                 singleEventPage.find('.apply-btn').css('visibility', 'visible');
-              /*  singleEventPage.find('#description').prop("readOnly", false).toggleClass('editable');
-                singleEventPage.find('#start').prop("readOnly", false).toggleClass('editable');
-                singleEventPage.find('#end').prop("readOnly", false).toggleClass('editable');*/
             }
         }
     });
@@ -119,13 +116,14 @@ $(function () {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
         // Hide whatever page is currently shown.
-        $('.main-content .page').removeClass('visible');
+        $('.visible').removeClass('visible');
         var map = {
             // The "Homepage".
             '': function () {
                 // Clear the filters object, uncheck all checkboxes, show all the events
                 filters = {};
                 checkboxes.prop('checked', false);
+                //       loadEvents();
                 renderEventsPage(events);
             },
             // Single events page.
@@ -135,7 +133,7 @@ $(function () {
                 renderSingleEventPage(index, events);
             },
             // Add event
-            '#addEvent': function() {
+            '#addEvent': function () {
                 renderSingleEventPage();
             },
             // Page with filtered events
@@ -162,6 +160,7 @@ $(function () {
         else {
             renderErrorPage();
         }
+        checkSession();
     }
 
     // This function is called only once - on page load.
@@ -187,7 +186,7 @@ $(function () {
             e.preventDefault();
             window.location.hash = 'login/';
         });
-        $('.btn-add-event').on('click', function(e) {
+        $('.btn-add-event').on('click', function (e) {
             e.preventDefault();
             window.location.hash = 'addEvent/';
         });
@@ -195,6 +194,9 @@ $(function () {
 
     // This function receives an object containing all the event we want to show.
     function renderEventsPage(data) {
+        if (typeof data == 'undefined') {
+            return;
+        }
         var page = $('.all-events'),
             allEvents = $('.all-events .events-list > li');
         // Hide all the events in the events list.
@@ -219,6 +221,11 @@ $(function () {
     function renderSingleEventPage(index, data) {
         var page = $('.single-event'),
             container = $('.preview-large');
+        var $eventTitle = container.find('#title');
+        var $eventOwner = container.find('#owner');
+        var $eventStart = container.find('#start');
+        var $eventEnd = container.find('#end');
+        var $eventDescription = container.find("#description");
         // Find the wanted event by iterating the data object and searching for the chosen index.
         if (typeof data != 'undefined' && data.length) {
             data.forEach(function (item) {
@@ -229,23 +236,51 @@ $(function () {
                         }
                         populateSinglePageEventPage(container, event);
                     });
+                    container.find('.edit').css('visibility', 'hidden');
                     var actionButton = container.find(".btn-action");
                     actionButton.addClass('btn-info');
                     actionButton.html("I'll be there");
                 }
             });
         } else {
+            container.find('.edit').css('visibility', 'hidden');
             populateSinglePageEventPage(container);
             var actionButton = container.find(".btn-action");
             actionButton.addClass('btn-info');
             actionButton.html("Apply");
+            actionButton.on('click', function () {
+                var eventJson = {
+                    "name": $eventTitle.val(),
+                    "startDateTime": $eventStart.val(),
+                    "endDateTime": $eventEnd.val(),
+                    "description": $eventDescription.val()
+                };
+                $.ajax({
+                    url: "addEvent",
+                    data: JSON.stringify(eventJson),
+                    type: "POST",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    success: function () {
+                        alert("success");
+                    },
+                    error: function () {
+                        alert("ERROR!");
+                    },
+                    complete: function () {
+
+                    }
+                });
+            });
         }
         // Show the page.
         page.addClass('visible');
 
         function populateSinglePageEventPage(container, event) {
             if (typeof event != 'undefined') {
-                container.find('h3').text(event.name);
+                container.find('#title').val(event.name);
                 container.find('#description').html(event.description);
                 container.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = moment(new Date(event.startDateTime)).format('DD/MM/YYYY HH:mm');
@@ -253,6 +288,7 @@ $(function () {
                 var endDate = moment(new Date(event.endDateTime)).format('DD/MM/YYYY HH:mm');
                 container.find('#end').val(endDate);
             } else {
+                container.find('#title').val("Title");
                 container.find('.event-information').trigger("reset");
                 container.find('#description').empty();
                 if (typeof user != 'undefined') {
@@ -352,10 +388,12 @@ $(function () {
         user = sessionUser;
         $('.userInfo').text(user.firstName + " " + user.lastName);
         $('.dropdown').toggle();
+        grantRightsToUser();
     }
 
     function checkSession() {
         if (user.length != 0) {
+            grantRightsToUser();
             return;
         }
         $.ajax({
@@ -364,7 +402,8 @@ $(function () {
             success: function (sessionUser) {
                 if (sessionUser.length == 0) {
                     return;
-                }                setUser(sessionUser);
+                }
+                setUser(sessionUser);
             },
             error: function () {
             },
@@ -373,10 +412,30 @@ $(function () {
         });
     }
 
-    function refreshPage() {
-        loadEvents();
-        checkSession();
+    function grantRightsToUser() {
+        if (typeof user == 'undefined') {
+            return;
+        }
+        $('.btn-add-event').addClass('visible');
     }
 
-    refreshPage();
+    loadEvents();
+
+    var startDateTextBox = $('#start');
+    var endDateTextBox = $('#end');
+
+    $.timepicker.datetimeRange(
+        startDateTextBox,
+        endDateTextBox,
+        {
+            minDate: 0,
+            dateFormat: 'dd/mm/yy',
+            timeFormat: 'HH:mm',
+            start: {}, // start picker options
+            end: {} // end picker options
+        }
+    );
+
+    $('#categories').multiselect();
+
 });
