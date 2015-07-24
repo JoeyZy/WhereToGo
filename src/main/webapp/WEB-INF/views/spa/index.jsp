@@ -31,12 +31,6 @@
                     <li><a href="#">Ratings</a></li>
                     <li><a href="#">Gallery</a></li>
                 </ul>
-                <%--                <form class="navbar-form navbar-left" role="search">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Search</button>
-                                </form>--%>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="userInfo" href="/user"></a></li>
                     <li class="dropdown">
@@ -83,12 +77,14 @@
                 <form>
                     <div class="filter-criteria">
                         <span>Category</span>
-                        <label><input type="checkbox" name="category" value="nature">Nature</label>
-                        <label><input type="checkbox" name="category" value="movie">Movie</label>
-                        <label><input type="checkbox" name="category" value="theatre">Theatre</label>
-                        <label><input type="checkbox" name="category" value="pub">Pub</label>
-                        <label><input type="checkbox" name="category" value="sport">Sport</label>
-                        <label><input type="checkbox" name="category" value="other">Other</label>
+
+                        <div id="filter-categories">
+                            <script id="categories-list" type="x-handlebars-template">
+                                {{#each this}}
+                                <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label>
+                                {{/each}}
+                            </script>
+                        </div>
                     </div>
                     <div class="filter-criteria">
                         <span>Date</span>
@@ -103,21 +99,21 @@
 
 
         <ul class="events-list">
-            <script id="events-template" type="x-handlebars-template">​
-            {{#each this}}
-            <li data-index="{{id}}">
-                <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
-                <h2><a href="#"> {{name}} </a></h2>
-                <ul class="event-description">
-                    <li><span>Category: </span>{{category}}</li>
-                    <li><span>Owner: </span>{{owner}}</li>
-                    <li><span>Begin: </span>{{startTime}}</li>
-                    <li><span>End: </span>{{endTime}}</li>
-                </ul>
-                <button class="btn btn-info ">Open event</button>
-                <div class="highlight"></div>
-            </li>
-            {{/each}}
+            <script id="events-template" type="x-handlebars-template">
+                {{#each this}}
+                <li data-index="{{id}}">
+                    <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
+                    <h2><a href="#"> {{name}} </a></h2>
+                    <ul class="event-description">
+                        <li><span>Category: </span>{{category}}</li>
+                        <li><span>Owner: </span>{{owner}}</li>
+                        <li><span>Begin: </span>{{startTime}}</li>
+                        <li><span>End: </span>{{endTime}}</li>
+                    </ul>
+                    <button class="btn btn-info ">Open event</button>
+                    <div class="highlight"></div>
+                </li>
+                {{/each}}
             </script>
         </ul>
     </div>
@@ -135,19 +131,12 @@
                     </li>
                     <li>
                         <label><b>Category:</b></label>
-                        <select id="categories" multiple="multiple">
-                            <option value="asdf">Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>      <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>      <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-
-
+                        <select id="event-categories" multiple="multiple">
+                            <script id="event-categories-list" type="x-handlebars-template">
+                                {{#each this}}
+                                <option>{{name}}</option>
+                                {{/each}}
+                            </script>
                         </select>
                     </li>
                     <li>
@@ -175,6 +164,7 @@
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="../../../resources/jquery/jquery-ui.js"></script>

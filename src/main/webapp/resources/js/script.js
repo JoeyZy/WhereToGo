@@ -11,6 +11,13 @@ $(function () {
         alert('ololo');
         e.preventDefault();
     });
+    $.getJSON("categories", function (data) {
+        var categoriesListElementTemplate = $('#event-categories-list').html();
+        var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
+        var categoriesFilter = $('#event-categories');
+        categoriesFilter.html(categoriesListElement(data));
+        categoriesFilter.multiselect();
+    });
     var checkboxes = $('.all-events input[type=checkbox]');
     var loginForm = $('#login-nav');
     // Login handler 
@@ -171,6 +178,7 @@ $(function () {
         var theTemplateScript = $('#events-template').html();
         //Compile the template​
         var theTemplate = Handlebars.compile(theTemplateScript);
+        displayCategoriesListFilter();
         list.find('li').remove();
         list.append(theTemplate(data));
         // Each events has a data-index attribute.
@@ -189,6 +197,47 @@ $(function () {
         $('.btn-add-event').on('click', function (e) {
             e.preventDefault();
             window.location.hash = 'addEvent/';
+        });
+    }
+
+    function displayCategoriesListFilter() {
+        $.getJSON("categories", function (data) {
+            var categoriesListElementTemplate = $('#categories-list').html();
+            var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
+            var categoriesFilter = $('#filter-categories');
+            categoriesFilter.html(categoriesListElement(data));
+            var checkboxes = $('.all-events input[type=checkbox]');
+            checkboxes.click(function () {
+                var that = $(this),
+                    specName = that.attr('name');
+                // When a checkbox is checked we need to write that in the filters object;
+                if (that.is(":checked")) {
+                    // If the filter for this specification isn't created yet - do it.
+                    if (!(filters[specName] && filters[specName].length)) {
+                        filters[specName] = [];
+                    }
+                    //	Push values into the chosen filter array
+                    filters[specName].push(that.val());
+                    // Change the url hash;
+                    createQueryHash(filters);
+                }
+                // When a checkbox is unchecked we need to remove its value from the filters object.
+                if (!that.is(":checked")) {
+                    if (filters[specName] && filters[specName].length && (filters[specName].indexOf(that.val()) != -1)) {
+                        // Find the checkbox value in the corresponding array inside the filters object.
+                        var index = filters[specName].indexOf(that.val());
+                        // Remove it.
+                        filters[specName].splice(index, 1);
+                        // If it was the last remaining value for this specification,
+                        // delete the whole array.
+                        if (!filters[specName].length) {
+                            delete filters[specName];
+                        }
+                    }
+                    // Change the url hash;
+                    createQueryHash(filters);
+                }
+            });
         });
     }
 
@@ -219,10 +268,16 @@ $(function () {
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data) {
+        // Multiselect plugin refresh
+        setTimeout(function() {
+            $('select#event-categories').multiselect('deselectAll', true);
+            $('select#event-categories').multiselect('updateButtonText');
+            $('select#event-categories').multiselect('refresh');
+        });
         var page = $('.single-event'),
             container = $('.preview-large');
+        var $categoriesElement = container.find('#event-categories');
         var $eventTitle = container.find('#title');
-        var $eventOwner = container.find('#owner');
         var $eventStart = container.find('#start');
         var $eventEnd = container.find('#end');
         var $eventDescription = container.find("#description");
@@ -262,6 +317,10 @@ $(function () {
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("Accept", "application/json");
                         xhr.setRequestHeader("Content-Type", "application/json");
+                        var foo = [];
+                        $categoriesElement.find(":selected").each(function(i, selected){
+                            foo[i] = $(selected).text();
+                        });
                     },
                     success: function () {
                         alert("success");
@@ -283,9 +342,9 @@ $(function () {
                 container.find('#title').val(event.name);
                 container.find('#description').html(event.description);
                 container.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
-                var startDate = moment(new Date(event.startDateTime)).format('DD/MM/YYYY HH:mm');
+                var startDate = event.startDateTime;
                 container.find('#start').val(startDate);
-                var endDate = moment(new Date(event.endDateTime)).format('DD/MM/YYYY HH:mm');
+                var endDate = event.endDateTime;
                 container.find('#end').val(endDate);
             } else {
                 container.find('#title').val("Title");
@@ -338,14 +397,14 @@ $(function () {
                             }
                         }
                         if (typeof item[c] == 'string') {
-                            if (item[c].toLowerCase().indexOf(filter) != -1) {
+                            if (item[c].indexOf(filter) != -1) {
                                 results.push(item);
                                 isFiltered = true;
                             }
                         }
                         if (Array.isArray(item[c])) {
                             item[c].forEach(function (i) {
-                                if (i.toLowerCase().indexOf(filter) != -1) {
+                                if (i.indexOf(filter) != -1) {
                                     results.push(item);
                                     isFiltered = true;
                                 }
@@ -435,7 +494,5 @@ $(function () {
             end: {} // end picker options
         }
     );
-
-    $('#categories').multiselect();
 
 });

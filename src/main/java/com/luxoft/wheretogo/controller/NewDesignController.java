@@ -1,8 +1,10 @@
 package com.luxoft.wheretogo.controller;
 
+import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class NewDesignController {
 
 	@Autowired
 	private EventsService eventsService;
+
+	@Autowired
+	private CategoriesService categoriesService;
 
 	@RequestMapping("/*")
 	public String init() {
@@ -52,6 +57,17 @@ public class NewDesignController {
 		return null;
 	}
 
+	@RequestMapping(value="/categories", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Category> categories() {
+		return categoriesService.findAll();
+	}
+
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@ResponseBody
+	public User user(HttpServletRequest request) {
+		return (User) request.getSession().getAttribute("user");
+	}
 
 
 }

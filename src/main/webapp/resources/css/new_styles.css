@@ -402,18 +402,18 @@ h1, h3 {
     margin: 0 auto;
 }
 
-.event-information ul {
+.event-information > ul {
     list-style: none outside;
     padding: 0;
 }
 
-.event-information li {
+.event-information > ul > li {
     padding: 12px;
     border-bottom: 1px solid #eee;
     position: relative;
 }
 
-.event-information label {
+.event-information > ul > li > label {
     width: 20%;
     margin-top: 3px;
     display: inline-block;
@@ -421,7 +421,7 @@ h1, h3 {
     padding: 3px;
 }
 
-.event-information input {
+.event-information > ul > li > input {
     height: 20px;
     width: 74%;
     padding: 12px;
@@ -444,12 +444,12 @@ h1, h3 {
     width: 600px;
 }
 
-.event-information button {
+.event-information > ul > li > button {
     background-color: #87bae1;
     margin: 12px;
 }
 
-.event-information li .editable {
+.event-information > ul > li > .editable {
     border: 1px solid #87bae1;;
     box-shadow: 0 0 10px #9ecaed;
 }
