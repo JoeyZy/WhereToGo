@@ -16,7 +16,7 @@ $(function () {
         var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
         var categoriesFilter = $('#event-categories');
         categoriesFilter.html(categoriesListElement(data));
-        categoriesFilter.multiselect();
+        //categoriesFilter.multiselect();
     });
     var checkboxes = $('.all-events input[type=checkbox]');
     var loginForm = $('#login-nav');
@@ -268,21 +268,29 @@ $(function () {
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data) {
-        // Multiselect plugin refresh
-        setTimeout(function() {
-            $('select#event-categories').multiselect('deselectAll', true);
-            $('select#event-categories').multiselect('updateButtonText');
-            $('select#event-categories').multiselect('refresh');
-        });
+/*        // Multiselect plugin refresh
+        $('select#event-categories').multiselect('deselectAll', true);
+        $('select#event-categories').multiselect('updateButtonText');
+        $('select#event-categories').multiselect('refresh');*/
+
+        // Find all event fields
         var page = $('.single-event'),
             container = $('.preview-large');
-        var $categoriesElement = container.find('#event-categories');
+        var $eventCategories = container.find('#event-categories');
+        var $eventCategoriesString = container.find('#event-categories-string');
         var $eventTitle = container.find('#title');
         var $eventStart = container.find('#start');
         var $eventEnd = container.find('#end');
         var $eventDescription = container.find("#description");
-        // Find the wanted event by iterating the data object and searching for the chosen index.
+        // Reset page
+        container.find('.edit').css('visibility', 'hidden');
+        $eventCategories.multiselect('destroy');
+        $eventCategories.hide();
+        $eventCategoriesString.hide();
+
+
         if (typeof data != 'undefined' && data.length) {
+            // Find the wanted event by iterating the data object and searching for the chosen index.
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
@@ -291,14 +299,12 @@ $(function () {
                         }
                         populateSinglePageEventPage(container, event);
                     });
-                    container.find('.edit').css('visibility', 'hidden');
                     var actionButton = container.find(".btn-action");
                     actionButton.addClass('btn-info');
                     actionButton.html("I'll be there");
                 }
             });
         } else {
-            container.find('.edit').css('visibility', 'hidden');
             populateSinglePageEventPage(container);
             var actionButton = container.find(".btn-action");
             actionButton.addClass('btn-info');
@@ -318,15 +324,15 @@ $(function () {
                         xhr.setRequestHeader("Accept", "application/json");
                         xhr.setRequestHeader("Content-Type", "application/json");
                         var foo = [];
-                        $categoriesElement.find(":selected").each(function(i, selected){
+                        $eventCategoriesParent.find(":selected").each(function(i, selected){
                             foo[i] = $(selected).text();
                         });
                     },
                     success: function () {
                         alert("success");
                     },
-                    error: function () {
-                        alert("ERROR!");
+                    error: function (error) {
+                        alert("ERROR!" + error);
                     },
                     complete: function () {
 
@@ -339,20 +345,32 @@ $(function () {
 
         function populateSinglePageEventPage(container, event) {
             if (typeof event != 'undefined') {
-                container.find('#title').val(event.name);
-                container.find('#description').html(event.description);
+                $eventTitle.val(event.name);
+                $eventCategoriesString.show();
+                $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
+                $eventDescription.html(event.description);
                 container.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
-                container.find('#start').val(startDate);
+                $eventStart.val(startDate);
                 var endDate = event.endDateTime;
-                container.find('#end').val(endDate);
+                $eventEnd.val(endDate);
             } else {
+                $eventCategories.multiselect();
                 container.find('#title').val("Title");
                 container.find('.event-information').trigger("reset");
                 container.find('#description').empty();
                 if (typeof user != 'undefined') {
                     container.find('#owner').val(user.firstName + " " + user.lastName);
                 }
+                $eventCategories.multiselect('refresh');
+            }
+
+            function getEventCategoriesAsList(categories) {
+                var res = categories[0].name;
+                for (var i=1; i<categories.length; i++) {
+                    res += ', ' + categories[i].name;
+                }
+                return res;
             }
 
             function makeDataEditable() {

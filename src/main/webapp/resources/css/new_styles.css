@@ -395,6 +395,10 @@ h1, h3 {
     font-size: 40px;
 }
 
+.event-categories-parent {
+    display: inline-block;
+}
+
 .event-information {
     padding: 20px 0;
     text-align: left;
@@ -415,15 +419,12 @@ h1, h3 {
 
 .event-information > ul > li > label {
     width: 20%;
-    margin-top: 3px;
     display: inline-block;
-    float: left;
     padding: 3px;
 }
 
 .event-information > ul > li > input {
     height: 20px;
-    width: 74%;
     padding: 12px;
     border: none;
 }

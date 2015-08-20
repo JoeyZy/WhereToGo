@@ -138,6 +138,7 @@
                                 {{/each}}
                             </script>
                         </select>
+                        <input id="event-categories-string" readonly>
                     </li>
                     <li>
                         <label><b>Start:</b></label>
