@@ -56,10 +56,10 @@ public class Event {
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> participants;
 
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/YYYY HH:mm", timezone="default")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
 	private Date startDateTime;
 
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/YYYY HH:mm", timezone="default")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
 	private Date endDateTime;
 
 	public Event() {

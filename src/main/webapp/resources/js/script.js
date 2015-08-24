@@ -310,8 +310,13 @@ $(function () {
             actionButton.addClass('btn-info');
             actionButton.html("Apply");
             actionButton.on('click', function () {
+                var categoriesList = [];
+                $eventCategories.find(":selected").each(function(i, selected){
+                    categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+                });
                 var eventJson = {
                     "name": $eventTitle.val(),
+                    "categories": categoriesList,
                     "startDateTime": $eventStart.val(),
                     "endDateTime": $eventEnd.val(),
                     "description": $eventDescription.val()
@@ -323,10 +328,6 @@ $(function () {
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("Accept", "application/json");
                         xhr.setRequestHeader("Content-Type", "application/json");
-                        var foo = [];
-                        $eventCategoriesParent.find(":selected").each(function(i, selected){
-                            foo[i] = $(selected).text();
-                        });
                     },
                     success: function () {
                         alert("success");

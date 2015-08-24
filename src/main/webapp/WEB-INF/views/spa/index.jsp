@@ -134,7 +134,7 @@
                         <select id="event-categories" multiple="multiple">
                             <script id="event-categories-list" type="x-handlebars-template">
                                 {{#each this}}
-                                <option>{{name}}</option>
+                                <option data-id="{{id}}">{{name}}</option>
                                 {{/each}}
                             </script>
                         </select>
