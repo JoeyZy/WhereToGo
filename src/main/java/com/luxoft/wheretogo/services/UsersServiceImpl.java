@@ -36,8 +36,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User findByLogin(String userLogin) {
-		User user = usersRepository.findByLogin(userLogin);
+	public User findByEmail(String userLogin) {
+		User user = usersRepository.findByEmail(userLogin);
 		if (user != null) {
 			Hibernate.initialize(user.getEvents());
 		}

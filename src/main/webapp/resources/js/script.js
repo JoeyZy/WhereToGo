@@ -7,10 +7,6 @@ $(function () {
     $('.home').click(function () {
         loadEvents();
     });
-    $('.userInfo').click(function (e) {
-        alert('ololo');
-        e.preventDefault();
-    });
     $.getJSON("categories", function (data) {
         var categoriesListElementTemplate = $('#event-categories-list').html();
         var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
@@ -133,6 +129,9 @@ $(function () {
                 //       loadEvents();
                 renderEventsPage(events);
             },
+            '#user': function() {
+                renderSingleUserPage(user);
+            },
             // Single events page.
             '#event': function () {
                 // Get the index of which event we want to show and call the appropriate function.
@@ -190,13 +189,13 @@ $(function () {
             window.location.hash = 'event/' + eventIndex;
         });
         var header = $('header');
-        header.find('.login-link').on('click', function (e) {
-            e.preventDefault();
-            window.location.hash = 'login/';
-        });
         $('.btn-add-event').on('click', function (e) {
             e.preventDefault();
-            window.location.hash = 'addEvent/';
+            window.location.hash = 'addEvent';
+        });
+        $('.userInfo').click(function (e) {
+            e.preventDefault();
+            window.location.hash = 'user/email=' + $(this).data('user');
         });
     }
 
@@ -276,18 +275,21 @@ $(function () {
         // Find all event fields
         var page = $('.single-event'),
             container = $('.preview-large');
+        var $eventInformation = container.find('.event-information');
         var $eventCategories = container.find('#event-categories');
         var $eventCategoriesString = container.find('#event-categories-string');
         var $eventTitle = container.find('#title');
         var $eventStart = container.find('#start');
         var $eventEnd = container.find('#end');
         var $eventDescription = container.find("#description");
+        var $userInformation = container.find(".user-information");
         // Reset page
         container.find('.edit').css('visibility', 'hidden');
         $eventCategories.multiselect('destroy');
         $eventCategories.hide();
         $eventCategoriesString.hide();
-
+        $userInformation.hide();
+        $eventInformation.show();
 
         if (typeof data != 'undefined' && data.length) {
             // Find the wanted event by iterating the data object and searching for the chosen index.
@@ -319,7 +321,7 @@ $(function () {
                     "categories": categoriesList,
                     "startDateTime": $eventStart.val(),
                     "endDateTime": $eventEnd.val(),
-                    "description": $eventDescription.val()
+                    "description": $eventDescription.text()
                 };
                 $.ajax({
                     url: "addEvent",
@@ -330,7 +332,7 @@ $(function () {
                         xhr.setRequestHeader("Content-Type", "application/json");
                     },
                     success: function () {
-                        alert("success");
+
                     },
                     error: function (error) {
                         alert("ERROR!" + error);
@@ -378,6 +380,25 @@ $(function () {
 
             }
         }
+    }
+
+    function renderSingleUserPage(user) {
+        $.getJSON("userInfo", {email: user.email}, function (user) {
+            var page = $('.single-event'),
+                container = $('.preview-large');
+            var $eventInformation = container.find(".event-information");
+            var $userInformation = container.find(".user-information");
+            var $eventTitle = container.find('#title');
+            var actionButton = container.find(".btn-action");
+            actionButton.hide();
+            $eventInformation.hide();
+            $userInformation.show();
+            $userInformation.find("#email").val(user.email);
+            $eventTitle.val(user.firstName + " " + user.lastName);
+            // Show the page.
+            page.addClass('visible');
+        });
+
     }
 
     // Find and render the filtered data results. Arguments are:
@@ -465,6 +486,7 @@ $(function () {
     function setUser(sessionUser) {
         user = sessionUser;
         $('.userInfo').text(user.firstName + " " + user.lastName);
+        $('.userInfo').data('user', user.email);
         $('.dropdown').toggle();
         grantRightsToUser();
     }

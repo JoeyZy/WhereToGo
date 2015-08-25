@@ -34,7 +34,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a class="userInfo" href="/user"></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
                                 class="caret"></span></a>
                         <ul id="login-dp" class="dropdown-menu">
                             <li>
@@ -122,7 +122,21 @@
         <div class="overlay"></div>
         <div class="preview-large">
             <input id="title"/>
+            <form class="user-information">
+                <ul>
+                    <li>
+                        <label><b>Email:</b></label>
+                        <input id="email" readonly/>
+                    </li>
+                    <li>
+                        <label><b>Events:</b></label>
+                        <ul>
 
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn btn-action btn-info"></button>
+            </form>
             <form class="event-information">
                 <ul>
                     <li>

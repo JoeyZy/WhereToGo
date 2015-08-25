@@ -395,41 +395,37 @@ h1, h3 {
     font-size: 40px;
 }
 
-.event-categories-parent {
-    display: inline-block;
-}
-
-.event-information {
+.preview-large > form {
     padding: 20px 0;
     text-align: left;
     width: 70%;
     margin: 0 auto;
 }
 
-.event-information > ul {
+.preview-large > form > ul {
     list-style: none outside;
     padding: 0;
 }
 
-.event-information > ul > li {
+.preview-large > form > ul > li {
     padding: 12px;
     border-bottom: 1px solid #eee;
     position: relative;
 }
 
-.event-information > ul > li > label {
+.preview-large > form > ul > li > label {
     width: 20%;
     display: inline-block;
     padding: 3px;
 }
 
-.event-information > ul > li > input {
+.preview-large > form > ul > li > input {
     height: 20px;
     padding: 12px;
     border: none;
 }
 
-.event-information #description {
+.preview-large > form #description {
     padding: 3px;
     display: block;
     clear: both;
@@ -439,18 +435,13 @@ h1, h3 {
     border: none;
     outline: none;
 }
-.event-information-div {
-    margin: 0 auto;
-    text-align: left;
-    width: 600px;
-}
 
-.event-information > ul > li > button {
+.preview-large > form > ul > li > button {
     background-color: #87bae1;
     margin: 12px;
 }
 
-.event-information > ul > li > .editable {
+.preview-large > form > ul > li > .editable {
     border: 1px solid #87bae1;;
     box-shadow: 0 0 10px #9ecaed;
 }

@@ -6,6 +6,7 @@ import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,9 @@ public class NewDesignController {
 
 	@Autowired
 	private CategoriesService categoriesService;
+
+	@Autowired
+	private UsersService usersService;
 
 	@RequestMapping("/*")
 	public String init() {
@@ -69,5 +73,10 @@ public class NewDesignController {
 		return (User) request.getSession().getAttribute("user");
 	}
 
+	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public User getUserInfo(User user) {
+		return usersService.findByEmail(user.getEmail());
+	}
 
 }
