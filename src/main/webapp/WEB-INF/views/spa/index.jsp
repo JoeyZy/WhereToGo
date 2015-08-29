@@ -121,9 +121,9 @@
     <div class="single-event page">
         <div class="overlay"></div>
         <div class="preview-large">
-            <input id="title"/>
+            <input id="title" placeholder="Event name"/>
             <form class="user-information">
-                <ul>
+                <ul class="list-form">
                     <li>
                         <label><b>Email:</b></label>
                         <input id="email" readonly/>
@@ -138,7 +138,7 @@
                 <button class="btn btn-action btn-info"></button>
             </form>
             <form class="event-information">
-                <ul>
+                <ul class="list-form">
                     <li>
                         <label><b>Owner:</b></label>
                         <input id="owner" readonly/>
@@ -156,11 +156,11 @@
                     </li>
                     <li>
                         <label><b>Start:</b></label>
-                        <input id="start"/>
+                        <input id="start" placeholder="When event starts"/>
                     </li>
                     <li>
                         <label><b>End:</b></label>
-                        <input id="end"/>
+                        <input id="end" placeholder="When event ends"/>
                     </li>
                     <li>
                         <label><b>Description:</b></label>
@@ -168,10 +168,10 @@
                         <div contentEditable="true" id="description" title="Description:"></div>
                     </li>
                 </ul>
-                <label class="warning"></label>
-                <button class="btn btn-action btn-info btn-I-will-be">I'll be there</button>
-                <button class="btn btn-action btn-info btn-apply">Apply</button>
-                <button class="btn btn-action btn-info btn-edit-event">Edit</button>
+                <ul class="errors"></ul>
+                <button class="btn btn-action btn-info btn-I-will-be" onclick="this.blur();">I'll be there</button>
+                <button class="btn btn-action btn-info btn-apply" onclick="this.blur();">Apply</button>
+                <button class="btn btn-action btn-info btn-edit-event" onclick="this.blur();">Edit</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>
@@ -181,9 +181,9 @@
         <h3>Sorry, something went wrong :(</h3>
     </div>
 </div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="../../../resources/jquery/jquery-ui.js"></script>
 <script src="../../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>

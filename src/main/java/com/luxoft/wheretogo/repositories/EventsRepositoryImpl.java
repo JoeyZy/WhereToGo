@@ -13,10 +13,7 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 	}
 
 	public void add(Event event) {
-		if (findByName(event.getName()) == null) {
-			super.add(event);
-		}
-		super.update(event);
+		super.add(event);
 	}
 
 	@Override
