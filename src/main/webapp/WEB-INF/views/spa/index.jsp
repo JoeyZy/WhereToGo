@@ -168,7 +168,10 @@
                         <div contentEditable="true" id="description" title="Description:"></div>
                     </li>
                 </ul>
-                <button class="btn btn-action btn-info"></button>
+                <label class="warning"></label>
+                <button class="btn btn-action btn-info btn-I-will-be">I'll be there</button>
+                <button class="btn btn-action btn-info btn-apply">Apply</button>
+                <button class="btn btn-action btn-info btn-edit-event">Edit</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>

@@ -4,6 +4,37 @@ $(function () {
     var events = [],
         filters = {},
         user = "";
+
+    // Find all event fields
+    var page = $('.single-event'),
+        container = $('.preview-large');
+    var $eventInformation = container.find('.event-information');
+    var $eventCategories = container.find('#event-categories');
+    var $eventCategoriesString = container.find('#event-categories-string');
+    var $eventTitle = container.find('#title');
+    var $eventStart = container.find('#start');
+    var $eventEnd = container.find('#end');
+    var $eventDescription = container.find("#description");
+    var $userInformation = container.find(".user-information");
+    var $buttons = container.find("button");
+
+    function resetSinglePage(){
+        container.find('.edit').css('visibility', 'hidden');
+        $eventCategories.multiselect('destroy');
+        $eventCategories.hide();
+        $eventCategoriesString.hide();
+        $userInformation.hide();
+        $eventInformation.show();
+        $buttons.hide();
+    }
+
+    resetSinglePage();
+
+
+
+
+
+
     $('.home').click(function () {
         loadEvents();
     });
@@ -12,7 +43,6 @@ $(function () {
         var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
         var categoriesFilter = $('#event-categories');
         categoriesFilter.html(categoriesListElement(data));
-        //categoriesFilter.multiselect();
     });
     var checkboxes = $('.all-events input[type=checkbox]');
     var loginForm = $('#login-nav');
@@ -91,9 +121,7 @@ $(function () {
             if (clicked.hasClass('close') || clicked.hasClass('overlay')) {
                 // Change the url hash with the last used filters.
                 createQueryHash(filters);
-            }
-            if (clicked.hasClass('edit')) {
-                singleEventPage.find('.apply-btn').css('visibility', 'visible');
+                resetSinglePage();
             }
         }
     });
@@ -266,51 +294,21 @@ $(function () {
 
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
-    function renderSingleEventPage(index, data) {
-/*        // Multiselect plugin refresh
-        $('select#event-categories').multiselect('deselectAll', true);
-        $('select#event-categories').multiselect('updateButtonText');
-        $('select#event-categories').multiselect('refresh');*/
-
-        // Find all event fields
-        var page = $('.single-event'),
-            container = $('.preview-large');
-        var $eventInformation = container.find('.event-information');
-        var $eventCategories = container.find('#event-categories');
-        var $eventCategoriesString = container.find('#event-categories-string');
-        var $eventTitle = container.find('#title');
-        var $eventStart = container.find('#start');
-        var $eventEnd = container.find('#end');
-        var $eventDescription = container.find("#description");
-        var $userInformation = container.find(".user-information");
-        // Reset page
-        container.find('.edit').css('visibility', 'hidden');
-        $eventCategories.multiselect('destroy');
-        $eventCategories.hide();
-        $eventCategoriesString.hide();
-        $userInformation.hide();
-        $eventInformation.show();
+    function renderSingleEventPage(index, data, addEvent) {
 
         if (typeof data != 'undefined' && data.length) {
             // Find the wanted event by iterating the data object and searching for the chosen index.
-            data.forEach(function (item) {
-                if (item.id == index) {
-                    $.getJSON("event", {id: item.id}, function (event) {
-                        if (user.email === event.owner.email) {
-                            container.find('.edit').css('visibility', 'visible');
-                        }
-                        populateSinglePageEventPage(container, event);
-                    });
-                    var actionButton = container.find(".btn-action");
-                    actionButton.addClass('btn-info');
-                    actionButton.html("I'll be there");
-                }
-            });
+            renderShowEventPage(data);
         } else {
+            renderAddEventPage();
+        }
+        // Show the page.
+        page.addClass('visible');
+
+        function renderAddEventPage() {
             populateSinglePageEventPage(container);
-            var actionButton = container.find(".btn-action");
-            actionButton.addClass('btn-info');
-            actionButton.html("Apply");
+            var actionButton = container.find(".btn-apply");
+            actionButton.show();
             actionButton.on('click', function () {
                 var categoriesList = [];
                 $eventCategories.find(":selected").each(function(i, selected){
@@ -343,8 +341,20 @@ $(function () {
                 });
             });
         }
-        // Show the page.
-        page.addClass('visible');
+
+        function renderShowEventPage(data) {
+            data.forEach(function (item) {
+                if (item.id == index) {
+                    $.getJSON("event", {id: item.id}, function (event) {
+                        if (user.email === event.owner.email) {
+                            container.find('.edit').css('visibility', 'visible');
+                        }
+                        populateSinglePageEventPage(container, event);
+                        container.find('.btn-I-will-be').show();
+                    });
+                }
+            });
+        }
 
         function populateSinglePageEventPage(container, event) {
             if (typeof event != 'undefined') {
@@ -384,11 +394,6 @@ $(function () {
 
     function renderSingleUserPage(user) {
         $.getJSON("userInfo", {email: user.email}, function (user) {
-            var page = $('.single-event'),
-                container = $('.preview-large');
-            var $eventInformation = container.find(".event-information");
-            var $userInformation = container.find(".user-information");
-            var $eventTitle = container.find('#title');
             var actionButton = container.find(".btn-action");
             actionButton.hide();
             $eventInformation.hide();
