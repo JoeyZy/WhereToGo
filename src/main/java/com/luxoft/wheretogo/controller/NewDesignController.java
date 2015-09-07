@@ -73,6 +73,13 @@ public class NewDesignController {
 		return (User) request.getSession().getAttribute("user");
 	}
 
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean logout(HttpServletRequest request) {
+		request.getSession().setAttribute("user", null);
+		return true;
+	}
+
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	@ResponseBody
 	public User getUserInfo(User user) {

@@ -32,7 +32,12 @@
                     <li><a href="#">Gallery</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="userInfo" href="/user"></a></li>
+                    <li>
+                        <a class="userInfo" href="/user"></a>
+                    </li>
+                    <li>
+                        <a class="logout" href="/logout"></a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
                                 class="caret"></span></a>
@@ -58,7 +63,7 @@
                                         </form>
                                     </div>
                                     <div class="col-md-12 bottom">
-                                        <button class="btn btn-info btn-block">Register</button>
+                                        <button class="btn btn-info btn-block btn-add-user">Register</button>
                                     </div>
                                 </div>
                             </li>

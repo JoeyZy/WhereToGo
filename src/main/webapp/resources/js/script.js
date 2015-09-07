@@ -4,6 +4,8 @@ $(function () {
     var events = [],
         filters = {},
         user = "";
+    $('.userInfo').hide();
+    $('.logout').hide();
 
     // Find all event fields
     var page = $('.single-event'),
@@ -229,6 +231,25 @@ $(function () {
             e.preventDefault();
             window.location.hash = 'user/email=' + $(this).data('user');
         });
+        $('.logout').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('href'),
+                type: "GET",
+                success: function (sessionUser) {
+                    user = '';
+                    $('.userInfo').hide();
+                    $('.logout').hide();
+                    $('.dropdown').show();
+                    $(window).trigger('hashchange');
+                },
+                error: function () {
+                    alert('Something wrong');
+                },
+                complete: function () {
+                }
+            });
+        });
     }
 
     function displayCategoriesListFilter() {
@@ -276,6 +297,11 @@ $(function () {
     function renderEventsPage(data) {
         if (typeof data == 'undefined') {
             return;
+        }
+        if (user !== '') {
+            $('.btn-add-event').addClass('visible');
+        } else {
+            $('.btn-add-event').removeClass('visible');
         }
         var page = $('.all-events'),
             allEvents = $('.all-events .events-list > li');
@@ -523,6 +549,9 @@ $(function () {
         user = sessionUser;
         $('.userInfo').text(user.firstName + " " + user.lastName);
         $('.userInfo').data('user', user.email);
+        $('.userInfo').show();
+        $('.logout').text('Logout');
+        $('.logout').show();
         $('.dropdown').toggle();
         grantRightsToUser();
     }
