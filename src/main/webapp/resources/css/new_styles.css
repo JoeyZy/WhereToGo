@@ -467,13 +467,6 @@ ul.errors {
     border-top:1px solid #ddd;
     padding-top: 10px;
 }
-#login-dp .social-buttons{
-    margin:12px 0
-}
-
-#login-dp .form-group {
-    margin-bottom: 10px;
-}
 
 @media(max-width:768px){
     #login-dp{

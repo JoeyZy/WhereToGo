@@ -35,13 +35,7 @@ $(function () {
         $buttons.hide();
         $errors.hide();
     }
-
     resetSinglePage();
-
-
-
-
-
 
     $('.home').click(function () {
         loadEvents();
@@ -80,6 +74,10 @@ $(function () {
             }
         });
         e.preventDefault();
+    });
+    var register = $('.btn-add-user');
+    register.on('click', function () {
+        window.location.hash = 'addUser';
     });
     //	Event handlers for frontend navigation
     //	Checkbox filtering
@@ -166,6 +164,9 @@ $(function () {
             },
             '#user': function() {
                 renderSingleUserPage(user);
+            },
+            '#addUser': function() {
+                renderSingleUserPage();
             },
             // Single events page.
             '#event': function () {
@@ -330,6 +331,10 @@ $(function () {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
         } else {
+            if (user === '') {
+                window.location.hash = '';
+                return;
+            }
             renderAddEventPage();
         }
         // Show the page.
@@ -450,17 +455,54 @@ $(function () {
     }
 
     function renderSingleUserPage(user) {
-        $.getJSON("userInfo", {email: user.email}, function (user) {
-            var actionButton = container.find(".btn-action");
-            actionButton.hide();
+        resetSinglePage();
+        if (user != undefined) {
+            if (user === '') {
+                window.location.hash = '';
+                return;
+            }
+            renderUserInfoPage();
+        } else {
+            renderAddUserPage();
+        }
+
+        function renderUserInfoPage() {
+            $.getJSON("userInfo", {email: user.email}, function (user) {
+                var $userPassword = $('.password-field');
+                var $firstName = $('.first-name-field');
+                var $lastName = $('.last-name-field');
+                var $eventsField = $('.events-field');
+                $userPassword.hide();
+                $firstName.hide();
+                $lastName.hide();
+                var $actionButton = container.find(".btn-action");
+                $actionButton.hide();
+                $eventInformation.hide();
+                $userInformation.show();
+                $userInformation.find("#email").val(user.email);
+                $eventTitle.val(user.firstName + " " + user.lastName);
+                $eventsField.show();
+                // Show the page.
+                page.addClass('visible');
+            });
+        }
+
+        function renderAddUserPage() {
+            var $userPassword = $('.password-field');
+            var $firstName = $('.first-name-field');
+            var $lastName = $('.last-name-field');
+            var $eventsField = $('.events-field');
+            $userPassword.show();
+            $firstName.show();
+            $lastName.hide();
+            var $actionButton = container.find(".btn-action");
+            $actionButton.show();
             $eventInformation.hide();
             $userInformation.show();
-            $userInformation.find("#email").val(user.email);
-            $eventTitle.val(user.firstName + " " + user.lastName);
+            $eventsField.hide();
             // Show the page.
             page.addClass('visible');
-        });
-
+        }
     }
 
     // Find and render the filtered data results. Arguments are:

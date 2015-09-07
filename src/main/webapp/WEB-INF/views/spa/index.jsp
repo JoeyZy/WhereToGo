@@ -133,14 +133,26 @@
                         <label><b>Email:</b></label>
                         <input id="email" readonly/>
                     </li>
-                    <li>
+                    <li class="password-field">
+                        <label><b>Password:</b></label>
+                        <input id="password"/>
+                    </li>
+                    <li class="first-name-field">
+                        <label><b>First Name:</b></label>
+                        <input id="first-name"/>
+                    </li>
+                    <li class="last-name-field">
+                        <label><b>Last Name:</b></label>
+                        <input id="last-name"/>
+                    </li>
+                    <li class="events-field">
                         <label><b>Events:</b></label>
                         <ul>
 
                         </ul>
                     </li>
                 </ul>
-                <button class="btn btn-action btn-info"></button>
+                <button class="btn btn-action btn-info">Add user</button>
             </form>
             <form class="event-information">
                 <ul class="list-form">
