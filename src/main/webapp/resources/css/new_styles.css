@@ -318,7 +318,7 @@ h1, h3 {
     pointer-events: auto;
 }
 
-.preview-large #title {
+.preview-large .event-title {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
     border: none;
     text-align: center;
@@ -396,37 +396,37 @@ h1, h3 {
     font-size: 40px;
 }
 
-.preview-large > form {
+.preview-large form {
     padding: 20px 0;
     text-align: left;
     width: 70%;
     margin: 0 auto;
 }
 
-.preview-large > form > ul.list-form {
+.preview-large form > ul.list-form {
     list-style: none outside;
     padding: 0;
 }
 
-.preview-large > form > ul.list-form > li {
+.preview-large form > ul.list-form > li {
     padding: 12px;
     border-bottom: 1px solid #eee;
     position: relative;
 }
 
-.preview-large > form > ul.list-form > li > label {
+.preview-large form > ul.list-form > li > label {
     width: 20%;
     display: inline-block;
     padding: 3px;
 }
 
-.preview-large > form > ul.list-form > li > input {
+.preview-large form > ul.list-form > li > input {
     height: 20px;
     padding: 12px;
     border: none;
 }
 
-.preview-large > form #description {
+.preview-large form #description {
     padding: 3px;
     display: block;
     clear: both;
@@ -436,12 +436,16 @@ h1, h3 {
     outline: none;
 }
 
-.preview-large > form > ul.list-form > li > button {
+.preview-large form > ul.list-form > li > button {
     background-color: #87bae1;
     margin: 12px;
 }
 
-.preview-large > form > ul.list-form > li > .editable {
+.preview-large form > ul.list-form > li > .editable {
+    border: 1px solid #dbe3e7;
+}
+
+input.editable {
     border: 1px solid #dbe3e7;
 }
 

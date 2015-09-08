@@ -13,11 +13,11 @@ $(function () {
     var $eventInformation = container.find('.event-information');
     var $eventCategories = container.find('#event-categories');
     var $eventCategoriesString = container.find('#event-categories-string');
-    var $eventTitle = container.find('#title');
+    var $eventTitle = container.find('.event-title');
     var $eventStart = container.find('#start');
     var $eventEnd = container.find('#end');
     var $eventDescription = container.find("#description");
-    var $userInformation = container.find(".user-information");
+    var $userInformationForm = container.find(".user-information");
     var $buttons = container.find("button");
     var $errors = container.find('.errors');
 
@@ -30,12 +30,26 @@ $(function () {
         $eventTitle.val("");
         $eventDescription.removeClass('editable');
         $eventDescription.empty();
-        $userInformation.hide();
+        $userInformationForm.hide();
         $eventInformation.show();
         $buttons.hide();
         $errors.hide();
     }
     resetSinglePage();
+
+
+    var $emailInput = $userInformationForm.find('#email');
+    var $passwordInput = $userInformationForm.find('#password');
+    var $firstNameInput = $userInformationForm.find('#first-name');
+    var $lastNameInput = $userInformationForm.find('#last-name');
+    var $eventsItem = $userInformationForm.find('events-field');
+    function resetUserPage() {
+        $emailInput.hide();
+        $passwordInput.hide();
+        $firstNameInput.hide();
+        $lastNameInput.hide();
+        $eventsItem.hide();
+    }
 
     $('.home').click(function () {
         loadEvents();
@@ -299,7 +313,7 @@ $(function () {
         if (typeof data == 'undefined') {
             return;
         }
-        if (user !== '') {
+        if (typeof user !== "undefined") {
             $('.btn-add-event').addClass('visible');
         } else {
             $('.btn-add-event').removeClass('visible');
@@ -331,7 +345,7 @@ $(function () {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
         } else {
-            if (user == undefined) {
+            if (typeof user === "undefined") {
                 window.location.hash = '';
                 return;
             }
@@ -410,9 +424,6 @@ $(function () {
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
-                        if (user.email === event.owner.email) {
-                            container.find('.edit').css('visibility', 'visible');
-                        }
                         populateSinglePageEventPage(container, event);
                         container.find('.btn-I-will-be').show();
                     });
@@ -434,7 +445,7 @@ $(function () {
             } else {
                 $eventCategories.multiselect();
                 $eventCategoriesString.hide();
-                if (typeof user != 'undefined') {
+                if (typeof user !== 'undefined') {
                     container.find('#owner').val(user.firstName + " " + user.lastName);
                 }
                 $eventCategories.multiselect('refresh');
@@ -455,8 +466,8 @@ $(function () {
     }
 
     function renderSingleUserPage(user) {
-        resetSinglePage();
-        if (user != undefined) {
+        $('.user-information').val('');
+        if (typeof user !== 'undefined') {
             renderUserInfoPage(user);
         } else {
             renderAddUserPage();
@@ -464,6 +475,8 @@ $(function () {
 
         function renderUserInfoPage(user) {
             $.getJSON("userInfo", {email: user.email}, function (user) {
+                $userInformationForm.find('input').removeClass('editable');
+                $userInformationForm.find('input').attr('readonly', true);
                 var $userPassword = $('.password-field');
                 var $firstName = $('.first-name-field');
                 var $lastName = $('.last-name-field');
@@ -474,9 +487,9 @@ $(function () {
                 var $actionButton = container.find(".btn-action");
                 $actionButton.hide();
                 $eventInformation.hide();
-                $userInformation.show();
-                $userInformation.find("#email").val(user.email);
-                $eventTitle.val(user.firstName + " " + user.lastName);
+                $userInformationForm.show();
+                $userInformationForm.find("#email").val(user.email);
+                $eventTitle.val("User Information");
                 $eventsField.show();
                 // Show the page.
                 page.addClass('visible');
@@ -484,6 +497,8 @@ $(function () {
         }
 
         function renderAddUserPage() {
+            $userInformationForm.find('input').addClass('editable');
+            $userInformationForm.find('input').attr('readonly', false);
             var $userPassword = $('.password-field');
             var $firstName = $('.first-name-field');
             var $lastName = $('.last-name-field');
@@ -494,7 +509,7 @@ $(function () {
             var $actionButton = container.find(".btn-action");
             $actionButton.show();
             $eventInformation.hide();
-            $userInformation.show();
+            $userInformationForm.show();
             $eventsField.hide();
             // Show the page.
             page.addClass('visible');
@@ -616,7 +631,7 @@ $(function () {
     }
 
     function grantRightsToUser() {
-        if (typeof user == 'undefined') {
+        if (typeof user === 'undefined') {
             return;
         }
         $('.btn-add-event').addClass('visible');
