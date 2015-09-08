@@ -131,7 +131,7 @@
                 <ul class="list-form">
                     <li>
                         <label><b>Email:</b></label>
-                        <input id="email" readonly/>
+                        <input id="email"/>
                     </li>
                     <li class="password-field">
                         <label><b>Password:</b></label>

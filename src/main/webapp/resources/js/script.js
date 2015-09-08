@@ -3,7 +3,7 @@ $(function () {
     // 	An array containing objects with information about the events.
     var events = [],
         filters = {},
-        user = "";
+        user = undefined;
     $('.userInfo').hide();
     $('.logout').hide();
 
@@ -238,7 +238,7 @@ $(function () {
                 url: $(this).attr('href'),
                 type: "GET",
                 success: function (sessionUser) {
-                    user = '';
+                    user = undefined;
                     $('.userInfo').hide();
                     $('.logout').hide();
                     $('.dropdown').show();
@@ -331,7 +331,7 @@ $(function () {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
         } else {
-            if (user === '') {
+            if (user == undefined) {
                 window.location.hash = '';
                 return;
             }
@@ -457,16 +457,12 @@ $(function () {
     function renderSingleUserPage(user) {
         resetSinglePage();
         if (user != undefined) {
-            if (user === '') {
-                window.location.hash = '';
-                return;
-            }
-            renderUserInfoPage();
+            renderUserInfoPage(user);
         } else {
             renderAddUserPage();
         }
 
-        function renderUserInfoPage() {
+        function renderUserInfoPage(user) {
             $.getJSON("userInfo", {email: user.email}, function (user) {
                 var $userPassword = $('.password-field');
                 var $firstName = $('.first-name-field');
