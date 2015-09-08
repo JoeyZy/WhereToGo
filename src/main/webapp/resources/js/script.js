@@ -13,7 +13,7 @@ $(function () {
     var $eventInformation = container.find('.event-information');
     var $eventCategories = container.find('#event-categories');
     var $eventCategoriesString = container.find('#event-categories-string');
-    var $eventTitle = container.find('.event-title');
+    var $eventTitle = container.find('#event-title');
     var $eventStart = container.find('#start');
     var $eventEnd = container.find('#end');
     var $eventDescription = container.find("#description");

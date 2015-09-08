@@ -318,7 +318,7 @@ h1, h3 {
     pointer-events: auto;
 }
 
-.preview-large .event-title {
+.preview-large .title {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
     border: none;
     text-align: center;

@@ -154,7 +154,7 @@
                 </form>
             </div>
             <div class="event-information">
-                <input class="event-title" placeholder="Event Information"/>
+                <input class="title" id="event-title" placeholder="Event Information"/>
                 <form>
                     <ul class="list-form">
                         <li>
