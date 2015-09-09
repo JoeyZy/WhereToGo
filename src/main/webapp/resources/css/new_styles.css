@@ -272,11 +272,11 @@ h1, h3 {
 	Single event Page
 ----------------------------*/
 
-.single-event {
+.SinglePage {
     z-index: 100;
 }
 
-.overlay {
+.Overlay {
     height: 0;
     width: 100%;
     position: fixed;
@@ -289,11 +289,11 @@ h1, h3 {
     opacity: 0.8;
 }
 
-.single-event.visible .overlay {
+.Page.visible .Overlay {
     height: 100%;
 }
 
-.preview-large {
+.SinglePage {
     box-sizing: border-box;
     margin: 0 auto;
     width: 60%;
@@ -312,13 +312,13 @@ h1, h3 {
 
 }
 
-.single-event.visible .preview-large {
+.Page.visible .SinglePage{
     opacity: 1;
     transition: 1.4s;
     pointer-events: auto;
 }
 
-.preview-large .title {
+.SinglePage__title {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
     border: none;
     text-align: center;
@@ -326,19 +326,19 @@ h1, h3 {
     width: 70%;
 }
 
-.preview-large img {
+.SinglePage img {
     width: 100%;
     height: 280px;
     border-bottom: 3px solid #efefef;
     border-radius: 5px 5px 0 0;
 }
 
-.preview-large p {
+.SinglePage p {
     line-height: 23px;
     padding: 50px 45px;
 }
 
-.preview-large table {
+.SinglePage table {
     line-height: 23px;
     padding: 50px 45px;
     text-align: left;
@@ -375,10 +375,10 @@ h1, h3 {
 }
 
 /*---------------------------
-	Error Page
+	ErrorPage Page
 ----------------------------*/
 
-.error {
+.ErrorPage {
     opacity: 0;
     transition: 0.6s;
     pointer-events: none;
@@ -388,45 +388,45 @@ h1, h3 {
     width: 100%;
 }
 
-.error.visible {
+.ErrorPage.visible {
     opacity: 1;
 }
 
-.error h3 {
+.ErrorPage h3 {
     font-size: 40px;
 }
 
-.preview-large form {
+.SinglePage__inputForm {
     padding: 20px 0;
     text-align: left;
     width: 70%;
     margin: 0 auto;
 }
 
-.preview-large form > ul.list-form {
+.SinglePage__inputItemsList {
     list-style: none outside;
     padding: 0;
 }
 
-.preview-large form > ul.list-form > li {
+.SinglePage__inputItem {
     padding: 12px;
     border-bottom: 1px solid #eee;
     position: relative;
 }
 
-.preview-large form > ul.list-form > li > label {
+.SinglePage__inputItem__label {
     width: 20%;
     display: inline-block;
     padding: 3px;
 }
 
-.preview-large form > ul.list-form > li > input {
+.SinglePage__inputItem__inputField  {
     height: 20px;
     padding: 12px;
     border: none;
 }
 
-.preview-large form #description {
+.SinglePage form #description {
     padding: 3px;
     display: block;
     clear: both;
@@ -436,12 +436,12 @@ h1, h3 {
     outline: none;
 }
 
-.preview-large form > ul.list-form > li > button {
+.SinglePage form > ul.list-form > li > button {
     background-color: #87bae1;
     margin: 12px;
 }
 
-.preview-large form > ul.list-form > li > .editable {
+.SinglePage form > ul.list-form > li > .editable {
     border: 1px solid #dbe3e7;
 }
 

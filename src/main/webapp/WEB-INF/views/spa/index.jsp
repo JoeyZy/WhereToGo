@@ -102,7 +102,6 @@
             </div>
         </div>
 
-
         <ul class="events-list">
             <script id="events-template" type="x-handlebars-template">
                 {{#each this}}
@@ -123,80 +122,70 @@
         </ul>
     </div>
 
-    <div class="single-event page">
-        <div class="overlay"></div>
-        <div class="preview-large">
-            <div class="user-information">
-                <input class="title" value="User Information"/>
-                <form>
-                    <ul class="list-form">
-                        <li>
-                            <label><b>Email:</b></label>
-                            <input class="user-email" placeholder="User email"/>
-                        </li>
-                        <li class="user-password-item">
-                            <label><b>Password:</b></label>
-                            <input class="user-password" placeholder="User password"/>
-                        </li>
-                        <li>
-                            <label><b>Name:</b></label>
-                            <input class="user-name" placeholder="First name"/>
-                            <input class="user-name" placeholder="Last name"/>
-                        </li>
-                        <li class="events-field">
-                            <label><b>Events:</b></label>
-                            <ul>
+    <div class="Page">
+        <div class="Overlay"></div>
+        <div class="SinglePage">
+            <input class="SinglePage__title" name="event-title" placeholder="Event Information"/>
+            <form class="SinglePage__inputForm">
+                <ul class="SinglePage__inputItemsList">
+                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                        <label class="SinglePage__inputItem__label"><b>Email:</b></label>
+                        <input class="SinglePage__inputItem__inputField user-email" placeholder="User email"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                        <label class="SinglePage__inputItem__label"><b>Password:</b></label>
+                        <input class="SinglePage__inputItem__inputField user-password" placeholder="User password"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                        <label class="SinglePage__inputItem__label"><b>Name:</b></label>
+                        <input class="SinglePage__inputItem__inputField user-first-name" placeholder="First name"/>
+                        <input class="SinglePage__inputItem__inputField user-last-name" placeholder="Last name"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                        <label class="SinglePage__inputItem__label"><b>Events:</b></label>
+                        <ul name="user-events">
 
-                            </ul>
-                        </li>
-                    </ul>
-                    <button class="btn btn-action btn-info">Add user</button>
-                </form>
-            </div>
-            <div class="event-information">
-                <input class="title" id="event-title" placeholder="Event Information"/>
-                <form>
-                    <ul class="list-form">
-                        <li>
-                            <label><b>Owner:</b></label>
-                            <input id="owner" readonly/>
-                        </li>
-                        <li>
-                            <label><b>Category:</b></label>
-                            <select id="event-categories" multiple="multiple">
-                                <script id="event-categories-list" type="x-handlebars-template">
-                                    {{#each this}}
-                                    <option data-id="{{id}}">{{name}}</option>
-                                    {{/each}}
-                                </script>
-                            </select>
-                            <input id="event-categories-string" readonly>
-                        </li>
-                        <li>
-                            <label><b>Start:</b></label>
-                            <input id="start" placeholder="When event starts"/>
-                        </li>
-                        <li>
-                            <label><b>End:</b></label>
-                            <input id="end" placeholder="When event ends"/>
-                        </li>
-                        <li>
-                            <label><b>Description:</b></label>
-
-                            <div contentEditable="true" id="description" title="Description:"></div>
-                        </li>
-                    </ul>
-                    <ul class="errors"></ul>
-                    <button class="btn btn-action btn-info btn-I-will-be" onclick="this.blur();">I'll be there</button>
-                    <button class="btn btn-action btn-info btn-apply" onclick="this.blur();">Apply</button>
-                    <button class="btn btn-action btn-info btn-edit-event" onclick="this.blur();">Edit</button>
-                </form>
-                <span class="edit"></span>
-                <span class="close"></span>
-            </div>
+                        </ul>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                        <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
+                        <input class="SinglePage__inputItem__inputField" id="owner"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                        <label class="SinglePage__inputItem__label"><b>Category:</b></label>
+                        <select id="event-categories" multiple="multiple">
+                            <script id="event-categories-list" type="x-handlebars-template">
+                                {{#each this}}
+                                <option data-id="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </script>
+                        </select>
+                        <input class="SinglePage__inputItem__inputField" id="event-categories-string">
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                        <label class="SinglePage__inputItem__label"><b>Start:</b></label>
+                        <input class="SinglePage__inputItem__inputField" id="start" placeholder="When event starts"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                        <label class="SinglePage__inputItem__label"><b>End:</b></label>
+                        <input class="SinglePage__inputItem__inputField" id="end" placeholder="When event ends"/>
+                    </li>
+                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                        <label class="SinglePage__inputItem__label"><b>Description:</b></label>
+                        <div contentEditable="true" id="description" title="Description:"></div>
+                    </li>
+                </ul>
+                <ul class="errors"></ul>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend" onclick="this.blur();">I'll be there</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--add" onclick="this.blur();">Add user</button>
+            </form>
+            <span class="edit"></span>
+            <span class="close"></span>
         </div>
     </div>
-    <div class="error page">
+
+    <div class="ErrorPage">
         <h3>Sorry, something went wrong :(</h3>
     </div>
 </div>

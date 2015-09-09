@@ -8,21 +8,20 @@ $(function () {
     $('.logout').hide();
 
     // Find all event fields
-    var page = $('.single-event'),
-        container = $('.preview-large');
-    var $eventInformation = container.find('.event-information');
-    var $eventCategories = container.find('#event-categories');
-    var $eventCategoriesString = container.find('#event-categories-string');
-    var $eventTitle = container.find('#event-title');
-    var $eventStart = container.find('#start');
-    var $eventEnd = container.find('#end');
-    var $eventDescription = container.find("#description");
-    var $userInformationForm = container.find(".user-information");
-    var $buttons = container.find("button");
-    var $errors = container.find('.errors');
+    var $singlePage = $('.Page');
+    var $eventInformation = $singlePage.find('.event-information');
+    var $eventCategories = $singlePage.find('#event-categories');
+    var $eventCategoriesString = $singlePage.find('#event-categories-string');
+    var $eventTitle = $singlePage.find('#event-title');
+    var $eventStart = $singlePage.find('#start');
+    var $eventEnd = $singlePage.find('#end');
+    var $eventDescription = $singlePage.find("#description");
+    var $userInformationForm = $singlePage.find(".user-information");
+    var $buttons = $singlePage.find("button");
+    var $errors = $singlePage.find('.ErrorPages');
 
     function resetSinglePage(){
-        container.find('.edit').css('visibility', 'hidden');
+        $singlePage.find('.edit').css('visibility', 'hidden');
         $eventCategories.multiselect('destroy');
         $eventCategories.hide();
         $eventCategoriesString.hide();
@@ -37,19 +36,10 @@ $(function () {
     }
     resetSinglePage();
 
-
-    var $emailInput = $userInformationForm.find('#email');
-    var $passwordInput = $userInformationForm.find('#password');
-    var $firstNameInput = $userInformationForm.find('#first-name');
-    var $lastNameInput = $userInformationForm.find('#last-name');
-    var $eventsItem = $userInformationForm.find('events-field');
-    function resetUserPage() {
-        $emailInput.hide();
-        $passwordInput.hide();
-        $firstNameInput.hide();
-        $lastNameInput.hide();
-        $eventsItem.hide();
-    }
+    var $userPassword = $('.password-field');
+    var $firstName = $('.first-name-field');
+    var $lastName = $('.last-name-field');
+    var $eventsField = $('.events-field');
 
     $('.home').click(function () {
         loadEvents();
@@ -126,19 +116,18 @@ $(function () {
             createQueryHash(filters);
         }
     });
-    // When the "Clear all filters" button is pressed change the hash to '#' (go to the home page)
+    // When the "Clear all filters" button is pressed change the hash to '#' (go to the home $singlePage)
     $('.filters button').click(function (e) {
         e.preventDefault();
         window.location.hash = '#';
     });
-    // Single event page buttons
-    var singleEventPage = $('.single-event');
-    singleEventPage.on('click', function (e) {
+    // Single event $singlePage buttons
+    $singlePage.on('click', function (e) {
         e.preventDefault();
-        if (singleEventPage.hasClass('visible')) {
+        if ($singlePage.hasClass('visible')) {
             var clicked = $(e.target);
-            // If the close button or the background are clicked go to the previous page.
-            if (clicked.hasClass('close') || clicked.hasClass('overlay')) {
+            // If the close button or the background are clicked go to the previous $singlePage.
+            if (clicked.hasClass('close') || clicked.hasClass('Overlay')) {
                 // Change the url hash with the last used filters.
                 createQueryHash(filters);
             }
@@ -157,7 +146,7 @@ $(function () {
     }
 
     // An event handler with calls the render function on every hashchange.
-    // The render function will show the appropriate content of out page.
+    // The render function will show the appropriate content of out $singlePage.
     $(window).on('hashchange', function () {
         render(window.location.hash);
     });
@@ -165,7 +154,7 @@ $(function () {
     function render(url) {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
-        // Hide whatever page is currently shown.
+        // Hide whatever $singlePage is currently shown.
         $('.visible').removeClass('visible');
         var map = {
             // The "Homepage".
@@ -182,7 +171,7 @@ $(function () {
             '#addUser': function() {
                 renderSingleUserPage();
             },
-            // Single events page.
+            // Single events $singlePage.
             '#event': function () {
                 // Get the index of which event we want to show and call the appropriate function.
                 var index = url.split('#event/')[1].trim();
@@ -212,14 +201,14 @@ $(function () {
         if (map[temp]) {
             map[temp]();
         }
-        // If the keyword isn't listed in the above - render the error page.
+        // If the keyword isn't listed in the above - render the error $singlePage.
         else {
             renderErrorPage();
         }
         checkSession();
     }
 
-    // This function is called only once - on page load.
+    // This function is called only once - on $singlePage load.
     // It fills up the events list via a handlebars template.
     // It recieves one parameter - the data we took from events.json.
     function generateAlleventsHTML(data) {
@@ -332,7 +321,7 @@ $(function () {
                 }
             });
         });
-        // Show the page itself.
+        // Show the $singlePage itself.
         // (the render function hides all pages so we need to show the one we want).
         page.addClass('visible');
     }
@@ -340,7 +329,8 @@ $(function () {
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
-        resetSinglePage();
+        $singlePage.find('.SinglePage__inputItem--user').hide();
+        $singlePage.find('.SinglePage__inputItem--event').show();
         if (typeof data != 'undefined' && data.length) {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
@@ -351,13 +341,13 @@ $(function () {
             }
             renderAddEventPage();
         }
-        // Show the page.
-        page.addClass('visible');
+        // Show the $singlePage.
+        $singlePage.addClass('visible');
 
         function renderAddEventPage() {
-            populateSinglePageEventPage(container);
+            populateSinglePageEventPage($singlePage);
             $eventDescription.addClass('editable');
-            var actionButton = container.find(".btn-apply");
+            var actionButton = $singlePage.find(".btn-apply");
             actionButton.show();
             actionButton.on('click', function () {
                 var categoriesList = [];
@@ -397,7 +387,7 @@ $(function () {
             function validateEventFields(event) {
                 var valid = true;
                 $errors.empty();
-                if (container.find('#owner').val() !== user.firstName + " " + user.lastName) {
+                if ($singlePage.find('#owner').val() !== user.firstName + " " + user.lastName) {
                     addErrorListItem("Owner field is wrong");
                     valid = false;
                 }
@@ -424,20 +414,20 @@ $(function () {
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
-                        populateSinglePageEventPage(container, event);
-                        container.find('.btn-I-will-be').show();
+                        populateSinglePageEventPage($singlePage, event);
+                        $singlePage.find('.btn-I-will-be').show();
                     });
                 }
             });
         }
 
-        function populateSinglePageEventPage(container, event) {
+        function populateSinglePageEventPage(singlePage, event) {
             if (typeof event != 'undefined') {
                 $eventTitle.val(event.name);
                 $eventCategoriesString.show();
                 $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
                 $eventDescription.html(event.description);
-                container.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
+                singlePage.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
@@ -446,7 +436,7 @@ $(function () {
                 $eventCategories.multiselect();
                 $eventCategoriesString.hide();
                 if (typeof user !== 'undefined') {
-                    container.find('#owner').val(user.firstName + " " + user.lastName);
+                    singlePage.find('#owner').val(user.firstName + " " + user.lastName);
                 }
                 $eventCategories.multiselect('refresh');
             }
@@ -466,6 +456,8 @@ $(function () {
     }
 
     function renderSingleUserPage(user) {
+        $singlePage.find('.SinglePage__inputItem--event').hide();
+        $singlePage.find('.SinglePage__inputItem--user').show();
         $('.user-information').val('');
         if (typeof user !== 'undefined') {
             renderUserInfoPage(user);
@@ -477,22 +469,18 @@ $(function () {
             $.getJSON("userInfo", {email: user.email}, function (user) {
                 $userInformationForm.find('input').removeClass('editable');
                 $userInformationForm.find('input').attr('readonly', true);
-                var $userPassword = $('.password-field');
-                var $firstName = $('.first-name-field');
-                var $lastName = $('.last-name-field');
-                var $eventsField = $('.events-field');
                 $userPassword.hide();
                 $firstName.hide();
                 $lastName.hide();
-                var $actionButton = container.find(".btn-action");
+                var $actionButton = $singlePage.find(".btn-action");
                 $actionButton.hide();
                 $eventInformation.hide();
                 $userInformationForm.show();
                 $userInformationForm.find("#email").val(user.email);
                 $eventTitle.val("User Information");
                 $eventsField.show();
-                // Show the page.
-                page.addClass('visible');
+                // Show the $singlePage.
+                $singlePage.addClass('visible');
             });
         }
 
@@ -506,13 +494,13 @@ $(function () {
             $userPassword.show();
             $firstName.show();
             $lastName.hide();
-            var $actionButton = container.find(".btn-action");
+            var $actionButton = $singlePage.find(".btn-action");
             $actionButton.show();
             $eventInformation.hide();
             $userInformationForm.show();
             $eventsField.hide();
-            // Show the page.
-            page.addClass('visible');
+            // Show the $singlePage.
+            $singlePage.addClass('visible');
         }
     }
 
@@ -579,9 +567,9 @@ $(function () {
         renderEventsPage(results);
     }
 
-    // Shows the error page.
+    // Shows the error $singlePage.
     function renderErrorPage() {
-        var page = $('.error');
+        var page = $('.ErrorPage');
         page.addClass('visible');
     }
 
@@ -610,7 +598,7 @@ $(function () {
     }
 
     function checkSession() {
-        if (user.length != 0) {
+        if (typeof user !== 'undefined') {
             grantRightsToUser();
             return;
         }
