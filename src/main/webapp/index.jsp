@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="../../../resources/jquery/jquery-ui.css">
-    <link rel="stylesheet" href="../../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
-    <link rel="stylesheet" href="../../../resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
-    <link href="../../../resources/css/new_styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
+    <link href="resources/css/new_styles.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -193,11 +193,11 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="../../../resources/jquery/jquery-ui.js"></script>
-<script src="../../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
-<script src="../../../resources/js/moment.js"></script>
-<script type="text/javascript" src="../../../resources/multiselect-plugin/js/bootstrap-multiselect.js"></script>
-<script src="../../../resources/js/script.js"></script>
+<script src="resources/jquery/jquery-ui.js"></script>
+<script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
+<script src="resources/js/moment.js"></script>
+<script type="text/javascript" src="resources/multiselect-plugin/js/bootstrap-multiselect.js"></script>
+<script src="resources/js/script.js"></script>
 <script>
     $('.dropdown-toggle').dropdown();
 </script>
