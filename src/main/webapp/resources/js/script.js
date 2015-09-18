@@ -11,6 +11,7 @@ $(function () {
     var $singlePage = $('.Page');
     var $eventInformation = $singlePage.find('.event-information');
     var $eventCategories = $singlePage.find('#event-categories');
+    var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
     var $eventCategoriesString = $singlePage.find('#event-categories-string');
     var $eventTitle = $singlePage.find('#event-title');
     var $eventStart = $singlePage.find('#start');
@@ -20,17 +21,15 @@ $(function () {
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.ErrorPages');
 
+    $eventCategories.multiselect();
     function resetSinglePage(){
-        $singlePage.find('.edit').css('visibility', 'hidden');
-        $eventCategories.multiselect('destroy');
-        $eventCategories.hide();
+        //reset inputs
+        $singlePage.find(".reset").val("");
+        //hide all fields related to "Categories"
+        $singlePage.find('.btn-group').hide();
         $eventCategoriesString.hide();
-        $eventInformation.trigger("reset");
-        $eventTitle.val("");
-        $eventDescription.removeClass('editable');
+        // Empty description
         $eventDescription.empty();
-        $userInformationForm.hide();
-        $eventInformation.show();
         $buttons.hide();
         $errors.hide();
     }
@@ -329,8 +328,9 @@ $(function () {
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
-        $singlePage.find('.SinglePage__inputItem--user').hide();
-        $singlePage.find('.SinglePage__inputItem--event').show();
+        resetSinglePage();
+        $singlePage.find('.UserPageComponent').hide();
+        $singlePage.find('.EventPageComponent').show();
         if (typeof data != 'undefined' && data.length) {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
@@ -433,7 +433,6 @@ $(function () {
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
             } else {
-                $eventCategories.multiselect();
                 $eventCategoriesString.hide();
                 if (typeof user !== 'undefined') {
                     singlePage.find('#owner').val(user.firstName + " " + user.lastName);
@@ -456,8 +455,8 @@ $(function () {
     }
 
     function renderSingleUserPage(user) {
-        $singlePage.find('.SinglePage__inputItem--event').hide();
-        $singlePage.find('.SinglePage__inputItem--user').show();
+        $singlePage.find('.EventPageComponent').hide();
+        $singlePage.find('.UserPageComponent').show();
         $('.user-information').val('');
         if (typeof user !== 'undefined') {
             renderUserInfoPage(user);
@@ -485,6 +484,7 @@ $(function () {
         }
 
         function renderAddUserPage() {
+            $singlePage.find('.btn-group').show();
             $userInformationForm.find('input').addClass('editable');
             $userInformationForm.find('input').attr('readonly', false);
             var $userPassword = $('.password-field');

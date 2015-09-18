@@ -5,7 +5,7 @@
 
 body {
     font: normal 16px Arial, Helvetica, sans-serif;
-    padding:50px;
+    padding: 50px;
 }
 
 h1, h3 {
@@ -312,7 +312,7 @@ h1, h3 {
 
 }
 
-.Page.visible .SinglePage{
+.Page.visible .SinglePage {
     opacity: 1;
     transition: 1.4s;
     pointer-events: auto;
@@ -420,7 +420,7 @@ h1, h3 {
     padding: 3px;
 }
 
-.SinglePage__inputItem__inputField  {
+.SinglePage__inputItem__inputField {
     height: 20px;
     padding: 12px;
     border: none;
@@ -458,31 +458,32 @@ ul.errors {
 
 /*Login*/
 
-#login-dp{
+#login-dp {
     min-width: 200px;
     padding: 10px 10px;
-    overflow:hidden;
+    overflow: hidden;
     margin-top: 5px;
-    background-color:rgba(255,255,255,.8);
+    background-color: rgba(255, 255, 255, .8);
 }
 
-#login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
-    border-top:1px solid #ddd;
+#login-dp .bottom {
+    background-color: rgba(255, 255, 255, .8);
+    border-top: 1px solid #ddd;
     padding-top: 10px;
 }
 
-@media(max-width:768px){
-    #login-dp{
+@media (max-width: 768px) {
+    #login-dp {
         background-color: inherit;
         color: #fff;
     }
-    #login-dp .bottom{
+
+    #login-dp .bottom {
         background-color: inherit;
-        border-top:0 none;
+        border-top: 0 none;
     }
 }
 
 div.ui-datepicker {
-    font-size:15px;
+    font-size: 15px;
 }

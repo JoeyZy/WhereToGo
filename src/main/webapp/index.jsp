@@ -125,33 +125,33 @@
     <div class="Page">
         <div class="Overlay"></div>
         <div class="SinglePage">
-            <input class="SinglePage__title" name="event-title" placeholder="Event Information"/>
+            <input class="SinglePage__title" id="event-title" placeholder="Event title"/>
             <form class="SinglePage__inputForm">
                 <ul class="SinglePage__inputItemsList">
-                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                    <li class="SinglePage__inputItem UserPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField user-email" placeholder="User email"/>
+                        <input class="SinglePage__inputItem__inputField user-email reset" placeholder="User email"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                    <li class="SinglePage__inputItem UserPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField user-password" placeholder="User password"/>
+                        <input class="SinglePage__inputItem__inputField user-password reset" placeholder="User password"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                    <li class="SinglePage__inputItem UserPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
                         <input class="SinglePage__inputItem__inputField user-first-name" placeholder="First name"/>
-                        <input class="SinglePage__inputItem__inputField user-last-name" placeholder="Last name"/>
+                        <input class="SinglePage__inputItem__inputField user-last-name reset" placeholder="Last name"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--user">
+                    <li class="SinglePage__inputItem UserPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
                         <ul name="user-events">
 
                         </ul>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                    <li class="SinglePage__inputItem EventPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
                         <input class="SinglePage__inputItem__inputField" id="owner"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                    <li class="SinglePage__inputItem EventPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>
                         <select id="event-categories" multiple="multiple">
                             <script id="event-categories-list" type="x-handlebars-template">
@@ -162,15 +162,15 @@
                         </select>
                         <input class="SinglePage__inputItem__inputField" id="event-categories-string">
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                    <li class="SinglePage__inputItem EventPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
-                        <input class="SinglePage__inputItem__inputField" id="start" placeholder="When event starts"/>
+                        <input class="SinglePage__inputItem__inputField reset" id="start" placeholder="When event starts"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                    <li class="SinglePage__inputItem EventPageComponent">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
-                        <input class="SinglePage__inputItem__inputField" id="end" placeholder="When event ends"/>
+                        <input class="SinglePage__inputItem__inputField reset" id="end" placeholder="When event ends"/>
                     </li>
-                    <li class="SinglePage__inputItem SinglePage__inputItem--event">
+                    <li class="SinglePage__inputItem EventPageComponent">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
                         <div contentEditable="true" id="description" title="Description:"></div>
                     </li>
