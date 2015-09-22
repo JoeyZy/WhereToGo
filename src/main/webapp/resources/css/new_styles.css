@@ -428,7 +428,6 @@ h1, h3 {
 
 .SinglePage form #description {
     padding: 3px;
-    display: block;
     clear: both;
     width: 100%;
     resize: none;

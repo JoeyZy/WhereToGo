@@ -125,33 +125,31 @@
     <div class="Page">
         <div class="Overlay"></div>
         <div class="SinglePage">
-            <input class="SinglePage__title" id="event-title" placeholder="Event title"/>
+            <input class="SinglePage__title reset" placeholder="Event title"/>
             <form class="SinglePage__inputForm">
                 <ul class="SinglePage__inputItemsList">
-                    <li class="SinglePage__inputItem UserPageComponent">
+                    <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField user-email reset" placeholder="User email"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__email reset" placeholder="User email"/>
                     </li>
-                    <li class="SinglePage__inputItem UserPageComponent">
+                    <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField user-password reset" placeholder="User password"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password reset" placeholder="User password"/>
                     </li>
-                    <li class="SinglePage__inputItem UserPageComponent">
+                    <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField user-first-name" placeholder="First name"/>
-                        <input class="SinglePage__inputItem__inputField user-last-name reset" placeholder="Last name"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__firstName reset" placeholder="First name"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__lastName reset" placeholder="Last name"/>
                     </li>
-                    <li class="SinglePage__inputItem UserPageComponent">
+                    <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
-                        <ul name="user-events">
-
-                        </ul>
+                        <ul class="UserPage__events"></ul>
                     </li>
-                    <li class="SinglePage__inputItem EventPageComponent">
+                    <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
-                        <input class="SinglePage__inputItem__inputField" id="owner"/>
+                        <input class="SinglePage__inputItem__inputField EventPage__owner" readonly/>
                     </li>
-                    <li class="SinglePage__inputItem EventPageComponent">
+                    <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>
                         <select id="event-categories" multiple="multiple">
                             <script id="event-categories-list" type="x-handlebars-template">
@@ -162,23 +160,23 @@
                         </select>
                         <input class="SinglePage__inputItem__inputField" id="event-categories-string">
                     </li>
-                    <li class="SinglePage__inputItem EventPageComponent">
+                    <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
                         <input class="SinglePage__inputItem__inputField reset" id="start" placeholder="When event starts"/>
                     </li>
-                    <li class="SinglePage__inputItem EventPageComponent">
+                    <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
                         <input class="SinglePage__inputItem__inputField reset" id="end" placeholder="When event ends"/>
                     </li>
-                    <li class="SinglePage__inputItem EventPageComponent">
+                    <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
-                        <div contentEditable="true" id="description" title="Description:"></div>
+                        <div contentEditable="false" id="description" title="Description:"></div>
                     </li>
                 </ul>
                 <ul class="errors"></ul>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend" onclick="this.blur();">I'll be there</button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--add" onclick="this.blur();">Add user</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--add" onclick="this.blur();">Add</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>
@@ -193,6 +191,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="resources/js/ba-linkify.js"></script>
 <script src="resources/jquery/jquery-ui.js"></script>
 <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="resources/js/moment.js"></script>

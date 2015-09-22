@@ -13,20 +13,23 @@ $(function () {
     var $eventCategories = $singlePage.find('#event-categories');
     var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
     var $eventCategoriesString = $singlePage.find('#event-categories-string');
-    var $eventTitle = $singlePage.find('#event-title');
+    var $eventTitle = $singlePage.find('.SinglePage__title');
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
     var $userInformationForm = $singlePage.find(".user-information");
     var $buttons = $singlePage.find("button");
-    var $errors = $singlePage.find('.ErrorPages');
+    var $errors = $singlePage.find('.errors');
+    var $buttonApply = $singlePage.find('.SinglePage__button--apply');
+    var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
+    var $buttonAdd = $singlePage.find('.SinglePage__button--add');
 
-    $eventCategories.multiselect();
     function resetSinglePage(){
+        $eventCategoriesMultiselect = $singlePage.find('.btn-group');
         //reset inputs
         $singlePage.find(".reset").val("");
         //hide all fields related to "Categories"
-        $singlePage.find('.btn-group').hide();
+        $eventCategoriesMultiselect.hide();
         $eventCategoriesString.hide();
         // Empty description
         $eventDescription.empty();
@@ -48,6 +51,7 @@ $(function () {
         var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
         var categoriesFilter = $('#event-categories');
         categoriesFilter.html(categoriesListElement(data));
+        $eventCategories.multiselect();
     });
     var checkboxes = $('.all-events input[type=checkbox]');
     var loginForm = $('#login-nav');
@@ -122,7 +126,6 @@ $(function () {
     });
     // Single event $singlePage buttons
     $singlePage.on('click', function (e) {
-        e.preventDefault();
         if ($singlePage.hasClass('visible')) {
             var clicked = $(e.target);
             // If the close button or the background are clicked go to the previous $singlePage.
@@ -329,8 +332,8 @@ $(function () {
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
         resetSinglePage();
-        $singlePage.find('.UserPageComponent').hide();
-        $singlePage.find('.EventPageComponent').show();
+        $singlePage.find('.UserPage').hide();
+        $singlePage.find('.EventPage').show();
         if (typeof data != 'undefined' && data.length) {
             // Find the wanted event by iterating the data object and searching for the chosen index.
             renderShowEventPage(data);
@@ -347,9 +350,7 @@ $(function () {
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
             $eventDescription.addClass('editable');
-            var actionButton = $singlePage.find(".btn-apply");
-            actionButton.show();
-            actionButton.on('click', function () {
+            $buttonAdd.on('click', function () {
                 var categoriesList = [];
                 $eventCategories.find(":selected").each(function(i, selected){
                     categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -387,7 +388,7 @@ $(function () {
             function validateEventFields(event) {
                 var valid = true;
                 $errors.empty();
-                if ($singlePage.find('#owner').val() !== user.firstName + " " + user.lastName) {
+                if ($singlePage.find('.EventPage__owner').val() !== user.firstName + " " + user.lastName) {
                     addErrorListItem("Owner field is wrong");
                     valid = false;
                 }
@@ -426,16 +427,19 @@ $(function () {
                 $eventTitle.val(event.name);
                 $eventCategoriesString.show();
                 $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
-                $eventDescription.html(event.description);
-                singlePage.find('#owner').val(event.owner.firstName + " " + event.owner.lastName);
+                $eventDescription.html(linkify(event.description));
+                singlePage.find('.EventPage__owner').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
+                $buttonAttend.show();
             } else {
+                $eventCategoriesMultiselect.show();
                 $eventCategoriesString.hide();
+                $buttonAdd.show();
                 if (typeof user !== 'undefined') {
-                    singlePage.find('#owner').val(user.firstName + " " + user.lastName);
+                    singlePage.find('.EventPage__owner').val(user.firstName + " " + user.lastName);
                 }
                 $eventCategories.multiselect('refresh');
             }
@@ -455,8 +459,9 @@ $(function () {
     }
 
     function renderSingleUserPage(user) {
-        $singlePage.find('.EventPageComponent').hide();
-        $singlePage.find('.UserPageComponent').show();
+        resetSinglePage();
+        $singlePage.find('.EventPage').hide();
+        $singlePage.find('.UserPage').show();
         $('.user-information').val('');
         if (typeof user !== 'undefined') {
             renderUserInfoPage(user);
@@ -484,9 +489,10 @@ $(function () {
         }
 
         function renderAddUserPage() {
-            $singlePage.find('.btn-group').show();
             $userInformationForm.find('input').addClass('editable');
             $userInformationForm.find('input').attr('readonly', false);
+            $eventTitle.val('User Information');
+            $eventTitle.attr('readonly', true);
             var $userPassword = $('.password-field');
             var $firstName = $('.first-name-field');
             var $lastName = $('.last-name-field');
@@ -494,11 +500,40 @@ $(function () {
             $userPassword.show();
             $firstName.show();
             $lastName.hide();
-            var $actionButton = $singlePage.find(".btn-action");
-            $actionButton.show();
             $eventInformation.hide();
             $userInformationForm.show();
             $eventsField.hide();
+            $buttonAdd.show();
+            $buttonAdd.on('click', function() {
+                if (!validateEventFields(eventJson)) {
+                    $errors.show();
+                    return;
+                }
+                function validateEventFields(event) {
+                    var valid = true;
+                    $errors.empty();
+                    if ($singlePage.find('.UserPage__email').val() !== user.firstName + " " + user.lastName) {
+                        addErrorListItem("Owner field is wrong");
+                        valid = false;
+                    }
+                    if (!event.name) {
+                        addErrorListItem("Event name can't be empty");
+                        valid = false;
+                    }
+                    if(event.categories.length == 0) {
+                        addErrorListItem("Choose at least one category");
+                        valid = false;
+                    }
+                    if(!event.startDateTime) {
+                        addErrorListItem("Add date for event");
+                        valid = false;
+                    }
+                    return valid;
+                }
+                function addErrorListItem(message) {
+                    $errors.append('<li>'+message+'</li>');
+                }
+            });
             // Show the $singlePage.
             $singlePage.addClass('visible');
         }
