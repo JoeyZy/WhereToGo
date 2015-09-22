@@ -13,7 +13,7 @@ $(function () {
     var $eventCategories = $singlePage.find('#event-categories');
     var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
     var $eventCategoriesString = $singlePage.find('#event-categories-string');
-    var $eventTitle = $singlePage.find('.SinglePage__title');
+    var $singlePageTitle = $singlePage.find('.SinglePage__title');
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
@@ -37,11 +37,6 @@ $(function () {
         $errors.hide();
     }
     resetSinglePage();
-
-    var $userPassword = $('.password-field');
-    var $firstName = $('.first-name-field');
-    var $lastName = $('.last-name-field');
-    var $eventsField = $('.events-field');
 
     $('.home').click(function () {
         loadEvents();
@@ -356,7 +351,7 @@ $(function () {
                     categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
                 });
                 var eventJson = {
-                    "name": $eventTitle.val(),
+                    "name": $singlePageTitle.val(),
                     "categories": categoriesList,
                     "startDateTime": $eventStart.val(),
                     "endDateTime": $eventEnd.val(),
@@ -424,7 +419,7 @@ $(function () {
 
         function populateSinglePageEventPage(singlePage, event) {
             if (typeof event != 'undefined') {
-                $eventTitle.val(event.name);
+                $singlePageTitle.val(event.name);
                 $eventCategoriesString.show();
                 $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
                 $eventDescription.html(linkify(event.description));
@@ -481,7 +476,7 @@ $(function () {
                 $eventInformation.hide();
                 $userInformationForm.show();
                 $userInformationForm.find("#email").val(user.email);
-                $eventTitle.val("User Information");
+                $singlePageTitle.val("User Information");
                 $eventsField.show();
                 // Show the $singlePage.
                 $singlePage.addClass('visible');
@@ -491,18 +486,10 @@ $(function () {
         function renderAddUserPage() {
             $userInformationForm.find('input').addClass('editable');
             $userInformationForm.find('input').attr('readonly', false);
-            $eventTitle.val('User Information');
-            $eventTitle.attr('readonly', true);
-            var $userPassword = $('.password-field');
-            var $firstName = $('.first-name-field');
-            var $lastName = $('.last-name-field');
-            var $eventsField = $('.events-field');
-            $userPassword.show();
-            $firstName.show();
-            $lastName.hide();
+            $singlePageTitle.val('User Information');
+            $singlePageTitle.attr('readonly', true);
             $eventInformation.hide();
             $userInformationForm.show();
-            $eventsField.hide();
             $buttonAdd.show();
             $buttonAdd.on('click', function() {
                 if (!validateEventFields(eventJson)) {

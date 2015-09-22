@@ -125,21 +125,21 @@
     <div class="Page">
         <div class="Overlay"></div>
         <div class="SinglePage">
-            <input class="SinglePage__title reset" placeholder="Event title"/>
             <form class="SinglePage__inputForm">
+                <input class="SinglePage__title reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList">
                     <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__email reset" placeholder="User email"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__email reset" type="email" placeholder="User email" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password reset" placeholder="User password"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password reset" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__firstName reset" placeholder="First name"/>
-                        <input class="SinglePage__inputItem__inputField UserPage__lastName reset" placeholder="Last name"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__firstName reset" placeholder="First name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__lastName reset" placeholder="Last name" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>

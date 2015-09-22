@@ -31,7 +31,6 @@ h1, h3 {
 
 .main-content {
     box-sizing: border-box;
-    text-align: center;
     margin: 30px 40px 60px;
     /*padding: 0 40px;*/
     position: relative;
@@ -322,8 +321,8 @@ h1, h3 {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
     border: none;
     text-align: center;
-    margin-top: 20px;
-    width: 70%;
+    margin: 20px auto 0;
+    width: 100%;
 }
 
 .SinglePage img {
@@ -398,12 +397,13 @@ h1, h3 {
 
 .SinglePage__inputForm {
     padding: 20px 0;
-    text-align: left;
     width: 70%;
     margin: 0 auto;
 }
 
 .SinglePage__inputItemsList {
+    margin-top: 10px;
+    text-align: left;
     list-style: none outside;
     padding: 0;
 }
