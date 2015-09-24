@@ -6,6 +6,7 @@
 body {
     font: normal 16px Arial, Helvetica, sans-serif;
     padding: 50px;
+/*    background-image: url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');*/
 }
 
 h1, h3 {
@@ -87,7 +88,6 @@ h1, h3 {
     position: relative;
     text-align: left;
     color: #2B2E31;
-    opacity: 0;
     pointer-events: none;
 }
 
@@ -276,19 +276,21 @@ h1, h3 {
 }
 
 .Overlay {
-    height: 0;
+    height: 10%;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     background-color: #000000;
-    /*background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');*/
     transition: 0.6s;
     z-index: 100;
-    opacity: 0.8;
+    pointer-events: none;
+    opacity: 0;
 }
 
 .Page.visible .Overlay {
+    pointer-events: auto;
+    opacity: 0.8;
     height: 100%;
 }
 

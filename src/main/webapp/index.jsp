@@ -127,24 +127,26 @@
         <div class="SinglePage">
             <form class="SinglePage__inputForm">
                 <input class="SinglePage__title reset" placeholder="Event title" required=""/>
-                <ul class="SinglePage__inputItemsList">
-                    <li class="SinglePage__inputItem UserPage">
+                <ul class="SinglePage__inputItemsList UserPage">
+                    <li class="SinglePage__inputItem UserPage__email">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__email reset" type="email" placeholder="User email" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset" type="email" placeholder="User email" required/>
                     </li>
-                    <li class="SinglePage__inputItem UserPage">
+                    <li class="SinglePage__inputItem UserPage__password">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password reset" placeholder="User password" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset" placeholder="User password" required/>
                     </li>
-                    <li class="SinglePage__inputItem UserPage">
+                    <li class="SinglePage__inputItem UserPage__name">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__firstName reset" placeholder="First name" required/>
-                        <input class="SinglePage__inputItem__inputField UserPage__lastName reset" placeholder="Last name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset" placeholder="First name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset" placeholder="Last name" required/>
                     </li>
-                    <li class="SinglePage__inputItem UserPage">
+                    <li class="SinglePage__inputItem UserPage__events">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
-                        <ul class="UserPage__events"></ul>
+                        <ul class="UserPage__events__list"></ul>
                     </li>
+                </ul>
+                <ul class="SinglePage__inputItemsList EventPage">
                     <li class="SinglePage__inputItem EventPage">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
                         <input class="SinglePage__inputItem__inputField EventPage__owner" readonly/>

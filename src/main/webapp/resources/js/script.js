@@ -9,7 +9,6 @@ $(function () {
 
     // Find all event fields
     var $singlePage = $('.Page');
-    var $eventInformation = $singlePage.find('.event-information');
     var $eventCategories = $singlePage.find('#event-categories');
     var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
     var $eventCategoriesString = $singlePage.find('#event-categories-string');
@@ -17,7 +16,7 @@ $(function () {
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
-    var $userInformationForm = $singlePage.find(".user-information");
+    var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.errors');
     var $buttonApply = $singlePage.find('.SinglePage__button--apply');
@@ -457,6 +456,8 @@ $(function () {
         resetSinglePage();
         $singlePage.find('.EventPage').hide();
         $singlePage.find('.UserPage').show();
+        $singlePageTitle.val('User Information');
+        $singlePageTitle.attr('readonly', true);
         $('.user-information').val('');
         if (typeof user !== 'undefined') {
             renderUserInfoPage(user);
@@ -466,35 +467,21 @@ $(function () {
 
         function renderUserInfoPage(user) {
             $.getJSON("userInfo", {email: user.email}, function (user) {
-                $userInformationForm.find('input').removeClass('editable');
-                $userInformationForm.find('input').attr('readonly', true);
-                $userPassword.hide();
-                $firstName.hide();
-                $lastName.hide();
-                var $actionButton = $singlePage.find(".btn-action");
-                $actionButton.hide();
-                $eventInformation.hide();
-                $userInformationForm.show();
-                $userInformationForm.find("#email").val(user.email);
-                $singlePageTitle.val("User Information");
-                $eventsField.show();
-                // Show the $singlePage.
+                $userPage.find('.UserPage__email__input').val(user.email);
+                $userPage.find('.UserPage__password').hide();
+                $userPage.find('.UserPage__name__first').val(user.firstName + ' ' + user.lastName);
+                $userPage.find('.UserPage__name__last').hide();
                 $singlePage.addClass('visible');
             });
         }
 
         function renderAddUserPage() {
-            $userInformationForm.find('input').addClass('editable');
-            $userInformationForm.find('input').attr('readonly', false);
-            $singlePageTitle.val('User Information');
-            $singlePageTitle.attr('readonly', true);
-            $eventInformation.hide();
-            $userInformationForm.show();
+            $userPage.find('.UserPage__name__last').show();
             $buttonAdd.show();
             $buttonAdd.on('click', function() {
                 if (!validateEventFields(eventJson)) {
                     $errors.show();
-                    return;
+
                 }
                 function validateEventFields(event) {
                     var valid = true;
