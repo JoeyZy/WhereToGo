@@ -21,7 +21,8 @@ $(function () {
     var $errors = $singlePage.find('.errors');
     var $buttonApply = $singlePage.find('.SinglePage__button--apply');
     var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
-    var $buttonAdd = $singlePage.find('.SinglePage__button--add');
+    var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
+    var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 
     function resetSinglePage(){
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
@@ -344,7 +345,7 @@ $(function () {
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
             $eventDescription.addClass('editable');
-            $buttonAdd.on('click', function () {
+            $buttonAddEvent.on('click', function () {
                 var categoriesList = [];
                 $eventCategories.find(":selected").each(function(i, selected){
                     categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -431,7 +432,7 @@ $(function () {
             } else {
                 $eventCategoriesMultiselect.show();
                 $eventCategoriesString.hide();
-                $buttonAdd.show();
+                $buttonAddEvent.show();
                 if (typeof user !== 'undefined') {
                     singlePage.find('.EventPage__owner').val(user.firstName + " " + user.lastName);
                 }
@@ -452,6 +453,11 @@ $(function () {
         }
     }
 
+    var $userEmail = $userPage.find('.UserPage__email__input');
+    var $userPassword = $userPage.find('.UserPage__password__input');
+    var $userFirstName = $userPage.find('.UserPage__name__first');
+    var $userLastName =  $userPage.find('.UserPage__name__last');
+
     function renderSingleUserPage(user) {
         resetSinglePage();
         $singlePage.find('.EventPage').hide();
@@ -467,39 +473,64 @@ $(function () {
 
         function renderUserInfoPage(user) {
             $.getJSON("userInfo", {email: user.email}, function (user) {
-                $userPage.find('.UserPage__email__input').val(user.email);
+                $userEmail.val(user.email);
                 $userPage.find('.UserPage__password').hide();
-                $userPage.find('.UserPage__name__first').val(user.firstName + ' ' + user.lastName);
-                $userPage.find('.UserPage__name__last').hide();
+                $userFirstName.val(user.firstName + ' ' + user.lastName);
+                $userLastName.hide();
                 $singlePage.addClass('visible');
             });
         }
 
         function renderAddUserPage() {
             $userPage.find('.UserPage__name__last').show();
-            $buttonAdd.show();
-            $buttonAdd.on('click', function() {
-                if (!validateEventFields(eventJson)) {
-                    $errors.show();
+            $buttonAddUser.show();
+            $buttonAddUser.on('click', function(e) {
 
+                if (!validateEventFields()) {
+                    $errors.show();
+                    return;
                 }
-                function validateEventFields(event) {
+                var userJson = {
+                    "email": $userEmail.val(),
+                    "password": $userPassword.val(),
+                    "firstName": $userFirstName.val(),
+                    "lastName": $userLastName.val()
+                };
+                $.ajax({
+                    url: "addUser",
+                    data: JSON.stringify(userJson),
+                    type: "POST",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    success: function () {
+                        loadEvents();
+                        createQueryHash(filters);
+                    },
+                    error: function (error) {
+                        alert("ERROR!" + error);
+                    },
+                    complete: function () {
+                    }
+                });
+                function validateEventFields() {
                     var valid = true;
                     $errors.empty();
-                    if ($singlePage.find('.UserPage__email').val() !== user.firstName + " " + user.lastName) {
-                        addErrorListItem("Owner field is wrong");
+                    if ($userEmail.val().length == 0) {
+                        addErrorListItem("Email mustn't be empty");
                         valid = false;
                     }
-                    if (!event.name) {
-                        addErrorListItem("Event name can't be empty");
+                    if ($userPassword.val().length == 0) {
+                        addErrorListItem("Enter password");
                         valid = false;
                     }
-                    if(event.categories.length == 0) {
-                        addErrorListItem("Choose at least one category");
+                    if($userFirstName.val().length == 0) {
+                        addErrorListItem("Enter First Name");
                         valid = false;
                     }
-                    if(!event.startDateTime) {
-                        addErrorListItem("Add date for event");
+                    if($userLastName.val().length == 0) {
+                        addErrorListItem("Enter Last Name");
                         valid = false;
                     }
                     return valid;
@@ -507,6 +538,7 @@ $(function () {
                 function addErrorListItem(message) {
                     $errors.append('<li>'+message+'</li>');
                 }
+                e.preventDefault();
             });
             // Show the $singlePage.
             $singlePage.addClass('visible');

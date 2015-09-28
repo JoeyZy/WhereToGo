@@ -134,7 +134,7 @@
                     </li>
                     <li class="SinglePage__inputItem UserPage__password">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset" placeholder="User password" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset" type="password" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__name">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
@@ -178,7 +178,8 @@
                 <ul class="errors"></ul>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend" onclick="this.blur();">I'll be there</button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--add" onclick="this.blur();">Add</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser" onclick="this.blur();">Add a user</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent" onclick="this.blur();">Add an event</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>

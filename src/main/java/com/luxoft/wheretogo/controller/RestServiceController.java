@@ -8,12 +8,16 @@ import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -44,10 +48,14 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public Event addEvent(@RequestBody Event event, HttpServletRequest request) {
+	public void addEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		eventsService.add(event);
-		return null;
+	}
+
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	public void addUser(@RequestBody User user) {
+		usersService.add(user);
 	}
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
