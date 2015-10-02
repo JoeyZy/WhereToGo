@@ -344,6 +344,7 @@ $(function () {
 
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
+            $singlePageTitle.attr('readonly', false);
             $eventDescription.addClass('editable');
             $buttonAddEvent.on('click', function () {
                 var categoriesList = [];

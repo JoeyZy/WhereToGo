@@ -1,0 +1,490 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: normal 16px Arial, Helvetica, sans-serif;
+    padding: 50px;
+/*    background-image: url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');*/
+}
+
+h1, h3 {
+    font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 500px) {
+
+    header {
+        padding: 20px 15px;
+    }
+
+    header h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+}
+
+/*-----------------
+	Main Content
+------------------*/
+
+.main-content {
+    box-sizing: border-box;
+    margin: 30px 40px 60px;
+    /*padding: 0 40px;*/
+    position: relative;
+}
+
+.main-content h3 {
+    font-size: 28px;
+    color: #5a96b9;
+    padding-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+
+    .main-content {
+        margin: 45px auto;
+        padding: 0 25px;
+    }
+
+}
+
+/*-------------------
+	All events Page
+--------------------*/
+
+/*	Filter Form	*/
+
+.nav-left {
+    width: 190px;
+    position: absolute;
+}
+
+.btn-add-event {
+    position: absolute;
+    margin-bottom: 15px;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn-add-event.visible {
+    pointer-events: auto;
+    position: relative;
+    transition: 2s;
+    opacity: 1;
+}
+
+.filters {
+    box-sizing: border-box;
+    padding: 5px 30px 30px;
+    background-color: #FFF;
+    border: 1px solid #DBE3E7;
+    border-radius: 3px;
+    box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
+    position: relative;
+    text-align: left;
+    color: #2B2E31;
+    pointer-events: none;
+}
+
+.filters .filter-criteria {
+    display: block;
+    margin: 10px 0 10px;
+}
+
+.filters span {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.filters label {
+    display: block;
+    line-height: 1.0;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.filters label input {
+    margin-right: 10px;
+}
+
+.filters button {
+    margin-top: 10px;
+}
+
+/*	events List	*/
+
+.events-list {
+    list-style: none;
+    margin-left: 225px;
+    max-width: 1500px;
+    text-align: center;
+    padding: 0;
+    opacity: 0;
+    font-size: 0;
+}
+
+.all-events.visible .events-list,
+.all-events.visible .filters {
+    opacity: 1;
+    transition: 1s;
+    pointer-events: auto;
+}
+
+.events-list > li {
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s;
+
+    text-align: left;
+    font: normal 12px sans-serif;
+
+    background-color: #ffffff;
+    border: 1px solid #dbe3e7;
+    border-radius: 3px;
+    box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
+
+    margin: 0 12px 14px 0;
+    padding: 25px;
+}
+
+.events-list > li.hidden {
+    opacity: 0.2;
+    display: none;
+    pointer-events: none;
+}
+
+/* The event image */
+
+.events-list .event-photo {
+    display: block;
+    text-align: center;
+    box-shadow: 0 0 20px 8px #f3f3f3 inset;
+
+    width: 275px;
+    margin-bottom: 25px;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+/* The event name */
+
+.events-list h2 {
+    display: block;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    margin: 0;
+}
+
+.events-list h2 a {
+    text-decoration: none;
+    color: #2B2E31;
+}
+
+/* event description */
+
+.events-list .event-description {
+    margin-top: 20px;
+
+    color: #5d5d5d;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: normal;
+
+    max-width: 260px;
+    margin-bottom: 20px;
+
+    list-style: none;
+}
+
+.events-list .event-description li {
+    display: block;
+    margin-right: 5px;
+}
+
+.events-list .event-description li:first-child {
+    display: block;
+}
+
+.events-list .event-description li span {
+    font-weight: bold;
+}
+
+/* Price and order button */
+
+.events-list button {
+    background-color: #87bae1;
+}
+
+.events-list .event-price {
+    float: right;
+
+    color: #4e4e4e;
+    font-weight: bold;
+    font-size: 20px;
+
+    padding-top: 6px;
+    margin: 0;
+}
+
+.events-list .highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.events-list > li:hover .highlight {
+    opacity: 1;
+}
+
+/* Making the list responsive */
+
+@media (max-width: 800px) {
+
+    .events-list .event-photo {
+        width: 225px;
+    }
+
+    .events-list .event-description {
+        max-width: 225px;
+    }
+}
+
+/*---------------------------
+	Single event Page
+----------------------------*/
+
+.SinglePage {
+    z-index: 100;
+}
+
+.Overlay {
+    height: 10%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000000;
+    transition: 0.6s;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.Page.visible .Overlay {
+    pointer-events: auto;
+    opacity: 0.8;
+    height: 100%;
+}
+
+.SinglePage {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    /*margin-left: -380px;*/
+    top: 0;
+    right: 0;
+    /*margin-top: -275px;*/
+    pointer-events: none;
+    background-color: #ffffff;
+
+    z-index: 102;
+    opacity: 0;
+    transition: 0.4s;
+
+}
+
+.Page.visible .SinglePage {
+    opacity: 1;
+    transition: 1.4s;
+    pointer-events: auto;
+}
+
+.SinglePage__title {
+    font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
+    border: none;
+    text-align: center;
+    margin: 20px auto 0;
+    width: 100%;
+}
+
+.SinglePage img {
+    width: 100%;
+    height: 280px;
+    border-bottom: 3px solid #efefef;
+    border-radius: 5px 5px 0 0;
+}
+
+.SinglePage p {
+    line-height: 23px;
+    padding: 50px 45px;
+}
+
+.SinglePage table {
+    line-height: 23px;
+    padding: 50px 45px;
+    text-align: left;
+}
+
+.apply-btn {
+    position: absolute;
+    right: 89px;
+    top: 15px;
+    height: 32px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.edit {
+    background: url("../images/edit.png") no-repeat center;
+    position: absolute;
+    right: 57px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.close {
+    background: url("../images/close.png") no-repeat center;
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+/*---------------------------
+	ErrorPage Page
+----------------------------*/
+
+.ErrorPage {
+    opacity: 0;
+    transition: 0.6s;
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 100px;
+    width: 100%;
+}
+
+.ErrorPage.visible {
+    opacity: 1;
+}
+
+.ErrorPage h3 {
+    font-size: 40px;
+}
+
+.SinglePage__inputForm {
+    padding: 20px 0;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.SinglePage__inputItemsList {
+    margin-top: 10px;
+    text-align: left;
+    list-style: none outside;
+    padding: 0;
+}
+
+.SinglePage__inputItem {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.SinglePage__inputItem__label {
+    width: 20%;
+    display: inline-block;
+    padding: 3px;
+}
+
+.SinglePage__inputItem__inputField {
+    height: 20px;
+    padding: 12px;
+    border: none;
+}
+
+.SinglePage form #description {
+    padding: 3px;
+    clear: both;
+    width: 100%;
+    resize: none;
+    height: 100%;
+    outline: none;
+}
+
+.SinglePage form > ul.list-form > li > button {
+    background-color: #87bae1;
+    margin: 12px;
+}
+
+.SinglePage form > ul.list-form > li > .editable {
+    border: 1px solid #dbe3e7;
+}
+
+input.editable {
+    border: 1px solid #dbe3e7;
+}
+
+ul.errors {
+    padding: 12px;
+    list-style-position: inside;
+    font-size: 12px;
+    color: red;
+}
+
+/*Login*/
+
+#login-dp {
+    min-width: 200px;
+    padding: 10px 10px;
+    overflow: hidden;
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, .8);
+}
+
+#login-dp .bottom {
+    background-color: rgba(255, 255, 255, .8);
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    #login-dp {
+        background-color: inherit;
+        color: #fff;
+    }
+
+    #login-dp .bottom {
+        background-color: inherit;
+        border-top: 0 none;
+    }
+}
+
+div.ui-datepicker {
+    font-size: 15px;
+}

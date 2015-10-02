@@ -1,5 +1,15 @@
 package com.luxoft.wheretogo.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
@@ -7,18 +17,6 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import java.util.List;
 
 @RestController
 public class RestServiceController {
@@ -78,7 +76,6 @@ public class RestServiceController {
 	public User getUserInfo(User user) {
 		return usersService.findByEmail(user.getEmail());
 	}
-
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public User login(@RequestBody User user, HttpServletRequest request) {
