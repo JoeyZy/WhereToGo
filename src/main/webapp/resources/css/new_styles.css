@@ -300,23 +300,15 @@ h1, h3 {
     width: 60%;
     position: absolute;
     left: 0;
-    /*margin-left: -380px;*/
     top: 0;
     right: 0;
-    /*margin-top: -275px;*/
     pointer-events: none;
     background-color: #ffffff;
 
     z-index: 102;
     opacity: 0;
-    transition: 0.4s;
+    transition: 0.4s
 
-}
-
-.Page.visible .SinglePage {
-    opacity: 1;
-    transition: 1.4s;
-    pointer-events: auto;
 }
 
 .SinglePage__title {
@@ -325,6 +317,55 @@ h1, h3 {
     text-align: center;
     margin: 20px auto 0;
     width: 100%;
+}
+
+.SinglePage__inputForm {
+    padding: 20px 0;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.SinglePage__inputItemsList {
+    margin-top: 10px;
+    text-align: left;
+    list-style: none outside;
+    padding: 0;
+}
+
+.SinglePage__inputItem {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    position: relative
+}
+
+.SinglePage__inputItem__label {
+    width: 20%;
+    display: inline-block;
+    padding: 3px;
+}
+
+.SinglePage__inputItem__inputField {
+    height: 20px;
+    padding: 12px;
+    border: none;
+}
+
+.SinglePage form #description {
+    padding: 3px;
+    clear: both;
+    width: 100%;
+    resize: none;
+    height: 100%;
+    outline: none;
+}
+
+.SinglePage form > ul.list-form > li > button {
+    background-color: #87bae1;
+    margin: 12px;
+}
+
+.SinglePage form > ul.list-form > li > .editable {
+    border: 1px solid #dbe3e7;
 }
 
 .SinglePage img {
@@ -343,6 +384,12 @@ h1, h3 {
     line-height: 23px;
     padding: 50px 45px;
     text-align: left;
+}
+
+.Page.visible .SinglePage {
+    opacity: 1;
+    transition: 1.4s;
+    pointer-events: auto;
 }
 
 .apply-btn {
@@ -395,55 +442,6 @@ h1, h3 {
 
 .ErrorPage h3 {
     font-size: 40px;
-}
-
-.SinglePage__inputForm {
-    padding: 20px 0;
-    width: 70%;
-    margin: 0 auto;
-}
-
-.SinglePage__inputItemsList {
-    margin-top: 10px;
-    text-align: left;
-    list-style: none outside;
-    padding: 0;
-}
-
-.SinglePage__inputItem {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-    position: relative;
-}
-
-.SinglePage__inputItem__label {
-    width: 20%;
-    display: inline-block;
-    padding: 3px;
-}
-
-.SinglePage__inputItem__inputField {
-    height: 20px;
-    padding: 12px;
-    border: none;
-}
-
-.SinglePage form #description {
-    padding: 3px;
-    clear: both;
-    width: 100%;
-    resize: none;
-    height: 100%;
-    outline: none;
-}
-
-.SinglePage form > ul.list-form > li > button {
-    background-color: #87bae1;
-    margin: 12px;
-}
-
-.SinglePage form > ul.list-form > li > .editable {
-    border: 1px solid #dbe3e7;
 }
 
 input.editable {

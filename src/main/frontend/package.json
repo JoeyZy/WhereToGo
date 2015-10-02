@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "gulp": "^3.9.0",
+    "gulp-ext": "*",
     "gulp-postcss": "*",
     "postcss": "*",
     "postcss-scss": "*",

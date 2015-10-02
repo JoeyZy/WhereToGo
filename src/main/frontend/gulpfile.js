@@ -13,7 +13,8 @@ gulp.task('default', function() {
     ];
 
 
-    return gulp.src('./css/*.css')
+    return gulp.src('./css/*.scss')
+            .pipe(require('gulp-ext').replace('css'))
             .pipe( postcss(processors) )
             .pipe( gulp.dest('../webapp/resources/css') );
 });
