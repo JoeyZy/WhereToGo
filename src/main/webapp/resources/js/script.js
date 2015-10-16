@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     // Globals variables 
     // 	An array containing objects with information about the events.
     var events = [],
@@ -323,6 +323,9 @@ $(function () {
         page.addClass('visible');
     }
 
+    var participantsTemplateScript = $('#participants').html();
+    var participantsTemplate = Handlebars.compile(participantsTemplateScript);
+
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
@@ -344,8 +347,6 @@ $(function () {
 
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
-            $singlePageTitle.attr('readonly', false);
-            $eventDescription.addClass('editable');
             $buttonAddEvent.on('click', function () {
                 var categoriesList = [];
                 $eventCategories.find(":selected").each(function(i, selected){
@@ -406,13 +407,41 @@ $(function () {
                 $errors.append('<li>'+message+'</li>');
             }
         }
-
         function renderShowEventPage(data) {
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
                         populateSinglePageEventPage($singlePage, event);
-                        $singlePage.find('.btn-I-will-be').show();
+
+                        var participants = $('.EventPage__events__list');
+                        participants.html(participantsTemplate(event.participants));
+
+
+                        $('.SinglePage__button--attend').off();
+                        $('.SinglePage__button--attend').on('click', function() {
+                            var json = {
+                                id:item.id
+                            };
+                            $.ajax({
+                                url: 'addEventToUser',
+                                data: JSON.stringify(json),
+                                type: "POST",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("Accept", "application/json");
+                                    xhr.setRequestHeader("Content-Type", "application/json");
+                                },
+                                success: function () {
+                                    $.getJSON("event", {id: item.id}, function (data) {
+                                        participants.html(participantsTemplate(event.participants));
+                                    });
+                                },
+                                error: function () {
+
+                                },
+                                complete: function () {
+                                }
+                            });
+                        });
                     });
                 }
             });
@@ -420,19 +449,30 @@ $(function () {
 
         function populateSinglePageEventPage(singlePage, event) {
             if (typeof event != 'undefined') {
+                $singlePageTitle.attr('readonly', true);
+                $eventDescription.attr('contenteditable', false);
+                $eventDescription.removeClass('editable');
                 $singlePageTitle.val(event.name);
                 $eventCategoriesString.show();
+                $('.EventPage__participants').show();
                 $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
                 $eventDescription.html(linkify(event.description));
+                $eventDescription.attr('contenteditable', false);
                 singlePage.find('.EventPage__owner').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
-                $buttonAttend.show();
+                if (user) {
+                    $buttonAttend.show();
+                }
             } else {
+                $singlePageTitle.attr('readonly', false);
+                $eventDescription.attr('contenteditable', true);
+                $eventDescription.addClass('editable');
                 $eventCategoriesMultiselect.show();
                 $eventCategoriesString.hide();
+                $('.EventPage__participants').hide();
                 $buttonAddEvent.show();
                 if (typeof user !== 'undefined') {
                     singlePage.find('.EventPage__owner').val(user.firstName + " " + user.lastName);

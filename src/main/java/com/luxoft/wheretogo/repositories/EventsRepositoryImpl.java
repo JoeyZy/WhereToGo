@@ -16,6 +16,10 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 		super.add(event);
 	}
 
+	public void merge(Event event) {
+		super.merge(event);
+	}
+
 	@Override
 	public List<Event> findAll() {
 		return super.findAll("id");

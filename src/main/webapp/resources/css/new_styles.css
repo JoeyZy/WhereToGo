@@ -341,7 +341,6 @@ h1, h3 {
 .SinglePage__inputItem__label {
     width: 20%;
     display: inline-block;
-    padding: 3px;
 }
 
 .SinglePage__inputItem__inputField {
@@ -351,7 +350,6 @@ h1, h3 {
 }
 
 .SinglePage form #description {
-    padding: 3px;
     clear: both;
     width: 100%;
     resize: none;
@@ -485,4 +483,8 @@ ul.errors {
 
 div.ui-datepicker {
     font-size: 15px;
+}
+
+.EventPage__events__list {
+    list-style: none;
 }

@@ -28,8 +28,6 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Ratings</a></li>
-                    <li><a href="#">Gallery</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -147,11 +145,11 @@
                     </li>
                 </ul>
                 <ul class="SinglePage__inputItemsList EventPage">
-                    <li class="SinglePage__inputItem EventPage">
+                    <li class="SinglePage__inputItem EventPage__owner">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
                         <input class="SinglePage__inputItem__inputField EventPage__owner" readonly/>
                     </li>
-                    <li class="SinglePage__inputItem EventPage">
+                    <li class="SinglePage__inputItem EventPage__categoty">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>
                         <select id="event-categories" multiple="multiple">
                             <script id="event-categories-list" type="x-handlebars-template">
@@ -162,17 +160,27 @@
                         </select>
                         <input class="SinglePage__inputItem__inputField" id="event-categories-string">
                     </li>
-                    <li class="SinglePage__inputItem EventPage">
+                    <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
                         <input class="SinglePage__inputItem__inputField reset" id="start" placeholder="When event starts"/>
                     </li>
-                    <li class="SinglePage__inputItem EventPage">
+                    <li class="SinglePage__inputItem EventPage__end">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
                         <input class="SinglePage__inputItem__inputField reset" id="end" placeholder="When event ends"/>
                     </li>
-                    <li class="SinglePage__inputItem EventPage">
+                    <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
                         <div contentEditable="false" id="description" title="Description:"></div>
+                    </li>
+                    <li class="SinglePage__inputItem EventPage__participants">
+                        <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
+                        <ul class="EventPage__events__list">
+                        </ul>
+                        <script id="participants" type="x-handlebars-template">
+                            {{#each this}}
+                            <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
+                            {{/each}}
+                        </script>
                     </li>
                 </ul>
                 <ul class="errors"></ul>
