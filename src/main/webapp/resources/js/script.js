@@ -323,8 +323,9 @@ $(document).ready(function () {
         page.addClass('visible');
     }
 
-    var participantsTemplateScript = $('#participants').html();
-    var participantsTemplate = Handlebars.compile(participantsTemplateScript);
+    var $participantsTemplateScript = $('#participants').html();
+    var $participantsTemplate = Handlebars.compile($participantsTemplateScript);
+    var $participants = $('.EventPage__events__list');
 
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
@@ -411,11 +412,8 @@ $(document).ready(function () {
             data.forEach(function (item) {
                 if (item.id == index) {
                     $.getJSON("event", {id: item.id}, function (event) {
+                        $participants.html($participantsTemplate(event.participants));
                         populateSinglePageEventPage($singlePage, event);
-
-                        var participants = $('.EventPage__events__list');
-                        participants.html(participantsTemplate(event.participants));
-
 
                         $('.SinglePage__button--attend').off();
                         $('.SinglePage__button--attend').on('click', function() {
@@ -431,8 +429,8 @@ $(document).ready(function () {
                                     xhr.setRequestHeader("Content-Type", "application/json");
                                 },
                                 success: function () {
-                                    $.getJSON("event", {id: item.id}, function (data) {
-                                        participants.html(participantsTemplate(event.participants));
+                                    $.getJSON("event", {id: item.id}, function (event) {
+                                        $participants.html($participantsTemplate(event.participants));
                                     });
                                 },
                                 error: function () {
@@ -463,7 +461,7 @@ $(document).ready(function () {
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
-                if (user) {
+                if (user && $participants.find("[data-id="+user.id+"]").length==0) {
                     $buttonAttend.show();
                 }
             } else {
