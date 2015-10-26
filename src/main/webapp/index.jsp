@@ -128,16 +128,16 @@
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="SinglePage__inputItem UserPage__email">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset" type="email" placeholder="User email" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable" type="email" placeholder="User email" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__password">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset" type="password" placeholder="User password" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable" type="password" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__name">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset" placeholder="First name" required/>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset" placeholder="Last name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable" placeholder="First name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable" placeholder="Last name" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__events">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
@@ -158,15 +158,15 @@
                                 {{/each}}
                             </script>
                         </select>
-                        <input class="SinglePage__inputItem__inputField" id="event-categories-string">
+                        <input class="SinglePage__inputItem__inputField" id="event-categories-string" readonly>
                     </li>
                     <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset" id="start" placeholder="When event starts"/>
+                        <input class="SinglePage__inputItem__inputField reset editable" id="start" placeholder="When event starts"/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__end">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset" id="end" placeholder="When event ends"/>
+                        <input class="SinglePage__inputItem__inputField reset editable" id="end" placeholder="When event ends"/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>

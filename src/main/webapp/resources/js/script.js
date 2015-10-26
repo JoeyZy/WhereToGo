@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     // Find all event fields
     var $singlePage = $('.Page');
+    var $eventPage = $singlePage.find('.EventPage');
     var $eventCategories = $singlePage.find('#event-categories');
     var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
     var $eventCategoriesString = $singlePage.find('#event-categories-string');
@@ -457,6 +458,7 @@ $(document).ready(function () {
                 $eventDescription.html(linkify(event.description));
                 $eventDescription.attr('contenteditable', false);
                 singlePage.find('.EventPage__owner').val(event.owner.firstName + " " + event.owner.lastName);
+                $eventPage.find('editable').attr('readonly', true);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
