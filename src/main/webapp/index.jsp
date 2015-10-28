@@ -147,7 +147,7 @@
                 <ul class="SinglePage__inputItemsList EventPage">
                     <li class="SinglePage__inputItem EventPage__owner">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
-                        <input class="SinglePage__inputItem__inputField EventPage__owner" readonly/>
+                        <input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__categoty">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>

@@ -387,7 +387,7 @@ $(document).ready(function () {
             function validateEventFields(event) {
                 var valid = true;
                 $errors.empty();
-                if ($singlePage.find('.EventPage__owner').val() !== user.firstName + " " + user.lastName) {
+                if ($singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
                     addErrorListItem("Owner field is wrong");
                     valid = false;
                 }
@@ -457,7 +457,7 @@ $(document).ready(function () {
                 $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
                 $eventDescription.html(linkify(event.description));
                 $eventDescription.attr('contenteditable', false);
-                singlePage.find('.EventPage__owner').val(event.owner.firstName + " " + event.owner.lastName);
+                singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
                 $eventPage.find('editable').attr('readonly', true);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
@@ -475,7 +475,7 @@ $(document).ready(function () {
                 $('.EventPage__participants').hide();
                 $buttonAddEvent.show();
                 if (typeof user !== 'undefined') {
-                    singlePage.find('.EventPage__owner').val(user.firstName + " " + user.lastName);
+                    singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
                 }
                 $eventCategories.multiselect('refresh');
             }
