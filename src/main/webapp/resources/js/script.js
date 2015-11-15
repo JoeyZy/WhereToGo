@@ -457,8 +457,10 @@ $(document).ready(function () {
                 $eventPage.find('editable').attr('readonly', true);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
+                $eventStart.datepicker('disable');
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
+                $eventEnd.datepicker('disable');
                 if (user && $participants.find("[data-id="+user.id+"]").length==0) {
                     $buttonAttend.show();
                 }
@@ -466,7 +468,10 @@ $(document).ready(function () {
             } else {
                 $singlePageTitle.attr('readonly', false);
                 $eventDescription.attr('contenteditable', true);
+                $eventStart.datepicker('enable');
+                $eventEnd.datepicker('enable');
                 $eventDescription.addClass('editable');
+                $eventCategories.val('');
                 $eventCategories.multiselect('enable');
                 $('.EventPage__participants').hide();
                 $buttonAddEvent.show();
