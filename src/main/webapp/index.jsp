@@ -158,7 +158,6 @@
                                 {{/each}}
                             </script>
                         </select>
-                        <input class="SinglePage__inputItem__inputField" id="event-categories-string" readonly>
                     </li>
                     <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>

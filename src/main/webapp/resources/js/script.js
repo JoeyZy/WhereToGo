@@ -12,7 +12,6 @@ $(document).ready(function () {
     var $eventPage = $singlePage.find('.EventPage');
     var $eventCategories = $singlePage.find('#event-categories');
     var $eventCategoriesMultiselect = $singlePage.find('.btn-group');
-    var $eventCategoriesString = $singlePage.find('#event-categories-string');
     var $singlePageTitle = $singlePage.find('.SinglePage__title');
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
@@ -29,9 +28,6 @@ $(document).ready(function () {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
         //reset inputs
         $singlePage.find(".reset").val("");
-        //hide all fields related to "Categories"
-        $eventCategoriesMultiselect.hide();
-        $eventCategoriesString.hide();
         // Empty description
         $eventDescription.empty();
         $buttons.hide();
@@ -391,8 +387,8 @@ $(document).ready(function () {
                     addErrorListItem("Owner field is wrong");
                     valid = false;
                 }
-                if (!event.name) {
-                    addErrorListItem("Event name can't be empty");
+                if (!event.name || event.name.length < 2) {
+                    addErrorListItem("Event name should have 2 or more symbols");
                     valid = false;
                 }
                 if(event.categories.length == 0) {
@@ -452,9 +448,9 @@ $(document).ready(function () {
                 $eventDescription.attr('contenteditable', false);
                 $eventDescription.removeClass('editable');
                 $singlePageTitle.val(event.name);
-                $eventCategoriesString.show();
+                $eventCategories.val(getEventCategoriesAsList(event.categories));
+                $eventCategories.multiselect('disable');
                 $('.EventPage__participants').show();
-                $eventCategoriesString.val(getEventCategoriesAsList(event.categories));
                 $eventDescription.html(linkify(event.description));
                 $eventDescription.attr('contenteditable', false);
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
@@ -466,12 +462,12 @@ $(document).ready(function () {
                 if (user && $participants.find("[data-id="+user.id+"]").length==0) {
                     $buttonAttend.show();
                 }
+                $eventCategories.multiselect('refresh');
             } else {
                 $singlePageTitle.attr('readonly', false);
                 $eventDescription.attr('contenteditable', true);
                 $eventDescription.addClass('editable');
-                $eventCategoriesMultiselect.show();
-                $eventCategoriesString.hide();
+                $eventCategories.multiselect('enable');
                 $('.EventPage__participants').hide();
                 $buttonAddEvent.show();
                 if (typeof user !== 'undefined') {
@@ -483,9 +479,9 @@ $(document).ready(function () {
             function getEventCategoriesAsList(categories) {
                 var res = categories[0].name;
                 for (var i=1; i<categories.length; i++) {
-                    res += ', ' + categories[i].name;
+                    res += ',' + categories[i].name;
                 }
-                return res;
+                return res.split(',');
             }
 
             function makeDataEditable() {
