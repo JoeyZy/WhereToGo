@@ -16,9 +16,11 @@ $(document).ready(function () {
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
+    var $eventPageParticipants = $('.EventPage__participants');
     var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.errors');
+    var $buttonEdit =  $singlePage.find(".SinglePage__button--edit");
     var $buttonApply = $singlePage.find('.SinglePage__button--apply');
     var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
     var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
@@ -197,7 +199,10 @@ $(document).ready(function () {
         }
         // If the keyword isn't listed in the above - render the error $singlePage.
         else {
-            renderErrorPage();
+            filters = {};
+            checkboxes.prop('checked', false);
+
+            renderEventsPage(events);
         }
         checkSession();
     }
@@ -324,6 +329,78 @@ $(document).ready(function () {
     var $participantsTemplate = Handlebars.compile($participantsTemplateScript);
     var $participants = $('.EventPage__events__list');
 
+    function saveEvent(eventJson, newEvent) {
+        if (!validateEventFields(eventJson)) {
+            $errors.show();
+            return;
+        }
+        $.ajax({
+            url: (newEvent) ? "addEvent" : "updateEvent",
+            data: JSON.stringify(eventJson),
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+            },
+            success: function () {
+                loadEvents();
+                createQueryHash(filters);
+            },
+            error: function (error) {
+                alert("ERROR!" + error);
+            },
+            complete: function () {
+            }
+        });
+        function validateEventFields(event) {
+            var valid = true;
+            $errors.empty();
+            if ($singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
+                addErrorListItem("Owner field is wrong");
+                valid = false;
+            }
+            if (!event.name || event.name.length < 2) {
+                addErrorListItem("Event name should have 2 or more symbols");
+                valid = false;
+            }
+            if(event.categories.length == 0) {
+                addErrorListItem("Choose at least one category");
+                valid = false;
+            }
+            if(!event.startDateTime) {
+                addErrorListItem("Add date for event");
+                valid = false;
+            }
+            return valid;
+        }
+        function addErrorListItem(message) {
+            $errors.append('<li>'+message+'</li>');
+        }
+    }
+
+    function makeEventPageEditable() {
+        $singlePageTitle.attr('readonly', false);
+        $eventDescription.attr('contenteditable', true);
+        $eventStart.datepicker('enable');
+        $eventEnd.datepicker('enable');
+        $eventDescription.addClass('editable');
+        $eventCategories.multiselect('enable');
+        $eventCategories.multiselect('refresh');
+    }
+
+    function makeEventPageUneditable() {
+        $singlePageTitle.attr('readonly', true);
+        $eventDescription.attr('contenteditable', false);
+        $eventDescription.removeClass('editable');
+        $singlePageTitle.val('');
+        $eventCategories.multiselect('disable');
+        $eventDescription.attr('contenteditable', false);
+        $eventPage.find('editable').attr('readonly', true);
+        $eventStart.datepicker('disable');
+        $eventEnd.datepicker('disable');
+        $eventCategories.multiselect('refresh');
+    }
+
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
@@ -357,53 +434,8 @@ $(document).ready(function () {
                     "endDateTime": $eventEnd.val(),
                     "description": $eventDescription.text()
                 };
-                if (!validateEventFields(eventJson)) {
-                    $errors.show();
-                    return;
-                }
-                $.ajax({
-                    url: "addEvent",
-                    data: JSON.stringify(eventJson),
-                    type: "POST",
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Accept", "application/json");
-                        xhr.setRequestHeader("Content-Type", "application/json");
-                    },
-                    success: function () {
-                        loadEvents();
-                        createQueryHash(filters);
-                    },
-                    error: function (error) {
-                        alert("ERROR!" + error);
-                    },
-                    complete: function () {
-                    }
-                });
+                saveEvent(eventJson, true);
             });
-            function validateEventFields(event) {
-                var valid = true;
-                $errors.empty();
-                if ($singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
-                    addErrorListItem("Owner field is wrong");
-                    valid = false;
-                }
-                if (!event.name || event.name.length < 2) {
-                    addErrorListItem("Event name should have 2 or more symbols");
-                    valid = false;
-                }
-                if(event.categories.length == 0) {
-                    addErrorListItem("Choose at least one category");
-                    valid = false;
-                }
-                if(!event.startDateTime) {
-                    addErrorListItem("Add date for event");
-                    valid = false;
-                }
-                return valid;
-            }
-            function addErrorListItem(message) {
-                $errors.append('<li>'+message+'</li>');
-            }
         }
         function renderShowEventPage(data) {
             data.forEach(function (item) {
@@ -412,8 +444,8 @@ $(document).ready(function () {
                         $participants.html($participantsTemplate(event.participants));
                         populateSinglePageEventPage($singlePage, event);
 
-                        $('.SinglePage__button--attend').off();
-                        $('.SinglePage__button--attend').on('click', function() {
+                        $buttonAttend.off();
+                        $buttonAttend.on('click', function() {
                             var json = {
                                 id:item.id
                             };
@@ -427,6 +459,7 @@ $(document).ready(function () {
                                 },
                                 success: function () {
                                     $.getJSON("event", {id: item.id}, function (event) {
+                                        $buttonAttend.hide();
                                         $participants.html($participantsTemplate(event.participants));
                                     });
                                 },
@@ -437,6 +470,14 @@ $(document).ready(function () {
                                 }
                             });
                         });
+
+                        $buttonEdit.off();
+                        $buttonEdit.on('click', function(event) {
+                            event.preventDefault();
+                            makeEventPageEditable();
+                            $buttonEdit.hide();
+                            $buttonApply.show();
+                        });
                     });
                 }
             });
@@ -444,41 +485,31 @@ $(document).ready(function () {
 
         function populateSinglePageEventPage(singlePage, event) {
             if (typeof event != 'undefined') {
-                $singlePageTitle.attr('readonly', true);
-                $eventDescription.attr('contenteditable', false);
-                $eventDescription.removeClass('editable');
+                makeEventPageUneditable();
                 $singlePageTitle.val(event.name);
                 $eventCategories.val(getEventCategoriesAsList(event.categories));
-                $eventCategories.multiselect('disable');
-                $('.EventPage__participants').show();
+                $eventPageParticipants.show();
                 $eventDescription.html(linkify(event.description));
-                $eventDescription.attr('contenteditable', false);
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
-                $eventPage.find('editable').attr('readonly', true);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
-                $eventStart.datepicker('disable');
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
-                $eventEnd.datepicker('disable');
+                if (user && user.id === event.owner.id) {
+                    $buttonEdit.show();
+                }
                 if (user && $participants.find("[data-id="+user.id+"]").length==0) {
                     $buttonAttend.show();
                 }
                 $eventCategories.multiselect('refresh');
             } else {
-                $singlePageTitle.attr('readonly', false);
-                $eventDescription.attr('contenteditable', true);
-                $eventStart.datepicker('enable');
-                $eventEnd.datepicker('enable');
-                $eventDescription.addClass('editable');
+                makeEventPageEditable();
                 $eventCategories.val('');
-                $eventCategories.multiselect('enable');
-                $('.EventPage__participants').hide();
+                $eventPageParticipants.hide();
                 $buttonAddEvent.show();
                 if (typeof user !== 'undefined') {
                     singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
                 }
-                $eventCategories.multiselect('refresh');
             }
 
             function getEventCategoriesAsList(categories) {
@@ -487,10 +518,6 @@ $(document).ready(function () {
                     res += ',' + categories[i].name;
                 }
                 return res.split(',');
-            }
-
-            function makeDataEditable() {
-
             }
         }
     }
@@ -519,12 +546,15 @@ $(document).ready(function () {
                 $userPage.find('.UserPage__password').hide();
                 $userFirstName.val(user.firstName + ' ' + user.lastName);
                 $userLastName.hide();
+                $userPage.find('.UserPage__events').show();
                 $singlePage.addClass('visible');
             });
         }
 
         function renderAddUserPage() {
+            $userPage.find('.UserPage__password').show();
             $userPage.find('.UserPage__name__last').show();
+            $userPage.find('.UserPage__events').hide();
             $buttonAddUser.show();
             $buttonAddUser.on('click', function(e) {
 

@@ -123,7 +123,7 @@
     <div class="Page">
         <div class="Overlay"></div>
         <div class="SinglePage">
-            <form class="SinglePage__inputForm">
+            <form class="SinglePage__inputForm" novalidate>
                 <input class="SinglePage__title reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="SinglePage__inputItem UserPage__email">
@@ -183,10 +183,11 @@
                     </li>
                 </ul>
                 <ul class="errors"></ul>
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit" onclick="this.blur();">Edit event</button>
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply changes</button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend" onclick="this.blur();">I'll be there</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser" onclick="this.blur();">Add a user</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent" onclick="this.blur();">Add an event</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser" onclick="this.blur();">Add user</button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent" onclick="this.blur();">Add event</button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>

@@ -1,17 +1,5 @@
 package com.luxoft.wheretogo.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
@@ -19,6 +7,14 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class RestServiceController {
@@ -51,6 +47,11 @@ public class RestServiceController {
 	public void addEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		eventsService.add(event);
+	}
+
+	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
+	public void updateEvent(@RequestBody Event event, HttpServletRequest request) {
+		eventsService.update(event);
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)

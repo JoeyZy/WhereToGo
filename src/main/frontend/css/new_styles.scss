@@ -317,7 +317,7 @@ h1, h3 {
          width: 100%;
     }
     &__inputForm {
-        padding: 20px 0;
+        padding: 20px 0 40px 0;
         width: 70%;
         margin: 0 auto;
     }
@@ -347,6 +347,7 @@ h1, h3 {
     }
 
     form #description {
+        padding: 5px;
         clear: both;
         width: 100%;
         resize: none;
@@ -359,7 +360,7 @@ h1, h3 {
         margin: 12px;
     }
 
-    form > ul.list-form > li > .editable {
+    #description.editable {
         border: 1px solid #dbe3e7;
     }
 
