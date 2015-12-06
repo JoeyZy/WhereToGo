@@ -95,7 +95,7 @@ public class RestServiceController {
 	public void addUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		Event eventToAdd = eventsService.findById(event.getId());
 		eventToAdd.getParticipants().add((User) request.getSession().getAttribute("user"));
-		eventsService.add(eventToAdd);
+		eventsService.update(eventToAdd);
 	}
 
 }

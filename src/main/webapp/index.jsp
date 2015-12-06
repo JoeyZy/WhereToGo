@@ -89,12 +89,6 @@
                             </script>
                         </div>
                     </div>
-                    <div class="filter-criteria">
-                        <span>Date</span>
-                        <label><input type="checkbox" value="1" name="date">Today</label>
-                        <label><input type="checkbox" value="7" name="date">Week</label>
-                        <label><input type="checkbox" value="30" name="date">Month</label>
-                    </div>
                     <button class="btn btn-info">Clear filters</button>
                 </form>
             </div>
@@ -144,12 +138,12 @@
                         <ul class="UserPage__events__list"></ul>
                     </li>
                 </ul>
-                <ul class="SinglePage__inputItemsList EventPage">
+                <ul class="SinglePage__inputItemsList EventPage" data-id="">
                     <li class="SinglePage__inputItem EventPage__owner">
                         <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
                         <input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>
                     </li>
-                    <li class="SinglePage__inputItem EventPage__categoty">
+                    <li class="SinglePage__inputItem EventPage__category">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>
                         <select id="event-categories" multiple="multiple">
                             <script id="event-categories-list" type="x-handlebars-template">

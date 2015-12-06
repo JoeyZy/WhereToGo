@@ -28,6 +28,9 @@ public class EventsServiceImpl implements EventsService {
 		Event oldEvent = findById(event.getId());
 		if (oldEvent != null) {
 			event.setOwner(oldEvent.getOwner());
+			if (event.getParticipants() == null) {
+				event.setParticipants(oldEvent.getParticipants());
+			}
 		}
 		eventsRepository.merge(event);
 	}

@@ -26,6 +26,29 @@ $(document).ready(function () {
     var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 
+    $buttonEdit.on('click', function(event) {
+        event.preventDefault();
+        makeEventPageEditable();
+        $buttonEdit.hide();
+        $buttonApply.show();
+    });
+
+    $buttonApply.on('click', function () {
+        var categoriesList = [];
+        $eventCategories.find(":selected").each(function(i, selected){
+            categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+        });
+        var eventJson = {
+            "id": $singlePage.find('.EventPage').attr('data-id'),
+            "name": $singlePageTitle.val(),
+            "categories": categoriesList,
+            "startDateTime": $eventStart.val(),
+            "endDateTime": $eventEnd.val(),
+            "description": $eventDescription.text()
+        };
+        saveEvent(eventJson, false);
+    });
+
     function resetSinglePage(){
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
         //reset inputs
@@ -47,7 +70,7 @@ $(document).ready(function () {
         categoriesFilter.html(categoriesListElement(data));
         $eventCategories.multiselect();
     });
-    var checkboxes = $('.all-events input[type=checkbox]');
+    var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
     // Login handler 
     loginForm.submit(function (e) {
@@ -157,7 +180,7 @@ $(document).ready(function () {
             '': function () {
                 // Clear the filters object, uncheck all checkboxes, show all the events
                 filters = {};
-                checkboxes.prop('checked', false);
+                $('.filters input[type=checkbox]').prop('checked', false);
 
                 renderEventsPage(events);
             },
@@ -344,7 +367,7 @@ $(document).ready(function () {
             },
             success: function () {
                 loadEvents();
-                createQueryHash(filters);
+                render(window.location.hash);
             },
             error: function (error) {
                 alert("ERROR!" + error);
@@ -405,6 +428,7 @@ $(document).ready(function () {
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
         resetSinglePage();
+        $singlePage.find('.EventPage').attr("data-id", index);
         $singlePage.find('.UserPage').hide();
         $singlePage.find('.EventPage').show();
         if (typeof data != 'undefined' && data.length) {
@@ -469,14 +493,6 @@ $(document).ready(function () {
                                 complete: function () {
                                 }
                             });
-                        });
-
-                        $buttonEdit.off();
-                        $buttonEdit.on('click', function(event) {
-                            event.preventDefault();
-                            makeEventPageEditable();
-                            $buttonEdit.hide();
-                            $buttonApply.show();
                         });
                     });
                 }
