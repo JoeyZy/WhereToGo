@@ -31,10 +31,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="userInfo" href="/user"></a>
+                        <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
                     </li>
                     <li>
-                        <a class="logout" href="/logout"></a>
+                        <a class="logout" href="${pageContext.request.contextPath}/logout"></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
@@ -44,7 +44,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="form" role="form" method="post" accept-charset="UTF-8"
-                                              action="/login" id="login-nav">
+                                              action="login" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"

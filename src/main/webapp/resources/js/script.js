@@ -732,7 +732,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: "/user",
+            url: "user",
             type: "GET",
             success: function (sessionUser) {
                 if (sessionUser.length == 0) {
