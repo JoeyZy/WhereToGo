@@ -31,6 +31,11 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <div class="add-event-container">
+                            <button class="btn btn-success btn-block btn-add-event">Add event</button>
+                        </div>
+                    </li>
+                    <li>
                         <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
                     </li>
                     <li>
@@ -75,7 +80,6 @@
 <div class="main-content">
     <div class="all-events page">
         <div class="nav-left">
-            <button class="btn btn-success btn-block btn-add-event">Add event</button>
             <div class="filters">
                 <form>
                     <div class="filter-criteria">
@@ -122,16 +126,20 @@
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="SinglePage__inputItem UserPage__email">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable" type="email" placeholder="User email" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"
+                               type="email" placeholder="User email" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__password">
                         <label class="SinglePage__inputItem__label"><b>Password:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable" type="password" placeholder="User password" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
+                               type="password" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__name">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable" placeholder="First name" required/>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable" placeholder="Last name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
+                               placeholder="First name" required/>
+                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
+                               placeholder="Last name" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__events">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
@@ -155,11 +163,13 @@
                     </li>
                     <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset editable" id="start" placeholder="When event starts"/>
+                        <input class="SinglePage__inputItem__inputField reset editable" id="start"
+                               placeholder="When event starts"/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__end">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset editable" id="end" placeholder="When event ends"/>
+                        <input class="SinglePage__inputItem__inputField reset editable" id="end"
+                               placeholder="When event ends"/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
@@ -177,11 +187,21 @@
                     </li>
                 </ul>
                 <ul class="errors"></ul>
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit" onclick="this.blur();">Edit event</button>
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--apply" onclick="this.blur();">Apply changes</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend" onclick="this.blur();">I'll be there</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser" onclick="this.blur();">Add user</button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent" onclick="this.blur();">Add event</button>
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
+                        onclick="this.blur();">Edit event
+                </button>
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--apply"
+                        onclick="this.blur();">Apply changes
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
+                        onclick="this.blur();">I'll be there
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
+                        onclick="this.blur();">Add user
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent"
+                        onclick="this.blur();">Add event
+                </button>
             </form>
             <span class="edit"></span>
             <span class="close"></span>

@@ -6,7 +6,7 @@
 body {
     font: normal 16px Arial, Helvetica, sans-serif;
     padding: 50px;
- /*   background-image: url('/resources/images/background.jpg');*/
+    /*   background-image: url('/resources/images/background.jpg');*/
     background-size: cover;
 }
 
@@ -64,9 +64,12 @@ h1, h3 {
     position: absolute;
 }
 
+.add-event-container {
+    margin: 8px 0;
+}
+
 .btn-add-event {
     position: absolute;
-    margin-bottom: 15px;
     width: 100%;
     opacity: 0;
     pointer-events: none;
@@ -75,7 +78,7 @@ h1, h3 {
 .btn-add-event.visible {
     pointer-events: auto;
     position: relative;
-    transition: 2s;
+    transition: 0.5s;
     opacity: 1;
 }
 
