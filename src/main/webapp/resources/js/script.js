@@ -20,13 +20,13 @@ $(document).ready(function () {
     var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.errors');
-    var $buttonEdit =  $singlePage.find(".SinglePage__button--edit");
+    var $buttonEdit = $singlePage.find(".SinglePage__button--edit");
     var $buttonApply = $singlePage.find('.SinglePage__button--apply');
     var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
     var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 
-    $buttonEdit.on('click', function(event) {
+    $buttonEdit.on('click', function (event) {
         event.preventDefault();
         makeEventPageEditable();
         $buttonEdit.hide();
@@ -35,7 +35,7 @@ $(document).ready(function () {
 
     $buttonApply.on('click', function () {
         var categoriesList = [];
-        $eventCategories.find(":selected").each(function(i, selected){
+        $eventCategories.find(":selected").each(function (i, selected) {
             categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
         });
         var eventJson = {
@@ -49,7 +49,7 @@ $(document).ready(function () {
         saveEvent(eventJson, false);
     });
 
-    function resetSinglePage(){
+    function resetSinglePage() {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
         //reset inputs
         $singlePage.find(".reset").val("");
@@ -58,6 +58,7 @@ $(document).ready(function () {
         $buttons.hide();
         $errors.hide();
     }
+
     resetSinglePage();
 
     $('.home').click(function () {
@@ -184,10 +185,10 @@ $(document).ready(function () {
 
                 renderEventsPage(events);
             },
-            '#user': function() {
+            '#user': function () {
                 renderSingleUserPage(user);
             },
-            '#addUser': function() {
+            '#addUser': function () {
                 renderSingleUserPage();
             },
             // Single events $singlePage.
@@ -319,15 +320,29 @@ $(document).ready(function () {
         });
     }
 
+    function enableAddEventsBtn() {
+        var addEventBtn = $('.btn-add-event');
+        addEventBtn.removeClass('disabled');
+        addEventBtn.addClass('btn-success');
+        addEventBtn.removeAttr('title');
+    }
+
+    function disableAddEventsBtn() {
+        var addEventBtn = $('.btn-add-event');
+        addEventBtn.removeClass('btn-success');
+        addEventBtn.addClass('disabled');
+        addEventBtn.attr('title', 'Please login to create an event');
+        addEventBtn.setA
+    }
+
     // This function receives an object containing all the event we want to show.
     function renderEventsPage(data) {
         if (typeof data == 'undefined') {
             return;
         }
-        if (typeof user !== "undefined") {
-            $('.btn-add-event').addClass('visible');
-        } else {
-            $('.btn-add-event').removeClass('visible');
+
+        if (typeof user == "undefined") {
+            disableAddEventsBtn();
         }
         var page = $('.all-events'),
             allEvents = $('.all-events .events-list > li');
@@ -386,18 +401,19 @@ $(document).ready(function () {
                 addErrorListItem("Event name should have 2 or more symbols");
                 valid = false;
             }
-            if(event.categories.length == 0) {
+            if (event.categories.length == 0) {
                 addErrorListItem("Choose at least one category");
                 valid = false;
             }
-            if(!event.startDateTime) {
+            if (!event.startDateTime) {
                 addErrorListItem("Add date for event");
                 valid = false;
             }
             return valid;
         }
+
         function addErrorListItem(message) {
-            $errors.append('<li>'+message+'</li>');
+            $errors.append('<li>' + message + '</li>');
         }
     }
 
@@ -447,20 +463,23 @@ $(document).ready(function () {
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
             $buttonAddEvent.on('click', function () {
-                var categoriesList = [];
-                $eventCategories.find(":selected").each(function(i, selected){
-                    categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-                });
-                var eventJson = {
-                    "name": $singlePageTitle.val(),
-                    "categories": categoriesList,
-                    "startDateTime": $eventStart.val(),
-                    "endDateTime": $eventEnd.val(),
-                    "description": $eventDescription.text()
-                };
-                saveEvent(eventJson, true);
+                if (typeof user !== "undefined") {
+                    var categoriesList = [];
+                    $eventCategories.find(":selected").each(function (i, selected) {
+                        categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+                    });
+                    var eventJson = {
+                        "name": $singlePageTitle.val(),
+                        "categories": categoriesList,
+                        "startDateTime": $eventStart.val(),
+                        "endDateTime": $eventEnd.val(),
+                        "description": $eventDescription.text()
+                    };
+                    saveEvent(eventJson, true);
+                }
             });
         }
+
         function renderShowEventPage(data) {
             data.forEach(function (item) {
                 if (item.id == index) {
@@ -469,9 +488,9 @@ $(document).ready(function () {
                         populateSinglePageEventPage($singlePage, event);
 
                         $buttonAttend.off();
-                        $buttonAttend.on('click', function() {
+                        $buttonAttend.on('click', function () {
                             var json = {
-                                id:item.id
+                                id: item.id
                             };
                             $.ajax({
                                 url: 'addEventToUser',
@@ -514,7 +533,7 @@ $(document).ready(function () {
                 if (user && user.id === event.owner.id) {
                     $buttonEdit.show();
                 }
-                if (user && $participants.find("[data-id="+user.id+"]").length==0) {
+                if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
                     $buttonAttend.show();
                 }
                 $eventCategories.multiselect('refresh');
@@ -530,7 +549,7 @@ $(document).ready(function () {
 
             function getEventCategoriesAsList(categories) {
                 var res = categories[0].name;
-                for (var i=1; i<categories.length; i++) {
+                for (var i = 1; i < categories.length; i++) {
                     res += ',' + categories[i].name;
                 }
                 return res.split(',');
@@ -541,7 +560,7 @@ $(document).ready(function () {
     var $userEmail = $userPage.find('.UserPage__email__input');
     var $userPassword = $userPage.find('.UserPage__password__input');
     var $userFirstName = $userPage.find('.UserPage__name__first');
-    var $userLastName =  $userPage.find('.UserPage__name__last');
+    var $userLastName = $userPage.find('.UserPage__name__last');
 
     function renderSingleUserPage(user) {
         resetSinglePage();
@@ -572,7 +591,7 @@ $(document).ready(function () {
             $userPage.find('.UserPage__name__last').show();
             $userPage.find('.UserPage__events').hide();
             $buttonAddUser.show();
-            $buttonAddUser.on('click', function(e) {
+            $buttonAddUser.on('click', function (e) {
 
                 if (!validateEventFields()) {
                     $errors.show();
@@ -613,19 +632,21 @@ $(document).ready(function () {
                         addErrorListItem("Enter password");
                         valid = false;
                     }
-                    if($userFirstName.val().length == 0) {
+                    if ($userFirstName.val().length == 0) {
                         addErrorListItem("Enter First Name");
                         valid = false;
                     }
-                    if($userLastName.val().length == 0) {
+                    if ($userLastName.val().length == 0) {
                         addErrorListItem("Enter Last Name");
                         valid = false;
                     }
                     return valid;
                 }
+
                 function addErrorListItem(message) {
-                    $errors.append('<li>'+message+'</li>');
+                    $errors.append('<li>' + message + '</li>');
                 }
+
                 e.preventDefault();
             });
             // Show the $singlePage.
@@ -655,13 +676,13 @@ $(document).ready(function () {
                     results = [];
                 }
                 // In these nested 'for loops' we will iterate over the filters and the events
-                // and check if they contain the same values (the ones we are filtering by). 
+                // and check if they contain the same values (the ones we are filtering by).
                 // Iterate over the entries inside filters.criteria (remember each criteria contains an array).
                 filters[c].forEach(function (filter) {
                     // Iterate over the events.
                     events.forEach(function (item) {
                         // If the event has the same specification value as the one in the filter
-                        // push it inside the results array and mark the isFiltered flag true. 
+                        // push it inside the results array and mark the isFiltered flag true.
                         if (typeof item[c] == 'number') {
                             if (item[c] == filter) {
                                 results.push(item);
@@ -749,9 +770,10 @@ $(document).ready(function () {
 
     function grantRightsToUser() {
         if (typeof user === 'undefined') {
+            disableAddEventsBtn();
             return;
         }
-        $('.btn-add-event').addClass('visible');
+        enableAddEventsBtn();
     }
 
     loadEvents();
