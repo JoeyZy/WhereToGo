@@ -206,10 +206,11 @@ $(document).ready(function () {
                 url = url.split('#filter/')[1].trim();
                 // Try and parse the filters object from the query string.
                 try {
-                    filters = JSON.parse(url);
+                    filters = JSON.parse(decodeURIComponent(url));
                 }
                     // If it isn't a valid json, go back to homepage ( the rest of the code won't be executed ).
                 catch (err) {
+                    alert("Can't parse filters data!" + err);
                     window.location.hash = '#';
                     return;
                 }
