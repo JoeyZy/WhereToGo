@@ -153,7 +153,7 @@
                     </li>
                     <li class="SinglePage__inputItem EventPage__category">
                         <label class="SinglePage__inputItem__label"><b>Category:</b></label>
-                        <select id="event-categories" multiple="multiple">
+                        <select id="event-categories">
                             <script id="event-categories-list" type="x-handlebars-template">
                                 {{#each this}}
                                 <option data-id="{{id}}">{{name}}</option>
