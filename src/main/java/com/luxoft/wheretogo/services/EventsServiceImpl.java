@@ -20,14 +20,19 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public void add(Event event) {
-		Event existingEvent = findByName(event.getName());
-		if (existingEvent != null) {
-			event.setId(existingEvent.getId());
+		eventsRepository.add(event);
+	}
+
+	@Override
+	public void update(Event event) {
+		Event oldEvent = findById(event.getId());
+		if (oldEvent != null) {
+			event.setOwner(oldEvent.getOwner());
 			if (event.getParticipants() == null) {
-				event.setParticipants(existingEvent.getParticipants());
+				event.setParticipants(oldEvent.getParticipants());
 			}
 		}
-		eventsRepository.add(event);
+		eventsRepository.merge(event);
 	}
 
 	@Override

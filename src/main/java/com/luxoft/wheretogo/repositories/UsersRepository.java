@@ -12,5 +12,5 @@ public interface UsersRepository {
 
 	User findById(long userId);
 
-	User findByLogin(String userLogin);
+	User findByEmail(String userLogin);
 }

@@ -5,66 +5,13 @@
 
 body {
     font: normal 16px Arial, Helvetica, sans-serif;
+    padding: 50px;
+    /*   background-image: url('/resources/images/background.jpg');*/
+    background-size: cover;
 }
 
 h1, h3 {
     font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
-}
-
-button {
-    border-radius: 2px;
-    background-color: #4BC34B;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
-    border: 0;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 13px;
-    cursor: pointer;
-
-    width: 95px;
-    height: 32px;
-}
-
-/*-----------------
-	The Header
-------------------*/
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 40px;
-    z-index: 100;
-
-    background-color: #282b2c;
-    padding: 20px 40px;
-    color: #fff;
-    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
-}
-
-header a {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-header h2.tzine {
-    float: right;
-    opacity: 0.9;
-}
-
-header h2.tzine:hover {
-    opacity: 1;
-}
-
-header h2.tzine a {
-    font-size: 13px;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 12px 18px;
-    border-radius: 3px;
-    background-color: #5895DB;
 }
 
 @media (max-width: 500px) {
@@ -86,9 +33,9 @@ header h2.tzine a {
 
 .main-content {
     box-sizing: border-box;
-    text-align: center;
-    margin: 125px auto 60px;
-    padding: 0 40px;
+    margin: 30px 40px 60px;
+    /*padding: 0 40px;*/
+    position: relative;
 }
 
 .main-content h3 {
@@ -112,18 +59,33 @@ header h2.tzine a {
 
 /*	Filter Form	*/
 
+.nav-left {
+    width: 190px;
+    position: absolute;
+}
+
+.add-event-container {
+    margin: 8px 0;
+}
+
+.btn-add-event {
+    position: relative;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    pointer-events: auto;
+}
+
 .filters {
     box-sizing: border-box;
     padding: 5px 30px 30px;
-    width: 190px;
     background-color: #FFF;
     border: 1px solid #DBE3E7;
     border-radius: 3px;
     box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
-    position: fixed;
+    position: relative;
     text-align: left;
     color: #2B2E31;
-    opacity: 0;
     pointer-events: none;
 }
 
@@ -142,8 +104,9 @@ header h2.tzine a {
 
 .filters label {
     display: block;
-    line-height: 1.4;
+    line-height: 1.0;
     font-size: 15px;
+    font-weight: normal;
 }
 
 .filters label input {
@@ -156,10 +119,6 @@ header h2.tzine a {
 
 /*	events List	*/
 
-.all-events h3 {
-    opacity: 0;
-}
-
 .events-list {
     list-style: none;
     margin-left: 225px;
@@ -171,8 +130,7 @@ header h2.tzine a {
 }
 
 .all-events.visible .events-list,
-.all-events.visible .filters,
-.all-events.visible h3 {
+.all-events.visible .filters {
     opacity: 1;
     transition: 1s;
     pointer-events: auto;
@@ -311,71 +269,132 @@ header h2.tzine a {
 	Single event Page
 ----------------------------*/
 
-.single-event {
+.SinglePage {
     z-index: 100;
 }
 
-.overlay {
-    height: 0;
+.Overlay {
+    height: 10%;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #282b2c;
+    background-color: #000000;
     transition: 0.6s;
     z-index: 100;
+    pointer-events: none;
+    opacity: 0;
 }
 
-.single-event.visible .overlay {
+.Page.visible .Overlay {
+    pointer-events: auto;
+    opacity: 0.8;
     height: 100%;
 }
 
-.preview-large {
+.SinglePage {
     box-sizing: border-box;
-    width: 760px;
-    /*height: 550px;*/
-    position: fixed;
-    left: 50%;
-    margin-left: -375px;
-    top: 50%;
-    margin-top: -275px;
+    margin: 0 auto;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
     pointer-events: none;
-
-    border-radius: 6px;
     background-color: #ffffff;
 
     z-index: 102;
     opacity: 0;
     transition: 0.4s;
 
+    &__title {
+         font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
+         border: none;
+         text-align: center;
+         margin: 20px auto 0;
+         width: 100%;
+    }
+    &__inputForm {
+        padding: 20px 0 40px 0;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    &__inputItemsList {
+        margin-top: 10px;
+        text-align: left;
+        list-style: none outside;
+        padding: 0;
+    }
+
+    &__inputItem {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        position: relative;
+
+        &__label {
+            width: 20%;
+            display: inline-block;
+        }
+
+        &__inputField {
+            height: 20px;
+            border: none;
+            background-color: white;
+        }
+    }
+
+    form #description {
+        padding: 5px;
+        clear: both;
+        width: 100%;
+        resize: none;
+        height: 100%;
+        outline: none;
+    }
+
+    form > ul.list-form > li > button {
+        background-color: #87bae1;
+        margin: 12px;
+    }
+
+    #description.editable {
+        border: 1px solid #dbe3e7;
+    }
+
+    img {
+        width: 100%;
+        height: 280px;
+        border-bottom: 3px solid #efefef;
+        border-radius: 5px 5px 0 0;
+    }
+
+    p {
+        line-height: 23px;
+        padding: 50px 45px;
+    }
+
+    table {
+        line-height: 23px;
+        padding: 50px 45px;
+        text-align: left;
+    }
+
 }
 
-.single-event.visible .preview-large {
+.Page.visible .SinglePage {
     opacity: 1;
     transition: 1.4s;
     pointer-events: auto;
 }
 
-.preview-large h3 {
-    margin-top: 20px;
-}
-
-.preview-large img {
-    width: 100%;
-    height: 280px;
-    border-bottom: 3px solid #efefef;
-    border-radius: 5px 5px 0 0;
-}
-
-.preview-large p {
-    line-height: 23px;
-    padding: 50px 45px;
-}
-
-.preview-large table {
-    line-height: 23px;
-    padding: 50px 45px;
-    text-align: left;
+.apply-btn {
+    position: absolute;
+    right: 89px;
+    top: 15px;
+    height: 32px;
+    cursor: pointer;
+    visibility: hidden;
 }
 
 .edit {
@@ -386,6 +405,7 @@ header h2.tzine a {
     width: 32px;
     height: 32px;
     cursor: pointer;
+    visibility: hidden;
 }
 
 .close {
@@ -399,10 +419,10 @@ header h2.tzine a {
 }
 
 /*---------------------------
-	Error Page
+	ErrorPage Page
 ----------------------------*/
 
-.error {
+.ErrorPage {
     opacity: 0;
     transition: 0.6s;
     pointer-events: none;
@@ -412,66 +432,57 @@ header h2.tzine a {
     width: 100%;
 }
 
-.error.visible {
+.ErrorPage.visible {
     opacity: 1;
 }
 
-.error h3 {
+.ErrorPage h3 {
     font-size: 40px;
 }
 
-.event-information {
-    padding: 20px 0;
-    text-align: left;
-    width: 600px;
-    margin: 0 auto;
-}
-
-.event-information ul {
-    list-style: none outside;
-    padding: 0;
-}
-
-.event-information li {
+ul.errors {
     padding: 12px;
-    border-bottom: 1px solid #eee;
-    position: relative;
+    list-style-position: inside;
+    font-size: 12px;
+    color: red;
 }
 
-.event-information label {
-    width: 20%;
-    margin-top: 3px;
-    display: inline-block;
-    float: left;
-    padding: 3px;
+/*Login*/
+
+#login-dp {
+    min-width: 200px;
+    padding: 10px 10px;
+    overflow: hidden;
+    margin-top: 5px;
+    background-color: rgba(255, 255, 255, .8);
 }
 
-.event-information input {
-    height: 20px;
-    width: 74%;
-    padding: 5px 8px;
-    border: none;
+#login-dp .bottom {
+    background-color: rgba(255, 255, 255, .8);
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
 }
 
-.event-information textarea {
-    display: block;
-    width: 100%;
-    resize: none;
-    height: 100%;
-    padding: 5px 8px;
-    border: none;
-}
-.event-information-div {
-    margin: 0 auto;
-    text-align: left;
-    width: 600px;
+@media (max-width: 768px) {
+    #login-dp {
+        background-color: inherit;
+        color: #fff;
+    }
+
+    #login-dp .bottom {
+        background-color: inherit;
+        border-top: 0 none;
+    }
 }
 
-.event-information button {
-    background-color: #87bae1;
-    margin: 12px;
+div.ui-datepicker {
+    font-size: 15px;
 }
 
-.event-information li .editable {
-    box-shadow: 0 0 10px #9ecaed;
+.EventPage {
+    &__events {
+        &__list {
+            list-style: none;
+        }
+    }
 }

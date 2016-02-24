@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,17 +24,17 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "login"})
-@ToString(of = {"id", "login"})
+@EqualsAndHashCode(of = {"id", "email"})
+@ToString(of = {"id", "email"})
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Email
 	@Column(unique = true)
-	@Size(min = 2, max = 30)
-	private String login;
+	private String email;
 
 	@JsonIgnore
 	@Size(min = 2, max = 30)
@@ -48,10 +47,6 @@ public class User {
 	@Size(min = 2, max = 30)
 	@Column(name = "last_name")
 	private String lastName;
-
-	@NotEmpty
-	@Email
-	private String email;
 
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "participants")
