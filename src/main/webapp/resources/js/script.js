@@ -333,7 +333,6 @@ $(document).ready(function () {
         addEventBtn.removeClass('btn-success');
         addEventBtn.addClass('disabled');
         addEventBtn.attr('title', 'Please login to create an event');
-        addEventBtn.setA
     }
 
     // This function receives an object containing all the event we want to show.
@@ -392,22 +391,37 @@ $(document).ready(function () {
             }
         });
         function validateEventFields(event) {
+            const EVENT_NAME_LENGTH_MIN = 3;
+            const EVENT_NAME_LENGTH_MAX = 20;
+            const DESCRIPTION_LENGTH_MIN = 10;
+            const DESCRIPTION_LENGTH_MAX = 1000;
+
             var valid = true;
             $errors.empty();
             if ($singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
                 addErrorListItem("Owner field is wrong");
                 valid = false;
             }
-            if (!event.name || event.name.length < 2) {
-                addErrorListItem("Event name should have 2 or more symbols");
+
+            var eventName = event.name.trim();
+            if (!eventName || eventName.length < EVENT_NAME_LENGTH_MIN || eventName.length > EVENT_NAME_LENGTH_MAX) {
+                addErrorListItem("Event name should be greater than " + EVENT_NAME_LENGTH_MIN +
+                    " and less than " + EVENT_NAME_LENGTH_MAX + " symbols");
                 valid = false;
             }
             if (event.categories.length == 0) {
-                addErrorListItem("Choose at least one category");
+                addErrorListItem("Choose a category");
                 valid = false;
             }
             if (!event.startDateTime) {
                 addErrorListItem("Add date for event");
+                valid = false;
+            }
+
+            var description = event.description.trim();
+            if (!description || description.length < DESCRIPTION_LENGTH_MIN || description.length > DESCRIPTION_LENGTH_MAX) {
+                addErrorListItem("Description should be greater than " + DESCRIPTION_LENGTH_MIN +
+                    " and less than " + DESCRIPTION_LENGTH_MAX + " symbols");
                 valid = false;
             }
             return valid;

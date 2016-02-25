@@ -106,7 +106,7 @@
                     <h2><a href="#"> {{name}} </a></h2>
                     <ul class="event-description">
                         <li><span>Category: </span>{{category}}</li>
-                        <li><span>Owner: </span>{{owner}}</li>
+                        <li><span>User Name: </span>{{owner}}</li>
                         <li><span>Begin: </span>{{startTime}}</li>
                         <li><span>End: </span>{{endTime}}</li>
                     </ul>
@@ -148,7 +148,7 @@
                 </ul>
                 <ul class="SinglePage__inputItemsList EventPage" data-id="">
                     <li class="SinglePage__inputItem EventPage__owner">
-                        <label class="SinglePage__inputItem__label"><b>Owner:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>User Name:</b></label>
                         <input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__category">
