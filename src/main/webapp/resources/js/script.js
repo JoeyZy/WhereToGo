@@ -382,7 +382,7 @@ $(document).ready(function () {
             },
             success: function () {
                 loadEvents();
-                render();
+                createQueryHash(filters);
             },
             error: function (error) {
                 alert("ERROR!" + error);
