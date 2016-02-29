@@ -382,7 +382,7 @@ $(document).ready(function () {
             },
             success: function () {
                 loadEvents();
-                render(window.location.hash);
+                render();
             },
             error: function (error) {
                 alert("ERROR!" + error);
