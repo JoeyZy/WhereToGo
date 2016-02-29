@@ -73,6 +73,7 @@ $(document).ready(function () {
     });
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
+    var $loginDropDown = $('.dropdown');
     // Login handler 
     loginForm.submit(function (e) {
         var email = loginForm.find("#userEmail").val();
@@ -175,6 +176,7 @@ $(document).ready(function () {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
         // Hide whatever $singlePage is currently shown.
+        checkSession();
         $('.visible').removeClass('visible');
         var map = {
             // The "Homepage".
@@ -229,7 +231,6 @@ $(document).ready(function () {
 
             renderEventsPage(events);
         }
-        checkSession();
     }
 
     // This function is called only once - on $singlePage load.
@@ -268,7 +269,7 @@ $(document).ready(function () {
                     user = undefined;
                     $('.userInfo').hide();
                     $('.logout').hide();
-                    $('.dropdown').show();
+                    $loginDropDown.show();
                     $(window).trigger('hashchange');
                 },
                 error: function () {
@@ -758,7 +759,7 @@ $(document).ready(function () {
         $('.userInfo').show();
         $('.logout').text('Logout');
         $('.logout').show();
-        $('.dropdown').toggle();
+        $loginDropDown.toggle();
         grantRightsToUser();
     }
 
@@ -775,6 +776,7 @@ $(document).ready(function () {
                     return;
                 }
                 setUser(sessionUser);
+                $loginDropDown.hide();
             },
             error: function () {
             },
