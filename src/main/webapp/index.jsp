@@ -32,9 +32,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="add-event-container">
-                            <button class="btn btn-block btn-add-event disabled"
-                                    title="Please login to create an event">Add event
-                            </button>
+                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event">Add event</button>
                         </div>
                     </li>
                     <li>
@@ -176,19 +174,6 @@
                     <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
                         <div contentEditable="false" id="description" title="Description:"></div>
-                    </li>
-                    <li class="SinglePage__inputItem">
-                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="location"></div>
-                    </li>
-                    <li class="SinglePage__inputItem EventPage__cost">
-                        <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
-                        <input class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
-                        <select class="form-control">
-                            <option selected="selected">UAH</option>
-                            <option>USD</option>
-                            <option>EUR</option>
-                        </select>
                     </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
