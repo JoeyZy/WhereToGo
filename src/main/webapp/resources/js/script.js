@@ -16,6 +16,7 @@ $(document).ready(function () {
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
+    var $eventLocation = $singlePage.find("#location");
     var $eventPageParticipants = $('.EventPage__participants');
     var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
@@ -44,7 +45,8 @@ $(document).ready(function () {
             "categories": categoriesList,
             "startDateTime": $eventStart.val(),
             "endDateTime": $eventEnd.val(),
-            "description": $eventDescription.text()
+            "description": $eventDescription.text(),
+            "location": $eventLocation.text()
         };
         saveEvent(eventJson, false);
     });
@@ -55,6 +57,7 @@ $(document).ready(function () {
         $singlePage.find(".reset").val("");
         // Empty description
         $eventDescription.empty();
+        $eventLocation.empty();
         $buttons.hide();
         $errors.hide();
     }
@@ -436,9 +439,11 @@ $(document).ready(function () {
     function makeEventPageEditable() {
         $singlePageTitle.attr('readonly', false);
         $eventDescription.attr('contenteditable', true);
+        $eventLocation.attr('contenteditable', true);
         $eventStart.datepicker('enable');
         $eventEnd.datepicker('enable');
         $eventDescription.addClass('editable');
+        $eventLocation.addClass('editable');
         $eventCategories.multiselect('enable');
         $eventCategories.multiselect('refresh');
     }
@@ -447,9 +452,12 @@ $(document).ready(function () {
         $singlePageTitle.attr('readonly', true);
         $eventDescription.attr('contenteditable', false);
         $eventDescription.removeClass('editable');
+        $eventLocation.attr('contenteditable', false);
+        $eventLocation.removeClass('editable');
         $singlePageTitle.val('');
         $eventCategories.multiselect('disable');
         $eventDescription.attr('contenteditable', false);
+        $eventLocation.attr('contenteditable', false);
         $eventPage.find('editable').attr('readonly', true);
         $eventStart.datepicker('disable');
         $eventEnd.datepicker('disable');
@@ -489,7 +497,8 @@ $(document).ready(function () {
                         "categories": categoriesList,
                         "startDateTime": $eventStart.val(),
                         "endDateTime": $eventEnd.val(),
-                        "description": $eventDescription.text()
+                        "description": $eventDescription.text(),
+                        "location": $eventLocation.text()
                     };
                     saveEvent(eventJson, true);
                 }
@@ -541,6 +550,7 @@ $(document).ready(function () {
                 $eventCategories.val(getEventCategoriesAsList(event.categories));
                 $eventPageParticipants.show();
                 $eventDescription.html(linkify(event.description));
+                $eventLocation.html(linkify(event.location));
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);

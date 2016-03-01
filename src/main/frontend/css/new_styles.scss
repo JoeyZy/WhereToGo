@@ -1,3 +1,5 @@
+$border: 1px solid #dbe3e7;
+
 * {
     margin: 0;
     padding: 0;
@@ -147,7 +149,7 @@ h1, h3 {
     font: normal 12px sans-serif;
 
     background-color: #ffffff;
-    border: 1px solid #dbe3e7;
+    border: $border;
     border-radius: 3px;
     box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
 
@@ -308,11 +310,11 @@ h1, h3 {
     transition: 0.4s;
 
     &__title {
-         font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
-         border: none;
-         text-align: center;
-         margin: 20px auto 0;
-         width: 100%;
+        font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
+        border: none;
+        text-align: center;
+        margin: 20px auto 0;
+        width: 100%;
     }
     &__inputForm {
         padding: 20px 0 40px 0;
@@ -344,13 +346,15 @@ h1, h3 {
         }
     }
 
-    form #description {
-        padding: 5px;
-        clear: both;
-        width: 100%;
-        resize: none;
-        height: 100%;
-        outline: none;
+    form {
+        #description, #location {
+            padding: 5px;
+            clear: both;
+            width: 100%;
+            resize: none;
+            height: 100%;
+            outline: none;
+        }
     }
 
     form > ul.list-form > li > button {
@@ -358,8 +362,10 @@ h1, h3 {
         margin: 12px;
     }
 
-    #description.editable {
-        border: 1px solid #dbe3e7;
+    #description, #location {
+        &.editable {
+            border: $border;
+        }
     }
 
     img {
@@ -483,6 +489,17 @@ div.ui-datepicker {
     &__events {
         &__list {
             list-style: none;
+        }
+    }
+    &__cost {
+        .form-control {
+            display: initial;
+            border: $border;
+            border-radius: 0;
+            width: inherit;
+        }
+        input.form-control {
+            width: 20%;
         }
     }
 }
