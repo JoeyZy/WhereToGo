@@ -77,16 +77,16 @@ h1, h3 {
 }
 
 .filters {
-    box-sizing: border-box;
-    padding: 5px 30px 30px;
-    background-color: #FFF;
-    border: 1px solid #DBE3E7;
-    border-radius: 3px;
-    box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
-    position: relative;
-    text-align: left;
-    color: #2B2E31;
-    pointer-events: none;
+  box-sizing: border-box;
+  padding: 5px 10px 30px;
+  background-color: #FFF;
+  border: 1px solid #DBE3E7;
+  border-radius: 3px;
+  box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
+  position: relative;
+  text-align: left;
+  color: #2B2E31;
+  pointer-events: none;
 }
 
 .filters .filter-criteria {
@@ -113,8 +113,9 @@ h1, h3 {
     margin-right: 10px;
 }
 
-.filters button {
-    margin-top: 10px;
+.filters .btn {
+  margin: 20px 10px 5px 30px;
+  background-color: rgba(255, 67, 81, 0.40)
 }
 
 /*	events List	*/
@@ -430,6 +431,46 @@ h1, h3 {
     left: 0;
     top: 100px;
     width: 100%;
+}
+
+.categories-common.Concert, .small_event.Concert {
+  background-color: rgba(255, 232, 148, 0.6);
+}
+
+.categories-common.Movie, .small_event.Movie {
+  background-color: rgba(182, 249, 178, 0.6);
+}
+
+.categories-common.Nature, .small_event.Nature {
+  background-color: rgba(255, 102, 122, 0.6);
+}
+
+.categories-common.Pub, .small_event.Pub {
+  background-color: rgba(123, 114, 233, 0.6);
+}
+
+.categories-common.Sport, .small_event.Sport {
+  background-color: rgba(252, 136, 15, 0.6);
+}
+
+.categories-common.Theatre, .small_event.Theatre {
+  background-color: rgba(220, 212, 249, 0.6);
+}
+
+.categories-common.Trip, .small_event.Trip {
+  background-color: rgba(255, 233, 59, 0.6);
+}
+
+.categories-common.Other, .small_event.Other {
+  background-color: rgba(239, 193, 249, 0.6);
+}
+
+.categories-common {
+  padding: 5px;
+  width: 150px;
+  margin: 10px;
+  text-align: left;
+  border-radius: 4px;
 }
 
 .ErrorPage.visible {
