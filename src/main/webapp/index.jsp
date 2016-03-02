@@ -82,8 +82,9 @@
         <div class="nav-left">
             <div class="filters">
                 <form>
+                    <span>Categories</span>
                     <div class="filter-criteria">
-                        <div id="filter-categories">
+                         <div id="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
                                 <div class="categories-common {{name}}">
