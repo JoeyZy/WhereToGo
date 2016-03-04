@@ -399,6 +399,8 @@ $(document).ready(function () {
             const EVENT_NAME_LENGTH_MAX = 20;
             const DESCRIPTION_LENGTH_MIN = 10;
             const DESCRIPTION_LENGTH_MAX = 1000;
+            const LOCATION_LENGTH_MIN = 7;
+            const LOCATION_LENGTH_MAX = 100;
 
             var valid = true;
             $errors.empty();
@@ -428,6 +430,14 @@ $(document).ready(function () {
                     " and less than " + DESCRIPTION_LENGTH_MAX + " symbols");
                 valid = false;
             }
+
+            var location = event.location.trim();
+            if (!location || location.length < LOCATION_LENGTH_MIN || location.length > LOCATION_LENGTH_MAX) {
+                addErrorListItem("Location should be greater than " + LOCATION_LENGTH_MIN +
+                    " and less than " + LOCATION_LENGTH_MAX + " symbols");
+                valid = false;
+            }
+
             return valid;
         }
 

@@ -39,6 +39,7 @@ public class Event {
 	private String name;
 
 	private String description;
+	private String location;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
