@@ -31,6 +31,7 @@ $(document).ready(function () {
         makeEventPageEditable();
         $buttonEdit.hide();
         $buttonApply.show();
+        $buttonAttend.hide();
     });
 
     $buttonApply.on('click', function () {

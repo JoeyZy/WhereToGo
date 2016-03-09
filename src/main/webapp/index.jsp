@@ -191,7 +191,7 @@
                         onclick="this.blur();">Edit event
                 </button>
                 <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--apply"
-                        onclick="this.blur();">Apply changes
+                        onclick="this.blur();">Save changes
                 </button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
                         onclick="this.blur();">I'll be there
