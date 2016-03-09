@@ -30,7 +30,7 @@ public class RestServiceController {
 
 	@RequestMapping("/events")
 	public List<EventResponse> events() {
-		return eventsService.getEventResponses();
+		return eventsService.getRelevantEventResponses();
 	}
 
 	@RequestMapping("/event")

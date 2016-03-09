@@ -159,14 +159,11 @@ $(document).ready(function () {
     $.getJSON("events", function (data) {
       // Write the data into our global variable.
       events = data;
-      var relevantEvents = events.filter(function (c) {
-        return moment(c.startTime, "DD/MM/YY HH:mm").isAfter(moment(moment(), "DD/MM/YY HH:mm"));
-      });
-      relevantEvents.sort(function (a, b) {
+      events.sort(function (a, b) {
         return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
       });
       // Call a function to create HTML for all the events.
-      generateAlleventsHTML(relevantEvents);
+      generateAlleventsHTML(events);
       // Manually trigger a hashchange to start the app.
       $(window).trigger('hashchange');
     });
