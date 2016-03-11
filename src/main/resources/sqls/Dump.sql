@@ -62,6 +62,7 @@ CREATE TABLE `events` (
   `description` VARCHAR(45)          DEFAULT NULL,
   `owner`       VARCHAR(45) NOT NULL,
   `categories`  INT(11)     NOT NULL,
+  `deleted`     INT(2)              DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_categories_idx` (`categories`),
   CONSTRAINT `fk_categories` FOREIGN KEY (`categories`) REFERENCES `categories` (`id`)
