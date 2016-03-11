@@ -211,16 +211,19 @@ $(document).ready(function () {
         }
     });
     // Get data about our events from events.json.
-    function loadEvents() {
-        $.getJSON("events", function (data) {
-            // Write the data into our global variable.
-            events = data;
-            // Call a function to create HTML for all the events.
-            generateAlleventsHTML(events);
-            // Manually trigger a hashchange to start the app.
-            $(window).trigger('hashchange');
-        });
-    }
+  function loadEvents() {
+    $.getJSON("events", function (data) {
+      // Write the data into our global variable.
+      events = data;
+      events.sort(function (a, b) {
+        return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+      });
+      // Call a function to create HTML for all the events.
+      generateAlleventsHTML(events);
+      // Manually trigger a hashchange to start the app.
+      $(window).trigger('hashchange');
+    });
+  }
 
     // An event handler with calls the render function on every hashchange.
     // The render function will show the appropriate content of out $singlePage.
@@ -650,8 +653,10 @@ $(document).ready(function () {
         function renderUserInfoPage(user) {
             $.getJSON("userInfo", {email: user.email}, function (user) {
                 $userEmail.val(user.email);
+                $userEmail.attr("readonly", true);
                 $userPage.find('.UserPage__password').hide();
                 $userFirstName.val(user.firstName + ' ' + user.lastName);
+                $userFirstName.attr("readonly", true);
                 $userLastName.hide();
                 $userPage.find('.UserPage__events').show();
                 $singlePage.addClass('visible');
@@ -663,9 +668,11 @@ $(document).ready(function () {
             $userPage.find('.UserPage__name__last').show();
             $userPage.find('.UserPage__events').hide();
             $buttonAddUser.show();
+            $userEmail.attr("readonly", false);
+            $userFirstName.attr("readonly", false);
             $buttonAddUser.on('click', function (e) {
 
-                if (!validateEventFields()) {
+              if (!validateEventFields()) {
                     $errors.show();
                     return;
                 }

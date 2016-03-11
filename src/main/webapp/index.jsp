@@ -82,18 +82,19 @@
         <div class="nav-left">
             <div class="filters">
                 <form>
+                    <span>Categories</span>
                     <div class="filter-criteria">
-                        <span>Category</span>
-
-                        <div id="filter-categories">
+                         <div id="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
+                                <div class="categories-common {{name}}">
                                 <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label>
+                                </div>
                                 {{/each}}
                             </script>
                         </div>
                     </div>
-                    <button class="btn btn-info">Clear filters</button>
+                    <button class="btn">Clear filters</button>
                 </form>
             </div>
         </div>
@@ -101,7 +102,7 @@
         <ul class="events-list">
             <script id="events-template" type="x-handlebars-template">
                 {{#each this}}
-                <li data-index="{{id}}">
+                <li data-index="{{id}}" class="small_event {{category}}">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
                     <h2><a href="#"> {{name}} </a></h2>
                     <ul class="event-description">
@@ -110,7 +111,6 @@
                         <li><span>Begin: </span>{{startTime}}</li>
                         <li><span>End: </span>{{endTime}}</li>
                     </ul>
-                    <button class="btn btn-info ">Open event</button>
                     <div class="highlight"></div>
                 </li>
                 {{/each}}

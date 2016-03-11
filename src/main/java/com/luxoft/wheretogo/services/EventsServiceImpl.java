@@ -84,4 +84,21 @@ public class EventsServiceImpl implements EventsService {
 		}
 		return eventResponses;
 	}
+
+	@Override
+	public List<EventResponse> getRelevantEventResponses() {
+		List<EventResponse> eventResponses = new ArrayList<>();
+		List<Event> events = findAll();
+		List<Event> relevantEvents = new ArrayList<>();
+		for(Event event :events) {
+			if (event.getStartDateTime().after(new Date())){
+				relevantEvents.add(event);
+			}
+		}
+
+		for (Event event : relevantEvents) {
+			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(), event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime()));
+		}
+		return eventResponses;
+	}
 }
