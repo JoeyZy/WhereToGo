@@ -19,4 +19,6 @@ public interface EventsService {
 
 	List<EventResponse> getEventResponses();
 
+	List<EventResponse> getRelevantEventResponses();
+
 }

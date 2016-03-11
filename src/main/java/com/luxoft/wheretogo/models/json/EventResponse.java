@@ -17,14 +17,16 @@ public class EventResponse {
 	private String description;
 	private String startTime;
 	private String endTime;
+	private Integer deleted;
 
-	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime) {
+	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted) {
 		this.id = id;
 		this.name = name;
 		setCategories(category);
 		this.owner = owner;
 		this.startTime = timeToString(startDateTime);
 		this.endTime = timeToString(endDateTime);
+		this.deleted = deleted;
 	}
 
 	public void setCategories(List<Category> categories) {

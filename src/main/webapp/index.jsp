@@ -190,8 +190,14 @@
                 <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
                         onclick="this.blur();">Edit event
                 </button>
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--apply"
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--delete"
+                        onclick="this.blur();">Delete event
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply"
                         onclick="this.blur();">Save changes
+                </button>
+                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
+                        onclick="this.blur();">Cancel
                 </button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
                         onclick="this.blur();">I'll be there
@@ -205,12 +211,26 @@
             </form>
             <span class="edit"></span>
             <span class="close"></span>
+
+            <div class="parentDisable">
+                <div id="ConfirmationPopUp">
+                    <span>Are you sure that you want to delete this event?</span>
+                    <div class="confirmDeleteButtons">
+                        <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDelete"
+                                onclick="this.blur();">Yes
+                        </button>
+                        <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
+                                onclick="this.blur();">No
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
     <div class="ErrorPage">
         <h3>Sorry, something went wrong :(</h3>
     </div>
+
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>

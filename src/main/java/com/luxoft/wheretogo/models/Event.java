@@ -60,6 +60,8 @@ public class Event {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
 	private Date endDateTime;
 
+	private Integer deleted;
+
 	public Event() {
 	}
 

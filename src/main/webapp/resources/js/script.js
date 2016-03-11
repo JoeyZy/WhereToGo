@@ -21,34 +21,89 @@ $(document).ready(function () {
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.errors');
     var $buttonEdit = $singlePage.find(".SinglePage__button--edit");
+    var $buttonDelete = $singlePage.find(".SinglePage__button--delete");
     var $buttonApply = $singlePage.find('.SinglePage__button--apply');
     var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
     var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
+    var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
+    var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
+    var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
 
     $buttonEdit.on('click', function (event) {
         event.preventDefault();
         makeEventPageEditable();
         $buttonEdit.hide();
+        $buttonDelete.hide();
         $buttonApply.show();
+        $buttonCancelEditing.show();
         $buttonAttend.hide();
     });
 
-    $buttonApply.on('click', function () {
-        var categoriesList = [];
-        $eventCategories.find(":selected").each(function (i, selected) {
-            categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-        });
-        var eventJson = {
-            "id": $singlePage.find('.EventPage').attr('data-id'),
-            "name": $singlePageTitle.val(),
-            "categories": categoriesList,
-            "startDateTime": $eventStart.val(),
-            "endDateTime": $eventEnd.val(),
-            "description": $eventDescription.text()
-        };
-        saveEvent(eventJson, false);
+  $buttonApply.on('click', function () {
+    updateEvent(false);
+  });
+
+  $buttonCancelEditing.on('click', function (event) {
+    event.preventDefault();
+    makeEventPageUneditable();
+    $buttonEdit.show();
+    $buttonDelete.show();
+    if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
+      $buttonAttend.show();
+    }
+    $buttonApply.hide();
+    $buttonCancelEditing.hide();
+  });
+
+  $buttonDelete.on('click', function () {
+    $buttonEdit.hide();
+    $buttonDelete.hide();
+    $buttonApply.hide();
+    $buttonCancelEditing.hide();
+    renderConfirmationPage();
+  });
+
+
+  function renderConfirmationPage() {
+    var parentDisable = $('.parentDisable');
+    parentDisable.addClass('visible');
+    var confirmationPopUp = $('#ConfirmationPopUp');
+    confirmationPopUp.addClass('visible');
+    $buttonCancelDelete.show();
+    $buttonConfirmDelete.show();
+  }
+
+  $buttonConfirmDelete.on('click', function () {
+    updateEvent(true);
+    createQueryHash(filters);
+  });
+
+  $buttonCancelDelete.on('click', function () {
+    var confirmationPopUp = $('#ConfirmationPopUp');
+    confirmationPopUp.removeClass('visible');
+    var parentDisable = $('.parentDisable');
+    parentDisable.removeClass('visible');
+    $buttonEdit.show();
+    $buttonDelete.show();
+  });
+
+  function updateEvent(deleted) {
+    var categoriesList = [];
+    $eventCategories.find(":selected").each(function (i, selected) {
+      categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
     });
+    var eventJson = {
+      "id": $singlePage.find('.EventPage').attr('data-id'),
+      "name": $singlePageTitle.val(),
+      "categories": categoriesList,
+      "startDateTime": $eventStart.val(),
+      "endDateTime": $eventEnd.val(),
+      "description": $eventDescription.text(),
+      "deleted": (deleted) ? "1" : "0"
+    };
+    saveEvent(eventJson, false);
+  }
 
     function resetSinglePage() {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
@@ -448,7 +503,6 @@ $(document).ready(function () {
         $singlePageTitle.attr('readonly', true);
         $eventDescription.attr('contenteditable', false);
         $eventDescription.removeClass('editable');
-        $singlePageTitle.val('');
         $eventCategories.multiselect('disable');
         $eventDescription.attr('contenteditable', false);
         $eventPage.find('editable').attr('readonly', true);
@@ -549,6 +603,7 @@ $(document).ready(function () {
                 $eventEnd.val(endDate);
                 if (user && user.id === event.owner.id) {
                     $buttonEdit.show();
+                    $buttonDelete.show();
                 }
                 if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
                     $buttonAttend.show();
