@@ -184,10 +184,12 @@
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
                         <input class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
-                        <select class="form-control">
-                            <option selected="selected">UAH</option>
-                            <option>USD</option>
-                            <option>EUR</option>
+                        <select id="currencies" class="form-control">
+                            <script id="curr-list" type="x-handlebars-template">
+                                {{#each this}}
+                                <option data-id="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </script>
                         </select>
                     </li>
                     <li class="SinglePage__inputItem EventPage__participants">

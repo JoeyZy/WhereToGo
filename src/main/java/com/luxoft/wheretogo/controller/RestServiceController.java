@@ -1,20 +1,24 @@
 package com.luxoft.wheretogo.controller;
 
-import com.luxoft.wheretogo.models.Category;
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.User;
-import com.luxoft.wheretogo.models.json.EventResponse;
-import com.luxoft.wheretogo.services.CategoriesService;
-import com.luxoft.wheretogo.services.EventsService;
-import com.luxoft.wheretogo.services.UsersService;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import com.luxoft.wheretogo.models.Category;
+import com.luxoft.wheretogo.models.Currency;
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.services.CategoriesService;
+import com.luxoft.wheretogo.services.CurrenciesService;
+import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.UsersService;
 
 @RestController
 public class RestServiceController {
@@ -24,6 +28,9 @@ public class RestServiceController {
 
 	@Autowired
 	private CategoriesService categoriesService;
+
+	@Autowired
+	private CurrenciesService currenciesService;
 
 	@Autowired
 	private UsersService usersService;
@@ -62,6 +69,11 @@ public class RestServiceController {
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public List<Category> categories() {
 		return categoriesService.findAll();
+	}
+
+	@RequestMapping(value = "/currencies", method = RequestMethod.GET)
+	public List<Currency> currencies() {
+		return currenciesService.findAll();
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)

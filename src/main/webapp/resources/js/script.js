@@ -74,6 +74,12 @@ $(document).ready(function () {
         categoriesFilter.html(categoriesListElement(data));
         $eventCategories.multiselect();
     });
+    $.getJSON("currencies", function (data) {
+        var currTemplate = $('#curr-list').html();
+        var currListElement = Handlebars.compile(currTemplate);
+        var categoriesFilter = $('#currencies');
+        categoriesFilter.html(currListElement(data));
+    });
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
     var $loginDropDown = $('.dropdown');
