@@ -183,7 +183,7 @@
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
-                        <input class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
+                        <input id="cost" class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
                         <select id="currencies" class="form-control">
                             <script id="curr-list" type="x-handlebars-template">
                                 {{#each this}}

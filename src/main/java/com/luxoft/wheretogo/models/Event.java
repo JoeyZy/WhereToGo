@@ -1,11 +1,8 @@
 package com.luxoft.wheretogo.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.validator.constraints.NotEmpty;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,9 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "events")
@@ -60,6 +63,12 @@ public class Event {
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
 	private Date endDateTime;
+
+	private Integer cost;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "currencyId")
+	private Currency currency;
 
 	public Event() {
 	}

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Globals variables 
+    // Globals variables
     // 	An array containing objects with information about the events.
     var events = [],
         filters = {},
@@ -17,6 +17,8 @@ $(document).ready(function () {
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
     var $eventLocation = $singlePage.find("#location");
+    var $eventCost = $singlePage.find("#cost");
+    var $eventCostCurrency = $singlePage.find("#currencies");
     var $eventPageParticipants = $('.EventPage__participants');
     var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
@@ -46,7 +48,9 @@ $(document).ready(function () {
             "startDateTime": $eventStart.val(),
             "endDateTime": $eventEnd.val(),
             "description": $eventDescription.text(),
-            "location": $eventLocation.text()
+            "location": $eventLocation.text(),
+            "cost": $eventCost.val(),
+            "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()}
         };
         saveEvent(eventJson, false);
     });
@@ -58,6 +62,8 @@ $(document).ready(function () {
         // Empty description
         $eventDescription.empty();
         $eventLocation.empty();
+        $eventCost.val("");
+        $eventCostCurrency.val("");
         $buttons.hide();
         $errors.hide();
     }
@@ -77,13 +83,12 @@ $(document).ready(function () {
     $.getJSON("currencies", function (data) {
         var currTemplate = $('#curr-list').html();
         var currListElement = Handlebars.compile(currTemplate);
-        var categoriesFilter = $('#currencies');
-        categoriesFilter.html(currListElement(data));
+        $eventCostCurrency.html(currListElement(data));
     });
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
     var $loginDropDown = $('.dropdown');
-    // Login handler 
+    // Login handler
     loginForm.submit(function (e) {
         var email = loginForm.find("#userEmail").val();
         var password = loginForm.find("#userPassword").val();
@@ -180,7 +185,7 @@ $(document).ready(function () {
     $(window).on('hashchange', function () {
         render(window.location.hash);
     });
-    // Navigation 
+    // Navigation
     function render(url) {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
@@ -460,6 +465,8 @@ $(document).ready(function () {
         $eventEnd.datepicker('enable');
         $eventDescription.addClass('editable');
         $eventLocation.addClass('editable');
+        $eventCost.prop('disabled', false);
+        $eventCostCurrency.prop('disabled', false);
         $eventCategories.multiselect('enable');
         $eventCategories.multiselect('refresh');
     }
@@ -474,6 +481,8 @@ $(document).ready(function () {
         $eventCategories.multiselect('disable');
         $eventDescription.attr('contenteditable', false);
         $eventLocation.attr('contenteditable', false);
+        $eventCost.prop('disabled', true);
+        $eventCostCurrency.prop('disabled', true);
         $eventPage.find('editable').attr('readonly', true);
         $eventStart.datepicker('disable');
         $eventEnd.datepicker('disable');
@@ -514,7 +523,9 @@ $(document).ready(function () {
                         "startDateTime": $eventStart.val(),
                         "endDateTime": $eventEnd.val(),
                         "description": $eventDescription.text(),
-                        "location": $eventLocation.text()
+                        "location": $eventLocation.text(),
+                        "cost": $eventCost.val(),
+                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()}
                     };
                     saveEvent(eventJson, true);
                 }
@@ -572,6 +583,8 @@ $(document).ready(function () {
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
+                $eventCost.val(event.cost);
+                $eventCostCurrency.val(event.currency.name);
                 if (user && user.id === event.owner.id) {
                     $buttonEdit.show();
                 }
@@ -597,6 +610,10 @@ $(document).ready(function () {
                 return res.split(',');
             }
         }
+    }
+
+    function getCurrencyId() {
+      return $eventCostCurrency.find("option:contains('" + $eventCostCurrency.val() + "')").attr("data-id");
     }
 
     var $userEmail = $userPage.find('.UserPage__email__input');
