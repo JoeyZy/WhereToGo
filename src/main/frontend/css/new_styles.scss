@@ -120,9 +120,10 @@ h1, h3 {
 /*	events List	*/
 
 .events-list {
+    display: flex;
+    flex-flow: row wrap;
     list-style: none;
     margin-left: 225px;
-    max-width: 1500px;
     text-align: center;
     padding: 0;
     opacity: 0;
@@ -137,6 +138,7 @@ h1, h3 {
 }
 
 .events-list > li {
+    flex: 32%;
     box-sizing: border-box;
     display: inline-block;
     cursor: pointer;
