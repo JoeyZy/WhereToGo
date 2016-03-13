@@ -50,6 +50,23 @@ $(document).ready(function () {
         saveEvent(eventJson, false);
     });
 
+    var buttonAddEventStateController = function() {
+        $(".SinglePage__inputItem__inputField").on("change keyup paste", function() {
+            var fieldsAreFilled = true;
+            if ($(".SinglePage__title").val() == '') {
+                return;
+            }
+            $(".SinglePage__inputItemsList:visible").find(".SinglePage__inputItem__inputField").each(function() {
+                var inputFieldValue = $(this).is('input') ? $(this).val() : $(this).html();
+                if (inputFieldValue == '') {
+                    fieldsAreFilled = false;
+                    return false;
+                }
+            });
+            fieldsAreFilled ? $buttonAddEvent.removeAttr('disabled') : $buttonAddEvent.attr('disabled', 'disabled');
+        });
+    }();
+
     function resetSinglePage() {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
         //reset inputs
@@ -479,6 +496,7 @@ $(document).ready(function () {
 
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
+            $buttonAddEvent.attr('disabled', 'disabled');
             $buttonAddEvent.on('click', function (event) {
                 event.preventDefault();
                 if (typeof user !== "undefined") {

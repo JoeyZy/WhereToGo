@@ -122,7 +122,7 @@
         <div class="Overlay"></div>
         <div class="SinglePage">
             <form class="SinglePage__inputForm" novalidate>
-                <input class="SinglePage__title reset" placeholder="Event title" required=""/>
+                <input class="SinglePage__title SinglePage__inputItem__inputField reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="SinglePage__inputItem UserPage__email">
                         <label class="SinglePage__inputItem__label"><b>Email:</b></label>
@@ -173,7 +173,8 @@
                     </li>
                     <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
-                        <div contentEditable="false" id="description" title="Description:"></div>
+                        <div class="SinglePage__inputItem__inputField" contentEditable="false" id="description"
+                             title="Description:"></div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
