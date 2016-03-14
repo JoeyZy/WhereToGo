@@ -1,3 +1,5 @@
+$border: 1px solid #dbe3e7;
+
 * {
     margin: 0;
     padding: 0;
@@ -124,6 +126,7 @@ h1, h3 {
     flex-flow: row wrap;
     list-style: none;
     margin-left: 225px;
+    max-width: 1500px;
     text-align: center;
     padding: 0;
     opacity: 0;
@@ -149,7 +152,7 @@ h1, h3 {
     font: normal 12px sans-serif;
 
     background-color: #ffffff;
-    border: 1px solid #dbe3e7;
+    border: $border;
     border-radius: 3px;
     box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
 
@@ -340,19 +343,21 @@ h1, h3 {
         }
 
         &__inputField {
+            height: 20px;
             border: none;
             background-color: white;
         }
     }
 
-    form #description {
-        min-height: 30px;
-        padding: 5px;
-        clear: both;
-        width: 100%;
-        resize: none;
-        height: 100%;
-        outline: none;
+    form {
+        #description, #location {
+            padding: 5px;
+            clear: both;
+            width: 100%;
+            resize: none;
+            height: 100%;
+            outline: none;
+        }
     }
 
     form > ul.list-form > li > button {
@@ -360,8 +365,10 @@ h1, h3 {
         margin: 12px;
     }
 
-    #description.editable {
-        border: 1px solid #dbe3e7;
+    #description, #location {
+        &.editable {
+            border: $border;
+        }
     }
 
     img {
@@ -485,6 +492,17 @@ div.ui-datepicker {
     &__events {
         &__list {
             list-style: none;
+        }
+    }
+    &__cost {
+        .form-control {
+            display: initial;
+            border: $border;
+            border-radius: 0;
+            width: inherit;
+        }
+        input.form-control {
+            width: 20%;
         }
     }
 }
