@@ -32,9 +32,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="add-event-container">
-                            <button class="btn btn-block btn-add-event disabled"
-                                    title="Please login to create an event">Add event
-                            </button>
+                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event">Add event</button>
                         </div>
                     </li>
                     <li>

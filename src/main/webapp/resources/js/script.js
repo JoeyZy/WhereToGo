@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Globals variables
+    // Globals variables 
     // 	An array containing objects with information about the events.
     var events = [],
         filters = {},
@@ -36,7 +36,8 @@ $(document).ready(function () {
         $buttonApply.show();
     });
 
-    $buttonApply.on('click', function () {
+    $buttonApply.on('click', function (event) {
+        event.preventDefault();
         var categoriesList = [];
         $eventCategories.find(":selected").each(function (i, selected) {
             categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -54,6 +55,23 @@ $(document).ready(function () {
         };
         saveEvent(eventJson, false);
     });
+
+    var buttonAddEventStateController = function() {
+        $(".SinglePage__inputItem__inputField").on("change keyup paste", function() {
+            var fieldsAreFilled = true;
+            if ($(".SinglePage__title").val() == '') {
+                return;
+            }
+            $(".SinglePage__inputItemsList:visible").find(".SinglePage__inputItem__inputField").each(function() {
+                var inputFieldValue = $(this).is('input') ? $(this).val() : $(this).html();
+                if (inputFieldValue == '') {
+                    fieldsAreFilled = false;
+                    return false;
+                }
+            });
+            fieldsAreFilled ? $buttonAddEvent.removeAttr('disabled') : $buttonAddEvent.attr('disabled', 'disabled');
+        });
+    }();
 
     function resetSinglePage() {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
@@ -88,7 +106,7 @@ $(document).ready(function () {
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
     var $loginDropDown = $('.dropdown');
-    // Login handler
+    // Login handler 
     loginForm.submit(function (e) {
         var email = loginForm.find("#userEmail").val();
         var password = loginForm.find("#userPassword").val();
@@ -185,7 +203,7 @@ $(document).ready(function () {
     $(window).on('hashchange', function () {
         render(window.location.hash);
     });
-    // Navigation
+    // Navigation 
     function render(url) {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
@@ -266,8 +284,8 @@ $(document).ready(function () {
             window.location.hash = 'event/' + eventIndex;
         });
         var header = $('header');
-        $('.btn-add-event').on('click', function (e) {
-            e.preventDefault();
+        $('.btn-add-event').on('click', function (event) {
+            event.preventDefault();
             window.location.hash = 'addEvent';
         });
         $('.userInfo').click(function (e) {
@@ -511,7 +529,9 @@ $(document).ready(function () {
 
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
-            $buttonAddEvent.on('click', function () {
+            $buttonAddEvent.attr('disabled', 'disabled');
+            $buttonAddEvent.on('click', function (event) {
+                event.preventDefault();
                 if (typeof user !== "undefined") {
                     var categoriesList = [];
                     $eventCategories.find(":selected").each(function (i, selected) {
@@ -540,7 +560,8 @@ $(document).ready(function () {
                         populateSinglePageEventPage($singlePage, event);
 
                         $buttonAttend.off();
-                        $buttonAttend.on('click', function () {
+                        $buttonAttend.on('click', function (event) {
+                            event.preventDefault();
                             var json = {
                                 id: item.id
                             };
@@ -650,8 +671,8 @@ $(document).ready(function () {
             $userPage.find('.UserPage__name__last').show();
             $userPage.find('.UserPage__events').hide();
             $buttonAddUser.show();
-            $buttonAddUser.on('click', function (e) {
-
+            $buttonAddUser.on('click', function (event) {
+                event.preventDefault();
                 if (!validateEventFields()) {
                     $errors.show();
                     return;
@@ -705,8 +726,6 @@ $(document).ready(function () {
                 function addErrorListItem(message) {
                     $errors.append('<li>' + message + '</li>');
                 }
-
-                e.preventDefault();
             });
             // Show the $singlePage.
             $singlePage.addClass('visible');
