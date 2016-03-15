@@ -175,6 +175,21 @@
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
                         <div contentEditable="false" id="description" title="Description:"></div>
                     </li>
+                    <li class="SinglePage__inputItem">
+                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
+                        <div contentEditable="false" id="location"></div>
+                    </li>
+                    <li class="SinglePage__inputItem EventPage__cost">
+                        <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
+                        <input id="cost" class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
+                        <select id="currencies" class="form-control">
+                            <script id="curr-list" type="x-handlebars-template">
+                                {{#each this}}
+                                <option data-id="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </script>
+                        </select>
+                    </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
                         <ul class="EventPage__events__list">

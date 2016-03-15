@@ -16,6 +16,9 @@ $(document).ready(function () {
     var $eventStart = $singlePage.find('#start');
     var $eventEnd = $singlePage.find('#end');
     var $eventDescription = $singlePage.find("#description");
+    var $eventLocation = $singlePage.find("#location");
+    var $eventCost = $singlePage.find("#cost");
+    var $eventCostCurrency = $singlePage.find("#currencies");
     var $eventPageParticipants = $('.EventPage__participants');
     var $userPage = $singlePage.find(".UserPage");
     var $buttons = $singlePage.find("button");
@@ -41,7 +44,7 @@ $(document).ready(function () {
     });
 
   $buttonApply.on('click', function () {
-    updateEvent(false);
+    updateEvent(true);
   });
 
   $buttonCancelEditing.on('click', function (event) {
@@ -75,7 +78,7 @@ $(document).ready(function () {
   }
 
   $buttonConfirmDelete.on('click', function () {
-    updateEvent(true);
+    updateEvent(false);
     createQueryHash(filters);
   });
 
@@ -89,6 +92,7 @@ $(document).ready(function () {
   });
 
   function updateEvent(deleted) {
+    event.preventDefault();
     var categoriesList = [];
     $eventCategories.find(":selected").each(function (i, selected) {
       categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -100,10 +104,32 @@ $(document).ready(function () {
       "startDateTime": $eventStart.val(),
       "endDateTime": $eventEnd.val(),
       "description": $eventDescription.text(),
-      "deleted": (deleted) ? "1" : "0"
+      "location": $eventLocation.text(),
+      "cost": $eventCost.val(),
+      "currency": {
+        "id": getCurrencyId(), "name": $eventCostCurrency.val()
+      }
     };
-    saveEvent(eventJson, false);
+    deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
   }
+
+
+    var buttonAddEventStateController = function() {
+        $(".SinglePage__inputItem__inputField").on("change keyup paste", function() {
+            var fieldsAreFilled = true;
+            if ($(".SinglePage__title").val() == '') {
+                return;
+            }
+            $(".SinglePage__inputItemsList:visible").find(".SinglePage__inputItem__inputField").each(function() {
+                var inputFieldValue = $(this).is('input') ? $(this).val() : $(this).html();
+                if (inputFieldValue == '') {
+                    fieldsAreFilled = false;
+                    return false;
+                }
+            });
+            fieldsAreFilled ? $buttonAddEvent.removeAttr('disabled') : $buttonAddEvent.attr('disabled', 'disabled');
+        });
+    }();
 
     function resetSinglePage() {
         $eventCategoriesMultiselect = $singlePage.find('.btn-group');
@@ -111,6 +137,9 @@ $(document).ready(function () {
         $singlePage.find(".reset").val("");
         // Empty description
         $eventDescription.empty();
+        $eventLocation.empty();
+        $eventCost.val("");
+        $eventCostCurrency.val("");
         $buttons.hide();
         $errors.hide();
     }
@@ -126,6 +155,11 @@ $(document).ready(function () {
         var categoriesFilter = $('#event-categories');
         categoriesFilter.html(categoriesListElement(data));
         $eventCategories.multiselect();
+    });
+    $.getJSON("currencies", function (data) {
+        var currTemplate = $('#curr-list').html();
+        var currListElement = Handlebars.compile(currTemplate);
+        $eventCostCurrency.html(currListElement(data));
     });
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
@@ -311,8 +345,8 @@ $(document).ready(function () {
             window.location.hash = 'event/' + eventIndex;
         });
         var header = $('header');
-        $('.btn-add-event').on('click', function (e) {
-            e.preventDefault();
+        $('.btn-add-event').on('click', function (event) {
+            event.preventDefault();
             window.location.hash = 'addEvent';
         });
         $('.userInfo').click(function (e) {
@@ -433,7 +467,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: (newEvent) ? "addEvent" : "updateEvent",
+            url: newEvent,
             data: JSON.stringify(eventJson),
             type: "POST",
             beforeSend: function (xhr) {
@@ -455,6 +489,8 @@ $(document).ready(function () {
             const EVENT_NAME_LENGTH_MAX = 20;
             const DESCRIPTION_LENGTH_MIN = 10;
             const DESCRIPTION_LENGTH_MAX = 1000;
+            const LOCATION_LENGTH_MIN = 7;
+            const LOCATION_LENGTH_MAX = 100;
 
             var valid = true;
             $errors.empty();
@@ -484,6 +520,14 @@ $(document).ready(function () {
                     " and less than " + DESCRIPTION_LENGTH_MAX + " symbols");
                 valid = false;
             }
+
+            var location = event.location.trim();
+            if (!location || location.length < LOCATION_LENGTH_MIN || location.length > LOCATION_LENGTH_MAX) {
+                addErrorListItem("Location should be greater than " + LOCATION_LENGTH_MIN +
+                    " and less than " + LOCATION_LENGTH_MAX + " symbols");
+                valid = false;
+            }
+
             return valid;
         }
 
@@ -495,9 +539,13 @@ $(document).ready(function () {
     function makeEventPageEditable() {
         $singlePageTitle.attr('readonly', false);
         $eventDescription.attr('contenteditable', true);
+        $eventLocation.attr('contenteditable', true);
         $eventStart.datepicker('enable');
         $eventEnd.datepicker('enable');
         $eventDescription.addClass('editable');
+        $eventLocation.addClass('editable');
+        $eventCost.prop('disabled', false);
+        $eventCostCurrency.prop('disabled', false);
         $eventCategories.multiselect('enable');
         $eventCategories.multiselect('refresh');
     }
@@ -506,8 +554,13 @@ $(document).ready(function () {
         $singlePageTitle.attr('readonly', true);
         $eventDescription.attr('contenteditable', false);
         $eventDescription.removeClass('editable');
+        $eventLocation.attr('contenteditable', false);
+        $eventLocation.removeClass('editable');
         $eventCategories.multiselect('disable');
         $eventDescription.attr('contenteditable', false);
+        $eventLocation.attr('contenteditable', false);
+        $eventCost.prop('disabled', true);
+        $eventCostCurrency.prop('disabled', true);
         $eventPage.find('editable').attr('readonly', true);
         $eventStart.datepicker('disable');
         $eventEnd.datepicker('disable');
@@ -536,7 +589,9 @@ $(document).ready(function () {
 
         function renderAddEventPage() {
             populateSinglePageEventPage($singlePage);
-            $buttonAddEvent.on('click', function () {
+            $buttonAddEvent.attr('disabled', 'disabled');
+            $buttonAddEvent.on('click', function (event) {
+                event.preventDefault();
                 if (typeof user !== "undefined") {
                     var categoriesList = [];
                     $eventCategories.find(":selected").each(function (i, selected) {
@@ -547,9 +602,12 @@ $(document).ready(function () {
                         "categories": categoriesList,
                         "startDateTime": $eventStart.val(),
                         "endDateTime": $eventEnd.val(),
-                        "description": $eventDescription.text()
+                        "description": $eventDescription.text(),
+                        "location": $eventLocation.text(),
+                        "cost": $eventCost.val(),
+                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()}
                     };
-                    saveEvent(eventJson, true);
+                    saveEvent(eventJson, "addEvent");
                 }
             });
         }
@@ -562,7 +620,8 @@ $(document).ready(function () {
                         populateSinglePageEventPage($singlePage, event);
 
                         $buttonAttend.off();
-                        $buttonAttend.on('click', function () {
+                        $buttonAttend.on('click', function (event) {
+                            event.preventDefault();
                             var json = {
                                 id: item.id
                             };
@@ -599,11 +658,14 @@ $(document).ready(function () {
                 $eventCategories.val(getEventCategoriesAsList(event.categories));
                 $eventPageParticipants.show();
                 $eventDescription.html(linkify(event.description));
+                $eventLocation.html(linkify(event.location));
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
                 var endDate = event.endDateTime;
                 $eventEnd.val(endDate);
+                $eventCost.val(event.cost);
+                $eventCostCurrency.val(event.currency.name);
                 if (user && user.id === event.owner.id) {
                     $buttonEdit.show();
                     $buttonDelete.show();
@@ -630,6 +692,10 @@ $(document).ready(function () {
                 return res.split(',');
             }
         }
+    }
+
+    function getCurrencyId() {
+      return $eventCostCurrency.find("option:contains('" + $eventCostCurrency.val() + "')").attr("data-id");
     }
 
     var $userEmail = $userPage.find('.UserPage__email__input');
@@ -670,9 +736,9 @@ $(document).ready(function () {
             $buttonAddUser.show();
             $userEmail.attr("readonly", false);
             $userFirstName.attr("readonly", false);
-            $buttonAddUser.on('click', function (e) {
-
-              if (!validateEventFields()) {
+            $buttonAddUser.on('click', function (event) {
+                event.preventDefault();
+                if (!validateEventFields()) {
                     $errors.show();
                     return;
                 }
@@ -725,8 +791,6 @@ $(document).ready(function () {
                 function addErrorListItem(message) {
                     $errors.append('<li>' + message + '</li>');
                 }
-
-                e.preventDefault();
             });
             // Show the $singlePage.
             $singlePage.addClass('visible');
