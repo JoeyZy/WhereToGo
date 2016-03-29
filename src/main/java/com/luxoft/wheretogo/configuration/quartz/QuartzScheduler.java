@@ -1,7 +1,5 @@
 package com.luxoft.wheretogo.configuration.quartz;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.log4j.Logger;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
@@ -26,11 +24,6 @@ public class QuartzScheduler {
 
 	@Autowired
 	private ApplicationContext applicationContext;
-
-	@PostConstruct
-	public void init() {
-		LOGGER.info("Hello world from Quartz...");
-	}
 
 	@Bean
 	public SpringBeanJobFactory springBeanJobFactory() {
@@ -72,6 +65,7 @@ public class QuartzScheduler {
 		CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
 		trigger.setJobDetail(job);
 		trigger.setCronExpression("1 * * * * ?");
+		//TODO: run job on weekly basis
 		//		trigger.setCronExpression(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 10, 0));
 		trigger.setName("WeeklyEventDigest");
 		return trigger;

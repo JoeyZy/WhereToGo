@@ -15,4 +15,8 @@ public class DateUtils {
 		return Date.from(zdt.toInstant());
 	}
 
+	public static LocalDateTime covertToLocalDateTime(final Date in) {
+		return LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+	}
+
 }

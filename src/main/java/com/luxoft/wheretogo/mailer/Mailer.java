@@ -33,8 +33,8 @@ public class Mailer {
 		}
 	}
 
-	public static void sendMail(String recipientsEmail, String subject, String text) {
-		LOGGER.debug(String.format("Sending email... [Subject='%s'; to='%s'; text='%s']", subject, recipientsEmail, text));
+	public static void sendMail(String recipientsEmail, String subject, String htmlContent) {
+		LOGGER.debug(String.format("Sending email... [Subject='%s'; to='%s']", subject, recipientsEmail));
 
 		try {
 			Message message = new MimeMessage(getSession());
@@ -44,13 +44,14 @@ public class Mailer {
 					InternetAddress.parse(recipientsEmail));
 
 			message.setSubject(subject);
-			message.setText(text);
+			message.setContent(htmlContent, "text/html; charset=utf-8");
 			Transport.send(message);
 
-			LOGGER.debug(String.format("Email has been sent [Subject='%s'; to='%s'; text='%s']", subject, recipientsEmail, text));
+			LOGGER.debug(String.format("Email has been sent [Subject='%s'; to='%s'; htmlContent='%s']", subject, recipientsEmail, htmlContent));
 		}
 		catch (MessagingException e) {
-			LOGGER.error(String.format("Email has NOT been sent [Subject='%s'; to='%s'; text='%s']", subject, recipientsEmail, text), e);
+			LOGGER.error(String.format("Email has NOT been sent [Subject='%s'; to='%s'; htmlContent='%s']", subject, recipientsEmail,
+					htmlContent), e);
 		}
 	}
 
