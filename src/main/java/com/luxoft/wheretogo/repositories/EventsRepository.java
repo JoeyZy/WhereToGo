@@ -1,8 +1,9 @@
 package com.luxoft.wheretogo.repositories;
 
-import com.luxoft.wheretogo.models.Event;
-
+import java.time.LocalDateTime;
 import java.util.List;
+
+import com.luxoft.wheretogo.models.Event;
 
 public interface EventsRepository {
 
@@ -11,6 +12,8 @@ public interface EventsRepository {
 	void merge(Event event);
 
 	List<Event> findAll();
+
+	List<Event> findByPeriod(LocalDateTime from, LocalDateTime to);
 
 	Event findById(long eventId);
 

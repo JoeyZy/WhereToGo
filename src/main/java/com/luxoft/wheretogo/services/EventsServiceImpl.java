@@ -1,20 +1,26 @@
 package com.luxoft.wheretogo.services;
 
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.json.EventResponse;
-import com.luxoft.wheretogo.repositories.EventsRepository;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.repositories.EventsRepository;
+
 @Service
 @Transactional
 public class EventsServiceImpl implements EventsService {
+
+	private final static Logger LOGGER = Logger.getLogger(EventsServiceImpl.class);
 
 	@Autowired
 	private EventsRepository eventsRepository;
@@ -42,6 +48,11 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
+	public List<Event> findByPeriod(LocalDateTime from, LocalDateTime to) {
+		return eventsRepository.findByPeriod(from, to);
+	}
+
+	@Override
 	public Event findById(long eventId) {
 		Event event = eventsRepository.findById(eventId);
 		if (event != null) {
@@ -64,7 +75,9 @@ public class EventsServiceImpl implements EventsService {
 		List<EventResponse> eventResponses = new ArrayList<>();
 		List<Event> events = findAll();
 		for (Event event : events) {
-			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(), event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(), event.getDeleted()));
+			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
+					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(),
+					event.getDeleted()));
 		}
 		return eventResponses;
 	}
@@ -80,7 +93,9 @@ public class EventsServiceImpl implements EventsService {
 			}
 		}
 		for (Event event : relevantEvents) {
-			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(), event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(), event.getDeleted()));
+			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
+					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(),
+					event.getDeleted()));
 		}
 		return eventResponses;
 	}

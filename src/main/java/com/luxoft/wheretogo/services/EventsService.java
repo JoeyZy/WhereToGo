@@ -1,9 +1,10 @@
 package com.luxoft.wheretogo.services;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.json.EventResponse;
-
-import java.util.List;
 
 public interface EventsService {
 
@@ -12,6 +13,8 @@ public interface EventsService {
 	void update(Event event);
 
 	List<Event> findAll();
+
+	List<Event> findByPeriod(LocalDateTime from, LocalDateTime to);
 
 	Event findById(long eventId);
 
