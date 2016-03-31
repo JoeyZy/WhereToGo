@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,6 @@ import com.luxoft.wheretogo.repositories.EventsRepository;
 @Service
 @Transactional
 public class EventsServiceImpl implements EventsService {
-
-	private final static Logger LOGGER = Logger.getLogger(EventsServiceImpl.class);
 
 	@Autowired
 	private EventsRepository eventsRepository;

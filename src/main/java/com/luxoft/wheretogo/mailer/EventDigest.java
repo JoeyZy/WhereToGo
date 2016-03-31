@@ -9,10 +9,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
-
-import lombok.Getter;
 
 /**
  * Created by Sergii on 26.03.2016.
@@ -23,7 +22,6 @@ public class EventDigest {
 	private EventsService eventsService;
 
 	@Autowired
-	@Getter
 	private UsersService usersService;
 
 	/**
@@ -40,7 +38,7 @@ public class EventDigest {
 		for (Event event : eventsService.findByPeriod(from, to)) {
 			// now each event has only one category, but it may have more than one
 			// this feature is disabled on UI side but back-end still supports multiple categories :)
-			// anyway, put event to each category that it belongs to is not so clever :)
+			// anyway, putting event to each category that it belongs to is not so clever :)
 			String eventCatId = event.getCategories().get(0).getName();
 
 			if (result.containsKey(eventCatId)) {
@@ -54,4 +52,9 @@ public class EventDigest {
 		return result;
 	}
 
+	//in the future we will filter out users by categories
+	//and send digest based on user's interests
+	public List<User> getUsers() {
+		return usersService.findAll();
+	}
 }

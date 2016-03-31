@@ -1,4 +1,6 @@
 INSERT INTO `users` (email, first_name, last_name, password) VALUES ('root@gmail.com', 'Root', 'Root', 'root');
+INSERT INTO `users` (email, first_name, last_name, password) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', 'root');
+INSERT INTO `users` (email, first_name, last_name, password) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', 'root');
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
   (1, 100, 0, 'Description of the event', '2017-06-11 23:38:00', 'вул. Костянтинівська, 2a, Kiev', 'Concert....', '2017-02-22 22:00:00', 1, 1),

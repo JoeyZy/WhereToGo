@@ -35,8 +35,6 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 
 	@Override
 	public List<Event> findByPeriod(LocalDateTime from, LocalDateTime to) {
-		LOGGER.debug(String.format("findByPeriod [from=%s; to=%s]", from, to));
-
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.ge("startDateTime", DateUtils.covertToDate(from)));
 		criteria.add(Restrictions.lt("endDateTime", DateUtils.covertToDate(to)));

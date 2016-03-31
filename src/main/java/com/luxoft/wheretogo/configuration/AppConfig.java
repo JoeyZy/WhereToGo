@@ -1,6 +1,5 @@
 package com.luxoft.wheretogo.configuration;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +15,6 @@ import com.luxoft.wheretogo.mailer.EventDigest;
 @EnableScheduling
 @ComponentScan(basePackages = "com.luxoft.wheretogo")
 public class AppConfig extends WebMvcConfigurerAdapter {
-	private final static Logger LOGGER = Logger.getLogger(AppConfig.class);
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

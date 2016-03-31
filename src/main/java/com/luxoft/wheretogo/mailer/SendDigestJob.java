@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.utils.DateUtils;
 
 /**
@@ -22,44 +23,45 @@ import com.luxoft.wheretogo.utils.DateUtils;
 public class SendDigestJob implements Job {
 
 	private final static Logger LOGGER = Logger.getLogger(SendDigestJob.class);
+	private final static String NBSP = "&nbsp;";
+	private final static String BR = "<br>";
+	private final static DateTimeFormatter DAY_MONTH_FORMATTER = DateTimeFormatter.ofPattern("dd MMM");
 
 	@Autowired
 	private EventDigest digest;
 
-	public static final String NBSP = "&nbsp;";
-	public static final DateTimeFormatter DAY_MONTH_FORMATTER = DateTimeFormatter.ofPattern("dd MMM");
-
 	public static final LocalDateTime DIGEST_START_DATE = LocalDateTime.now();
-	//TODO: use real end date DIGEST_START_DATE.plusWeeks(1)
-	public static final LocalDateTime DIGEST_END_DATE = LocalDateTime.of(2017, 6, 30, 23, 0);
+	public static final LocalDateTime DIGEST_END_DATE = DIGEST_START_DATE.plusWeeks(1);
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String recipient = "serg.tanchenko@gmail.com";
+		String subject = getSubject();
+		String mailBody = getMailBody();
 
-		Mailer.sendMail(recipient, getSubject(), getMailBody());
+		for (User user : digest.getUsers()) {
+			String helloMessage = getHelloMessage(user);
+			Mailer.sendMail(user.getEmail(), subject, helloMessage + mailBody);
+		}
 	}
 
 	//TODO: use HTML template instead of html in java
 	private String getMailBody() {
-		StringBuilder mailBody = new StringBuilder("<h2>");
+		StringBuilder mailBody = new StringBuilder("<h3>");
 		mailBody.append(getSubject())
-				.append("</h2>");
-		try {
-			mailBody.append("<hr>");
+				.append("</h3>");
 
-			//TODO: remove hard-coded date
+		try {
 			Map<String, List<Event>> eventMap = digest.getEvents(DIGEST_START_DATE, DIGEST_END_DATE);
 
 			mailBody.append("<ol>");
 			for (String category : eventMap.keySet()) {
-				mailBody.append("<li><h3>")
+				mailBody.append("<li><h4>")
 						.append(category)
-						.append("</h3>");
+						.append("</h4>");
 
 				mailBody.append("<ul>");
 				for (Event event : eventMap.get(category)) {
 					mailBody.append("<li>")
-							.append(event.getName())
+							.append(getEventLink(event))
 							.append(NBSP)
 							.append(event.getLocation())
 							.append(NBSP)
@@ -74,6 +76,19 @@ public class SendDigestJob implements Job {
 			LOGGER.error("Can not generate email body " + e);
 		}
 		return mailBody.toString();
+	}
+
+	private String getEventLink(final Event event) {
+		return String.format("<a href='%s%s' target='_blank' title='Click to open it in new window'>%s</a>",
+				Mailer.mailProps.getProperty("event.url"),
+				event.getId(),
+				event.getName());
+	}
+
+	private String getHelloMessage(User user) {
+		return String.format("Dear %s %s," + BR + BR
+				+ "Please find below the list of upcoming events" + BR
+				+ "and have a pleasant rest of the week :)", user.getFirstName(), user.getLastName());
 	}
 
 	/**

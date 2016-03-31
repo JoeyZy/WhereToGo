@@ -64,9 +64,11 @@ public class QuartzScheduler {
 
 		CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
 		trigger.setJobDetail(job);
-		trigger.setCronExpression("1 * * * * ?");
-		//TODO: run job on weekly basis
-		//		trigger.setCronExpression(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(DateBuilder.MONDAY, 10, 0));
+		//for testing trigger the job every minute
+		//trigger.setCronExpression("1 * * * * ?");
+
+		//monday 10:00 AM
+		trigger.setCronExpression("0 10 * * 1 ?");
 		trigger.setName("WeeklyEventDigest");
 		return trigger;
 	}
