@@ -34,8 +34,16 @@ public class SendDigestJob implements Job {
 	public static final LocalDateTime DIGEST_END_DATE = DIGEST_START_DATE.plusWeeks(1);
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+		Map<String, List<Event>> upcomingEvents = digest.getEvents(DIGEST_START_DATE, DIGEST_END_DATE);
+		// we should not send digest if no events.
+		if (upcomingEvents.isEmpty()) {
+			LOGGER.warn(String.format("No events found for period: %s - %s. Any emails have been sent.",
+					DAY_MONTH_FORMATTER.format(DIGEST_START_DATE), DAY_MONTH_FORMATTER.format(DIGEST_END_DATE)));
+			return;
+		}
+
 		String subject = getSubject();
-		String mailBody = getMailBody();
+		String mailBody = getMailBody(upcomingEvents);
 
 		for (User user : digest.getUsers()) {
 			String helloMessage = getHelloMessage(user);
@@ -44,22 +52,20 @@ public class SendDigestJob implements Job {
 	}
 
 	//TODO: use HTML template instead of html in java
-	private String getMailBody() {
+	private String getMailBody(Map<String, List<Event>> upcomingEvents) {
 		StringBuilder mailBody = new StringBuilder("<h3>");
 		mailBody.append(getSubject())
 				.append("</h3>");
 
 		try {
-			Map<String, List<Event>> eventMap = digest.getEvents(DIGEST_START_DATE, DIGEST_END_DATE);
-
 			mailBody.append("<ol>");
-			for (String category : eventMap.keySet()) {
+			for (String category : upcomingEvents.keySet()) {
 				mailBody.append("<li><h4>")
 						.append(category)
 						.append("</h4>");
 
 				mailBody.append("<ul>");
-				for (Event event : eventMap.get(category)) {
+				for (Event event : upcomingEvents.get(category)) {
 					mailBody.append("<li>")
 							.append(getEventLink(event))
 							.append(NBSP)
