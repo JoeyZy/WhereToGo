@@ -66,8 +66,9 @@ h1, h3 {
     position: absolute;
 }
 
-.add-event-container {
+.navbar-btn-container {
     margin: 8px 0;
+  padding: 0 15px;
 }
 
 .btn-add-event {
@@ -591,4 +592,9 @@ div.ui-datepicker {
             width: 20%;
         }
     }
+}
+
+#calendar {
+  max-width: 100%;
+  margin: 0 auto;
 }

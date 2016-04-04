@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="resources/jquery/jquery-ui.css">
     <link rel="stylesheet" href="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
     <link rel="stylesheet" href="resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
+    <link href='resources/css/fullcalendar.min.css' rel='stylesheet'/>
+    <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
     <link href="resources/css/new_styles.css" rel="stylesheet">
 </head>
 <body>
@@ -27,11 +29,19 @@
                 <a class="navbar-brand home" href="#">Events!</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <div class="add-event-container">
+                        <div class="navbar-btn-container">
+                            <button class="btn btn-info btn-calendar" title="Open calendar">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                Calendar
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="navbar-btn-container">
                             <button class="btn btn-block btn-add-event disabled" title="Please login to create an event">Add event</button>
                         </div>
                     </li>
@@ -84,11 +94,11 @@
                 <form>
                     <span>Categories</span>
                     <div class="filter-criteria">
-                         <div id="filter-categories">
+                        <div id="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
                                 <div class="categories-common {{name}}">
-                                <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label>
+                                    <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label>
                                 </div>
                                 {{/each}}
                             </script>
@@ -146,6 +156,11 @@
                         <ul class="UserPage__events__list"></ul>
                     </li>
                 </ul>
+
+                <ul class="SinglePage__inputItemsList Calendar">
+                    <div id='calendar'></div>
+                </ul>
+
                 <ul class="SinglePage__inputItemsList EventPage" data-id="">
                     <li class="SinglePage__inputItem EventPage__owner">
                         <label class="SinglePage__inputItem__label"><b>User Name:</b></label>
@@ -255,8 +270,9 @@
 <script src="resources/jquery/jquery-ui.js"></script>
 <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="resources/js/moment.js"></script>
-<script type="text/javascript" src="resources/multiselect-plugin/js/bootstrap-multiselect.js"></script>
+<script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src="resources/js/script.js"></script>
+<script src='resources/fullcalendar/fullcalendar.min.js'></script>
 <script>
     $('.dropdown-toggle').dropdown();
 </script>

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Globals variables 
+  // Globals variables
     // 	An array containing objects with information about the events.
     var events = [],
         filters = {},
@@ -21,6 +21,7 @@ $(document).ready(function () {
     var $eventCostCurrency = $singlePage.find("#currencies");
     var $eventPageParticipants = $('.EventPage__participants');
     var $userPage = $singlePage.find(".UserPage");
+  var $calendarPage = $singlePage.find(".Calendar");
     var $buttons = $singlePage.find("button");
     var $errors = $singlePage.find('.errors');
     var $buttonEdit = $singlePage.find(".SinglePage__button--edit");
@@ -164,7 +165,7 @@ $(document).ready(function () {
     var checkboxes = $('.filters input[type=checkbox]');
     var loginForm = $('#login-nav');
     var $loginDropDown = $('.dropdown');
-    // Login handler 
+  // Login handler
     loginForm.submit(function (e) {
         var email = loginForm.find("#userEmail").val();
         var password = loginForm.find("#userPassword").val();
@@ -264,7 +265,7 @@ $(document).ready(function () {
     $(window).on('hashchange', function () {
         render(window.location.hash);
     });
-    // Navigation 
+  // Navigation
     function render(url) {
         // Get the keyword from the url.
         var temp = url.split('/')[0];
@@ -296,6 +297,10 @@ $(document).ready(function () {
             '#addEvent': function () {
                 renderSingleEventPage();
             },
+          // Calendar
+          '#calendar': function () {
+            renderCalendarPage();
+          },
             // Page with filtered events
             '#filter': function () {
                 // Grab the string after the '#filter/' keyword. Call the filtering function.
@@ -349,6 +354,11 @@ $(document).ready(function () {
             event.preventDefault();
             window.location.hash = 'addEvent';
         });
+      $('.btn-calendar').on('click', function (event) {
+        event.preventDefault();
+        window.location.hash = 'calendar';
+      });
+
         $('.userInfo').click(function (e) {
             e.preventDefault();
             window.location.hash = 'user/email=' + $(this).data('user');
@@ -567,10 +577,21 @@ $(document).ready(function () {
         $eventCategories.multiselect('refresh');
     }
 
+  function hideCalendarPage() {
+    $calendarPage.hide();
+    $calendarPage.find('#calendar').hide();
+  }
+
+  function showCalendarPage() {
+    $calendarPage.show();
+    $calendarPage.find('#calendar').show();
+  }
+
     // Opens up a preview for one of the events.
     // Its parameters are an index from the hash and the events object.
     function renderSingleEventPage(index, data, addEvent) {
         resetSinglePage();
+      hideCalendarPage();
         $singlePage.find('.EventPage').attr("data-id", index);
         $singlePage.find('.UserPage').hide();
         $singlePage.find('.EventPage').show();
@@ -698,6 +719,54 @@ $(document).ready(function () {
       return $eventCostCurrency.find("option:contains('" + $eventCostCurrency.val() + "')").attr("data-id");
     }
 
+  function renderCalendarPage() {
+    $eventPage.hide();
+    $userPage.hide();
+    $singlePage.find(".SinglePage__button").each(function () {
+      $(this).hide();
+    });
+
+    $singlePageTitle.val('Calendar');
+    $singlePageTitle.attr('readonly', true);
+
+    renderFullCalendar(events);
+
+    showCalendarPage();
+    $singlePage.addClass('visible');
+  }
+
+  function renderFullCalendar(events) {
+    var fcEventList = [];
+    var fcEvent;
+    events.forEach(function (e) {
+      fcEvent = {
+        id: e.id,
+        url: "/#event/" + e.id,
+        title: e.name,
+        start: moment(e.startTime, "DD/MM/YY HH:mm"),
+        end: moment(e.endTime, "DD/MM/YY HH:mm")
+      };
+      fcEventList.push(fcEvent);
+    });
+
+
+    $(document).ready(function () {
+
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek,basicDay'
+        },
+        defaultDate: moment().format("YYYY-MM-DD"),
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        events: fcEventList
+      });
+
+    });
+  }
+
     var $userEmail = $userPage.find('.UserPage__email__input');
     var $userPassword = $userPage.find('.UserPage__password__input');
     var $userFirstName = $userPage.find('.UserPage__name__first');
@@ -705,6 +774,7 @@ $(document).ready(function () {
 
     function renderSingleUserPage(user) {
         resetSinglePage();
+      hideCalendarPage();
         $singlePage.find('.EventPage').hide();
         $singlePage.find('.UserPage').show();
         $singlePageTitle.val('User Information');
