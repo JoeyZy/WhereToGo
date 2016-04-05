@@ -741,7 +741,7 @@ $(document).ready(function () {
     events.forEach(function (e) {
       fcEvent = {
         id: e.id,
-        url: "/#event/" + e.id,
+        url: "#event/" + e.id,
         title: e.name,
         start: moment(e.startTime, "DD/MM/YY HH:mm"),
         end: moment(e.endTime, "DD/MM/YY HH:mm")
