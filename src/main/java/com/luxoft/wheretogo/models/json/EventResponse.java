@@ -18,8 +18,9 @@ public class EventResponse {
 	private String startTime;
 	private String endTime;
 	private Integer deleted;
+	private String picture;
 
-	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted) {
+	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted, String picture) {
 		this.id = id;
 		this.name = name;
 		setCategories(category);
@@ -27,6 +28,7 @@ public class EventResponse {
 		this.startTime = timeToString(startDateTime);
 		this.endTime = timeToString(endDateTime);
 		this.deleted = deleted;
+		this.picture = picture;
 	}
 
 	public void setCategories(List<Category> categories) {

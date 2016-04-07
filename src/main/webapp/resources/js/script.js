@@ -32,6 +32,11 @@ $(document).ready(function () {
     var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
     var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
     var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
+    var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
+    var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
+    var $pictureParent = $singlePage.find('li.event_pic');
+    var $picture = $singlePage.find('img.event_pic');
+
 
     $buttonEdit.on('click', function (event) {
         event.preventDefault();
@@ -67,6 +72,25 @@ $(document).ready(function () {
     renderConfirmationPage();
   });
 
+  $pictureUploadPlaceholder.on('click', function(){
+    $buttonUploadPicture.click();
+  })
+
+  $buttonUploadPicture.on('change', function() {
+        var input = ($buttonUploadPicture)[0]
+        if (input.files && input.files[0]) {
+               if (input.files[0].size/1024/1024 > 3) {
+                    alert('You can download file with size less then 3Mb');
+                    return;
+               }
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                $picture.attr('src', reader.result);
+            }
+           reader.readAsDataURL(input.files[0]);
+        }
+  });
 
   function renderConfirmationPage() {
     var parentDisable = $('.parentDisable');
@@ -108,7 +132,8 @@ $(document).ready(function () {
       "cost": $eventCost.val(),
       "currency": {
         "id": getCurrencyId(), "name": $eventCostCurrency.val()
-      }
+      },
+      "picture": $picture.attr('src')
     };
     deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
   }
@@ -142,6 +167,8 @@ $(document).ready(function () {
         $eventCostCurrency.val("");
         $buttons.hide();
         $errors.hide();
+        $pictureParent.show();
+        $picture.attr('src', "resources/images/noimg.png");
     }
 
     resetSinglePage();
@@ -548,6 +575,9 @@ $(document).ready(function () {
         $eventCostCurrency.prop('disabled', false);
         $eventCategories.multiselect('enable');
         $eventCategories.multiselect('refresh');
+        $pictureUploadPlaceholder.on('click', function(){$buttonUploadPicture.click();});
+        $pictureParent.show()
+        $picture.attr('title', 'Click Me to change!');
     }
 
     function makeEventPageUneditable() {
@@ -565,6 +595,13 @@ $(document).ready(function () {
         $eventStart.datepicker('disable');
         $eventEnd.datepicker('disable');
         $eventCategories.multiselect('refresh');
+        $pictureUploadPlaceholder.off('click');
+        $picture.attr('title','');
+
+        if(!$picture.attr('src') || $picture.attr('src') == 'resources/images/noimg.png') {
+            $pictureParent.hide();
+        }
+
     }
 
     // Opens up a preview for one of the events.
@@ -605,7 +642,8 @@ $(document).ready(function () {
                         "description": $eventDescription.text(),
                         "location": $eventLocation.text(),
                         "cost": $eventCost.val(),
-                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()}
+                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()},
+                        "picture": $picture.attr('src')
                     };
                     saveEvent(eventJson, "addEvent");
                 }
@@ -659,6 +697,12 @@ $(document).ready(function () {
                 $eventPageParticipants.show();
                 $eventDescription.html(linkify(event.description));
                 $eventLocation.html(linkify(event.location));
+                if (event.picture.length){
+                   $picture.attr('src', event.picture);
+                   $pictureParent.show();
+                } else {
+                    $pictureParent.hide();
+                }
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);

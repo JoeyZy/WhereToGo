@@ -73,8 +73,11 @@ public class EventsServiceImpl implements EventsService {
 		List<Event> events = findAll();
 		for (Event event : events) {
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
-					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(),
-					event.getDeleted()));
+					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
+					event.getStartDateTime(),
+					event.getEndDateTime(),
+					event.getDeleted(),//
+					event.getPicture()));
 		}
 		return eventResponses;
 	}
@@ -90,11 +93,14 @@ public class EventsServiceImpl implements EventsService {
 			}
 		}
 		for (Event event : relevantEvents) {
+
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
-					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(), event.getStartDateTime(), event.getEndDateTime(),
-					event.getDeleted()));
+					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
+					event.getStartDateTime(),
+					event.getEndDateTime(),
+					event.getDeleted(),//
+					event.getPicture()));
 		}
 		return eventResponses;
 	}
-
 }
