@@ -1,5 +1,7 @@
 package com.luxoft.wheretogo.models;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,9 +17,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.google.common.io.ByteStreams;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -74,7 +78,30 @@ public class Event {
 	@JoinColumn(name = "currencyId")
 	private Currency currency;
 
+	@Column(name="picture")
+	private Blob picture;
+
 	public Event() {
 	}
 
+	public void setPicture(String value) {
+		try {
+			this.picture = new SerialBlob(value.getBytes());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getPicture() {
+		if(this.picture == null) {
+			return "";
+		}
+
+		try {
+			return new String(ByteStreams.toByteArray(this.picture.getBinaryStream()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 }

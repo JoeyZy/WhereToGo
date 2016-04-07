@@ -110,6 +110,13 @@
                         <li><span>User Name: </span>{{owner}}</li>
                         <li><span>Begin: </span>{{startTime}}</li>
                         <li><span>End: </span>{{endTime}}</li>
+                        {{#if picture.length}}
+                            <li class ='event_pic_min'>
+                                <div class='event_pic_min'>
+                                    <img class='event_pic' src='{{picture}}'/>
+                                <div>
+                            </li>
+                        {{/if}}
                     </ul>
                     <div class="highlight"></div>
                 </li>
@@ -199,6 +206,13 @@
                             <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
                             {{/each}}
                         </script>
+                    </li>
+                    <li class='event_pic'>
+                        <div contentEditable="false" id="picture"  class='event_pic'>
+                            <img style=''
+                                 class="event_pic uploadPlaceholderEvent"/>
+                            <input  style='display:none;' type='file' class="SinglePage__button--upload" accept="image/jpeg,image/png" />
+                        </div>
                     </li>
                 </ul>
                 <ul class="errors"></ul>
