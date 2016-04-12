@@ -92,6 +92,10 @@ $(document).ready(function () {
         }
   });
 
+  function isDefaultPicture() {
+      return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/noimg.png');
+  }
+
   function renderConfirmationPage() {
     var parentDisable = $('.parentDisable');
     parentDisable.addClass('visible');
@@ -133,7 +137,7 @@ $(document).ready(function () {
       "currency": {
         "id": getCurrencyId(), "name": $eventCostCurrency.val()
       },
-      "picture": $picture.attr('src')
+      "picture": isDefaultPicture() ? "" : $picture.attr('src')
     };
     deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
   }
@@ -598,7 +602,7 @@ $(document).ready(function () {
         $pictureUploadPlaceholder.off('click');
         $picture.attr('title','');
 
-        if(!$picture.attr('src') || $picture.attr('src') == 'resources/images/noimg.png') {
+        if(isDefaultPicture()) {
             $pictureParent.hide();
         }
 
@@ -643,11 +647,15 @@ $(document).ready(function () {
                         "location": $eventLocation.text(),
                         "cost": $eventCost.val(),
                         "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()},
-                        "picture": $picture.attr('src')
+                        "picture": isDefaultPicture() ? "" : $picture.attr('src')
                     };
                     saveEvent(eventJson, "addEvent");
                 }
             });
+        }
+
+        function isDefaultPicture() {
+            return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/noimg.png');
         }
 
         function renderShowEventPage(data) {

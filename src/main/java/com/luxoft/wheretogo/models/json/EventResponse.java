@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class EventResponse {
+	private static final String EMPTY_PICTURE = "resources/images/noimg.png";
 	private long id;
 	private String name;
 	private List<String> category;
@@ -28,7 +29,7 @@ public class EventResponse {
 		this.startTime = timeToString(startDateTime);
 		this.endTime = timeToString(endDateTime);
 		this.deleted = deleted;
-		this.picture = picture;
+		this.picture = clearEmptyPicture(picture);
 	}
 
 	public void setCategories(List<Category> categories) {
@@ -49,5 +50,9 @@ public class EventResponse {
 	private String timeToString(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 		return dateFormat.format(date);
+	}
+
+	private String clearEmptyPicture(String picture) {
+		return picture == null ? "" : picture.replace(EMPTY_PICTURE, "");
 	}
 }

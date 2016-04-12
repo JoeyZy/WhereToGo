@@ -6,22 +6,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.io.ByteStreams;
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -38,6 +30,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = {"id", "name"})
 @ToString(of = {"id", "name"})
 public class Event {
+	@Transient
+	private static final Logger LOG = Logger.getLogger(Event.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,7 +82,7 @@ public class Event {
 		try {
 			this.picture = new SerialBlob(value.getBytes());
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.warn("Can not convert image for saving", e);
 		}
 	}
 
@@ -100,7 +94,7 @@ public class Event {
 		try {
 			return new String(ByteStreams.toByteArray(this.picture.getBinaryStream()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.warn("Can not convert image", e);
 		}
 		return "";
 	}
