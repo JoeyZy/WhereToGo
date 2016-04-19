@@ -39,7 +39,6 @@ $(document).ready(function () {
 
 
     $buttonEdit.on('click', function (event) {
-        event.preventDefault();
         makeEventPageEditable();
         $buttonEdit.hide();
         $buttonDelete.hide();
@@ -53,8 +52,9 @@ $(document).ready(function () {
   });
 
   $buttonCancelEditing.on('click', function (event) {
-    event.preventDefault();
     makeEventPageUneditable();
+    var index = (window.location.hash).split('#event/')[1].trim();
+    renderSingleEventPage(index, events);
     $buttonEdit.show();
     $buttonDelete.show();
     if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
@@ -65,16 +65,12 @@ $(document).ready(function () {
   });
 
   $buttonDelete.on('click', function () {
-    $buttonEdit.hide();
-    $buttonDelete.hide();
-    $buttonApply.hide();
-    $buttonCancelEditing.hide();
     renderConfirmationPage();
   });
 
   $pictureUploadPlaceholder.on('click', function(){
     $buttonUploadPicture.click();
-  })
+  });
 
   $buttonUploadPicture.on('change', function() {
         var input = ($buttonUploadPicture)[0]
@@ -87,7 +83,7 @@ $(document).ready(function () {
                 var reader = new FileReader();
                 reader.onload = function () {
                 $picture.attr('src', reader.result);
-            }
+            };
            reader.readAsDataURL(input.files[0]);
         }
   });
@@ -120,7 +116,6 @@ $(document).ready(function () {
   });
 
   function updateEvent(deleted) {
-    event.preventDefault();
     var categoriesList = [];
     $eventCategories.find(":selected").each(function (i, selected) {
       categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -632,7 +627,6 @@ $(document).ready(function () {
             populateSinglePageEventPage($singlePage);
             $buttonAddEvent.attr('disabled', 'disabled');
             $buttonAddEvent.on('click', function (event) {
-                event.preventDefault();
                 if (typeof user !== "undefined") {
                     var categoriesList = [];
                     $eventCategories.find(":selected").each(function (i, selected) {
