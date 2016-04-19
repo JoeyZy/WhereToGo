@@ -1,10 +1,7 @@
 package com.luxoft.wheretogo.mailer;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,9 +28,9 @@ public class EventDigest {
 	 * @param to   end date
 	 * @return map (K = id of category, V = list of events)
 	 */
-	public Map<String, List<Event>> getEvents(LocalDateTime from, LocalDateTime to) {
+	public Map<String, Collection<Event>> getEvents(LocalDateTime from, LocalDateTime to) {
 
-		Map<String, List<Event>> result = new HashMap<>();
+		Map<String, Collection<Event>> result = new HashMap<>();
 
 		for (Event event : eventsService.findByPeriod(from, to)) {
 			// now each event has only one category, but it may have more than one

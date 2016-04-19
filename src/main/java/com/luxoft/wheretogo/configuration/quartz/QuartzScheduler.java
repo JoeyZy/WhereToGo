@@ -1,8 +1,8 @@
 package com.luxoft.wheretogo.configuration.quartz;
 
+import com.luxoft.wheretogo.mailer.EventNotificationJob;
 import org.apache.log4j.Logger;
-import org.quartz.JobDetail;
-import org.quartz.Trigger;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,8 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 import com.luxoft.wheretogo.mailer.SendDigestJob;
+
+import java.util.List;
 
 /**
  * Created by Sergii on 29.03.2016.
@@ -35,15 +37,15 @@ public class QuartzScheduler {
 	}
 
 	@Bean
-	public SchedulerFactoryBean scheduler(Trigger trigger, JobDetail job) {
+	public SchedulerFactoryBean scheduler(List<Trigger> trigger, List<JobDetail> job) {
 
 		SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
 		//		schedulerFactory.setConfigLocation(new ClassPathResource("quartz.properties"));
 
 		LOGGER.debug("Setting the Scheduler up");
 		schedulerFactory.setJobFactory(springBeanJobFactory());
-		schedulerFactory.setJobDetails(job);
-		schedulerFactory.setTriggers(trigger);
+		schedulerFactory.setJobDetails(job.toArray(new JobDetail[job.size()]));
+		schedulerFactory.setTriggers(trigger.toArray(new Trigger[trigger.size()]));
 
 		return schedulerFactory;
 	}
@@ -59,7 +61,7 @@ public class QuartzScheduler {
 		return jobDetailFactory;
 	}
 
-	@Bean
+	@Bean(name="digestTrigger")
 	public CronTriggerFactoryBean trigger(JobDetail job) {
 
 		CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
@@ -71,5 +73,24 @@ public class QuartzScheduler {
 		trigger.setCronExpression("0 10 * * 1 ?");
 		trigger.setName("WeeklyEventDigest");
 		return trigger;
+	}
+
+
+	@Bean(name="notificationTrigger")
+	public Trigger notificationTrigger(JobDetail job) {
+		Trigger trigger = TriggerBuilder.newTrigger()
+				.withIdentity("Event notification Trigger")
+				.withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(8, 0)).build();
+		return trigger;
+	}
+
+	@Bean(name="notificationJob")
+	public JobDetailFactoryBean notificationJob() {
+		JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
+		jobDetailFactory.setJobClass(EventNotificationJob.class);
+		jobDetailFactory.setName("EventNotificationQuartzJob");
+		jobDetailFactory.setDescription("Invoke EventNotificationJob...");
+		jobDetailFactory.setDurability(true);
+		return jobDetailFactory;
 	}
 }
