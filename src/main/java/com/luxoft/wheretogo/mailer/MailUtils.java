@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Map;
-
+/**
+ * Created by Sergii on 29.03.2016.
+ */
 final public class MailUtils {
     private static final Logger LOGGER = Logger.getLogger(MailUtils.class);
     private final static String NBSP = "&nbsp;";

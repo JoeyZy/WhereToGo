@@ -3,6 +3,8 @@ package com.luxoft.wheretogo.mailer;
 import com.google.common.collect.*;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.services.EventsService;
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,19 +20,24 @@ import java.util.Map;
 
 @Component
 public class EventNotificationJob implements Job {
+    private final static Logger LOGGER = Logger.getLogger(EventNotificationJob.class);
     private final static DateTimeFormatter DAY_MONTH_FORMATTER = DateTimeFormatter.ofPattern("dd MMM");
+
     @Autowired
-    private EventDigest eventDigest;
+    private EventsService eventsService;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        LOGGER.info("Event notification job is started!");
         List<MailCommand> commands = Lists.newArrayList();
         Multimap<User, Event> events = getPendingToSendEventsMappedToUsers();
+        if (events.isEmpty()) {
+            LOGGER.info("No events to notify on date: " + LocalDate.now().plusDays(1).toString());
+        }
         events.keySet().forEach(key -> commands.add(buildMail(key, events.get(key))));
 
         commands.forEach(item -> item.execute());
     }
-
 
     private MailCommand buildMail(User user, Collection<Event> events) {
         return MailCommand.Builder.builder()
@@ -55,7 +62,7 @@ public class EventNotificationJob implements Job {
     private Multimap<User,Event> getPendingToSendEventsMappedToUsers() {
         Multimap<User, Event> map = ArrayListMultimap.create();
         List<Event> events = getEventsPendingNotification();
-        events.forEach(item -> item.getParticipants().forEach(user -> map.put(user, item)));
+        events.forEach((item) -> item.getParticipants().forEach((user) -> map.put(user, item)));
 
        return map;
     }
@@ -64,9 +71,7 @@ public class EventNotificationJob implements Job {
         final LocalDateTime start = LocalDate.now().plusDays(1).atStartOfDay();
         final LocalDateTime end = LocalDate.now().plusDays(2).atStartOfDay();
 
-        List events = Lists.newArrayList();
-        eventDigest.getEvents(start, end).values().forEach(item -> events.addAll(item));
-        return events;
+        return eventsService.findByPeriod(start, end);
     }
 
     private static class MailCommand {

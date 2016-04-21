@@ -46,7 +46,11 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<Event> findByPeriod(LocalDateTime from, LocalDateTime to) {
-		return eventsRepository.findByPeriod(from, to);
+		List<Event> events = eventsRepository.findByPeriod(from, to);
+		for(Event event : events) {
+			Hibernate.initialize(event.getParticipants());
+		}
+		return events;
 	}
 
 	@Override
