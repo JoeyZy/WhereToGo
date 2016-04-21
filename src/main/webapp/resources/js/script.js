@@ -89,7 +89,7 @@ $(document).ready(function () {
   });
 
   function isDefaultPicture() {
-      return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/noimg.png');
+      return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/camera.png');
   }
 
   function renderConfirmationPage() {
@@ -167,7 +167,7 @@ $(document).ready(function () {
         $buttons.hide();
         $errors.hide();
         $pictureParent.show();
-        $picture.attr('src', "resources/images/noimg.png");
+        $picture.attr('src', "resources/images/camera.png");
     }
 
     resetSinglePage();
@@ -254,11 +254,6 @@ $(document).ready(function () {
             createQueryHash(filters);
         }
     });
-    // When the "Clear all filters" button is pressed change the hash to '#' (go to the home $singlePage)
-    $('.filters button').click(function (e) {
-        e.preventDefault();
-        window.location.hash = '#';
-    });
     // Single event $singlePage buttons
     $singlePage.on('click', function (e) {
         if ($singlePage.hasClass('visible')) {
@@ -277,6 +272,12 @@ $(document).ready(function () {
       events = data;
       events.sort(function (a, b) {
         return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+      });
+      events.forEach( function(item) {
+        item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+        item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
+        item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+        item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
       });
       // Call a function to create HTML for all the events.
       generateAlleventsHTML(events);
@@ -649,7 +650,7 @@ $(document).ready(function () {
         }
 
         function isDefaultPicture() {
-            return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/noimg.png');
+            return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/camera.png');
         }
 
         function renderShowEventPage(data) {

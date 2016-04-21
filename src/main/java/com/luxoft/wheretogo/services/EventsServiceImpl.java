@@ -77,7 +77,8 @@ public class EventsServiceImpl implements EventsService {
 					event.getStartDateTime(),
 					event.getEndDateTime(),
 					event.getDeleted(),//
-					event.getPicture()));
+					event.getPicture(),
+					event.getLocation()));
 		}
 		return eventResponses;
 	}
@@ -99,7 +100,9 @@ public class EventsServiceImpl implements EventsService {
 					event.getStartDateTime(),
 					event.getEndDateTime(),
 					event.getDeleted(),//
-					event.getPicture()));
+					event.getPicture(),
+					event.getLocation()))
+			;
 		}
 		return eventResponses;
 	}
