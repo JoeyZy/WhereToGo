@@ -26,6 +26,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand home" href="#"><img class="icons" src="resources/images/list.png"><span> All Events</span></a>
+                <a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -33,7 +34,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="add-event-container">
-                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event">+ Event</button>
+                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event"><img class="icons" src="resources/images/add_event.png"> Event</button>
                         </div>
                     </li>
                     <li>
@@ -107,7 +108,7 @@
                         <div class="event-box-img">
                             <div class="event-img {{category}}" style="background-image:url({{picture}})">
                                 <div class="event-box-content">
-                                    <h2 class="event-box-title"><a href="#"> {{name}} </a></h2>
+                                    <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
                                     <div class="event-box-location-and-by">
                                         <div class="location"><img class="icons" src="resources/images/location.png"> {{location}}</div>

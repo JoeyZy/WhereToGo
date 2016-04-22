@@ -1,4 +1,8 @@
 $border: 1px solid #dbe3e7;
+$successButtonColor:#9CCC65;
+$darkGreyColor:#37474F;
+$notActiveMenuTabColor:#90A4AE;
+$activeTopMenuTabColor:#BBDEFB;
 
 * {
   margin: 0;
@@ -38,7 +42,7 @@ h1, h3 {
   color: #fff;
 }
 
-.home > img {
+.navbar-brand > img {
   display: inline-block;
 }
 
