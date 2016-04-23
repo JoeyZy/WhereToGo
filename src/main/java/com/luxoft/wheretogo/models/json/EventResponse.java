@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class EventResponse {
+	private static final String EMPTY_PICTURE = "resources/images/noimg.png";
 	private long id;
 	private String name;
 	private List<String> category;
@@ -18,8 +19,10 @@ public class EventResponse {
 	private String startTime;
 	private String endTime;
 	private Integer deleted;
+	private String picture;
+	private String location;
 
-	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted) {
+	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted, String picture, String location) {
 		this.id = id;
 		this.name = name;
 		setCategories(category);
@@ -27,6 +30,8 @@ public class EventResponse {
 		this.startTime = timeToString(startDateTime);
 		this.endTime = timeToString(endDateTime);
 		this.deleted = deleted;
+		this.location = location;
+		this.picture = clearEmptyPicture(picture);
 	}
 
 	public void setCategories(List<Category> categories) {
@@ -47,5 +52,9 @@ public class EventResponse {
 	private String timeToString(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 		return dateFormat.format(date);
+	}
+
+	private String clearEmptyPicture(String picture) {
+		return picture == null ? "" : picture.replace(EMPTY_PICTURE, "");
 	}
 }

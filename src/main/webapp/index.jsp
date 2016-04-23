@@ -14,6 +14,7 @@
     <link href='resources/css/fullcalendar.min.css' rel='stylesheet'/>
     <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
     <link href="resources/css/new_styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <header>
@@ -27,7 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand home" href="#">Events!</a>
+                <a class="navbar-brand home" href="#"><img class="icons" src="resources/images/list.png"><span> All Events</span></a>
+                <%--<a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>--%>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
@@ -42,8 +44,8 @@
                         </div>
                     </li>
                     <li>
-                        <div class="navbar-btn-container">
-                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event">Add event</button>
+                        <div class="add-event-container">
+                            <button class="btn btn-block btn-add-event disabled" title="Please login to create an event"><img class="icons" src="resources/images/add_event.png"> Event</button>
                         </div>
                     </li>
                     <li>
@@ -91,21 +93,20 @@
 <div class="main-content">
     <div class="all-events page">
         <div class="nav-left">
-            <div class="filters">
+            <div class="filters bs-callout bs-callout-default">
                 <form>
-                    <span>Categories</span>
+                    <lable>Categories</lable>
                     <div class="filter-criteria">
                         <div id="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
                                 <div class="categories-common {{name}}">
-                                    <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label>
+                                <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label><span class="badge {{name}}">  </span>
                                 </div>
                                 {{/each}}
                             </script>
                         </div>
                     </div>
-                    <button class="btn">Clear filters</button>
                 </form>
             </div>
         </div>
@@ -113,15 +114,35 @@
         <ul class="events-list">
             <script id="events-template" type="x-handlebars-template">
                 {{#each this}}
-                <li data-index="{{id}}" class="small_event {{category}}">
+                <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
-                    <h2><a href="#"> {{name}} </a></h2>
-                    <ul class="event-description">
-                        <li><span>Category: </span>{{category}}</li>
-                        <li><span>User Name: </span>{{owner}}</li>
-                        <li><span>Begin: </span>{{startTime}}</li>
-                        <li><span>End: </span>{{endTime}}</li>
-                    </ul>
+                        <div class="event-box-img">
+                            <div class="event-img {{category}}" style="background-image:url({{picture}})">
+                                <div class="event-box-content">
+                                    <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
+
+                                    <div class="event-box-location-and-by">
+                                        <div class="location"><img class="icons" src="resources/images/location.png"> {{location}}</div>
+                                        <div class="created-by"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="category_color {{category}}"></div>
+
+                            <div class="start">
+                                <span>START <br></span>
+                                <div class="start_date"><img class="icons" src="resources/images/calendar.png"> {{actualStartDate}}</div>
+                                <div class="start_time"><img class="icons" src="resources/images/time.png"> {{actualStartTime}}</div>
+                            </div>
+
+                            <div class="end">
+                                <span>END <br></span>
+                                <div class="end_date"><img class="icons" src="resources/images/calendar.png">  {{actualEndDate}}</div>
+                                <div class="end_time"><img class="icons" src="resources/images/time.png">  {{actualEndTime}}</div>
+
+                            </div>
+
                     <div class="highlight"></div>
                 </li>
                 {{/each}}
@@ -215,6 +236,13 @@
                             <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
                             {{/each}}
                         </script>
+                    </li>
+                    <li class='event_pic'>
+                        <div contentEditable="false" id="picture"  class='event_pic'>
+                            <img style=''
+                                 class="event_pic uploadPlaceholderEvent"/>
+                            <input  style='display:none;' type='file' class="SinglePage__button--upload" accept="image/jpeg,image/png" />
+                        </div>
                     </li>
                 </ul>
                 <ul class="errors"></ul>

@@ -1,23 +1,19 @@
 package com.luxoft.wheretogo.models;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.io.ByteStreams;
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,6 +30,8 @@ import lombok.ToString;
 @EqualsAndHashCode(of = {"id", "name"})
 @ToString(of = {"id", "name"})
 public class Event {
+	@Transient
+	private static final Logger LOG = Logger.getLogger(Event.class);
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +72,30 @@ public class Event {
 	@JoinColumn(name = "currencyId")
 	private Currency currency;
 
+	@Column(name="picture")
+	private Blob picture;
+
 	public Event() {
 	}
 
+	public void setPicture(String value) {
+		try {
+			this.picture = new SerialBlob(value.getBytes());
+		} catch (SQLException e) {
+			LOG.warn("Can not convert image for saving", e);
+		}
+	}
+
+	public String getPicture() {
+		if(this.picture == null) {
+			return "";
+		}
+
+		try {
+			return new String(ByteStreams.toByteArray(this.picture.getBinaryStream()));
+		} catch (Exception e) {
+			LOG.warn("Can not convert image", e);
+		}
+		return "";
+	}
 }

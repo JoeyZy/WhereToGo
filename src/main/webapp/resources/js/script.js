@@ -33,9 +33,13 @@ $(document).ready(function () {
     var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
     var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
     var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
+    var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
+    var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
+    var $pictureParent = $singlePage.find('li.event_pic');
+    var $picture = $singlePage.find('img.event_pic');
+
 
     $buttonEdit.on('click', function (event) {
-        event.preventDefault();
         makeEventPageEditable();
         $buttonEdit.hide();
         $buttonDelete.hide();
@@ -49,8 +53,9 @@ $(document).ready(function () {
   });
 
   $buttonCancelEditing.on('click', function (event) {
-    event.preventDefault();
     makeEventPageUneditable();
+    var index = (window.location.hash).split('#event/')[1].trim();
+    renderSingleEventPage(index, events);
     $buttonEdit.show();
     $buttonDelete.show();
     if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
@@ -61,13 +66,32 @@ $(document).ready(function () {
   });
 
   $buttonDelete.on('click', function () {
-    $buttonEdit.hide();
-    $buttonDelete.hide();
-    $buttonApply.hide();
-    $buttonCancelEditing.hide();
     renderConfirmationPage();
   });
 
+  $pictureUploadPlaceholder.on('click', function(){
+    $buttonUploadPicture.click();
+  });
+
+  $buttonUploadPicture.on('change', function() {
+        var input = ($buttonUploadPicture)[0]
+        if (input.files && input.files[0]) {
+               if (input.files[0].size/1024/1024 > 3) {
+                    alert('You can download file with size less then 3Mb');
+                    return;
+               }
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                $picture.attr('src', reader.result);
+            };
+           reader.readAsDataURL(input.files[0]);
+        }
+  });
+
+  function isDefaultPicture() {
+      return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/camera.png');
+  }
 
   function renderConfirmationPage() {
     var parentDisable = $('.parentDisable');
@@ -93,7 +117,6 @@ $(document).ready(function () {
   });
 
   function updateEvent(deleted) {
-    event.preventDefault();
     var categoriesList = [];
     $eventCategories.find(":selected").each(function (i, selected) {
       categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -109,7 +132,8 @@ $(document).ready(function () {
       "cost": $eventCost.val(),
       "currency": {
         "id": getCurrencyId(), "name": $eventCostCurrency.val()
-      }
+      },
+      "picture": isDefaultPicture() ? "" : $picture.attr('src')
     };
     deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
   }
@@ -143,6 +167,8 @@ $(document).ready(function () {
         $eventCostCurrency.val("");
         $buttons.hide();
         $errors.hide();
+        $pictureParent.show();
+        $picture.attr('src', "resources/images/camera.png");
     }
 
     resetSinglePage();
@@ -229,11 +255,6 @@ $(document).ready(function () {
             createQueryHash(filters);
         }
     });
-    // When the "Clear all filters" button is pressed change the hash to '#' (go to the home $singlePage)
-    $('.filters button').click(function (e) {
-        e.preventDefault();
-        window.location.hash = '#';
-    });
     // Single event $singlePage buttons
     $singlePage.on('click', function (e) {
         if ($singlePage.hasClass('visible')) {
@@ -252,6 +273,12 @@ $(document).ready(function () {
       events = data;
       events.sort(function (a, b) {
         return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+      });
+      events.forEach( function(item) {
+        item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+        item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
+        item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+        item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
       });
       // Call a function to create HTML for all the events.
       generateAlleventsHTML(events);
@@ -558,6 +585,9 @@ $(document).ready(function () {
         $eventCostCurrency.prop('disabled', false);
         $eventCategories.multiselect('enable');
         $eventCategories.multiselect('refresh');
+        $pictureUploadPlaceholder.on('click', function(){$buttonUploadPicture.click();});
+        $pictureParent.show()
+        $picture.attr('title', 'Click Me to change!');
     }
 
     function makeEventPageUneditable() {
@@ -575,6 +605,13 @@ $(document).ready(function () {
         $eventStart.datepicker('disable');
         $eventEnd.datepicker('disable');
         $eventCategories.multiselect('refresh');
+        $pictureUploadPlaceholder.off('click');
+        $picture.attr('title','');
+
+        if(isDefaultPicture()) {
+            $pictureParent.hide();
+        }
+
     }
 
   function hideCalendarPage() {
@@ -612,7 +649,6 @@ $(document).ready(function () {
             populateSinglePageEventPage($singlePage);
             $buttonAddEvent.attr('disabled', 'disabled');
             $buttonAddEvent.on('click', function (event) {
-                event.preventDefault();
                 if (typeof user !== "undefined") {
                     var categoriesList = [];
                     $eventCategories.find(":selected").each(function (i, selected) {
@@ -626,11 +662,16 @@ $(document).ready(function () {
                         "description": $eventDescription.text(),
                         "location": $eventLocation.text(),
                         "cost": $eventCost.val(),
-                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()}
+                        "currency": {"id":  getCurrencyId(), "name": $eventCostCurrency.val()},
+                        "picture": isDefaultPicture() ? "" : $picture.attr('src')
                     };
                     saveEvent(eventJson, "addEvent");
                 }
             });
+        }
+
+        function isDefaultPicture() {
+            return !$picture.attr('src') ||  ($picture.attr('src') == 'resources/images/camera.png');
         }
 
         function renderShowEventPage(data) {
@@ -680,6 +721,12 @@ $(document).ready(function () {
                 $eventPageParticipants.show();
                 $eventDescription.html(linkify(event.description));
                 $eventLocation.html(linkify(event.location));
+                if (event.picture.length){
+                   $picture.attr('src', event.picture);
+                   $pictureParent.show();
+                } else {
+                    $pictureParent.hide();
+                }
                 singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
                 var startDate = event.startDateTime;
                 $eventStart.val(startDate);
