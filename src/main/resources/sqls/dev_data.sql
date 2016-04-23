@@ -3,21 +3,21 @@ INSERT INTO `users` (email, first_name, last_name, password) VALUES ('serg.tanch
 INSERT INTO `users` (email, first_name, last_name, password) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', 'root');
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
-  (1, 100, 0, 'Description of the event', '2016-04-27 23:38:00', 'Lepse Street, 6z, Kiev', 'Concert....', '2016-04-27 22:00:00', 1, 1),
-  (2, 200, 0, 'Description of the event', '2016-04-28 23:38:00', 'Lepse Street, 6z, Kiev', 'Movie......', '2016-04-28 22:00:00', 2, 1),
-  (3, 300, 0, 'Description of the event', '2016-04-29 23:38:00', 'Lepse Street, 6z, Kiev', 'Nature.....', '2016-04-29 22:00:00', 3, 1),
+  (1, 100, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Concert....', '2016-04-21 22:00:00', 1, 1),
+  (2, 200, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Movie......', '2016-04-22 22:00:00', 2, 1),
+  (3, 300, 0, 'Description of the event', '2016-04-23 23:38:00', 'Lepse Street, 6z, Kiev', 'Nature.....', '2016-04-23 22:00:00', 3, 1),
   (4, 400, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Pub........', '2016-04-24 22:00:00', 1, 1),
   (5, 500, 0, 'Description of the event', '2016-04-25 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......0', '2016-04-25 22:00:00', 2, 1),
   (9, 500, 0, 'Description of the event1', '2016-04-26 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......1', '2016-04-26 22:00:00', 2, 1),
-  (10, 500, 0, 'Description of the event2', '2016-04-27 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......2', '2016-04-15 22:00:00', 2, 1),
-  (11, 500, 0, 'Description of the event3', '2016-04-28 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......3', '2016-04-15 22:00:00', 2, 1),
+  (10, 500, 0, 'Description of the event2', '2016-04-27 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......2', '2016-04-27 22:00:00', 2, 1),
+  (11, 500, 0, 'Description of the event3', '2016-04-28 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......3', '2016-04-28 22:00:00', 2, 1),
   (6, 600, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....0', '2016-04-22 22:00:00', 3, 1),
   (12, 600, 0, 'Description of the event', '2016-04-23 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....1', '2016-04-23 22:00:00', 3, 1),
   (13, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....2', '2016-04-24 22:00:00', 3, 1),
-  (14, 600, 0, 'Description of the event', '2016-04-12 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....3', '2016-04-12 22:00:00', 3, 1),
-  (15, 600, 0, 'Description of the event', '2016-04-11 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....4', '2016-04-11 22:00:00', 3, 1),
-  (7, 700, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Trip.......', '2016-04-22 13:38:00', 1, 1),
-  (8, 800, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Other......', '2016-04-22 22:00:00', 2, 1);
+  (14, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....3', '2016-04-24 22:00:00', 3, 1),
+  (15, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....4', '2016-04-24 22:00:00', 3, 1),
+  (7, 700, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Trip.......', '2016-04-24 13:38:00', 1, 1),
+  (8, 800, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Other......', '2016-04-24 22:00:00', 2, 1);
 
 INSERT INTO `events_categories` (category_id, event_id) VALUES
   (1, 1),
