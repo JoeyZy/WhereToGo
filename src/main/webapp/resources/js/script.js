@@ -744,27 +744,27 @@ $(document).ready(function () {
         url: "#event/" + e.id,
         title: e.name,
         start: moment(e.startTime, "DD/MM/YY HH:mm"),
-        end: moment(e.endTime, "DD/MM/YY HH:mm")
+        end: moment(e.endTime, "DD/MM/YY HH:mm"),
+        editable: false
       };
       fcEventList.push(fcEvent);
     });
 
-
-    $(document).ready(function () {
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,basicWeek,basicDay'
-        },
-        defaultDate: moment().format("YYYY-MM-DD"),
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: fcEventList
-      });
-
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      //defaultDate: moment().format("YYYY-MM-DD"),
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: fcEventList,
+      firstDay: 1, // first day of the week Monday=1
+      titleRangeSeparator: "\u2013",
+      timeFormat: ' ' // don't show start time near events' names
     });
+    $('#calendar').fullCalendar('today'); // show current day when calendar is opened
   }
 
     var $userEmail = $userPage.find('.UserPage__email__input');
