@@ -3,6 +3,7 @@ $(document).ready(function () {
     // 	An array containing objects with information about the events.
     var events = [],
         filters = {},
+      filterColors = {},
         user = undefined;
     $('.userInfo').hide();
     $('.logout').hide();
@@ -412,12 +413,23 @@ $(document).ready(function () {
     }
 
     function displayCategoriesListFilter() {
+      var badgeSelector = ".badge";
+      //didn't find another way of matching categories and colors
+      function getColorsOfCategories() {
+        $(badgeSelector).each(function (index, value) {
+          var fullClass = $(value).attr('class');
+          var filterName = fullClass.slice(badgeSelector.length).toLowerCase();
+          filterColors[filterName] = $(value).css('background-color');
+        })
+      }
+
         $.getJSON("categories", function (data) {
             var categoriesListElementTemplate = $('#categories-list').html();
             var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
             var categoriesFilter = $('#filter-categories');
             categoriesFilter.html(categoriesListElement(data));
             var checkboxes = $('.all-events input[type=checkbox]');
+          getColorsOfCategories();
             checkboxes.click(function () {
                 var that = $(this),
                     specName = that.attr('name');
@@ -792,6 +804,7 @@ $(document).ready(function () {
         title: e.name,
         start: moment(e.startTime, "DD/MM/YY HH:mm"),
         end: moment(e.endTime, "DD/MM/YY HH:mm"),
+        color: getEventColor(e),
         editable: false
       };
       fcEventList.push(fcEvent);
@@ -812,6 +825,11 @@ $(document).ready(function () {
       timeFormat: ' ' // don't show start time near events' names
     });
     $('#calendar').fullCalendar('today'); // show current day when calendar is opened
+
+    function getEventColor(event) {
+      var eventCategory = event.category[0];
+      return filterColors[eventCategory.toLowerCase()];
+    }
   }
 
     var $userEmail = $userPage.find('.UserPage__email__input');
