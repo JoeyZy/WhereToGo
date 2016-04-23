@@ -258,11 +258,15 @@ $(document).ready(function () {
     });
     // Single event $singlePage buttons
     $singlePage.on('click', function (e) {
+      var top = $(window).scrollTop();
+      console.log(top);
         if ($singlePage.hasClass('visible')) {
             var clicked = $(e.target);
             // If the close button or the background are clicked go to the previous $singlePage.
             if (clicked.hasClass('close') || clicked.hasClass('Overlay')) {
                 // Change the url hash with the last used filters.
+
+              $(window).scrollTop(top);
                 createQueryHash(filters);
             }
         }
@@ -293,6 +297,7 @@ $(document).ready(function () {
     $(window).on('hashchange', function () {
         render(window.location.hash);
     });
+
   // Navigation
     function render(url) {
         // Get the keyword from the url.
@@ -300,6 +305,12 @@ $(document).ready(function () {
         // Hide whatever $singlePage is currently shown.
         checkSession();
         $('.visible').removeClass('visible');
+      var singlePage = $('.SinglePage');
+
+      moveSinglePageToCenter();
+      $(window).scroll(moveSinglePageToCenter);
+      $(window).resize(moveSinglePageToCenter);
+
         var map = {
             // The "Homepage".
             '': function () {
@@ -357,6 +368,13 @@ $(document).ready(function () {
 
             renderEventsPage(events);
         }
+
+      function moveSinglePageToCenter() {
+        var top = 25 + $(window).scrollTop();
+        singlePage.css({
+          top: top
+        });
+      };
     }
 
     // This function is called only once - on $singlePage load.
@@ -805,6 +823,7 @@ $(document).ready(function () {
         start: moment(e.startTime, "DD/MM/YY HH:mm"),
         end: moment(e.endTime, "DD/MM/YY HH:mm"),
         color: getEventColor(e),
+        dragScroll: false,
         editable: false
       };
       fcEventList.push(fcEvent);
