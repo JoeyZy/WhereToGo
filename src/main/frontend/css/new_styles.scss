@@ -1,8 +1,8 @@
 $border: 1px solid #dbe3e7;
-$successButtonColor:#9CCC65;
-$darkGreyColor:#37474F;
-$notActiveMenuTabColor:#90A4AE;
-$activeTopMenuTabColor:#BBDEFB;
+$successButtonColor: #9CCC65;
+$darkGreyColor: #37474F;
+$notActiveMenuTabColor: #90A4AE;
+$activeTopMenuTabColor: #BBDEFB;
 
 * {
   margin: 0;
@@ -29,13 +29,13 @@ h1, h3 {
 }
 
 .navbar-inverse {
-  background-image: linear-gradient(to bottom,#37474F 0, #3a3a3a 100%);
-  box-shadow:1px 3px 1px rgba(0, 0, 0, 0.4);
-  border-color:#37474F;
+  background-image: linear-gradient(to bottom, #37474F 0, #3a3a3a 100%);
+  box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.4);
+  border-color: #37474F;
 }
 
 .navbar-default .navbar-brand:hover {
-  color:#BBDEFB;
+  color: #BBDEFB;
 }
 
 .navbar-inverse .navbar-brand {
@@ -83,8 +83,9 @@ h1, h3 {
   position: absolute;
 }
 
-.add-event-container {
+.navbar-btn-container {
   margin: 8px 0;
+  padding: 0 15px;
 }
 
 .btn-add-event {
@@ -151,7 +152,7 @@ h1, h3 {
   background-color: #9CCC65;
 }
 
-.badge.Pub, .category_color.Pub ,  .event-img.Pub{
+.badge.Pub, .category_color.Pub, .event-img.Pub {
   background-color: #26A69A;
 }
 
@@ -183,8 +184,8 @@ h1, h3 {
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.87) 100%);
 }
 
-.event-box-img, .event-box-img a{
-  color: rgb(255,255,255);
+.event-box-img, .event-box-img a {
+  color: rgb(255, 255, 255);
   background-size: cover;
   position: relative;
 }
@@ -218,7 +219,7 @@ h1, h3 {
 .event-box-location-and-by {
   text-align: center;
   margin-top: 40px;
-  display:block;
+  display: block;
   z-index: 5;
   position: relative;
   color: #CBCBCC;
@@ -362,13 +363,12 @@ h1, h3 {
 }
 
 .start, .end {
-  display:inline-block;
+  display: inline-block;
 }
 
 .start_date, .start_time, .end_date, .end_time {
   margin: 5px 0;
 }
-
 
 /* Making the list responsive */
 

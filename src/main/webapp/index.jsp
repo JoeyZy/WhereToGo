@@ -44,7 +44,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="add-event-container">
+                        <div class="navbar-btn-container">
                             <button class="btn btn-block btn-add-event disabled" title="Please login to create an event"><img class="icons" src="resources/images/add_event.png"> Event</button>
                         </div>
                     </li>
