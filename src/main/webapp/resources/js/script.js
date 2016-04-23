@@ -259,7 +259,6 @@ $(document).ready(function () {
     // Single event $singlePage buttons
     $singlePage.on('click', function (e) {
       var top = $(window).scrollTop();
-      console.log(top);
         if ($singlePage.hasClass('visible')) {
             var clicked = $(e.target);
             // If the close button or the background are clicked go to the previous $singlePage.
