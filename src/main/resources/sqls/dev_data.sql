@@ -1,6 +1,6 @@
-INSERT INTO `users` (email, first_name, last_name, password) VALUES ('root@gmail.com', 'Root', 'Root', 'root');
-INSERT INTO `users` (email, first_name, last_name, password) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', 'root');
-INSERT INTO `users` (email, first_name, last_name, password) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', 'root');
+INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('root@gmail.com', 'Root', 'Root', 'root', 'user');
+INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', 'root', 'user');
+INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', 'root', 'user');
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
   (1, 100, 0, 'Description of the event', concat(CURDATE(), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Concert....',
