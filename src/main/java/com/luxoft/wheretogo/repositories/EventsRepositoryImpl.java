@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.utils.DateUtils;
 
 @Repository
@@ -53,5 +54,10 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 	@Override
 	public Event findByName(String eventName) {
 		return super.findByProperty("name", eventName);
+	}
+
+	@Override
+	public List<Event> findByOwner(User owner) {
+		return super.findListByProperty("owner", owner.getId());
 	}
 }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
 
 public interface EventsService {
@@ -23,5 +24,7 @@ public interface EventsService {
 	List<EventResponse> getEventResponses();
 
 	List<EventResponse> getRelevantEventResponses();
+
+	List<Event> findByOwner(User owner);
 
 }

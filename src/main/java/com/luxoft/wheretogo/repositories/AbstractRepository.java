@@ -45,6 +45,12 @@ public abstract class AbstractRepository<T> {
 		return (T) criteria.uniqueResult();
 	}
 
+	protected List<T> findListByProperty(String property, Object value) {
+		Criteria criteria = getCriteria();
+		criteria.add(Restrictions.eq(property, value));
+		return (List<T>) criteria.uniqueResult();
+	}
+
 	protected Criteria getCriteria() {
 		return sessionFactory.getCurrentSession().createCriteria(clazz).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	}

@@ -272,8 +272,11 @@ $(document).ready(function () {
 		}
 	});
 	// Get data about our events from events.json.
-	function loadEvents() {
-		$.getJSON("events", function (data) {
+	function loadEvents(type) {
+		if (!type) {
+			type = "events"
+		}
+		$.getJSON(type, function (data) {
 			// Write the data into our global variable.
 			events = data;
 			events.sort(function (a, b) {
@@ -319,6 +322,9 @@ $(document).ready(function () {
 				$('.filters input[type=checkbox]').prop('checked', false);
 
 				renderEventsPage(events);
+			},
+			"#myEvents" : function() {
+				loadEvents("myEvents");
 			},
 			'#user': function () {
 				renderSingleUserPage(user);

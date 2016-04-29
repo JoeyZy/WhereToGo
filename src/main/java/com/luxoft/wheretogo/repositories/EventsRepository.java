@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 
 public interface EventsRepository {
 
@@ -18,5 +19,7 @@ public interface EventsRepository {
 	Event findById(long eventId);
 
 	Event findByName(String eventName);
+
+	List<Event> findByOwner(User owner);
 
 }

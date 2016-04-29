@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventsRepository;
 
@@ -109,5 +110,10 @@ public class EventsServiceImpl implements EventsService {
 			;
 		}
 		return eventResponses;
+	}
+
+	@Override
+	public List<Event> findByOwner(User owner) {
+		return eventsRepository.findByOwner(owner);
 	}
 }

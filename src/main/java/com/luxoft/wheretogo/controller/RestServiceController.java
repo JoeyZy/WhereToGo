@@ -42,6 +42,11 @@ public class RestServiceController {
 		return eventsService.getRelevantEventResponses();
 	}
 
+	@RequestMapping("/myEvents")
+	public List<Event> myEvents(HttpServletRequest request) {
+		return eventsService.findByOwner((User) request.getSession().getAttribute("user"));
+	}
+
 	@RequestMapping("/event")
 	public Event event(Event event) {
 		return eventsService.findById(event.getId());
