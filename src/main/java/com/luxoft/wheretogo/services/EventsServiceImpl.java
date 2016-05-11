@@ -78,7 +78,9 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getUserRelevantEventResponses(User user) {
-		return convertToEventResponses(getRelevantEvents(eventsRepository.findByOwner(user)));
+		List<Event> events = eventsRepository.findByOwner(user);
+		events.addAll(user.getEvents());
+		return convertToEventResponses(getRelevantEvents(events));
 	}
 
 	@Override

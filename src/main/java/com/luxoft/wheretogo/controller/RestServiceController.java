@@ -118,9 +118,12 @@ public class RestServiceController {
 
 	@RequestMapping(value = "/addEventToUser", method = RequestMethod.POST)
 	public void addUserToEvent(@RequestBody Event event, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
 		Event eventToAdd = eventsService.findById(event.getId());
-		eventToAdd.getParticipants().add((User) request.getSession().getAttribute("user"));
+		eventToAdd.getParticipants().add(user);
+		user.getEvents().add(eventToAdd);
 		eventsService.update(eventToAdd);
+		usersService.add(user);
 	}
 
 }
