@@ -1,4 +1,5 @@
-INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('root@gmail.com', 'Root', 'Root', 'root', 'user');
+INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('root@gmail.com', 'Root', 'Root', 'root', 'admin');
+INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('test@gmail.com', 'Test', 'Test', 'test', 'user');
 INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', 'root', 'user');
 INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', 'root', 'user');
 
@@ -10,7 +11,7 @@ INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `lo
   (3, 300, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 2), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Nature.....',
    concat(ADDDATE(CURDATE(), 2), ' 22:00:00'), 3, 1),
   (4, 400, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 3), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Pub........',
-   concat(ADDDATE(CURDATE(), 3), ' 22:00:00'), 1, 1),
+   concat(ADDDATE(CURDATE(), 3), ' 22:00:00'), 1, 2),
   (5, 500, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 4), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......0',
    concat(ADDDATE(CURDATE(), 4), ' 22:00:00'), 2, 1),
   (9, 500, 0, 'Description of the event1', concat(ADDDATE(CURDATE(), 5), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......1',

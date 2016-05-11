@@ -1,16 +1,15 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.utils.DateUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.User;
-import com.luxoft.wheretogo.utils.DateUtils;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class EventsRepositoryImpl extends AbstractRepository<Event> implements EventsRepository {
@@ -58,6 +57,6 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 
 	@Override
 	public List<Event> findByOwner(User owner) {
-		return super.findListByProperty("owner", owner.getId());
+		return super.findListByProperty("owner", owner);
 	}
 }

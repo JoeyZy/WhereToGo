@@ -1,15 +1,5 @@
 package com.luxoft.wheretogo.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.Event;
@@ -19,6 +9,14 @@ import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class RestServiceController {
@@ -43,8 +41,8 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/myEvents")
-	public List<Event> myEvents(HttpServletRequest request) {
-		return eventsService.findByOwner((User) request.getSession().getAttribute("user"));
+	public List<EventResponse> myEvents(HttpServletRequest request) {
+		return eventsService.getUserRelevantEventResponses((User) request.getSession().getAttribute("user"));
 	}
 
 	@RequestMapping("/event")

@@ -29,7 +29,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand home" href="#"><img class="icons" src="resources/images/list.png"><span> All Events</span></a>
-                <%--<a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>--%>
+                <a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">

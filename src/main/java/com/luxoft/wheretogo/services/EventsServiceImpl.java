@@ -1,20 +1,19 @@
 package com.luxoft.wheretogo.services;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventsRepository;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -48,7 +47,7 @@ public class EventsServiceImpl implements EventsService {
 	@Override
 	public List<Event> findByPeriod(LocalDateTime from, LocalDateTime to) {
 		List<Event> events = eventsRepository.findByPeriod(from, to);
-		for(Event event : events) {
+		for (Event event : events) {
 			Hibernate.initialize(event.getParticipants());
 		}
 		return events;
@@ -74,8 +73,21 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getEventResponses() {
+		return convertToEventResponses(findAll());
+	}
+
+	@Override
+	public List<EventResponse> getUserRelevantEventResponses(User user) {
+		return convertToEventResponses(getRelevantEvents(eventsRepository.findByOwner(user)));
+	}
+
+	@Override
+	public List<EventResponse> getRelevantEventResponses() {
+		return convertToEventResponses(getRelevantEvents( findAll()));
+	}
+
+	private List<EventResponse> convertToEventResponses(List<Event> events) {
 		List<EventResponse> eventResponses = new ArrayList<>();
-		List<Event> events = findAll();
 		for (Event event : events) {
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
 					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
@@ -88,32 +100,9 @@ public class EventsServiceImpl implements EventsService {
 		return eventResponses;
 	}
 
-	@Override
-	public List<EventResponse> getRelevantEventResponses() {
-		List<EventResponse> eventResponses = new ArrayList<>();
-		List<Event> events = findAll();
-		List<Event> relevantEvents = new ArrayList<>();
-		for (Event event : events) {
-			if (event.getStartDateTime().after(new Date()) && !(event.getDeleted() == 1)) {
-				relevantEvents.add(event);
-			}
-		}
-		for (Event event : relevantEvents) {
+	private List<Event> getRelevantEvents(List<Event> events) {
+		return events.stream().filter(event -> event.getStartDateTime().after(new Date()) && !(event.getDeleted() == 1)).collect(Collectors.toList());
 
-			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
-					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
-					event.getStartDateTime(),
-					event.getEndDateTime(),
-					event.getDeleted(),//
-					event.getPicture(),
-					event.getLocation()))
-			;
-		}
-		return eventResponses;
 	}
 
-	@Override
-	public List<Event> findByOwner(User owner) {
-		return eventsRepository.findByOwner(owner);
-	}
 }
