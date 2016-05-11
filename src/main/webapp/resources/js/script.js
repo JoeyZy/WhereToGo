@@ -169,7 +169,7 @@ $(document).ready(function () {
 		$eventCostCurrency.val("");
 		$buttons.hide();
 		$errors.hide();
-		$pictureParent.show();
+		$pictureParent.hide();
 		$picture.attr('src', "resources/images/camera.png");
 	}
 
@@ -537,6 +537,7 @@ $(document).ready(function () {
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
 			$errors.show();
+			$buttonAddEvent.removeAttr('disabled');
 			return;
 		}
 		$.ajax({
@@ -686,7 +687,9 @@ $(document).ready(function () {
 		function renderAddEventPage() {
 			populateSinglePageEventPage($singlePage);
 			$buttonAddEvent.attr('disabled', 'disabled');
+
 			$buttonAddEvent.on('click', function (event) {
+				$buttonAddEvent.attr('disabled', 'disabled');
 				if (typeof user !== "undefined") {
 					var categoriesList = [];
 					$eventCategories.find(":selected").each(function (i, selected) {
@@ -703,6 +706,7 @@ $(document).ready(function () {
 						"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 						"picture": isDefaultPicture() ? "" : $picture.attr('src')
 					};
+					event.stopPropagation();
 					saveEvent(eventJson, "addEvent");
 				}
 			});
