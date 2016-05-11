@@ -68,8 +68,9 @@ $(document).ready(function () {
 		$buttonCancelEditing.hide();
 	});
 
-	$buttonDelete.on('click', function () {
+	$buttonDelete.on('click', function() {
 		renderConfirmationPage();
+		return false;
 	});
 
 	$pictureUploadPlaceholder.on('click', function () {
