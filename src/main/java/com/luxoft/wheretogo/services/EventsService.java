@@ -1,11 +1,11 @@
 package com.luxoft.wheretogo.services;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface EventsService {
 
@@ -23,8 +23,8 @@ public interface EventsService {
 
 	List<EventResponse> getEventResponses();
 
-	List<EventResponse> getRelevantEventResponses();
+	List<EventResponse> getUserRelevantEventResponses(User user);
 
-	List<Event> findByOwner(User owner);
+	List<EventResponse> getRelevantEventResponses();
 
 }

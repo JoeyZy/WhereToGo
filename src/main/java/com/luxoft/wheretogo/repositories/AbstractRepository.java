@@ -1,13 +1,13 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public abstract class AbstractRepository<T> {
 
@@ -48,7 +48,7 @@ public abstract class AbstractRepository<T> {
 	protected List<T> findListByProperty(String property, Object value) {
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));
-		return (List<T>) criteria.uniqueResult();
+		return criteria.list();
 	}
 
 	protected Criteria getCriteria() {

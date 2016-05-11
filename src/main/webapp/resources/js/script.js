@@ -6,10 +6,12 @@ $(document).ready(function () {
 		filterColors = {},
 		user = undefined;
 	var adminRole = 'admin';
+	var oldLocationHash = "#";
 	$('.userInfo').hide();
 	$('.logout').hide();
 
 	// Find all event fields
+	var $myEventsLink = $('.my-events');
 	var $singlePage = $('.Page');
 	var $eventPage = $singlePage.find('.EventPage');
 	var $eventCategories = $singlePage.find('#event-categories');
@@ -39,7 +41,6 @@ $(document).ready(function () {
 	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
-
 
 	$buttonEdit.on('click', function (event) {
 		makeEventPageEditable();
@@ -76,7 +77,7 @@ $(document).ready(function () {
 	});
 
 	$buttonUploadPicture.on('change', function () {
-		var input = ($buttonUploadPicture)[0]
+		var input = ($buttonUploadPicture)[0];
 		if (input.files && input.files[0]) {
 			if (input.files[0].size / 1024 / 1024 > 3) {
 				alert('You can download file with size less then 3Mb');
@@ -178,6 +179,10 @@ $(document).ready(function () {
 	$('.home').click(function () {
 		loadEvents();
 	});
+	$myEventsLink.on("click", function (event) {
+		event.preventDefault();
+		window.location.hash = 'myEvents';
+	});
 	$.getJSON("categories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
 		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
@@ -267,7 +272,7 @@ $(document).ready(function () {
 				// Change the url hash with the last used filters.
 
 				$(window).scrollTop(top);
-				createQueryHash(filters);
+				window.location.hash = oldLocationHash;
 			}
 		}
 	});
@@ -290,8 +295,6 @@ $(document).ready(function () {
 			});
 			// Call a function to create HTML for all the events.
 			generateAlleventsHTML(events);
-			// Manually trigger a hashchange to start the app.
-			$(window).trigger('hashchange');
 		});
 	}
 
@@ -319,12 +322,18 @@ $(document).ready(function () {
 			'': function () {
 				// Clear the filters object, uncheck all checkboxes, show all the events
 				filters = {};
+				oldLocationHash = "";
 				$('.filters input[type=checkbox]').prop('checked', false);
-
+				loadEvents();
 				renderEventsPage(events);
 			},
 			"#myEvents" : function() {
+				if (typeof user == "undefined") {
+					window.location.hash = '#';
+				}
+				oldLocationHash = "#myEvents";
 				loadEvents("myEvents");
+				renderEventsPage(events);
 			},
 			'#user': function () {
 				renderSingleUserPage(user);
@@ -380,7 +389,7 @@ $(document).ready(function () {
 			singlePage.css({
 				top: top
 			});
-		};
+		}
 	}
 
 	// This function is called only once - on $singlePage load.
@@ -625,7 +634,7 @@ $(document).ready(function () {
 		$pictureUploadPlaceholder.on('click', function () {
 			$buttonUploadPicture.click();
 		});
-		$pictureParent.show()
+		$pictureParent.show();
 		$picture.attr('title', 'Click Me to change!');
 	}
 
@@ -1052,6 +1061,7 @@ $(document).ready(function () {
 		$('.userInfo').show();
 		$('.logout').text('Logout');
 		$('.logout').show();
+		$myEventsLink.show();
 		$loginDropDown.toggle();
 		grantRightsToUser();
 	}
@@ -1066,6 +1076,7 @@ $(document).ready(function () {
 			type: "GET",
 			success: function (sessionUser) {
 				if (sessionUser.length == 0) {
+					$myEventsLink.hide();
 					return;
 				}
 				setUser(sessionUser);
@@ -1103,5 +1114,5 @@ $(document).ready(function () {
 			end: {} // end picker options
 		}
 	);
-
+	$(window).trigger('hashchange');
 });
