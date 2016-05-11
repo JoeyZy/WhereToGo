@@ -49,10 +49,12 @@ $(document).ready(function () {
 		$buttonApply.show();
 		$buttonCancelEditing.show();
 		$buttonAttend.hide();
+		return false;
 	});
 
 	$buttonApply.on('click', function () {
 		updateEvent(true);
+		return false;
 	});
 
 	$buttonCancelEditing.on('click', function (event) {
@@ -66,6 +68,7 @@ $(document).ready(function () {
 		}
 		$buttonApply.hide();
 		$buttonCancelEditing.hide();
+		return false;
 	});
 
 	$buttonDelete.on('click', function() {
@@ -75,6 +78,7 @@ $(document).ready(function () {
 
 	$pictureUploadPlaceholder.on('click', function () {
 		$buttonUploadPicture.click();
+		return false;
 	});
 
 	$buttonUploadPicture.on('change', function () {
@@ -118,6 +122,7 @@ $(document).ready(function () {
 		parentDisable.removeClass('visible');
 		$buttonEdit.show();
 		$buttonDelete.show();
+		return false;
 	});
 
 	function updateEvent(deleted) {
@@ -634,6 +639,7 @@ $(document).ready(function () {
 		$eventCategories.multiselect('refresh');
 		$pictureUploadPlaceholder.on('click', function () {
 			$buttonUploadPicture.click();
+			return false;
 		});
 		$pictureParent.show();
 		$picture.attr('title', 'Click Me to change!');
@@ -719,6 +725,7 @@ $(document).ready(function () {
 					event.stopPropagation();
 					saveEvent(eventJson, "addEvent");
 				}
+				return false;
 			});
 		}
 
@@ -759,6 +766,7 @@ $(document).ready(function () {
 								complete: function () {
 								}
 							});
+							return false;
 						});
 					});
 				}
@@ -970,6 +978,7 @@ $(document).ready(function () {
 			});
 			// Show the $singlePage.
 			$singlePage.addClass('visible');
+			return false;
 		}
 	}
 
