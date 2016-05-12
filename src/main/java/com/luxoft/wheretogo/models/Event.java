@@ -34,7 +34,6 @@ public class Event {
 	private static final Logger LOG = Logger.getLogger(Event.class);
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Size(min = 2, max = 30)

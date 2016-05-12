@@ -28,7 +28,7 @@ public abstract class AbstractRepository<T> {
 	}
 
 	protected void add(T object) {
-		sessionFactory.getCurrentSession().persist(object);
+		sessionFactory.getCurrentSession().saveOrUpdate(object);
 	}
 
 	protected void merge(T object) {

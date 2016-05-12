@@ -55,6 +55,11 @@ public class RestServiceController {
 		return (User) request.getSession().getAttribute("user");
 	}
 
+	@RequestMapping(value= "/getEventId", method = RequestMethod.GET)
+	public Long getNextEventId(){
+		return eventsService.getNextEventId();
+	}
+
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
 	public void addEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setOwner((User) request.getSession().getAttribute("user"));

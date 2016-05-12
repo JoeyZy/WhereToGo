@@ -42,3 +42,4 @@ INSERT INTO `events_categories` (category_id, event_id) VALUES
   (6, 15), # Theatre4
   (7, 7),
   (8, 8);
+

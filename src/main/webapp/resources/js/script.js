@@ -310,6 +310,20 @@ $(document).ready(function () {
 		render(window.location.hash);
 	});
 
+	function getEventId() {
+		$.ajax({
+			url: "getEventId",
+			type: "GET",
+			success: function (eventId) {
+				renderSingleEventPage(eventId);
+			},
+			error: function () {
+				renderSingleEventPage();
+			}
+		});
+	}
+
+
 	// Navigation
 	function render(url) {
 		// Get the keyword from the url.
@@ -355,7 +369,7 @@ $(document).ready(function () {
 			},
 			// Add event
 			'#addEvent': function () {
-				renderSingleEventPage();
+				getEventId();
 			},
 			// Calendar
 			'#calendar': function () {
@@ -398,6 +412,8 @@ $(document).ready(function () {
 		}
 	}
 
+
+
 	// This function is called only once - on $singlePage load.
 	// It fills up the events list via a handlebars template.
 	// It recieves one parameter - the data we took from events.json.
@@ -417,10 +433,13 @@ $(document).ready(function () {
 			window.location.hash = 'event/' + eventIndex;
 		});
 		var header = $('header');
+
 		$('.btn-add-event').on('click', function (event) {
 			event.preventDefault();
 			window.location.hash = 'addEvent';
 		});
+
+
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
 			window.location.hash = 'calendar';
@@ -705,13 +724,13 @@ $(document).ready(function () {
 			$buttonAddEvent.attr('disabled', 'disabled');
 
 			$buttonAddEvent.on('click', function (event) {
-				$buttonAddEvent.attr('disabled', 'disabled');
 				if (typeof user !== "undefined") {
 					var categoriesList = [];
 					$eventCategories.find(":selected").each(function (i, selected) {
 						categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
 					});
 					var eventJson = {
+						"id": $singlePage.find('.EventPage').attr('data-id'),
 						"name": $singlePageTitle.val(),
 						"categories": categoriesList,
 						"startDateTime": $eventStart.val(),
@@ -722,7 +741,6 @@ $(document).ready(function () {
 						"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 						"picture": isDefaultPicture() ? "" : $picture.attr('src')
 					};
-					event.stopPropagation();
 					saveEvent(eventJson, "addEvent");
 				}
 				return false;

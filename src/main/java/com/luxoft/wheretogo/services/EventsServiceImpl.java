@@ -3,6 +3,7 @@ package com.luxoft.wheretogo.services;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class EventsServiceImpl implements EventsService {
 
 	@Autowired
 	private EventsRepository eventsRepository;
+	@Autowired
+	private EventIdGeneratorRepository idGenerator;
 
 	@Override
 	public void add(Event event) {
@@ -85,7 +88,12 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getRelevantEventResponses() {
-		return convertToEventResponses(getRelevantEvents( findAll()));
+		return convertToEventResponses(getRelevantEvents(findAll()));
+	}
+
+	@Override
+	public Long getNextEventId() {
+		return idGenerator.getNextId();
 	}
 
 	private List<EventResponse> convertToEventResponses(List<Event> events) {

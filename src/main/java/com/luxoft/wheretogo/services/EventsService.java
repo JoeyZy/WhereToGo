@@ -27,4 +27,5 @@ public interface EventsService {
 
 	List<EventResponse> getRelevantEventResponses();
 
+	Long getNextEventId();
 }
