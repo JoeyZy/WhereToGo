@@ -32,6 +32,7 @@ $(document).ready(function () {
 	var $buttonDelete = $singlePage.find(".SinglePage__button--delete");
 	var $buttonApply = $singlePage.find('.SinglePage__button--apply');
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
+	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
@@ -757,39 +758,65 @@ $(document).ready(function () {
 					$.getJSON("event", {id: item.id}, function (event) {
 						$participants.html($participantsTemplate(event.participants));
 						populateSinglePageEventPage($singlePage, event);
-
 						$buttonAttend.off();
 						$buttonAttend.on('click', function (event) {
 							event.preventDefault();
-							var json = {
-								id: item.id
-							};
-							$.ajax({
-								url: 'addEventToUser',
-								data: JSON.stringify(json),
-								type: "POST",
-								beforeSend: function (xhr) {
-									xhr.setRequestHeader("Accept", "application/json");
-									xhr.setRequestHeader("Content-Type", "application/json");
-								},
-								success: function () {
-									$.getJSON("event", {id: item.id}, function (event) {
-										$buttonAttend.hide();
-										$participants.html($participantsTemplate(event.participants));
-									});
-								},
-								error: function () {
+							assignEvent(item.id);
+						});
 
-								},
-								complete: function () {
-								}
-							});
-							return false;
+						$buttonCancelAttend.on('click', function (event) {
+							event.preventDefault();
+							unassignEvent(item.id);
 						});
 					});
 				}
 			});
 		}
+
+		function assignEvent(id) {
+			var json = {
+				id: id
+			};
+			$.ajax({
+				url: 'assignEventToUser',
+				data: JSON.stringify(json),
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/json");
+				},
+				success: function (event) {
+					$participants.html($participantsTemplate(event.participants));
+					allowAttendEvent();
+				},
+				error: function () { },
+				complete: function () { }
+			});
+			return false;
+		}
+
+		function unassignEvent(id) {
+			var json = {
+					id: id
+						};
+			$.ajax({
+				url: 'unassignEventFromUser',
+				data: JSON.stringify(json),
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/json");
+				},
+				success: function (event) {
+					$participants.html($participantsTemplate(event.participants));
+					allowAttendEvent();
+				},
+				error: function () { },
+				complete: function () { }
+			});
+			return false;
+		}
+
 
 		function populateSinglePageEventPage(singlePage, event) {
 			if (typeof event != 'undefined') {
@@ -816,9 +843,7 @@ $(document).ready(function () {
 					$buttonEdit.show();
 					$buttonDelete.show();
 				}
-				if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
-					$buttonAttend.show();
-				}
+				allowAttendEvent();
 				$eventCategories.multiselect('refresh');
 			} else {
 				makeEventPageEditable();
@@ -838,6 +863,18 @@ $(document).ready(function () {
 				return res.split(',');
 			}
 		}
+	}
+
+	function allowAttendEvent() {
+			$buttonCancelAttend.hide();
+			$buttonAttend.hide();
+			if(user) {
+				if ($participants.find("[data-id=" + user.id + "]").length == 0) {
+					$buttonAttend.show();
+				} else {
+					$buttonCancelAttend.show();
+				}
+			}
 	}
 
 	function getCurrencyId() {

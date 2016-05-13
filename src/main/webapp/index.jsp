@@ -262,7 +262,10 @@
                         onclick="this.blur();">Cancel
                 </button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
-                        onclick="this.blur();">I'll be there
+                        onclick="this.blur();">Visit
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelAttend"
+                        onclick="this.blur();">Cancel visit
                 </button>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
                         onclick="this.blur();">Add user
