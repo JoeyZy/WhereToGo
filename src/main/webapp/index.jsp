@@ -125,8 +125,8 @@
                                     <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
                                     <div class="event-box-location-and-by">
-                                        <div class="location"><img class="icons" src="resources/images/location.png"> {{location}}</div>
-                                        <div class="created-by"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                        <div class="location" title="{{location}}"><img class="icons" src="resources/images/location.png"> {{location}}</div>
+                                        <div class="created-by" title="{{owner}}"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
                                     </div>
                                 </div>
                             </div>
