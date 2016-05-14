@@ -116,10 +116,12 @@
 
         <ul class="events-list">
             <script id="events-template" type="x-handlebars-template">
-                {{#each this}}
+                {{#each this }}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
-                        <div class="event-box-img">
+
+                        <span class="content">
+			<div class="event-box-img">
                             <div class="event-img {{category}}" style="background-image:url({{picture}})">
                                 <div class="event-box-content">
                                     <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
@@ -145,9 +147,19 @@
                                 <div class="end_time"><img class="icons" src="resources/images/time.png">  {{actualEndTime}}</div>
 
                             </div>
-
-                    <div class="highlight"></div>
-                </li>
+                        </span>
+                        <!--<div class="highlight"></div> - with hover buttons became unclickable -->
+                        <span class="button_group" visit={{attends}} >
+                            <button type ="button" class="btn assign-action-btn btn-success">
+                                <img src="resources/images/checkmark.png" class="assign-action-img"/>
+                                    Visit
+                            </button>
+                            <button type="button" class="btn assign-action-btn btn-default">
+                                <img src="resources/images/xmark.png" class="assign-action-img"/>
+                                    Cancel visit
+                            </button>
+                        </span>
+                   </li>
                 {{/each}}
             </script>
         </ul>

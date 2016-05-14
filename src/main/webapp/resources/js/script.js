@@ -81,6 +81,7 @@ $(document).ready(function () {
 		$buttonUploadPicture.click();
 		return false;
 	});
+	
 
 	$buttonUploadPicture.on('change', function () {
 		var input = ($buttonUploadPicture)[0];
@@ -224,6 +225,7 @@ $(document).ready(function () {
 					return;
 				}
 				setUser(sessionUser);
+				showInlineAssignments();
 			},
 			error: function () {
 			},
@@ -414,7 +416,6 @@ $(document).ready(function () {
 	}
 
 
-
 	// This function is called only once - on $singlePage load.
 	// It fills up the events list via a handlebars template.
 	// It recieves one parameter - the data we took from events.json.
@@ -428,11 +429,14 @@ $(document).ready(function () {
 		// Each events has a data-index attribute.
 		// On click change the url hash to open up a preview for this event only.
 		// Remember: every hashchange triggers the render function.
-		list.find('li').on('click', function (e) {
+		$.each(list.find('li'), function(index, item) {
+			$(item).find('span.content').on('click', function (e) {
 			e.preventDefault();
-			var eventIndex = $(this).data('index');
+			var eventIndex = $(item).data('index');
 			window.location.hash = 'event/' + eventIndex;
+			});
 		});
+		showInlineAssignments();
 		var header = $('header');
 
 		$('.btn-add-event').on('click', function (event) {
@@ -461,6 +465,7 @@ $(document).ready(function () {
 					$('.logout').hide();
 					$loginDropDown.show();
 					$(window).trigger('hashchange');
+					showInlineAssignments();
 				},
 				error: function () {
 					alert('Something wrong');
@@ -469,7 +474,85 @@ $(document).ready(function () {
 				}
 			});
 		});
+
+		attachClickEventToButtons();
+
 	}
+
+//--------------------------INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
+	function attachClickEventToButtons() {
+		$('.assign-action-btn.btn-success').on("click", function (event) {
+	        var eventId = $(event.target).parent().parent().attr('data-index');
+	        assignUnassignEvent('assignEventToUser', eventId, inlineAssignmentCallBackFunction);
+	    });
+
+	    $('.assign-action-btn.btn-default').on("click", function (event) {
+	        var eventId = $(event.target).parent().parent().attr('data-index');
+	        assignUnassignEvent('unassignEventFromUser', eventId, inlineAssignmentCallBackFunction);
+	    });
+	}
+	function showInlineAssignments() {
+		var list = $('.all-events .events-list');
+		$.each(list.find('li'), function(index, item){
+			 alterAssignmentButtonsVisibility($(item));
+		});
+	}
+
+	function alterAssignmentButtonsVisibility(nodeLI) {
+			nodeLI.find('.assign-action-btn.btn-success').hide();
+    			nodeLI.find('.assign-action-btn.btn-default').hide();
+
+    	    			if (user) {
+    				if(nodeLI.find('.button_group').attr('visit') == 'true') {
+    					nodeLI.find('.assign-action-btn.btn-success').hide();
+    					nodeLI.find('.assign-action-btn.btn-default').show();
+    				} else {
+    					nodeLI.find('.assign-action-btn.btn-default').hide();
+    					nodeLI.find('.assign-action-btn.btn-success').show();
+    				}
+    			}
+	}
+
+	function alterVisitAttribute(id, value) {
+		var li = $('li[data-index=' + id + ']');
+		$(li.find('.button_group')).attr('visit', value);
+	}
+
+	function inlineAssignmentCallBackFunction(event) {
+		var li = $('li[data-index=' + event.id + ']');
+		alterVisitAttribute(event.id, $.grep(event.participants, function(e){return e.id==user.id}).length != 0);
+		alterAssignmentButtonsVisibility(li);
+	}
+
+		function assignUnassignEvent(action, id, callback) {
+			var json = {
+				id: id
+			};
+			$.ajax({
+				url: action,
+				data: JSON.stringify(json),
+				type: "POST",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Accept", "application/json");
+					xhr.setRequestHeader("Content-Type", "application/json");
+				},
+				success: function (event) {
+					callback(event)
+				},
+				error: function () { },
+				complete: function () { }
+			});
+			return false;
+		}
+
+		
+
+	       //$('.assign-action-btn.btn-default').on("click",
+		//			assignUnassignEvent('unassignEventFromUser', 
+                 //                       nodeLI.attr('data-index'), inlineAssignmentCallBackFunction));
+
+
+//--------------------------END INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 	function displayCategoriesListFilter() {
 		var badgeSelector = ".badge";
@@ -761,62 +844,28 @@ $(document).ready(function () {
 						$buttonAttend.off();
 						$buttonAttend.on('click', function (event) {
 							event.preventDefault();
-							assignEvent(item.id);
+							assignUnassignEvent('assignEventToUser', item.id, refreshParticipantsList);
+							//assignEvent(item.id);
 						});
 
 						$buttonCancelAttend.on('click', function (event) {
 							event.preventDefault();
-							unassignEvent(item.id);
+							assignUnassignEvent('unassignEventFromUser', item.id, refreshParticipantsList);
+							//unassignEvent(item.id);
 						});
 					});
 				}
 			});
 		}
 
-		function assignEvent(id) {
-			var json = {
-				id: id
-			};
-			$.ajax({
-				url: 'assignEventToUser',
-				data: JSON.stringify(json),
-				type: "POST",
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("Accept", "application/json");
-					xhr.setRequestHeader("Content-Type", "application/json");
-				},
-				success: function (event) {
-					$participants.html($participantsTemplate(event.participants));
-					allowAttendEvent();
-				},
-				error: function () { },
-				complete: function () { }
-			});
-			return false;
+
+//-------------------------- ASSIGNMENT FUNCTIONALITY------------------------------------//
+		function refreshParticipantsList(event) {
+			$participants.html($participantsTemplate(event.participants));
+			allowAttendEvent();
 		}
 
-		function unassignEvent(id) {
-			var json = {
-					id: id
-						};
-			$.ajax({
-				url: 'unassignEventFromUser',
-				data: JSON.stringify(json),
-				type: "POST",
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("Accept", "application/json");
-					xhr.setRequestHeader("Content-Type", "application/json");
-				},
-				success: function (event) {
-					$participants.html($participantsTemplate(event.participants));
-					allowAttendEvent();
-				},
-				error: function () { },
-				complete: function () { }
-			});
-			return false;
-		}
-
+//--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
 			if (typeof event != 'undefined') {
@@ -1160,6 +1209,7 @@ $(document).ready(function () {
 			return;
 		}
 		enableAddEventsBtn();
+		loadEvents();
 	}
 
 	loadEvents();

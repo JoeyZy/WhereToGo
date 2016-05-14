@@ -36,8 +36,8 @@ public class RestServiceController {
 	private UsersService usersService;
 
 	@RequestMapping("/events")
-	public List<EventResponse> events() {
-		return eventsService.getRelevantEventResponses();
+	public List<EventResponse> events(HttpServletRequest request) {
+		return eventsService.getRelevantEventResponses((User) request.getSession().getAttribute("user"));
 	}
 
 	@RequestMapping("/myEvents")
@@ -125,10 +125,13 @@ public class RestServiceController {
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		Event eventToUpdate = eventsService.findById(event.getId());
-		eventToUpdate.getParticipants().add(user);
-		user.getEvents().add(eventToUpdate);
-		eventsService.update(eventToUpdate);
-		usersService.update(user);
+
+		if (!eventToUpdate.getParticipants().contains(user)) {
+			eventToUpdate.getParticipants().add(user);
+			user.getEvents().add(eventToUpdate);
+			eventsService.update(eventToUpdate);
+			usersService.update(user);
+		}
 		return eventToUpdate;
 	}
 
