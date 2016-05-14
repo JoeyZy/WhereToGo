@@ -14,4 +14,6 @@ public interface UsersService {
 
 	User findByEmail(String userLogin);
 
+	void update(User user);
+
 }

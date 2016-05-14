@@ -35,4 +35,9 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		return super.findByProperty("email", userLogin);
 	}
 
+	@Override
+	public void update(User user) {
+		super.update(user);
+	}
+
 }

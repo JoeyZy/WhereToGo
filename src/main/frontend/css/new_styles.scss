@@ -368,6 +368,36 @@ h1, h3 {
   margin: 5px 0;
 }
 
+.button_group {
+  width: 100%;
+  display: inline-block;
+  z-index:10;
+}
+
+.assign-action-btn {
+  display:none;
+  width: 150px;
+  margin-left: 31%;
+  margin-bottom: 5px;
+  z-index: 50;
+}
+
+.assign-action-btn.btn-default {
+  background: #505050;
+  color: #F0F0F0;
+  font-size: 13px;
+}
+
+.assign-action-img {
+  width: 18px;
+  height:18px;
+}
+
+
+.content {
+  min-width: 400px;
+}
+
 /* Making the list responsive */
 
 @media (max-width: 800px) {

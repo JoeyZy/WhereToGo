@@ -76,19 +76,19 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getEventResponses() {
-		return convertToEventResponses(findAll());
+		return convertToEventResponses(findAll(), null);
 	}
 
 	@Override
 	public List<EventResponse> getUserRelevantEventResponses(User user) {
 		List<Event> events = eventsRepository.findByOwner(user);
 		events.addAll(user.getEvents());
-		return convertToEventResponses(getRelevantEvents(events));
+		return convertToEventResponses(getRelevantEvents(events), user);
 	}
 
 	@Override
-	public List<EventResponse> getRelevantEventResponses() {
-		return convertToEventResponses(getRelevantEvents(findAll()));
+	public List<EventResponse> getRelevantEventResponses(User user) {
+		return convertToEventResponses(getRelevantEvents(findAll()), user);
 	}
 
 	@Override
@@ -96,16 +96,18 @@ public class EventsServiceImpl implements EventsService {
 		return idGenerator.getNextId();
 	}
 
-	private List<EventResponse> convertToEventResponses(List<Event> events) {
+	private List<EventResponse> convertToEventResponses(List<Event> events, User user) {
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
+			Hibernate.initialize(event.getParticipants());
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
 					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
 					event.getStartDateTime(),
 					event.getEndDateTime(),
 					event.getDeleted(),//
 					event.getPicture(),
-					event.getLocation()));
+					event.getLocation(),
+					user!= null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user)));
 		}
 		return eventResponses;
 	}
