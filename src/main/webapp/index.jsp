@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
+<script src="resources/js/fb-sdk.js"></script>
 <header>
     <nav class="navbar navbar-default navbar-inverse" role="navigation">
         <div class="container-fluid">
@@ -63,6 +64,13 @@
                         <ul id="login-dp" class="dropdown-menu">
                             <li>
                                 <div class="row">
+                                    <div class="col-md-12 bottom">
+                                        <ul class="login-buttons">
+                                            <li class="item">
+                                                <div id="facebook-btn"></div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <div class="col-md-12">
                                         <form class="form" role="form" method="post" accept-charset="UTF-8"
                                               action="login" id="login-nav">
@@ -104,13 +112,16 @@
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
                                 <div class="categories-common {{name}}">
-                                <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label><span class="badge {{name}}">  </span>
+                                    <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label><span
+                                        class="badge {{name}}">  </span>
                                 </div>
                                 {{/each}}
                             </script>
                         </div>
                     </div>
                 </form>
+            </div>
+            <div id="status">
             </div>
         </div>
 
@@ -119,32 +130,33 @@
                 {{#each this}}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
-                        <div class="event-box-img">
-                            <div class="event-img {{category}}" style="background-image:url({{picture}})">
-                                <div class="event-box-content">
-                                    <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
+                    <div class="event-box-img">
+                        <div class="event-img {{category}}" style="background-image:url({{picture}})">
+                            <div class="event-box-content">
+                                <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
-                                    <div class="event-box-location-and-by">
-                                        <div class="location"><img class="icons" src="resources/images/location.png"> {{location}}</div>
-                                        <div class="created-by"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                <div class="event-box-location-and-by">
+                                    <div class="location"><img class="icons" src="resources/images/location.png"> {{location}}</div>
+                                    <div class="created-by"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            <div class="category_color {{category}}"></div>
+                    </div>
+                    <div class="category_color {{category}}"></div>
 
-                            <div class="start">
-                                <span>START <br></span>
-                                <div class="start_date"><img class="icons" src="resources/images/calendar.png"> {{actualStartDate}}</div>
-                                <div class="start_time"><img class="icons" src="resources/images/time.png"> {{actualStartTime}}</div>
-                            </div>
+                    <div class="start">
+                        <span>START <br></span>
+                        <div class="start_date"><img class="icons" src="resources/images/calendar.png"> {{actualStartDate}}</div>
+                        <div class="start_time"><img class="icons" src="resources/images/time.png"> {{actualStartTime}}</div>
+                    </div>
 
-                            <div class="end">
-                                <span>END <br></span>
-                                <div class="end_date"><img class="icons" src="resources/images/calendar.png">  {{actualEndDate}}</div>
-                                <div class="end_time"><img class="icons" src="resources/images/time.png">  {{actualEndTime}}</div>
+                    <div class="end">
+                        <span>END <br></span>
+                        <div class="end_date"><img class="icons" src="resources/images/calendar.png"> {{actualEndDate}}</div>
+                        <div class="end_time"><img class="icons" src="resources/images/time.png"> {{actualEndTime}}</div>
 
-                            </div>
+                    </div>
 
                     <div class="highlight"></div>
                 </li>
@@ -241,10 +253,10 @@
                         </script>
                     </li>
                     <li class='event_pic'>
-                        <div contentEditable="false" id="picture"  class='event_pic'>
+                        <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
                                  class="event_pic uploadPlaceholderEvent"/>
-                            <input  style='display:none;' type='file' class="SinglePage__button--upload" accept="image/jpeg,image/png" />
+                            <input style='display:none;' type='file' class="SinglePage__button--upload" accept="image/jpeg,image/png"/>
                         </div>
                     </li>
                 </ul>
@@ -304,6 +316,7 @@
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src="resources/js/script.js"></script>
+<script src="resources/js/fb-login.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>
 <script>
     $('.dropdown-toggle').dropdown();

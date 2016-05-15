@@ -612,6 +612,26 @@ ul.errors {
   background-color: rgba(255, 255, 255, .8);
 }
 
+/* login buttons (social networks)*/
+.login-buttons {
+  position: relative;
+  width: 100%;
+  text-align: center;
+
+  .item {
+    display: inline-block;
+
+    #facebook-btn {
+      width: 35px;
+      height: 30px;
+      background-size: 100%;
+      background-image: url("../images/social_networks/fb.png");
+      background-repeat: no-repeat;
+      background-position: 0;
+    }
+  }
+}
+
 #login-dp .bottom {
   background-color: rgba(255, 255, 255, .8);
   border-top: 1px solid #ddd;
