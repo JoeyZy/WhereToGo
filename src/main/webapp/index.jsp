@@ -151,11 +151,11 @@
                         <!--<div class="highlight"></div> - with hover buttons became unclickable -->
                         <span class="button_group" visit={{attends}} >
                             <button type ="button" class="btn assign-action-btn btn-success">
-                                <img src="resources/images/checkmark.png" class="assign-action-img"/>
+                                <span class="glyphicon glyphicon-ok assign-action-img" />
                                     Visit
                             </button>
                             <button type="button" class="btn assign-action-btn btn-default">
-                                <img src="resources/images/xmark.png" class="assign-action-img"/>
+                                <span class="glyphicon glyphicon-remove assign-action-img" />
                                     Cancel visit
                             </button>
                         </span>
