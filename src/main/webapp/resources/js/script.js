@@ -225,7 +225,7 @@ $(document).ready(function () {
 					return;
 				}
 				setUser(sessionUser);
-				showInlineAssignments();
+				loadEvents();
 			},
 			error: function () {
 			},
@@ -1209,7 +1209,6 @@ $(document).ready(function () {
 			return;
 		}
 		enableAddEventsBtn();
-		loadEvents();
 	}
 
 	loadEvents();
