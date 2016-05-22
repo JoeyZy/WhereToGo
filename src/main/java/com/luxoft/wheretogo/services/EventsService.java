@@ -6,6 +6,7 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface EventsService {
 
@@ -23,7 +24,7 @@ public interface EventsService {
 
 	List<EventResponse> getEventResponses();
 
-	List<EventResponse> getUserRelevantEventResponses(User user);
+	Set<EventResponse> getUserRelevantEventResponses(User user);
 
 	List<EventResponse> getRelevantEventResponses(User user);
 

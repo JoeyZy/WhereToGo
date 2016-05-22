@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class RestServiceController {
@@ -41,7 +42,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/myEvents")
-	public List<EventResponse> myEvents(HttpServletRequest request) {
+	public Set<EventResponse> myEvents(HttpServletRequest request) {
 		return eventsService.getUserRelevantEventResponses((User) request.getSession().getAttribute("user"));
 	}
 

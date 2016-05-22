@@ -13,7 +13,9 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,10 +82,10 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
-	public List<EventResponse> getUserRelevantEventResponses(User user) {
+	public Set<EventResponse> getUserRelevantEventResponses(User user) {
 		List<Event> events = eventsRepository.findByOwner(user);
 		events.addAll(user.getEvents());
-		return convertToEventResponses(getRelevantEvents(events), user);
+		return new HashSet<>(convertToEventResponses(getRelevantEvents(events), user));
 	}
 
 	@Override
