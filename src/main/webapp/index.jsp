@@ -233,7 +233,9 @@
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
-                        <input id="cost" class="form-control" type="number" min="0" max="100000" placeholder="Estimated cost"/>
+                        <input id="cost" class="form-control" type="number" min="0" max="100000"
+                               placeholder="Estimated cost"
+                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                         <select id="currencies" class="form-control">
                             <script id="curr-list" type="x-handlebars-template">
                                 {{#each this}}

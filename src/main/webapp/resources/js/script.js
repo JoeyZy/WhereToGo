@@ -702,6 +702,17 @@ $(document).ready(function () {
 				valid = false;
 			}
 
+			var eventCost = event.cost.trim();
+			if (eventCost <= 0) {
+				addErrorListItem("Event cost must be greater then zero");
+				valid = false;
+			}
+
+			var eventCurrencyId = event.currency.id;
+			if (eventCurrencyId === undefined) {
+				addErrorListItem("Event currency is not choosen");
+				valid = false;
+			}
 			return valid;
 		}
 
