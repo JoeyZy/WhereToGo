@@ -439,9 +439,9 @@ $(document).ready(function () {
 		showInlineAssignments();
 		var header = $('header');
 
-		$('.btn-add-event').on('click', function (event) {
-			event.preventDefault();
+		$('.btn-add-event').on('click', function () {
 			window.location.hash = 'addEvent';
+			return false;
 		});
 
 
@@ -607,17 +607,17 @@ $(document).ready(function () {
 	}
 
 	function enableAddEventsBtn() {
-		var addEventBtn = $('.btn-add-event');
-		addEventBtn.removeClass('disabled');
-		addEventBtn.addClass('btn-success');
-		addEventBtn.removeAttr('title');
+		var $addEventBtn = $('.btn-add-event');
+		$addEventBtn.prop('disabled', false);
+		$addEventBtn.addClass('btn-success');
+		$addEventBtn.removeAttr('title');
 	}
 
 	function disableAddEventsBtn() {
-		var addEventBtn = $('.btn-add-event');
-		addEventBtn.removeClass('btn-success');
-		addEventBtn.addClass('disabled');
-		addEventBtn.attr('title', 'Please login to create an event');
+		var $addEventBtn = $('.btn-add-event');
+		$addEventBtn.removeClass('btn-success');
+		$addEventBtn.prop('disabled', true);
+		$addEventBtn.attr('title', 'Please login to create an event');
 	}
 
 	// This function receives an object containing all the event we want to show.
@@ -807,7 +807,7 @@ $(document).ready(function () {
 			populateSinglePageEventPage($singlePage);
 			$buttonAddEvent.attr('disabled', 'disabled');
 
-			$buttonAddEvent.on('click', function (event) {
+			$buttonAddEvent.on('click', function () {
 				if (typeof user !== "undefined") {
 					var categoriesList = [];
 					$eventCategories.find(":selected").each(function (i, selected) {
