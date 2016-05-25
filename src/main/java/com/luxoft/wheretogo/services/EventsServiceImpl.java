@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
@@ -11,11 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +23,8 @@ public class EventsServiceImpl implements EventsService {
 	private EventsRepository eventsRepository;
 	@Autowired
 	private EventIdGeneratorRepository idGenerator;
+	@Autowired
+	private CategoriesService categoriesService;
 
 	@Override
 	public void add(Event event) {
@@ -117,6 +116,18 @@ public class EventsServiceImpl implements EventsService {
 	private List<Event> getRelevantEvents(List<Event> events) {
 		return events.stream().filter(event -> event.getStartDateTime().after(new Date()) && !(event.getDeleted() == 1)).collect(Collectors.toList());
 
+	}
+
+	@Override
+	public Set<CategoryResponse> getUserEventsCounterByCategories(User user) {
+		Set<Event> events = new HashSet<>(eventsRepository.findByOwner(user));
+		events.addAll(user.getEvents());
+		return new LinkedHashSet<>(categoriesService.countEventsByCategories(getRelevantEvents(new ArrayList<>(events))));
+	}
+
+	@Override
+	public List<CategoryResponse> getEventsCounterByCategories() {
+		return categoriesService.countEventsByCategories(getRelevantEvents(findAll()));
 	}
 
 }

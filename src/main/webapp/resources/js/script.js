@@ -330,6 +330,7 @@ $(document).ready(function () {
 				oldLocationHash = "";
 				$('.filters input[type=checkbox]').prop('checked', false);
 				loadEvents();
+				displayCategoriesListFilter();
 				renderEventsPage(events);
 			},
 			"#myEvents" : function() {
@@ -338,6 +339,7 @@ $(document).ready(function () {
 				}
 				oldLocationHash = "#myEvents";
 				loadEvents("myEvents");
+				displayCategoriesListFilter("myEventsCategories");
 				renderEventsPage(events);
 			},
 			'#user': function () {
@@ -402,6 +404,9 @@ $(document).ready(function () {
 	// It fills up the events list via a handlebars template.
 	// It recieves one parameter - the data we took from events.json.
 	function generateAlleventsHTML(data) {
+		$('.total-counter').empty();
+		$('.total-counter').append("Total " +data.length + " events");
+		//displayCategoriesListFilter();
 		var list = $('.all-events .events-list');
 		var theTemplateScript = $('#events-template').html();
 		//Compile the template​
@@ -536,7 +541,13 @@ $(document).ready(function () {
 
 //--------------------------END INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
 
-	function displayCategoriesListFilter() {
+	function displayCategoriesListFilter(type) {
+		var categoriesFilter = $('.filter-categories');
+
+	    if (!type) {
+    			type = "categories"
+    	}
+
 		var badgeSelector = ".badge";
 		//didn't find another way of matching categories and colors
 		function getColorsOfCategories() {
@@ -547,11 +558,12 @@ $(document).ready(function () {
 			})
 		}
 
-		$.getJSON("categories", function (data) {
+		$.getJSON(type, function (data) {
 			var categoriesListElementTemplate = $('#categories-list').html();
 			var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
-			var categoriesFilter = $('#filter-categories');
-			categoriesFilter.html(categoriesListElement(data));
+			categoriesFilter.find('div').remove();
+			categoriesFilter.append(categoriesListElement(data));
+
 			var checkboxes = $('.all-events input[type=checkbox]');
 			getColorsOfCategories();
 			checkboxes.click(function () {

@@ -1,10 +1,10 @@
 package com.luxoft.wheretogo.repositories;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface EventsRepository {
 

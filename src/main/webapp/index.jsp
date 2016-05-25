@@ -100,12 +100,13 @@
                 <form>
                     <lable>Categories</lable>
                     <div class="filter-criteria">
-                        <div id="filter-categories">
+                        <div class="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
-                                <div class="categories-common {{name}}">
-                                <label><input type="checkbox" name="category" value="{{name}}">{{name}}</label><span class="badge {{name}}">  </span>
-                                </div>
+                                     <div class="categories-common {{category}}">
+                                    <label><input type="checkbox" name="category" value="{{category}}">{{category}}</label><span class="badge
+                                    {{category}}">{{counter}}</span>
+                                    </div>
                                 {{/each}}
                             </script>
                         </div>
@@ -115,6 +116,7 @@
         </div>
 
         <ul class="events-list">
+        <div class="total-counter"></div>
             <script id="events-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_event">
@@ -208,7 +210,7 @@
                         <select id="event-categories">
                             <script id="event-categories-list" type="x-handlebars-template">
                                 {{#each this}}
-                                <option data-id="{{id}}">{{name}}</option>
+                                <option data-id="{{id}}">{{category}}</option>
                                 {{/each}}
                             </script>
                         </select>
@@ -311,7 +313,6 @@
     </div>
 
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

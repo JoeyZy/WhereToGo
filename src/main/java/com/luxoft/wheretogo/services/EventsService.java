@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 
 import java.time.LocalDateTime;
@@ -29,4 +30,8 @@ public interface EventsService {
 	List<EventResponse> getRelevantEventResponses(User user);
 
 	Long getNextEventId();
+
+	Set<CategoryResponse> getUserEventsCounterByCategories(User user);
+
+	List<CategoryResponse> getEventsCounterByCategories();
 }

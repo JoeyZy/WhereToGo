@@ -1,11 +1,10 @@
 package com.luxoft.wheretogo.controller;
 
-import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
-import com.luxoft.wheretogo.services.CategoriesService;
 import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
@@ -26,9 +25,6 @@ public class RestServiceController {
 
 	@Autowired
 	private EventsService eventsService;
-
-	@Autowired
-	private CategoriesService categoriesService;
 
 	@Autowired
 	private CurrenciesService currenciesService;
@@ -85,9 +81,14 @@ public class RestServiceController {
 		usersService.add(user);
 	}
 
+	@RequestMapping(value = "/myEventsCategories", method = RequestMethod.GET)
+	public Set<CategoryResponse> myEventsCategories(HttpServletRequest request) {
+		return eventsService.getUserEventsCounterByCategories((User) request.getSession().getAttribute("user"));
+	}
+
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
-	public List<Category> categories() {
-		return categoriesService.findAll();
+	public List<CategoryResponse> categories() {
+		return eventsService.getEventsCounterByCategories();
 	}
 
 	@RequestMapping(value = "/currencies", method = RequestMethod.GET)
@@ -127,7 +128,7 @@ public class RestServiceController {
 		User user = (User) request.getSession().getAttribute("user");
 		Event eventToUpdate = eventsService.findById(event.getId());
 
-		if (!eventToUpdate.getParticipants().contains(user)) {
+		if (!(eventToUpdate.getParticipants() == null) && !eventToUpdate.getParticipants().contains(user)) {
 			eventToUpdate.getParticipants().add(user);
 			user.getEvents().add(eventToUpdate);
 			eventsService.update(eventToUpdate);
