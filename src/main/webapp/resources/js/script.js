@@ -166,29 +166,7 @@ $(document).ready(function () {
 	}
 
 	resetSinglePage();
-
-
-	function loadArchivedEvents(searchFrom, searchTo) {
-		var requestName= "archivedEvents";
-		if(oldLocationHash==="#myEvents") {
-			requestName = "archivedUsersEvents";
-		}
-		$.getJSON(requestName, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
-			events = data;
-			events.sort(function (a, b) {
-				return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
-			});
-			events.forEach(function (item) {
-				item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
-				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
-				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
-				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
-			});
-			// Call a function to create HTML for all the events.
-			generateAlleventsHTML(events);
-		});
-	}
-
+	
 	var $showArchiveCheckbox = $('#show-archive');
 	var archiveDateFilters = $('#archiveDateFilters');
 	$showArchiveCheckbox.on('click', function () {
@@ -211,7 +189,7 @@ $(document).ready(function () {
 	function showArchiveDateFilters() {
 		archiveDateFilters.removeClass('hidden');
 		var searchParams = populateArchveDateDefaultValues();
-		loadArchivedEvents(searchParams.searchFrom, searchParams.searchTo);
+		loadEvents("archivedEvents", searchParams.searchFrom, searchParams.searchTo);
 	}
 
 	$archiveFrom.datepicker({
@@ -220,7 +198,7 @@ $(document).ready(function () {
 		onSelect: function (selected, evnt) {
 			if (selected != null) {
 				searchFrom = selected;
-				loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+				loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 			}
 		}
 	});
@@ -230,7 +208,7 @@ $(document).ready(function () {
 		dateFormat: 'dd-mm-y',
 		onSelect: function (selected, evnt) {
 			if (selected != null) {
-				loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+				loadEvents($archiveFrom.val(), $archiveTo.val());
 			}
 		}
 	});
@@ -368,13 +346,16 @@ $(document).ready(function () {
 			}
 		}
 	});
-	// Get data about our events from events.json.
-	function loadEvents(type) {
+	
+	function loadEvents(type, searchFrom, searchTo) {
+		var type= type;
 		if (!type) {
 			type = "events"
 		}
-		$.getJSON(type, function (data) {
-			// Write the data into our global variable.
+		if(oldLocationHash==="#myEvents" && type === "archivedEvents") {
+			type = "archivedUsersEvents";
+		}
+		$.getJSON(type, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
 			events = data;
 			events.sort(function (a, b) {
 				return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
@@ -389,6 +370,7 @@ $(document).ready(function () {
 			generateAlleventsHTML(events);
 		});
 	}
+	
 
 	// An event handler with calls the render function on every hashchange.
 	// The render function will show the appropriate content of out $singlePage.
@@ -432,7 +414,7 @@ $(document).ready(function () {
 				$('.filters input[type=checkbox]').prop('checked', false);
 
 				if($showArchiveCheckbox.find("input").prop("checked")) {
-					loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+					loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val())
 				}
 				else {
 					loadEvents();
@@ -446,7 +428,7 @@ $(document).ready(function () {
 				}
 				oldLocationHash = "#myEvents";
 				if($showArchiveCheckbox.find("input").prop("checked")) {
-					loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+					loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val())
 				}
 
 				else {
