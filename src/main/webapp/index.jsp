@@ -308,10 +308,10 @@
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
                         onclick="this.blur();">Add user
                 </button>
+                </div>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent"
                         onclick="this.blur();">Add event
                 </button>
-                </div>
             </form>
             <span class="edit"></span>
             <span class="close"></span>
