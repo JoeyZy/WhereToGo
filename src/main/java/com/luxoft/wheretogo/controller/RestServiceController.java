@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.controller;
 
+import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
@@ -152,4 +153,14 @@ public class RestServiceController {
 		return eventToUpdate;
 	}
 
+
+	@RequestMapping("/archivedEvents")
+	public List<EventResponse> archivedEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
+			return eventsService.getArchivedEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
+	}
+
+	@RequestMapping("/archivedUsersEvents")
+	public List<EventResponse> archivedUsersEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
+			return eventsService.getArchivedUsersEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
+	}
 }

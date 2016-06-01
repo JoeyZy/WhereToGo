@@ -173,6 +173,10 @@ h1, h3 {
   background-color: #EF5350;
 }
 
+.event-img.Outdated {
+  background-color: #C0C0C0;
+}
+
 .badge {
   height: 17px;
 }
@@ -718,6 +722,41 @@ img.event_pic {
   text-align: initial;
   font-size: 16px;
   color:#90A4AE;
+}
+
+
+
+.categories-common.Archive {
+  width: 100%;
+}
+
+.archive.date.filters {
+  display: table;
+  width: 100%;
+}
+
+.archived.datepicker {
+  padding-top: 5%;
+  display: table-cell;
+  width: 50%;
+}
+
+.archived.datepicker input {
+  width: 90%;
+  text-align: center;
+}
+
+.categories-common.Archive div label {
+  display: inline-block;
+  line-height: 1.0;
+  font-size: 15px;
+  font-weight: normal;
+  width: 100%;
+  color: #000;
+}
+
+input.show-archive-input {
+  margin-right: 10px;
 }
 
 /* Icons

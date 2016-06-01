@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.services;
 
+import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
@@ -108,7 +109,7 @@ public class EventsServiceImpl implements EventsService {
 					event.getDeleted(),//
 					event.getPicture(),
 					event.getLocation(),
-					user!= null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user)));
+					user != null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user)));
 		}
 		return eventResponses;
 	}
@@ -130,4 +131,29 @@ public class EventsServiceImpl implements EventsService {
 		return categoriesService.countEventsByCategories(getRelevantEvents(findAll()));
 	}
 
+
+	@Override
+	public List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user) {
+		List<Event> archivedevents = findAll().stream().filter(event -> {
+				return event.getEndDateTime().after(request.getSearchFrom())
+                        && event.getEndDateTime().before(request.getSearchTo())
+                        && !(event.getDeleted() == 1);
+		}).collect(Collectors.toList());
+			return convertToEventResponses(filterArchivedEvents(archivedevents, user), user);
+	}
+
+	private List<Event> filterArchivedEvents(List<Event> events, User user) {
+		return events.stream().filter(event -> {
+			return event.getParticipants().contains(user) || event.getOwner().equals(user);
+		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user) {
+		List<Event> archivedevents = eventsRepository.findByOwner(user).stream().filter(event -> {
+			return event.getEndDateTime().after(request.getSearchFrom())
+					&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1);
+		}).collect(Collectors.toList());
+		return convertToEventResponses(archivedevents, user);
+	}
 }

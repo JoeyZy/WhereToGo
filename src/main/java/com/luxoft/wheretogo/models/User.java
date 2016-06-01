@@ -21,7 +21,32 @@ import java.util.Set;
 @ToString(of = {"id", "email"})
 public class User {
 
+	public long getId() {
+		return id;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public Set<Event> getEvents() {
+		return events;
+	}
+
 	@Id
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 

@@ -72,7 +72,7 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$buttonDelete.on('click', function() {
+	$buttonDelete.on('click', function () {
 		renderConfirmationPage();
 		return false;
 	});
@@ -81,7 +81,7 @@ $(document).ready(function () {
 		$buttonUploadPicture.click();
 		return false;
 	});
-	
+
 
 	$buttonUploadPicture.on('change', function () {
 		var input = ($buttonUploadPicture)[0];
@@ -161,15 +161,116 @@ $(document).ready(function () {
 		$buttons.hide();
 		$errors.hide();
 		$pictureParent.hide();
+
 		$picture.attr('src', "resources/images/camera.png");
 	}
 
 	resetSinglePage();
 
+
+	function loadArchivedEvents(searchFrom, searchTo) {
+		var requestName= "archivedEvents";
+		if(oldLocationHash==="#myEvents") {
+			requestName = "archivedUsersEvents";
+		}
+		$.getJSON(requestName, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
+			events = data;
+			events.sort(function (a, b) {
+				return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+			});
+			events.forEach(function (item) {
+				item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
+				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
+				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
+				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
+			});
+			// Call a function to create HTML for all the events.
+			generateAlleventsHTML(events);
+		});
+	}
+
+	var $showArchiveCheckbox = $('#show-archive');
+	var archiveDateFilters = $('#archiveDateFilters');
+	$showArchiveCheckbox.on('click', function () {
+		if ($showArchiveCheckbox.find("input").prop("checked")) {
+			showArchiveDateFilters();
+			makeEventPageUneditable();
+			hideShowSinglePageAllButtons(true);
+		}
+		else {
+			archiveDateFilters.addClass('hidden');
+			loadEvents();
+			makeEventPageEditable();
+			hideShowSinglePageAllButtons(false);
+		}
+	});
+
+	var $archiveFrom = $("#datepickerFrom");
+	var $archiveTo = $("#datepickerTo");
+
+	function showArchiveDateFilters() {
+		archiveDateFilters.removeClass('hidden');
+		var searchParams = populateArchveDateDefaultValues();
+		loadArchivedEvents(searchParams.searchFrom, searchParams.searchTo);
+	}
+
+	$archiveFrom.datepicker({
+		maxDate: '+0m +0w +0d',
+		dateFormat: 'dd-mm-y',
+		onSelect: function (selected, evnt) {
+			if (selected != null) {
+				searchFrom = selected;
+				loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+			}
+		}
+	});
+
+	$archiveTo.datepicker({
+		maxDate: '+0m +0w +0d',
+		dateFormat: 'dd-mm-y',
+		onSelect: function (selected, evnt) {
+			if (selected != null) {
+				loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+			}
+		}
+	});
+
+	function populateArchveDateDefaultValues() {
+		var searchTo = new Date();
+		var monthAgo = searchTo.getMonth() - 1,
+			year = searchTo.getFullYear();
+		if (monthAgo < 0) {
+			monthAgo = 11;
+			year -= 1;
+		}
+		var searchFrom = new Date(year, monthAgo, searchTo.getDate());
+
+		$archiveFrom.val($.datepicker.formatDate('dd-mm-y', searchFrom));
+		$archiveTo.val($.datepicker.formatDate('dd-mm-y', searchTo));
+		return {searchFrom: $archiveFrom.val(), searchTo: $archiveTo.val()};
+	}
+
+	function hideShowSinglePageAllButtons(isHidden) {
+		if (isHidden) {
+			$singlePage.find('.SinglePage__all_buttons').addClass("hidden");
+		}
+		else {
+			$singlePage.find('.SinglePage__all_buttons').removeClass("hidden");
+		}
+	}
+
 	$('.home').click(function () {
+		hideArchiveElements();
 		loadEvents();
 	});
+
+	function hideArchiveElements() {
+		$showArchiveCheckbox.find("input").prop("checked", false);
+		archiveDateFilters.addClass('hidden');
+	}
+
 	$myEventsLink.on("click", function (event) {
+		hideArchiveElements();
 		event.preventDefault();
 		window.location.hash = 'myEvents';
 	});
@@ -329,17 +430,30 @@ $(document).ready(function () {
 				filters = {};
 				oldLocationHash = "";
 				$('.filters input[type=checkbox]').prop('checked', false);
-				loadEvents();
+
+				if($showArchiveCheckbox.find("input").prop("checked")) {
+					loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+				}
+				else {
+					loadEvents();
+				}
 				displayCategoriesListFilter();
 				renderEventsPage(events);
 			},
-			"#myEvents" : function() {
+			"#myEvents": function () {
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
 				oldLocationHash = "#myEvents";
-				loadEvents("myEvents");
+				if($showArchiveCheckbox.find("input").prop("checked")) {
+					loadArchivedEvents($archiveFrom.val(), $archiveTo.val());
+				}
+
+				else {
+					loadEvents("myEvents");
+				}
 				displayCategoriesListFilter("myEventsCategories");
+
 				renderEventsPage(events);
 			},
 			'#user': function () {
@@ -387,7 +501,6 @@ $(document).ready(function () {
 		else {
 			filters = {};
 			checkboxes.prop('checked', false);
-
 			renderEventsPage(events);
 		}
 
@@ -413,14 +526,20 @@ $(document).ready(function () {
 		var theTemplate = Handlebars.compile(theTemplateScript);
 		list.find('li').remove();
 		list.append(theTemplate(data));
+		if($showArchiveCheckbox.find("input").prop("checked")) {
+			list.find(".event-img").addClass("Outdated");
+		}
+		else {
+			list.find(".event-img").removeClass("Outdated");
+		}
 		// Each events has a data-index attribute.
 		// On click change the url hash to open up a preview for this event only.
 		// Remember: every hashchange triggers the render function.
-		$.each(list.find('li'), function(index, item) {
+		$.each(list.find('li'), function (index, item) {
 			$(item).find('span.content').on('click', function (e) {
-			e.preventDefault();
-			var eventIndex = $(item).data('index');
-			window.location.hash = 'event/' + eventIndex;
+				e.preventDefault();
+				var eventIndex = $(item).data('index');
+				window.location.hash = 'event/' + eventIndex;
 			});
 		});
 		showInlineAssignments();
@@ -469,35 +588,38 @@ $(document).ready(function () {
 //--------------------------INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
 	function attachClickEventToButtons() {
 		$('.assign-action-btn.btn-success').on("click", function (event) {
-	        var eventId = $(event.target).parent().parent().attr('data-index');
-	        assignUnassignEvent('assignEventToUser', eventId, inlineAssignmentCallBackFunction);
-	    });
+			var eventId = $(event.target).parent().parent().attr('data-index');
+			assignUnassignEvent('assignEventToUser', eventId, inlineAssignmentCallBackFunction);
+		});
 
-	    $('.assign-action-btn.btn-default').on("click", function (event) {
-	        var eventId = $(event.target).parent().parent().attr('data-index');
-	        assignUnassignEvent('unassignEventFromUser', eventId, inlineAssignmentCallBackFunction);
-	    });
+		$('.assign-action-btn.btn-default').on("click", function (event) {
+			var eventId = $(event.target).parent().parent().attr('data-index');
+			assignUnassignEvent('unassignEventFromUser', eventId, inlineAssignmentCallBackFunction);
+		});
 	}
+
 	function showInlineAssignments() {
 		var list = $('.all-events .events-list');
-		$.each(list.find('li'), function(index, item){
-			 alterAssignmentButtonsVisibility($(item));
+		$.each(list.find('li'), function (index, item) {
+			alterAssignmentButtonsVisibility($(item));
 		});
 	}
 
 	function alterAssignmentButtonsVisibility(nodeLI) {
-			nodeLI.find('.assign-action-btn.btn-success').hide();
-    			nodeLI.find('.assign-action-btn.btn-default').hide();
-
-    	    			if (user) {
-    				if(nodeLI.find('.button_group').attr('visit') == 'true') {
-    					nodeLI.find('.assign-action-btn.btn-success').hide();
-    					nodeLI.find('.assign-action-btn.btn-default').show();
-    				} else {
-    					nodeLI.find('.assign-action-btn.btn-default').hide();
-    					nodeLI.find('.assign-action-btn.btn-success').show();
-    				}
-    			}
+		if (!$showArchiveCheckbox.find("input").prop("checked")) {
+			if (user) {
+				if (nodeLI.find('.button_group').attr('visit') == 'true') {
+					nodeLI.find('.assign-action-btn.btn-success').hide();
+					nodeLI.find('.assign-action-btn.btn-default').show();
+				} else {
+					nodeLI.find('.assign-action-btn.btn-default').hide();
+					nodeLI.find('.assign-action-btn.btn-success').show();
+				}
+				return;
+			}
+		}
+		nodeLI.find('.assign-action-btn.btn-success').hide();
+		nodeLI.find('.assign-action-btn.btn-default').hide();
 	}
 
 	function alterVisitAttribute(id, value) {
@@ -507,36 +629,39 @@ $(document).ready(function () {
 
 	function inlineAssignmentCallBackFunction(event) {
 		var li = $('li[data-index=' + event.id + ']');
-		alterVisitAttribute(event.id, $.grep(event.participants, function(e){return e.id==user.id}).length != 0);
+		alterVisitAttribute(event.id, $.grep(event.participants, function (e) {
+				return e.id == user.id
+			}).length != 0);
 		alterAssignmentButtonsVisibility(li);
 	}
 
-		function assignUnassignEvent(action, id, callback) {
-			var json = {
-				id: id
-			};
-			$.ajax({
-				url: action,
-				data: JSON.stringify(json),
-				type: "POST",
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("Accept", "application/json");
-					xhr.setRequestHeader("Content-Type", "application/json");
-				},
-				success: function (event) {
-					callback(event)
-				},
-				error: function () { },
-				complete: function () { }
-			});
-			return false;
-		}
+	function assignUnassignEvent(action, id, callback) {
+		var json = {
+			id: id
+		};
+		$.ajax({
+			url: action,
+			data: JSON.stringify(json),
+			type: "POST",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/json");
+			},
+			success: function (event) {
+				callback(event)
+			},
+			error: function () {
+			},
+			complete: function () {
+			}
+		});
+		return false;
+	}
 
-		
 
-	       //$('.assign-action-btn.btn-default').on("click",
-		//			assignUnassignEvent('unassignEventFromUser', 
-                 //                       nodeLI.attr('data-index'), inlineAssignmentCallBackFunction));
+	//$('.assign-action-btn.btn-default').on("click",
+	//			assignUnassignEvent('unassignEventFromUser', 
+	//                       nodeLI.attr('data-index'), inlineAssignmentCallBackFunction));
 
 
 //--------------------------END INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
@@ -544,9 +669,9 @@ $(document).ready(function () {
 	function displayCategoriesListFilter(type) {
 		var categoriesFilter = $('.filter-categories');
 
-	    if (!type) {
-    			type = "categories"
-    	}
+		if (!type) {
+			type = "categories"
+		}
 
 		var badgeSelector = ".badge";
 		//didn't find another way of matching categories and colors
@@ -564,7 +689,7 @@ $(document).ready(function () {
 			categoriesFilter.find('div').remove();
 			categoriesFilter.append(categoriesListElement(data));
 
-			var checkboxes = $('.all-events input[type=checkbox]');
+			var checkboxes = $('.filter-categories input[type=checkbox]');
 			getColorsOfCategories();
 			checkboxes.click(function () {
 				var that = $(this),
@@ -614,6 +739,15 @@ $(document).ready(function () {
 		$addEventBtn.attr('title', 'Please login to create an event');
 	}
 
+	function disableArchiveCheckbox() {
+		hideArchiveElements();
+		$showArchiveCheckbox.find("input").prop('disabled', true);
+	}
+
+	function enableArchiveCheckbox() {
+		$showArchiveCheckbox.find("input").prop('disabled', false);
+	}
+
 	// This function receives an object containing all the event we want to show.
 	function renderEventsPage(data) {
 		if (typeof data == 'undefined') {
@@ -622,6 +756,7 @@ $(document).ready(function () {
 
 		if (typeof user == "undefined") {
 			disableAddEventsBtn();
+			disableArchiveCheckbox();
 		}
 		var page = $('.all-events'),
 			allEvents = $('.all-events .events-list > li');
@@ -918,15 +1053,15 @@ $(document).ready(function () {
 	}
 
 	function allowAttendEvent() {
-			$buttonCancelAttend.hide();
-			$buttonAttend.hide();
-			if(user) {
-				if ($participants.find("[data-id=" + user.id + "]").length == 0) {
-					$buttonAttend.show();
-				} else {
-					$buttonCancelAttend.show();
-				}
+		$buttonCancelAttend.hide();
+		$buttonAttend.hide();
+		if (user) {
+			if ($participants.find("[data-id=" + user.id + "]").length == 0) {
+				$buttonAttend.show();
+			} else {
+				$buttonCancelAttend.show();
 			}
+		}
 	}
 
 	function getCurrencyId() {
@@ -1198,6 +1333,7 @@ $(document).ready(function () {
 				}
 				setUser(sessionUser);
 				$loginDropDown.hide();
+				$showArchiveCheckbox.find("input").prop('disabled', false);
 			},
 			error: function () {
 			},
@@ -1209,9 +1345,11 @@ $(document).ready(function () {
 	function grantRightsToUser() {
 		if (typeof user === 'undefined') {
 			disableAddEventsBtn();
+			disableArchiveCheckbox();
 			return;
 		}
 		enableAddEventsBtn();
+		enableArchiveCheckbox();
 	}
 
 	loadEvents();

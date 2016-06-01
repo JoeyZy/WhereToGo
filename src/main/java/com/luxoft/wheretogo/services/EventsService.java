@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.services;
 
+import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
@@ -34,4 +35,9 @@ public interface EventsService {
 	Set<CategoryResponse> getUserEventsCounterByCategories(User user);
 
 	List<CategoryResponse> getEventsCounterByCategories();
+
+	List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user);
+
+	List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user);
+
 }

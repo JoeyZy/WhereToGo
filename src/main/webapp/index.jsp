@@ -113,6 +113,27 @@
                     </div>
                 </form>
             </div>
+
+            <div class="archives bs-callout bs-callout-default">
+                <form>
+                    <lable>Archive</lable>
+                    <div class="filter-criteria">
+                        <div class="categories-common Archive">
+                            <div id="show-archive">
+                                <label><input type="checkbox" class="show-archive-input"/>Show old events</label>
+                            </div>
+
+                            <div id="archiveDateFilters" class="archive date filters hidden">
+                                <form class="ui-datepicker">
+                                    <p class="archived datepicker">FROM <input type="text" id="datepickerFrom"></p>
+                                    <p class="archived datepicker">TO <input type="text" id="datepickerTo"></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </div>
 
         <ul class="events-list">
@@ -265,6 +286,7 @@
                     </li>
                 </ul>
                 <ul class="errors"></ul>
+                <div class="SinglePage__all_buttons">
                 <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
                         onclick="this.blur();">Edit event
                 </button>
@@ -289,6 +311,7 @@
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent"
                         onclick="this.blur();">Add event
                 </button>
+                </div>
             </form>
             <span class="edit"></span>
             <span class="close"></span>

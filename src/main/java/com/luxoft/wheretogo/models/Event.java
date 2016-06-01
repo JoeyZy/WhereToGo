@@ -39,6 +39,54 @@ public class Event {
 	@Size(min = 2, max = 30)
 	private String name;
 
+	public long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public Set<User> getParticipants() {
+		return participants;
+	}
+
+	public Date getStartDateTime() {
+		return startDateTime;
+	}
+
+	public Date getEndDateTime() {
+		return endDateTime;
+	}
+
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public Integer getCost() {
+		return cost;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
 	private String description;
 	private String location;
 
