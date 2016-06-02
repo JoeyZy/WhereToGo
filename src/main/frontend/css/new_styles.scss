@@ -362,11 +362,12 @@ h1, h3 {
 
 .event-img, .start, .end {
   background-size: cover;
-  padding: 40px 10% 5px;
+  padding: 40px 5% 10px;
 }
 
 .start, .end {
   display: inline-block;
+  width: 49%;
 }
 
 .start_date, .start_time, .end_date, .end_time {
