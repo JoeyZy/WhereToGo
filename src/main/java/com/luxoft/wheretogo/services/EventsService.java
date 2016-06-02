@@ -40,4 +40,7 @@ public interface EventsService {
 
 	List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user);
 
+	List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user);
+
+	List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user);
 }

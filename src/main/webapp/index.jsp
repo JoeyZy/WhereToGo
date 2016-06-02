@@ -125,8 +125,8 @@
 
                             <div id="archiveDateFilters" class="archive date filters hidden">
                                 <form class="ui-datepicker">
-                                    <p class="archived datepicker">FROM <input type="text" id="datepickerFrom"></p>
-                                    <p class="archived datepicker">TO <input type="text" id="datepickerTo"></p>
+                                    <p class="archived datepicker">FROM <input type="text" id="datepickerFrom" readonly="readonly"></p>
+                                    <p class="archived datepicker">TO <input type="text" id="datepickerTo" readonly="readonly"></p>
                                 </form>
                             </div>
                         </div>

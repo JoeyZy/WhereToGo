@@ -156,4 +156,21 @@ public class EventsServiceImpl implements EventsService {
 		}).collect(Collectors.toList());
 		return convertToEventResponses(archivedevents, user);
 	}
+
+	@Override
+	public List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user) {
+	return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream().filter(event -> {
+		return event.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo())
+				&& !(event.getDeleted() == 1);
+	}).collect(Collectors.toList()), user));
+	}
+
+	@Override
+	public List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user) {
+		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream().filter(event -> {
+			return event.getEndDateTime().after(request.getSearchFrom())
+					&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1);
+		}).collect(Collectors.toList()));
+	}
 }

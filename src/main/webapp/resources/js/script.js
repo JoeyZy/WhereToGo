@@ -196,7 +196,10 @@ $(document).ready(function () {
 		maxDate: '+0m +0w +0d',
 		dateFormat: 'dd-mm-y',
 		onSelect: function (selected, evnt) {
-			if (selected != null) {
+			if (selected != $archiveTo.val() != null) {
+				if ($archiveFrom.datepicker("getDate") > $archiveTo.datepicker("getDate")) {
+					$archiveFrom.val($archiveTo.val());
+				}
 				searchFrom = selected;
 				loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 			}
@@ -207,8 +210,12 @@ $(document).ready(function () {
 		maxDate: '+0m +0w +0d',
 		dateFormat: 'dd-mm-y',
 		onSelect: function (selected, evnt) {
-			if (selected != null) {
-				loadEvents($archiveFrom.val(), $archiveTo.val());
+			if (selected != $archiveFrom.val() != null) {
+				if ($archiveTo.datepicker("getDate") < $archiveFrom.datepicker("getDate")) {
+				$archiveTo.val($archiveFrom.val());
+				}
+				searchTo = selected;
+				loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 			}
 		}
 	});
@@ -251,8 +258,9 @@ $(document).ready(function () {
 		hideArchiveElements();
 		event.preventDefault();
 		window.location.hash = 'myEvents';
+		loadEvents();
 	});
-	$.getJSON("categories", function (data) {
+	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
 		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
 		var categoriesFilter = $('#event-categories');
@@ -355,6 +363,7 @@ $(document).ready(function () {
 		if(oldLocationHash==="#myEvents" && type === "archivedEvents") {
 			type = "archivedUsersEvents";
 		}
+
 		$.getJSON(type, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
 			events = data;
 			events.sort(function (a, b) {
@@ -367,7 +376,9 @@ $(document).ready(function () {
 				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
 			});
 			// Call a function to create HTML for all the events.
+			displayCategoriesListFilter(type, searchFrom, searchTo);
 			generateAlleventsHTML(events);
+
 		});
 	}
 	
@@ -419,7 +430,6 @@ $(document).ready(function () {
 				else {
 					loadEvents();
 				}
-				displayCategoriesListFilter();
 				renderEventsPage(events);
 			},
 			"#myEvents": function () {
@@ -434,7 +444,6 @@ $(document).ready(function () {
 				else {
 					loadEvents("myEvents");
 				}
-				displayCategoriesListFilter("myEventsCategories");
 
 				renderEventsPage(events);
 			},
@@ -501,7 +510,6 @@ $(document).ready(function () {
 	function generateAlleventsHTML(data) {
 		$('.total-counter').empty();
 		$('.total-counter').append("Total " +data.length + " events");
-		//displayCategoriesListFilter();
 		var list = $('.all-events .events-list');
 		var theTemplateScript = $('#events-template').html();
 		//Compile the template​
@@ -648,14 +656,18 @@ $(document).ready(function () {
 
 //--------------------------END INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
 
-	function displayCategoriesListFilter(type) {
-		var categoriesFilter = $('.filter-categories');
-
+	function displayCategoriesListFilter(type, searchFrom, searchTo) {
+		var type= type;
 		if (!type) {
-			type = "categories"
+			type = "events"
 		}
+		if(oldLocationHash==="#myEvents" && type === "archivedEvents") {
+			type = "archivedUsersEvents";
+		}
+		type = type + "Categories";
+			var categoriesFilter = $('.filter-categories');
 
-		var badgeSelector = ".badge";
+			var badgeSelector = ".badge";
 		//didn't find another way of matching categories and colors
 		function getColorsOfCategories() {
 			$(badgeSelector).each(function (index, value) {
@@ -664,8 +676,7 @@ $(document).ready(function () {
 				filterColors[filterName] = $(value).css('background-color');
 			})
 		}
-
-		$.getJSON(type, function (data) {
+		$.getJSON(type, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
 			var categoriesListElementTemplate = $('#categories-list').html();
 			var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
 			categoriesFilter.find('div').remove();
@@ -1335,7 +1346,6 @@ $(document).ready(function () {
 	}
 
 	loadEvents();
-	displayCategoriesListFilter();
 
 	var startDateTextBox = $('#start');
 	var endDateTextBox = $('#end');

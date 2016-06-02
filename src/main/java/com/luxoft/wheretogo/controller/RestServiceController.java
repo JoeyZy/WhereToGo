@@ -87,7 +87,7 @@ public class RestServiceController {
 		return eventsService.getUserEventsCounterByCategories((User) request.getSession().getAttribute("user"));
 	}
 
-	@RequestMapping(value = "/categories", method = RequestMethod.GET)
+	@RequestMapping(value = "/eventsCategories", method = RequestMethod.GET)
 	public List<CategoryResponse> categories() {
 		return eventsService.getEventsCounterByCategories();
 	}
@@ -163,4 +163,16 @@ public class RestServiceController {
 	public List<EventResponse> archivedUsersEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 			return eventsService.getArchivedUsersEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
 	}
+
+
+	@RequestMapping(value = "/archivedEventsCategories", method = RequestMethod.GET)
+	public List<CategoryResponse> archivedEventsCategories(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
+		return eventsService.getArchivedEventsCounterByCategories(request, (User) httpRequest.getSession().getAttribute("user"));
+	}
+
+	@RequestMapping(value = "/archivedUsersEventsCategories", method = RequestMethod.GET)
+	public List<CategoryResponse> archivedUsersEventsCategories(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
+		return eventsService.getArchivedUsersEventsCounterByCategories(request, (User) httpRequest.getSession().getAttribute("user"));
+	}
+
 }
