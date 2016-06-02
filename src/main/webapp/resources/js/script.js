@@ -177,6 +177,8 @@ $(document).ready(function () {
 		}
 		else {
 			archiveDateFilters.addClass('hidden');
+			$archiveFrom.val(null);
+			$archiveTo.val(null);
 			loadEvents();
 			makeEventPageEditable();
 			hideShowSinglePageAllButtons(false);
@@ -188,8 +190,8 @@ $(document).ready(function () {
 
 	function showArchiveDateFilters() {
 		archiveDateFilters.removeClass('hidden');
-		var searchParams = populateArchveDateDefaultValues();
-		loadEvents("archivedEvents", searchParams.searchFrom, searchParams.searchTo);
+		populateArchveDateDefaultValues();
+		loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 	}
 
 	$archiveFrom.datepicker({
@@ -200,7 +202,6 @@ $(document).ready(function () {
 				if ($archiveFrom.datepicker("getDate") > $archiveTo.datepicker("getDate")) {
 					$archiveFrom.val($archiveTo.val());
 				}
-				searchFrom = selected;
 				loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 			}
 		}
@@ -214,7 +215,6 @@ $(document).ready(function () {
 				if ($archiveTo.datepicker("getDate") < $archiveFrom.datepicker("getDate")) {
 				$archiveTo.val($archiveFrom.val());
 				}
-				searchTo = selected;
 				loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val());
 			}
 		}
@@ -232,7 +232,6 @@ $(document).ready(function () {
 
 		$archiveFrom.val($.datepicker.formatDate('dd-mm-y', searchFrom));
 		$archiveTo.val($.datepicker.formatDate('dd-mm-y', searchTo));
-		return {searchFrom: $archiveFrom.val(), searchTo: $archiveTo.val()};
 	}
 
 	function hideShowSinglePageAllButtons(isHidden) {
@@ -258,7 +257,7 @@ $(document).ready(function () {
 		hideArchiveElements();
 		event.preventDefault();
 		window.location.hash = 'myEvents';
-		loadEvents();
+		loadEvents("myEvents");
 	});
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
@@ -356,12 +355,15 @@ $(document).ready(function () {
 	});
 	
 	function loadEvents(type, searchFrom, searchTo) {
-		var type= type;
+		var type = type;
 		if (!type) {
 			type = "events"
 		}
-		if(oldLocationHash==="#myEvents" && type === "archivedEvents") {
-			type = "archivedUsersEvents";
+		if(oldLocationHash==="#myEvents") {
+			type = 'myEvents';
+			if (type === "archivedEvents") {
+				type = "archivedUsersEvents";
+			}
 		}
 
 		$.getJSON(type, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
@@ -657,16 +659,8 @@ $(document).ready(function () {
 //--------------------------END INLINE ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 	function displayCategoriesListFilter(type, searchFrom, searchTo) {
-		var type= type;
-		if (!type) {
-			type = "events"
-		}
-		if(oldLocationHash==="#myEvents" && type === "archivedEvents") {
-			type = "archivedUsersEvents";
-		}
 		type = type + "Categories";
 			var categoriesFilter = $('.filter-categories');
-
 			var badgeSelector = ".badge";
 		//didn't find another way of matching categories and colors
 		function getColorsOfCategories() {
