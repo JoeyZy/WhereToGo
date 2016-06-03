@@ -360,9 +360,11 @@ $(document).ready(function () {
 			type = "events"
 		}
 		if(oldLocationHash==="#myEvents") {
-			type = 'myEvents';
 			if (type === "archivedEvents") {
 				type = "archivedUsersEvents";
+			}
+			else {
+				type = 'myEvents';
 			}
 		}
 
