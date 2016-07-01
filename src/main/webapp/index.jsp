@@ -339,13 +339,17 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="resources/js/ba-linkify.js"></script>
-<script src="resources/jquery/jquery-ui.js"></script>
-<script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
-<script src="resources/js/moment.js"></script>
-<script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src="resources/js/lib/ba-linkify.js"></script>
+<script src="resources/js/lib/jquery/jquery-ui.js"></script>
+<script src="resources/js/lib/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
+<script src="resources/js/lib/moment.js"></script>
+<script src="resources/js/lib/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src='resources/js/lib/fullcalendar/fullcalendar.min.js'></script>
+
+<script src="resources/js/core.js"></script>
+<script src="resources/js/mvc.js"></script>
 <script src="resources/js/script.js"></script>
-<script src='resources/fullcalendar/fullcalendar.min.js'></script>
+
 <script>
     $('.dropdown-toggle').dropdown();
 </script>
