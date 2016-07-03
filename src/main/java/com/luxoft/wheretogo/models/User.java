@@ -8,7 +8,15 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -21,32 +29,7 @@ import java.util.Set;
 @ToString(of = {"id", "email"})
 public class User {
 
-	public long getId() {
-		return id;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public Set<Event> getEvents() {
-		return events;
-	}
-
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
@@ -72,6 +55,8 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "participants")
 	private Set<Event> events;
+	@NotNull
+	private boolean active;
 
 	public User() {
 	}

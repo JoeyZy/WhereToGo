@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface EventsService {
 
-	void add(Event event);
+	boolean add(Event event);
 
 	void update(Event event);
 

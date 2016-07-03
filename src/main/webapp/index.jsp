@@ -45,7 +45,7 @@
                     </li>
                     <li>
                         <div class="navbar-btn-container">
-                            <button class="btn btn-block btn-add-event" title="Please login to create an event">
+                            <button class="btn btn-block btn-add-event" title="Please login with active profile to create an event">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Event
                             </button>

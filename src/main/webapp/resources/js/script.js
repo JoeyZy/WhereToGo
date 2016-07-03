@@ -715,6 +715,9 @@ $(document).ready(function () {
 	}
 
 	function enableAddEventsBtn() {
+		if (!user.active) {
+			return;
+		}
 		var $addEventBtn = $('.btn-add-event');
 		$addEventBtn.prop('disabled', false);
 		$addEventBtn.addClass('btn-success');

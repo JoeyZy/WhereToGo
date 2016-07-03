@@ -10,6 +10,8 @@ import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,10 +61,14 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public void addEvent(@RequestBody Event event, HttpServletRequest request) {
+	public ResponseEntity<String> addEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		event.setDeleted(NOT_DELETED);
-		eventsService.add(event);
+		boolean eventIsAdded = eventsService.add(event);
+		if (!eventIsAdded) {
+			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
