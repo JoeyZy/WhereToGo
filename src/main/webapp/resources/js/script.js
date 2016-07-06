@@ -1000,8 +1000,8 @@ $(document).ready(function () {
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
-				$eventDescription.html(linkify(event.description));
-				$eventLocation.html(linkify(event.location));
+				$eventDescription.text(linkify(event.description));
+				$eventLocation.text(linkify(event.location));
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
 					$pictureParent.show();
