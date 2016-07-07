@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="resources/jquery/jquery-ui.css">
-    <link rel="stylesheet" href="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
-    <link rel="stylesheet" href="resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
-    <link href='resources/css/fullcalendar.min.css' rel='stylesheet'/>
-    <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
-    <link href="resources/css/new_styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="../../resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
+    <link href='../../resources/css/fullcalendar.min.css' rel='stylesheet'/>
+    <link href='../../resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
+    <link href="../../resources/css/new_styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -28,8 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand home" href="#"><img class="icons" src="resources/images/list.png"><span> All Events</span></a>
-                <a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>
+                <a class="navbar-brand home" href="#"><img class="icons" src="../../resources/images/list.png"><span> All Events</span></a>
+                <a class="navbar-brand my-events" href="#"><img class="icons" src="../../resources/images/star.png"><span> My Events</span></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
@@ -65,20 +65,25 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="form" role="form" method="post" accept-charset="UTF-8"
-                                              action="login" id="login-nav">
+                                              action="/login" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
-                                                       placeholder="Email address" required>
+                                                       name="userEmail" placeholder="Email address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="userPassword">Password</label>
                                                 <input type="password" class="form-control" id="userPassword"
-                                                       placeholder="Password" required>
+                                                       name="userPassword" placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-info btn-block">Sign in</button>
                                             </div>
+
+                                            <input type="hidden"
+                                                   name="${_csrf.parameterName}"
+                                                   value="${_csrf.token}"/>
+
                                         </form>
                                     </div>
                                     <div class="col-md-12 bottom">
@@ -93,7 +98,33 @@
         </div>
     </nav>
 </header>
-<div class="main-content">
+<div >
+
+    <div class="col-md-12">
+        <form class="form" role="form" method="post" accept-charset="UTF-8"
+              action="/login" id="login-nav">
+            <div class="form-group">
+                <label class="sr-only" for="userEmail">Email address</label>
+                <input type="email" class="form-control" id="userEmail"
+                       name="userEmail" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="userPassword">Password</label>
+                <input type="password" class="form-control" id="userPassword"
+                       name="userPassword" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block">Sign in</button>
+            </div>
+
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+
+        </form>
+    </div>
+
+
     <div class="all-events page">
         <div class="nav-left">
             <div class="filters bs-callout bs-callout-default">
@@ -150,8 +181,8 @@
                                     <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
                                     <div class="event-box-location-and-by">
-                                        <div class="location" title="{{location}}"><img class="icons" src="resources/images/location.png"> {{location}}</div>
-                                        <div class="created-by" title="{{owner}}"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                        <div class="location" title="{{location}}"><img class="icons" src="../../resources/images/location.png"> {{location}}</div>
+                                        <div class="created-by" title="{{owner}}"><img class="icons" src="../../resources/images/black.png"><span> Created by </span>{{owner}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -160,14 +191,14 @@
 
                             <div class="start">
                                 <span>START <br></span>
-                                <div class="start_date"><img class="icons" src="resources/images/calendar.png"> {{actualStartDate}}</div>
-                                <div class="start_time"><img class="icons" src="resources/images/time.png"> {{actualStartTime}}</div>
+                                <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> {{actualStartDate}}</div>
+                                <div class="start_time"><img class="icons" src="../../resources/images/time.png"> {{actualStartTime}}</div>
                             </div>
 
                             <div class="end">
                                 <span>END <br></span>
-                                <div class="end_date"><img class="icons" src="resources/images/calendar.png">  {{actualEndDate}}</div>
-                                <div class="end_time"><img class="icons" src="resources/images/time.png">  {{actualEndTime}}</div>
+                                <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  {{actualEndDate}}</div>
+                                <div class="end_time"><img class="icons" src="../../resources/images/time.png">  {{actualEndTime}}</div>
 
                             </div>
                         </span>
@@ -339,13 +370,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="resources/js/ba-linkify.js"></script>
-<script src="resources/jquery/jquery-ui.js"></script>
-<script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
-<script src="resources/js/moment.js"></script>
-<script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
-<script src="resources/js/script.js"></script>
-<script src='resources/fullcalendar/fullcalendar.min.js'></script>
+<script src="../../resources/js/ba-linkify.js"></script>
+<script src="../../resources/jquery/jquery-ui.js"></script>
+<script src="../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
+<script src="../../resources/js/moment.js"></script>
+<script src="../../resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src="../../resources/js/script.js"></script>
+<script src='../../resources/fullcalendar/fullcalendar.min.js'></script>
 <script>
     $('.dropdown-toggle').dropdown();
 </script>
