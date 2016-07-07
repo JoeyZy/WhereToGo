@@ -1,13 +1,11 @@
 package com.luxoft.wheretogo.services;
 
-import static org.junit.Assert.*;
-
 import com.luxoft.wheretogo.models.*;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
-import org.hibernate.Hibernate;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,23 +14,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.stubbing.OngoingStubbing;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by serhii on 05.07.16.
+ * Created by maks on 05.07.16.
  */
 public class EventsServiceImplTest {
     @Mock
     EventsRepository eventsRepository;
+
+    @Mock
+    EventIdGeneratorRepository idGenerator;
 
     @Mock
     CategoriesService categoriesService;
@@ -43,23 +41,44 @@ public class EventsServiceImplTest {
     @Spy
     List<Event> events = new ArrayList<Event>();
 
+    // time in the future
+    private Date dateStart1 = new Date(new Date().getTime() + 1000000000);
+    private Date dateFinish1 = new Date(new Date().getTime() + 1000000000);
 
-    private List<Category> lc = new ArrayList<Category>();
-    private Date dateStart = new Date();
-    private Date dateFinish = new Date();
-    private User user = new User();
+    // time in the past
+    private Date dateStart2 = new Date(new Date().getTime() - 1000000000);
+    private Date dateFinish2 = new Date(new Date().getTime() - 1000000000);
 
     private List<Category> lc1 = new ArrayList<Category>();
-    private Date dateStart1 = new Date();
-    private Date dateFinish1 = new Date();
+    private List<Category> lc2 = new ArrayList<Category>();
+
     private User user1 = new User();
+    private User user2 = new User();
+    private User user3 = new User();
+    ArchiveServiceRequest request = new ArchiveServiceRequest();
 
     @Before
     public void setUp() throws Exception {
-        user.setFirstName("vasya");
-        user.setLastName("pupkin");
-        MockitoAnnotations.initMocks(this);
         events = getEventList();
+
+        user1.setFirstName("vasya");
+        user1.setLastName("pupkin");
+        ArrayList<Event> copylist = new ArrayList<>();
+        copylist.add(events.get(0));
+
+        user2.setEvents(new HashSet<>(copylist));
+
+        user3.setFirstName("user3");
+        user3.setLastName("user3");
+        copylist = new ArrayList<>();
+        copylist.add(events.get(1));
+        user3.setEvents(new HashSet<>(copylist));
+
+        request.setSearchFrom("20-06-16");
+        request.setSearchTo("30-06-16");
+
+        MockitoAnnotations.initMocks(this);
+
     }
 
     @After
@@ -114,37 +133,44 @@ public class EventsServiceImplTest {
     @Test
     public void getEventResponses() throws Exception {
 
+        List<EventResponse> expectedResult = new ArrayList<>();
+        expectedResult.add(getEventResponseList().get(1));
+        List<Event> copyevents = new ArrayList<>();
+        copyevents.add(events.get(0));
+        when(eventsRepository.findAll()).thenReturn(copyevents);
+        List<EventResponse> actualResult = eventsService.getEventResponses();
+        Assert.assertEquals(actualResult, expectedResult);
+    }
+
+    @Test
+    public void getUserRelevantEventResponses() throws Exception {
+        List<EventResponse> list = new ArrayList<>();
+        list.add(getEventResponseList().get(0));
+        Set<EventResponse> set = new HashSet(list);
+        List<Event> copyevents = new ArrayList<>();
+        copyevents.add(events.get(0));
+        when(eventsRepository.findByOwner(user2)).thenReturn(copyevents);
+        Set<EventResponse> expList = eventsService.getUserRelevantEventResponses(user2);
+        Assert.assertEquals(expList, set);
+    }
+
+    @Test
+    public void getRelevantEventResponses() throws Exception {
+
         List<EventResponse> list = new ArrayList<>();
         list.add(getEventResponseList().get(0));
         List<Event> copyevents = new ArrayList<>();
         copyevents.add(events.get(0));
         when(eventsRepository.findAll()).thenReturn(copyevents);
-        List<EventResponse> expList = eventsService.getEventResponses();
+        List<EventResponse> expList = eventsService.getRelevantEventResponses(user2);
         Assert.assertEquals(expList, list);
     }
 
     @Test
-    public void getUserRelevantEventResponses() throws Exception {
-//        List<EventResponse> list = getEventResponseList();
-//        List<Event> copyevents = new ArrayList<>();
-//        copyevents.add(events.get(0));
-//        when(eventsRepository.findByOwner()).thenReturn(copyevents);
-//
-//        List<EventResponse> expList = eventsService.getEventResponses();
-//        Assert.assertEquals(expList, list);
-    }
-
-    @Test
-    public void getRelevantEventResponses() throws Exception {
-//        List<EventResponse> list = getEventResponseList();
-//        when(eventsRepository.findAll()).thenReturn(events);
-//        List<EventResponse> expList = eventsService.getEventResponses().;
-//        Assert.assertEquals(expList, list);
-    }
-
-    @Test
     public void getNextEventId() throws Exception {
-
+        Long one = new Long(1);
+        when(idGenerator.getNextId()).thenReturn(1l);
+        Assert.assertEquals(eventsService.getNextEventId(), one);
     }
 
     @Test
@@ -160,7 +186,6 @@ public class EventsServiceImplTest {
         when(categoriesService.countEventsByCategories(any(List.class))).thenReturn(new ArrayList<>(expectedResult));
 
         Assert.assertEquals(expectedResult,eventsService.getUserEventsCounterByCategories(userTest));
-
     }
 
     @Test
@@ -179,12 +204,26 @@ public class EventsServiceImplTest {
 
     @Test
     public void getArchivedEventsResponse() throws Exception {
+        List<EventResponse> expectedResult = new ArrayList<>();
+        expectedResult.add(getEventResponseList().get(2));
 
+        when(eventsRepository.findAll()).thenReturn(events);
+        List<EventResponse> actualResult = eventsService.getArchivedEventsResponse(request, user3);
+
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Test
     public void getArchivedUsersEventsResponse() throws Exception {
-
+        List<EventResponse> list = new ArrayList<>();
+        list.add(getEventResponseList().get(2));
+        List<Event> copyevents = new ArrayList<>();
+        copyevents.add(events.get(1));
+        when(eventsRepository.findByOwner(user3)).thenReturn(copyevents);
+        List<EventResponse> expList = eventsService.getArchivedUsersEventsResponse(request, user3);
+        Set<EventResponse> actualResult = new HashSet<EventResponse>(expList);
+        Set<EventResponse> expectedResult = new HashSet<EventResponse>(list);
+        Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
@@ -192,53 +231,65 @@ public class EventsServiceImplTest {
         User userTest = new User();
         List<Category> categoriesTest = getCategoryList();
         List<CategoryResponse> expectedResult = new ArrayList<>();
-        List<Event> eventsToTest = new ArrayList<>();
-        List<Category> listCat1 = new ArrayList<>();
-        List<Category> listCat2 = new ArrayList<>();
         ArchiveServiceRequest request = new ArchiveServiceRequest();
-
-        listCat1.add(categoriesTest.get(0));
-        listCat2.add(categoriesTest.get(1));
 
         expectedResult.add(new CategoryResponse(categoriesTest.get(0).getId(),categoriesTest.get(0).getName(),1));
 
-        when(categoriesService.countEventsByCategories(eventsToTest)).thenReturn(expectedResult);
+        when(categoriesService.countEventsByCategories(any(List.class))).thenReturn(expectedResult);
         Assert.assertEquals(eventsService.getArchivedEventsCounterByCategories(request,userTest),expectedResult);
     }
 
     @Test
     public void getArchivedUsersEventsCounterByCategories() throws Exception {
+        User userTest = new User();
+        List<Category> categoriesTest = getCategoryList();
+        List<CategoryResponse> expectedResult = new ArrayList<>();
+        ArchiveServiceRequest request = new ArchiveServiceRequest();
 
+        expectedResult.add(new CategoryResponse(categoriesTest.get(0).getId(),categoriesTest.get(0).getName(),1));
+
+        when(categoriesService.countEventsByCategories(any(List.class))).thenReturn(expectedResult);
+        Assert.assertEquals(eventsService.getArchivedUsersEventsCounterByCategories(request,userTest),expectedResult);
     }
+
     public List<Event> getEventList(){
         Event e1 = new Event();
         e1.setCost(100);
         e1.setCurrency(new Currency());
-        e1.setStartDateTime(dateStart);
+        e1.setStartDateTime(dateStart1);
         e1.setDeleted(0);
         e1.setDescription("blaaaaaaaaaa");
-        e1.setEndDateTime(dateFinish);
+        e1.setEndDateTime(dateFinish1);
         e1.setId(1);
-        e1.setCategories(lc);
+        e1.setCategories(lc1);
         e1.setLocation("blaaaq");
         e1.setName("bluka");
-        e1.setOwner(user);
+        e1.setOwner(user1);
         e1.setPicture("blaaa");
+        Set<User> users = new HashSet<>();
+        users.add(user2);
+        e1.setParticipants(users);
+
+
         events.add(e1);
 
         Event e2 = new Event();
         e2.setCost(100);
         e2.setCurrency(new Currency());
-        e2.setStartDateTime(dateStart1);
+        e2.setStartDateTime(dateStart2);
         e2.setDeleted(0);
         e2.setDescription("blyaaaaaaaaaa");
-        e2.setEndDateTime(dateFinish1);
-        e2.setId(1);
-        e2.setCategories(lc1);
+        e2.setEndDateTime(dateFinish2);
+        e2.setId(2);
+        e2.setCategories(lc2);
         e2.setLocation("blyaaaq");
         e2.setName("blyuka");
-        e2.setOwner(user1);
+        e2.setOwner(user3);
         e2.setPicture("blyaaa");
+        users = new HashSet<>();
+        users.add(user2);
+        e2.setParticipants(users);
+
         events.add(e2);
 
         return events;
@@ -246,16 +297,36 @@ public class EventsServiceImplTest {
     }
     public List<EventResponse> getEventResponseList(){
         List<EventResponse> eventResponses = new ArrayList<>();
-        eventResponses.add(new EventResponse(1, "bluka", lc,
+        eventResponses.add(new EventResponse(1, "bluka", lc1,
                 "vasya pupkin",
-                dateStart,
-                dateFinish,
-                0,//
+                dateStart1,
+                dateFinish1,
+                0,
+                "blaaa",
+                "blaaaq",
+                true));
+
+        eventResponses.add(new EventResponse(1, "bluka", lc1,
+                "vasya pupkin",
+                dateStart1,
+                dateFinish1,
+                0,
                 "blaaa",
                 "blaaaq",
                 false));
+
+        eventResponses.add(new EventResponse(2, "blyuka", lc1,
+                "user3 user3",
+                dateStart2,
+                dateFinish2,
+                0,
+                "blyaaa",
+                "blyaaaq",
+                true));
+
         return eventResponses;
     }
+
 
     public User initUser(){
         List<Category> categoriesTest = getCategoryList();
