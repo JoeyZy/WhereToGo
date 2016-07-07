@@ -275,7 +275,8 @@ $(document).ready(function () {
 	var loginForm = $('#login-nav');
 	var $loginDropDown = $('.dropdown');
 	// Login handler
-	loginForm.submit(function (e) {
+	// Not needed form error 403 when work together with spring security
+	/*loginForm.submit(function (e) {
 		var email = loginForm.find("#userEmail").val();
 		var password = loginForm.find("#userPassword").val();
 		var json = {"email": email, "password": password};
@@ -301,7 +302,7 @@ $(document).ready(function () {
 			}
 		});
 		e.preventDefault();
-	});
+	});*/
 	var register = $('.btn-add-user');
 	register.on('click', function () {
 		window.location.hash = 'addUser';

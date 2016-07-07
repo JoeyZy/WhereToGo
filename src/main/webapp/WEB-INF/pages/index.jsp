@@ -99,32 +99,6 @@
     </nav>
 </header>
 <div >
-
-    <div class="col-md-12">
-        <form class="form" role="form" method="post" accept-charset="UTF-8"
-              action="/login" id="login-nav">
-            <div class="form-group">
-                <label class="sr-only" for="userEmail">Email address</label>
-                <input type="email" class="form-control" id="userEmail"
-                       name="userEmail" placeholder="Email address" required>
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="userPassword">Password</label>
-                <input type="password" class="form-control" id="userPassword"
-                       name="userPassword" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-info btn-block">Sign in</button>
-            </div>
-
-            <input type="hidden"
-                   name="${_csrf.parameterName}"
-                   value="${_csrf.token}"/>
-
-        </form>
-    </div>
-
-
     <div class="all-events page">
         <div class="nav-left">
             <div class="filters bs-callout bs-callout-default">
