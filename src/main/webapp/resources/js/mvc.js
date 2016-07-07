@@ -1,3 +1,7 @@
+/*
+ * TODO Break the file down to a number of files, one per entity;
+ * TODO During the build, combine all the files into one
+ */
 var Event = {
     SET   : "set",
     ADD   : "add",
@@ -81,9 +85,9 @@ function ArrayModel(a) {
 }
 ArrayModel.prototype = Object.create(Model.prototype);
 ArrayModel.prototype.add = function (v) {
-    if (Array.isArray(v)) { // @compat ES5.1
+    if (Array.isArray(v)) { // @compat es5
         var that = this;
-        v.forEach(function (e) { // @compat ES5.1
+        v.forEach(function (e) { // @compat es5
             that.val().push(e);
             that.notify(Event.ADD, e);
         });
