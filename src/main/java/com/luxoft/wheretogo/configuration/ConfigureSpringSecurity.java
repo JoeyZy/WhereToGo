@@ -32,7 +32,14 @@ public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll().and()
+        http
+            .authorizeRequests()
+                .antMatchers("/myEvents", "/sessionUser", "/getEventId",
+                        "/addEvent", "/deleteEvent", "/updateEvent", "/myEventsCategories",
+                        "/user", "/userInfo", "/assignEventToUser",
+                        "/unassignEventFromUser", "/archivedEvents", "/archivedUsersEvents",
+                        "/archivedEventsCategories", "/archivedUsersEventsCategories").authenticated()
+                .anyRequest().permitAll().and()
                 .formLogin().loginPage("/login").failureUrl("/?error_login")
                 .usernameParameter("userEmail")
                 .passwordParameter("userPassword")
