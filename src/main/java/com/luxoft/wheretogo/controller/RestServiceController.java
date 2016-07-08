@@ -4,11 +4,15 @@ import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.repositories.GroupsRepository;
 import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.GroupsService;
 import com.luxoft.wheretogo.services.UsersService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +39,17 @@ public class RestServiceController {
 	@Autowired
 	private UsersService usersService;
 
+	@Autowired
+	private GroupsService groupsService;
+
 	@RequestMapping("/events")
 	public List<EventResponse> events(HttpServletRequest request) {
 		return eventsService.getRelevantEventResponses((User) request.getSession().getAttribute("user"));
+	}
+
+	@RequestMapping(value= "/getGroupId", method = RequestMethod.GET)
+	public Long getNextGroupId(){
+		return groupsService.getNextGroupId();
 	}
 
 	@RequestMapping("/myEvents")
@@ -81,6 +93,15 @@ public class RestServiceController {
 	public void updateEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event);
+	}
+
+	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
+	public ResponseEntity<String> addGroup(@RequestBody Group group, HttpServletRequest request) {
+		boolean groupIsAdded = groupsService.add(group);
+		if (!groupIsAdded) {
+			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)

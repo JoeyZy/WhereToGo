@@ -20,12 +20,16 @@ $(document).ready(function () {
 	var $eventStart = $singlePage.find('#start');
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
+	//var $groupDescription = $singlePage.find("#descriptionGroup")
 	var $eventLocation = $singlePage.find("#location");
 	var $eventCost = $singlePage.find("#cost");
 	var $eventCostCurrency = $singlePage.find("#currencies");
 	var $eventPageParticipants = $('.EventPage__participants');
 	var $userPage = $singlePage.find(".UserPage");
 	var $calendarPage = $singlePage.find(".Calendar");
+
+	var $groupPage = $singlePage.find(".GroupPage");
+
 	var $buttons = $singlePage.find("button");
 	var $errors = $singlePage.find('.errors');
 	var $buttonEdit = $singlePage.find(".SinglePage__button--edit");
@@ -34,6 +38,10 @@ $(document).ready(function () {
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
+
+
+	var $buttonAddGroup = $singlePage.find('.SinglePage__button--addGroup');
+
 	var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
 	var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
@@ -406,6 +414,19 @@ $(document).ready(function () {
 		});
 	}
 
+	function getGroupId() {
+		$.ajax({
+			url: "getGroupId",
+			type: "GET",
+			success: function (groupId) {
+				renderSingleGroupPage(groupId);
+			},
+			error: function () {
+				renderSingleGroupPage();
+			}
+		});
+	}
+
 
 	// Navigation
 	function render(url) {
@@ -463,9 +484,17 @@ $(document).ready(function () {
 				var index = url.split('#event/')[1].trim();
 				renderSingleEventPage(index, events);
 			},
+			'#group': function () {
+				// Get the index of which event we want to show and call the appropriate function.
+				var index = url.split('#group/')[1].trim();
+				renderSingleGroupPage(index, groups);
+			},
 			// Add event
 			'#addEvent': function () {
 				getEventId();
+			},
+			'#addGroup': function () {
+				getGroupId();
 			},
 			// Calendar
 			'#calendar': function () {
@@ -544,6 +573,10 @@ $(document).ready(function () {
 			return false;
 		});
 
+		$('.btn-add-group').on('click', function () {
+			window.location.hash = 'addGroup';
+			return false;
+		});
 
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
@@ -723,12 +756,27 @@ $(document).ready(function () {
 		$addEventBtn.addClass('btn-success');
 		$addEventBtn.removeAttr('title');
 	}
+	function enableAddGroupsBtn() {
+		if (!user.active) {
+			return;
+		}
+		var $addGroupBtn = $('.btn-add-group');
+		$addGroupBtn.prop('disabled', false);
+		$addGroupBtn.addClass('btn-success');
+		$addGroupBtn.removeAttr('title');
+	}
 
 	function disableAddEventsBtn() {
 		var $addEventBtn = $('.btn-add-event');
 		$addEventBtn.removeClass('btn-success');
 		$addEventBtn.prop('disabled', true);
 		$addEventBtn.attr('title', 'Please login to create an event');
+	}
+	function disableAddGroupsBtn() {
+		var $addGroupBtn = $('.btn-add-group');
+		$addGroupBtn.removeClass('btn-success');
+		$addGroupBtn.prop('disabled', true);
+		$addGroupBtn.attr('title', 'Please login to create a group');
 	}
 
 	function disableArchiveCheckbox() {
@@ -749,6 +797,7 @@ $(document).ready(function () {
 		if (typeof user == "undefined") {
 			disableAddEventsBtn();
 			disableArchiveCheckbox();
+			disableAddGroupsBtn();
 		}
 		var page = $('.all-events'),
 			allEvents = $('.all-events .events-list > li');
@@ -859,6 +908,52 @@ $(document).ready(function () {
 			$errors.append('<li>' + message + '</li>');
 		}
 	}
+	
+
+
+
+	function saveGroup(groupJson, newGroup) {
+		if (!validateGroupFields(groupJson)) {
+			$errors.show();
+			$buttonAddGroup.removeAttr('disabled');
+			return;
+		}
+		$.ajax({
+			url: newGroup,
+			data: JSON.stringify(groupJson),
+			type: "POST",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/json");
+			},
+			success: function () {
+				loadEvents();
+				createQueryHash(filters);
+			},
+			error: function (error) {
+				alert("ERROR!" + error);
+			},
+			complete: function () {
+			}
+		});
+		function validateGroupFields(group) {
+			const GROUP_NAME_LENGTH_MIN = 3;
+			const GROUP_NAME_LENGTH_MAX = 20;
+			var valid = true;
+			$errors.empty();
+
+
+			var groupName = group.name.trim();
+			if (!groupName || groupName.length < GROUP_NAME_LENGTH_MIN || groupName.length > GROUP_NAME_LENGTH_MAX) {
+				addErrorListItem("Group name should be greater than " + GROUP_NAME_LENGTH_MIN +
+					" and less than " + GROUP_NAME_LENGTH_MAX + " symbols");
+				valid = false;
+			}
+			
+			return valid;
+		}
+
+	}
 
 	function makeEventPageEditable() {
 		$singlePageTitle.attr('readonly', false);
@@ -916,9 +1011,75 @@ $(document).ready(function () {
 
 	// Opens up a preview for one of the events.
 	// Its parameters are an index from the hash and the events object.
+
+	function renderSingleGroupPage(index, data, addGroup) {
+		resetSinglePage();
+		hideCalendarPage();
+		$singlePageTitle.attr('placeholder', 'Group title');
+		$singlePage.find('.GroupPage').attr("data-id", index);
+		$singlePage.find('.UserPage').hide();
+		$singlePage.find('.GroupPage').show();
+		$buttonAddGroup.show();
+		if (typeof data != 'undefined' && data.length) {
+			// Find the wanted event by iterating the data object and searching for the chosen index.
+			renderShowGroupPage(data);
+		} else {
+			if (typeof user === "undefined") {
+				window.location.hash = '';
+				return;
+			}
+			renderAddGroupPage();
+		}
+		// Show the $singlePage.
+		$singlePage.addClass('visible');
+		//$groupDescription.attr('contentEditable', 'true');
+
+		function renderAddGroupPage() {
+			$eventPage.hide();
+			populateSinglePageGroupPage($singlePage);
+			$buttonAddGroup.on('click', function () {
+				if (typeof user !== "undefined") {
+					var groupJson = {
+						"id": $singlePage.find('.GroupPage').attr('data-id'),
+						"name": $singlePageTitle.val()
+					};
+					saveGroup(groupJson, "addGroup");
+				}
+				return false;
+			});
+		}
+
+
+
+		function renderShowGroupPage(data) {
+			data.forEach(function (item) {
+				if (item.id == index) {
+					$.getJSON("group", {id: item.id}, function (group) {
+						populateSinglePageGroupPage($singlePage, group)
+					});
+				}
+			});
+		}
+
+
+//--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
+
+		function populateSinglePageGroupPage(singlePage, group) {
+			if (typeof group != 'undefined') {
+				makeGroupPageUneditable();
+				$singlePageTitle.val(group.name);
+				makeGroupPageEditable();
+				$buttonAddGroup.show();
+			}
+
+		}
+	}
+
 	function renderSingleEventPage(index, data, addEvent) {
 		resetSinglePage();
 		hideCalendarPage();
+
+
 		$singlePage.find('.EventPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.EventPage').show();
@@ -936,6 +1097,7 @@ $(document).ready(function () {
 		$singlePage.addClass('visible');
 
 		function renderAddEventPage() {
+			$groupPage.hide();
 			populateSinglePageEventPage($singlePage);
 			$buttonAddEvent.on('click', function () {
 				if (typeof user !== "undefined") {
@@ -1063,6 +1225,7 @@ $(document).ready(function () {
 	function renderCalendarPage() {
 		$eventPage.hide();
 		$userPage.hide();
+		$groupPage.hide();
 		$singlePage.find(".SinglePage__button").each(function () {
 			$(this).hide();
 		});
@@ -1123,6 +1286,7 @@ $(document).ready(function () {
 	function renderSingleUserPage(user) {
 		resetSinglePage();
 		hideCalendarPage();
+		$groupPage.hide();
 		$singlePage.find('.EventPage').hide();
 		$singlePage.find('.UserPage').show();
 		$singlePageTitle.val('User Information');
@@ -1337,10 +1501,12 @@ $(document).ready(function () {
 	function grantRightsToUser() {
 		if (typeof user === 'undefined') {
 			disableAddEventsBtn();
+			disableAddGroupsBtn();
 			disableArchiveCheckbox();
 			return;
 		}
 		enableAddEventsBtn();
+		enableAddGroupsBtn();
 		enableArchiveCheckbox();
 	}
 

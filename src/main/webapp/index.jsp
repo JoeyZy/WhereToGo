@@ -45,6 +45,14 @@
                     </li>
                     <li>
                         <div class="navbar-btn-container">
+                            <button class="btn btn-block btn-add-group" title="Please login with active profile to create a group">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Group
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="navbar-btn-container">
                             <button class="btn btn-block btn-add-event" title="Please login with active profile to create an event">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Event
@@ -285,6 +293,14 @@
                         </div>
                     </li>
                 </ul>
+                <%--bla--%>
+
+                <ul class="SinglePage__inputItemsList GroupPage" data-id="">
+
+
+
+                </ul>
+                <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
                 <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
@@ -311,6 +327,9 @@
                 </div>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent"
                         onclick="this.blur();">Add event
+                </button>
+                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addGroup"
+                        onclick="this.blur();">Add group
                 </button>
             </form>
             <span class="edit"></span>
