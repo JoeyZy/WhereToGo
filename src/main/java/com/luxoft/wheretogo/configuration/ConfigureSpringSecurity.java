@@ -1,7 +1,5 @@
 package com.luxoft.wheretogo.configuration;
 
-import com.luxoft.wheretogo.services.MyUserDetailsService;
-import com.luxoft.wheretogo.services.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -36,14 +34,15 @@ public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                .antMatchers("/myEvents", "/sessionUser", "/getEventId",
                         "/addEvent", "/deleteEvent", "/updateEvent", "/myEventsCategories",
-                        "/user", "/userInfo", "/assignEventToUser",
+                        "/userInfo", "/assignEventToUser",
                         "/unassignEventFromUser", "/archivedEvents", "/archivedUsersEvents",
                         "/archivedEventsCategories", "/archivedUsersEventsCategories").authenticated()
                 .anyRequest().permitAll().and()
-                .formLogin().loginPage("/login").failureUrl("/?error_login")
+                .formLogin().loginProcessingUrl("/j_spring_security_check")
+                .loginPage("/").failureUrl("/?error_login")
                 .usernameParameter("userEmail")
                 .passwordParameter("userPassword")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
+                .and().logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/?logout")
                 .and().csrf();
     }
 

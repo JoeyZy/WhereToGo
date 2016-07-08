@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -103,11 +104,10 @@ public class RestServiceController {
 
 	// Hack. JavaScript gets its data from this response
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User user(HttpServletRequest request) {
+	public User user(HttpServletRequest request, Principal principal) {
 		User user = (User) request.getSession().getAttribute("user");
-		if (user == null) {
-			String email = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().
-					getAuthentication().getPrincipal()).getUsername();
+		if ((user == null) && (principal != null)) {
+			String email = principal.getName();
 			if (email.isEmpty()) {
 				return null;
 			}
@@ -158,7 +158,7 @@ public class RestServiceController {
 		return eventToUpdate;
 	}
 
-	/*@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
+	@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignEventFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		Event eventToUpdate = eventsService.findById(event.getId());
@@ -171,7 +171,7 @@ public class RestServiceController {
 			usersService.update(user);
 		}
 		return eventToUpdate;
-	}*/
+	}
 
 
 	@RequestMapping("/archivedEvents")

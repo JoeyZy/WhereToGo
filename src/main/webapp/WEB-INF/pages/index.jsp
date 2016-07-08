@@ -57,7 +57,7 @@
                         <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
                     </li>
                     <li>
-                        <c:url value="/logout" var="logoutUrl" />
+                        <c:url value="/j_spring_security_logout" var="logoutUrl" />
                         <!-- csrt for log out-->
                         <form action="${logoutUrl}" method="post" id="logoutForm">
                             <input type="hidden"
@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="form" role="form" method="post" accept-charset="UTF-8"
-                                              action="/login" id="login-nav">
+                                              action="<c:url value='/j_spring_security_check' />" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
@@ -95,11 +95,8 @@
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-info btn-block">Sign in</button>
                                             </div>
-
                                             <input type="hidden"
-                                                   name="${_csrf.parameterName}"
-                                                   value="${_csrf.token}"/>
-
+                                                   name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         </form>
                                     </div>
                                     <div class="col-md-12 bottom">
