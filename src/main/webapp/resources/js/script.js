@@ -38,9 +38,42 @@ $(document).ready(function () {
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
+	$buttonAddEvent.on('click', function () {
+		if (typeof user !== "undefined") {
+			var categoriesList = [];
+			$eventCategories.find(":selected").each(function (i, selected) {
+				categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+			});
+			var eventJson = {
+				"id": $singlePage.find('.EventPage').attr('data-id'),
+				"name": $singlePageTitle.val(),
+				"categories": categoriesList,
+				"startDateTime": $eventStart.val(),
+				"endDateTime": $eventEnd.val(),
+				"description": $eventDescription.text(),
+				"location": $eventLocation.text(),
+				"cost": $eventCost.val(),
+				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
+				"picture": isDefaultPicture() ? "" : $picture.attr('src')
+			};
+			saveEvent(eventJson, "addEvent");
+		}
+		return false;
+	});
 
 
 	var $buttonAddGroup = $singlePage.find('.SinglePage__button--addGroup');
+
+	$buttonAddGroup.on('click', function () {
+		if (typeof user !== "undefined") {
+			var groupJson = {
+				"id": $singlePage.find('.GroupPage').attr('data-id'),
+				"name": $singlePageTitle.val()
+			};
+			saveGroup(groupJson, "addGroup");
+		}
+		return false;
+	});
 
 	var $buttonAddUser = $singlePage.find('.SinglePage__button--addUser');
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
@@ -1036,17 +1069,7 @@ $(document).ready(function () {
 
 		function renderAddGroupPage() {
 			$eventPage.hide();
-			populateSinglePageGroupPage($singlePage);
-			$buttonAddGroup.on('click', function () {
-				if (typeof user !== "undefined") {
-					var groupJson = {
-						"id": $singlePage.find('.GroupPage').attr('data-id'),
-						"name": $singlePageTitle.val()
-					};
-					saveGroup(groupJson, "addGroup");
-				}
-				return false;
-			});
+			populateSinglePageGroupPage($singlePage)
 		}
 
 
@@ -1079,7 +1102,7 @@ $(document).ready(function () {
 		resetSinglePage();
 		hideCalendarPage();
 
-
+		$singlePageTitle.attr('placeholder', 'Event title');
 		$singlePage.find('.EventPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.EventPage').show();
@@ -1099,28 +1122,7 @@ $(document).ready(function () {
 		function renderAddEventPage() {
 			$groupPage.hide();
 			populateSinglePageEventPage($singlePage);
-			$buttonAddEvent.on('click', function () {
-				if (typeof user !== "undefined") {
-					var categoriesList = [];
-					$eventCategories.find(":selected").each(function (i, selected) {
-						categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-					});
-					var eventJson = {
-						"id": $singlePage.find('.EventPage').attr('data-id'),
-						"name": $singlePageTitle.val(),
-						"categories": categoriesList,
-						"startDateTime": $eventStart.val(),
-						"endDateTime": $eventEnd.val(),
-						"description": $eventDescription.text(),
-						"location": $eventLocation.text(),
-						"cost": $eventCost.val(),
-						"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
-						"picture": isDefaultPicture() ? "" : $picture.attr('src')
-					};
-					saveEvent(eventJson, "addEvent");
-				}
-				return false;
-			});
+
 		}
 
 		function isDefaultPicture() {
