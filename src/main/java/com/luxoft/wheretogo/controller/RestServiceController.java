@@ -7,6 +7,7 @@ import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.repositories.GroupsRepository;
 import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
@@ -45,6 +46,11 @@ public class RestServiceController {
 	@RequestMapping("/events")
 	public List<EventResponse> events(HttpServletRequest request) {
 		return eventsService.getRelevantEventResponses((User) request.getSession().getAttribute("user"));
+	}
+
+	@RequestMapping("/groups")
+	public List<GroupResponse> groups(HttpServletRequest request) {
+		return groupsService.getRelevantGroupResponses();
 	}
 
 	@RequestMapping(value= "/getGroupId", method = RequestMethod.GET)

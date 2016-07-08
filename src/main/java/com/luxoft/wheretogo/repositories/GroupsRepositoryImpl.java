@@ -4,6 +4,8 @@ import com.luxoft.wheretogo.models.Group;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by eleonora on 07.07.16.
  */
@@ -18,6 +20,11 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
 
     public void add(Group group) {
         super.add(group);
+    }
+
+    @Override
+    public List<Group> findAll() {
+        return super.findAll("id");
     }
 
     @Override
