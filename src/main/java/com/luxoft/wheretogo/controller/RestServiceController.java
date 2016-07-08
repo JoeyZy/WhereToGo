@@ -12,8 +12,8 @@ import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -101,35 +101,36 @@ public class RestServiceController {
 		return currenciesService.findAll();
 	}
 
+	// Hack. JavaScript gets its data from this response
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public User user(HttpServletRequest request) {
-		return (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null) {
+			String email = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().
+					getAuthentication().getPrincipal()).getUsername();
+			if (email.isEmpty()) {
+				return null;
+			}
+			user = usersService.findByEmail(email);
+			request.getSession().setAttribute("user", user);
+		}
+		return user;
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public User user(HttpServletRequest request) {
+		return (User) request.getSession().getAttribute("user");
+	}*/
+
+	/*@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public boolean logout(HttpServletRequest request) {
 		request.getSession().setAttribute("user", null);
 		return true;
-	}
+	}*/
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public User getUserInfo(User user) {
 		return usersService.findByEmail(user.getEmail());
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(
-			@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
-		}
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("login");
-		return model;
 	}
 
 	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -157,7 +158,7 @@ public class RestServiceController {
 		return eventToUpdate;
 	}
 
-	@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
+	/*@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignEventFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		Event eventToUpdate = eventsService.findById(event.getId());
@@ -170,7 +171,7 @@ public class RestServiceController {
 			usersService.update(user);
 		}
 		return eventToUpdate;
-	}
+	}*/
 
 
 	@RequestMapping("/archivedEvents")

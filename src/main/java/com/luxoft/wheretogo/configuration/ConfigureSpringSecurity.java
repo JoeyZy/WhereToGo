@@ -34,7 +34,7 @@ public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/myEvents", "/sessionUser", "/getEventId",
+               .antMatchers("/myEvents", "/sessionUser", "/getEventId",
                         "/addEvent", "/deleteEvent", "/updateEvent", "/myEventsCategories",
                         "/user", "/userInfo", "/assignEventToUser",
                         "/unassignEventFromUser", "/archivedEvents", "/archivedUsersEvents",
