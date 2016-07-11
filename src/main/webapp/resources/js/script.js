@@ -10,6 +10,10 @@ $(document).ready(function () {
 	$('.userInfo').hide();
 	$('.logout').hide();
 
+	// Spring Security
+	var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
 	var $singlePage = $('.Page');
@@ -43,6 +47,15 @@ $(document).ready(function () {
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
 
+	// Spring security. Attach csrf token to all request
+	$(function () {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+	
 	$buttonEdit.on('click', function (event) {
 		makeEventPageEditable();
 		$buttonEdit.hide();

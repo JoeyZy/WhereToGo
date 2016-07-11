@@ -42,8 +42,7 @@ public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
                 .loginPage("/").failureUrl("/?error_login")
                 .usernameParameter("userEmail")
                 .passwordParameter("userPassword")
-                .and().logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/?logout")
-                .and().csrf();
+                .and().logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/?logout");
     }
 
     @Bean
