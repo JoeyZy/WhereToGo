@@ -73,7 +73,7 @@ function Model(v) {
         return value;
     };
 }
-Model.prototype = Object.create(new AbstractSubject());
+Model.prototype = Object.create(new AbstractSubject()); // @compat es5
 Model.prototype.constructor = Model;
 
 /**

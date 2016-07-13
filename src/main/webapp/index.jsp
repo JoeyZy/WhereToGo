@@ -60,7 +60,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
                                 class="caret"></span></a>
-                        <ul id="login-dp" class="dropdown-menu">
+                        <ul data-model="login" id="login-dp" class="dropdown-menu">
                             <li>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -68,16 +68,16 @@
                                               action="login" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
-                                                <input type="email" class="form-control" id="userEmail"
+                                                <input data-model="login.email" type="email" class="form-control" id="userEmail"
                                                        placeholder="Email address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="userPassword">Password</label>
-                                                <input type="password" class="form-control" id="userPassword"
+                                                <input data-model="login.password" type="password" class="form-control" id="userPassword"
                                                        placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-info btn-block">Sign in</button>
+                                                <button type="submit" class="btn btn-info btn-block btn-signin">Sign in</button>
                                             </div>
                                         </form>
                                     </div>

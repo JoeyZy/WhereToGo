@@ -1,4 +1,17 @@
 /**
+ * @param {any} [o]
+ */
+function Ref(o) {
+    var value = o;
+    this.get = function () {
+        return value;
+    };
+    this.set = function (o) {
+        value = o;
+    };
+}
+
+/**
  * TODO
  */
 function defined(o) {
