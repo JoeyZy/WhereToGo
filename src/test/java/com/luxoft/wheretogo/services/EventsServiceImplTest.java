@@ -42,12 +42,12 @@ public class EventsServiceImplTest {
     List<Event> events = new ArrayList<Event>();
 
     // time in the future
-    private Date dateStart1 = new Date(new Date().getTime() + 1000000000);
-    private Date dateFinish1 = new Date(new Date().getTime() + 1000000000);
+    private Date dateStart1 = new Date(1469397912107l);
+    private Date dateFinish1 = new Date(1469397912107l);
 
     // time in the past
-    private Date dateStart2 = new Date(new Date().getTime() - 1000000000);
-    private Date dateFinish2 = new Date(new Date().getTime() - 1000000000);
+    private Date dateStart2 = new Date(1467397912107l);
+    private Date dateFinish2 = new Date(1467397912107l);
 
     private List<Category> lc1 = new ArrayList<Category>();
     private List<Category> lc2 = new ArrayList<Category>();
@@ -75,7 +75,7 @@ public class EventsServiceImplTest {
         user3.setEvents(new HashSet<>(copylist));
 
         request.setSearchFrom("20-06-16");
-        request.setSearchTo("30-06-16");
+        request.setSearchTo("10-07-16");
 
         MockitoAnnotations.initMocks(this);
 
@@ -373,5 +373,4 @@ public class EventsServiceImplTest {
 
         return categories;
     }
-
 }

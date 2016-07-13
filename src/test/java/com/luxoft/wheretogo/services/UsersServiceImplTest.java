@@ -58,7 +58,7 @@ public class UsersServiceImplTest {
     }
 
     @org.junit.Test
-    public void findById_Null() throws Exception {
+    public void findByIdWithNullObject() throws Exception {
         User user = users.get(0);
         when(usersRepository.findById(anyInt())).thenReturn(null);
         Assert.assertEquals(usersService.findById(user.getId()), null);
@@ -72,7 +72,7 @@ public class UsersServiceImplTest {
     }
 
     @org.junit.Test
-    public void findByEmail_Null() throws Exception {
+    public void findByEmailWithNullObject() throws Exception {
         User user = users.get(0);
         when(usersRepository.findByEmail(anyString())).thenReturn(null);
         Assert.assertEquals(usersService.findByEmail(user.getEmail()), null);
