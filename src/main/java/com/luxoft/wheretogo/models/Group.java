@@ -1,14 +1,16 @@
 package com.luxoft.wheretogo.models;
 
+import com.google.common.io.ByteStreams;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.log4j.Logger;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.sql.Blob;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -34,5 +36,24 @@ public class Group {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner")
     private User owner;
+
+    @Column(name="picture")
+    private Blob picture;
+
+    private String description;
+    private String location;
+
+    public String getPicture(){
+        if(this.picture == null){
+            return "";
+        }
+
+        try{
+            return new String(ByteStreams.toByteArray(this.picture.getBinaryStream()));
+        } catch (Exception e){
+            LOG.warn("Cannot convert image",e);
+        }
+        return "";
+    }
 
 }

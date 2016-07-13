@@ -60,8 +60,9 @@ public class GroupsServiceImpl implements GroupsService{
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
             groupResponses.add(new GroupResponse(group.getId(), group.getName(),
-                    group.getOwner().getFirstName()+" "+group.getOwner().getLastName()));
-        }
+                    group.getOwner().getFirstName()+" "+group.getOwner().getLastName(),
+                    group.getLocation(),group.getDescription(),group.getPicture()));
+                }
         return groupResponses;
     }
 
