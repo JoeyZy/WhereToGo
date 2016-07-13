@@ -10,10 +10,6 @@ $(document).ready(function () {
 	$('.userInfo').hide();
 	$('.logout').hide();
 
-	// Spring Security
-	var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
-	var csrfToken = $("meta[name='_csrf']").attr("content");
-	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
 	var $singlePage = $('.Page');
@@ -285,37 +281,7 @@ $(document).ready(function () {
 		$eventCostCurrency.html(currListElement(data));
 	});
 	var checkboxes = $('.filters input[type=checkbox]');
-	var loginForm = $('#login-nav');
 	var $loginDropDown = $('.dropdown');
-	// Login handler
-	// Not needed form error 403 when work together with spring security
-	/*loginForm.submit(function (e) {
-		var email = loginForm.find("#userEmail").val();
-		var password = loginForm.find("#userPassword").val();
-		var json = {"email": email, "password": password};
-		$.ajax({
-			url: loginForm.attr("action"),
-			data: JSON.stringify(json),
-			type: "POST",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			success: function (sessionUser) {
-				if (sessionUser.length == 0) {
-					alert('Wrong credentials');
-					return;
-				}
-				setUser(sessionUser);
-				loadEvents();
-			},
-			error: function () {
-			},
-			complete: function () {
-			}
-		});
-		e.preventDefault();
-	});*/
 	var register = $('.btn-add-user');
 	register.on('click', function () {
 		window.location.hash = 'addUser';

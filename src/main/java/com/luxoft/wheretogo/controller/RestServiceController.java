@@ -12,8 +12,10 @@ import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -117,32 +119,10 @@ public class RestServiceController {
 		return user;
 	}
 
-	/*@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User user(HttpServletRequest request) {
-		return (User) request.getSession().getAttribute("user");
-	}*/
-
-	/*@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public boolean logout(HttpServletRequest request) {
-		request.getSession().setAttribute("user", null);
-		return true;
-	}*/
-
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public User getUserInfo(User user) {
 		return usersService.findByEmail(user.getEmail());
 	}
-
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public User login(@RequestBody User user, HttpServletRequest request) {
-		User sessionUser = usersService.findByEmail(user.getEmail());
-		if (sessionUser == null || !sessionUser.getPassword().equals(user.getPassword())) {
-			return null;
-		}
-		request.getSession().setAttribute("user", sessionUser);
-
-		return sessionUser;
-	}*/
 
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
@@ -173,7 +153,6 @@ public class RestServiceController {
 		return eventToUpdate;
 	}
 
-
 	@RequestMapping("/archivedEvents")
 	public List<EventResponse> archivedEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 			return eventsService.getArchivedEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
@@ -183,7 +162,6 @@ public class RestServiceController {
 	public List<EventResponse> archivedUsersEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 			return eventsService.getArchivedUsersEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
 	}
-
 
 	@RequestMapping(value = "/archivedEventsCategories", method = RequestMethod.GET)
 	public List<CategoryResponse> archivedEventsCategories(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
