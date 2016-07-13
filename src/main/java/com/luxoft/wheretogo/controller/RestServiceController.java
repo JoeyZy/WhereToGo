@@ -103,6 +103,7 @@ public class RestServiceController {
 
 	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
 	public ResponseEntity<String> addGroup(@RequestBody Group group, HttpServletRequest request) {
+		group.setOwner((User) request.getSession().getAttribute("user"));
 		boolean groupIsAdded = groupsService.add(group);
 		if (!groupIsAdded) {
 			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);

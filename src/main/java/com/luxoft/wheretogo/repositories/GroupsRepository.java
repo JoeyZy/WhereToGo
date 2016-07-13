@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.User;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface GroupsRepository {
     Group findById(long groupId);
 
     Group findByName(String groupName);
+
+    List<Group> findByOwner(User owner);
 }

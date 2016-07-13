@@ -59,7 +59,8 @@ public class GroupsServiceImpl implements GroupsService{
     private List<GroupResponse> convertToGroupResponses(List<Group> groups) {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
-            groupResponses.add(new GroupResponse(group.getId(), group.getName()));
+            groupResponses.add(new GroupResponse(group.getId(), group.getName(),
+                    group.getOwner().getFirstName()+" "+group.getOwner().getLastName()));
         }
         return groupResponses;
     }

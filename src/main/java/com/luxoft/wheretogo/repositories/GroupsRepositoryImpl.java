@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.User;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +35,10 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
     public Group findByName(String groupName) {
         return super.findByProperty("name", groupName);
     }
+
+    @Override
+    public List<Group> findByOwner(User owner) {
+        return super.findListByProperty("owner", owner);
+    }
+
 }

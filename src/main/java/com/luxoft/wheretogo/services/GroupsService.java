@@ -22,4 +22,5 @@ public interface GroupsService {
     Group findByName(String groupName);
 
     List<GroupResponse> getRelevantGroupResponses();
+
 }
