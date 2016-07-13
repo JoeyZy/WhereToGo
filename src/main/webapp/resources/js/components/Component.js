@@ -12,6 +12,7 @@ Component.prototype = {
     /**
      * @param {string} [id]
      */
+    // FIXME It's an id, not selector, it won't work like this :)
     get: function (id) {
         if (defined(id)) {
             return $(this.id + "." + id, this.element);
