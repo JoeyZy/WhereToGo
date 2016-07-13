@@ -2,6 +2,7 @@ $(document).ready(function () {
 	// Globals variables
 	// 	An array containing objects with information about the events.
 	var events = [],
+		groups = [],
 		filters = {},
 		filterColors = {},
 		user = undefined;
@@ -20,7 +21,6 @@ $(document).ready(function () {
 	var $eventStart = $singlePage.find('#start');
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
-	//var $groupDescription = $singlePage.find("#descriptionGroup")
 	var $eventLocation = $singlePage.find("#location");
 	var $eventCost = $singlePage.find("#cost");
 	var $eventCostCurrency = $singlePage.find("#currencies");
@@ -29,6 +29,8 @@ $(document).ready(function () {
 	var $calendarPage = $singlePage.find(".Calendar");
 
 	var $groupPage = $singlePage.find(".GroupPage");
+	var $groupDescription = $singlePage.find("#GroupDescription");
+	var $groupLocation = $singlePage.find("#GroupLocation");
 
 	var $buttons = $singlePage.find("button");
 	var $errors = $singlePage.find('.errors');
@@ -518,7 +520,7 @@ $(document).ready(function () {
 				renderSingleEventPage(index, events);
 			},
 			'#group': function () {
-				// Get the index of which event we want to show and call the appropriate function.
+				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
 				renderSingleGroupPage(index, groups);
 			},
@@ -1032,6 +1034,38 @@ $(document).ready(function () {
 
 	}
 
+	function makeGroupPageUneditable() {
+		$singlePageTitle.attr('readonly', true);
+		$groupDescription.attr('contenteditable', false);
+		$groupDescription.removeClass('editable');
+		$groupLocation.attr('contenteditable', false);
+		$groupLocation.removeClass('editable');
+		$groupDescription.attr('contenteditable', false);
+		$groupLocation.attr('contenteditable', false);
+		$groupPage.find('editable').attr('readonly', true);
+		$pictureUploadPlaceholder.off('click');
+		$picture.attr('title', '');
+
+		if (isDefaultPicture()) {
+			$pictureParent.hide();
+		}
+
+	}
+
+	function makeGroupPageEditable() {
+		$singlePageTitle.attr('readonly', false);
+		$groupDescription.attr('contenteditable', true);
+		$groupLocation.attr('contenteditable', true);
+		$groupDescription.addClass('editable');
+		$groupLocation.addClass('editable');
+		$pictureUploadPlaceholder.on('click', function () {
+			$buttonUploadPicture.click();
+			return false;
+		});
+		$pictureParent.show();
+		$picture.attr('title', 'Click Me to change!');
+	}
+
 	function hideCalendarPage() {
 		$calendarPage.hide();
 		$calendarPage.find('#calendar').hide();
@@ -1042,12 +1076,13 @@ $(document).ready(function () {
 		$calendarPage.find('#calendar').show();
 	}
 
-	// Opens up a preview for one of the events.
-	// Its parameters are an index from the hash and the events object.
+	// Opens up a preview for one of the groups.
+	// Its parameters are an index from the hash and the groups object.
 
 	function renderSingleGroupPage(index, data, addGroup) {
 		resetSinglePage();
 		hideCalendarPage();
+
 		$singlePageTitle.attr('placeholder', 'Group title');
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
@@ -1073,7 +1108,6 @@ $(document).ready(function () {
 		}
 
 
-
 		function renderShowGroupPage(data) {
 			data.forEach(function (item) {
 				if (item.id == index) {
@@ -1084,15 +1118,31 @@ $(document).ready(function () {
 			});
 		}
 
-
-//--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
-
 		function populateSinglePageGroupPage(singlePage, group) {
 			if (typeof group != 'undefined') {
 				makeGroupPageUneditable();
 				$singlePageTitle.val(group.name);
+				$groupDescription.html(linkify(group.description));
+				$groupLocation.html(linkify(group.location));
+				if (group.picture.length) {
+					$picture.attr('src', group.picture);
+					$pictureParent.show();
+				} else {
+					$pictureParent.hide();
+				}
+				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
+
+				if (user && (user.id === group.owner.id)) {
+					$buttonEdit.show();
+					$buttonDelete.show();
+				}
+			}
+			else {
 				makeGroupPageEditable();
 				$buttonAddGroup.show();
+				if(typeof user !== 'undefined'){
+					singlePage.find('.GroupPage__owner__name').val(user.firstName + " " + user.lastName);
+				}
 			}
 
 		}
