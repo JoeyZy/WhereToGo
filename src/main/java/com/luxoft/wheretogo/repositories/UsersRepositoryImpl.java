@@ -1,12 +1,17 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class UsersRepositoryImpl extends AbstractRepository<User> implements UsersRepository {
+
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public UsersRepositoryImpl() {
 		super(User.class);
@@ -15,6 +20,8 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	@Override
 	public void add(User user) {
 		if (findByEmail(user.getEmail()) == null) {
+			user.setPassword(encoder.encode(user.getPassword()));
+			user.setActive(true);
 			super.add(user);
 		}
 		super.update(user);

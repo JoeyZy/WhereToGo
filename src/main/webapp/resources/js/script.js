@@ -92,6 +92,15 @@ $(document).ready(function () {
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
 
+	// Spring security. Attach csrf token to all request
+	$(function () {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+	
 	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
 	var $buttonConfirmDeleteGroup = $singlePage.find('.SinglePage__button--confirmDeleteGroup');
 	var $buttonCancelDeleteGroup = $singlePage.find('.SinglePage__button--cancelDeleteGroup');
@@ -386,36 +395,7 @@ $(document).ready(function () {
 		$eventCostCurrency.html(currListElement(data));
 	});
 	var checkboxes = $('.filters input[type=checkbox]');
-	var loginForm = $('#login-nav');
 	var $loginDropDown = $('.dropdown');
-	// Login handler
-	loginForm.submit(function (e) {
-		var email = loginForm.find("#userEmail").val();
-		var password = loginForm.find("#userPassword").val();
-		var json = {"email": email, "password": password};
-		$.ajax({
-			url: loginForm.attr("action"),
-			data: JSON.stringify(json),
-			type: "POST",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			success: function (sessionUser) {
-				if (sessionUser.length == 0) {
-					alert('Wrong credentials');
-					return;
-				}
-				setUser(sessionUser);
-				loadEvents();
-			},
-			error: function () {
-			},
-			complete: function () {
-			}
-		});
-		e.preventDefault();
-	});
 	var register = $('.btn-add-user');
 	register.on('click', function () {
 		window.location.hash = 'addUser';
@@ -1433,8 +1413,8 @@ $(document).ready(function () {
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
-				$eventDescription.html(linkify(event.description));
-				$eventLocation.html(linkify(event.location));
+				$eventDescription.text(linkify(event.description));
+				$eventLocation.text(linkify(event.location));
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
 					$pictureParent.show();

@@ -206,7 +206,7 @@ h1, h3 {
   z-index: 5;
   position: relative;
 }
-.event-box-location-and-by {
+.event-box-location-and-by, .group-box-location-and-by {
   text-align: center;
   margin-top: 40px;
   display: block;
@@ -215,15 +215,7 @@ h1, h3 {
   color: #CBCBCC;
   font-size: 15px;
 }
-.group-box-location-and-by {
-  text-align: center;
-  margin-top: 40px;
-  display: block;
-  z-index: 5;
-  position: relative;
-  color: #CBCBCC;
-  font-size: 15px;
-}
+
 .location, .created-by, .event-box-title {
   display: block;
   white-space: nowrap;
@@ -414,6 +406,13 @@ h1, h3 {
 .event-img, .start, .end {
   background-size: cover;
   padding: 40px 5% 10px;
+}
+.description{
+  display: inline-block;
+  width: 90%;
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+  word-break: normal;
 }
 .start, .end {
   display: inline-block;
