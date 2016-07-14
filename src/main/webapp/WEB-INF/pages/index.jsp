@@ -239,15 +239,19 @@
                                         <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
                                         <div class="group-box-location-and-by">
-                                            <%--<div class="location" title="{{location}}"><img class="icons"--%>
-                                                                                            <%--src="resources/images/location.png"> {{location}}</div>--%>
-                                            <%--<div class="created-by" title="{{owner}}"><img class="icons"--%>
-                                                                                           <%--src="resources/images/black.png"><span> Created by </span>{{owner}}</div>--%>
+                                            <div class="location" title="{{location}}"><img class="icons"
+                                                                                            src="resources/images/location.png"> {{location}}</div>
+                                            <div class="created-by" title="{{owner}}"><img class="icons"
+                                                                                           src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="category_color {{Nature}}"></div>
+
+                            <div class="description" title="{{description}}">
+                                {{description}}
+                            </div>
                         </span>
                     <!--<div class="highlight"></div> - with hover buttons became unclickable -->
                         <span class="button_group" visit={{attends}}>
