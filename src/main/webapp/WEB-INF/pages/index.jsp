@@ -293,10 +293,6 @@
                         <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
                                placeholder="Last name" required/>
                     </li>
-                    <li class="SinglePage__inputItem UserPage__events">
-                        <label class="SinglePage__inputItem__label"><b>Events:</b></label>
-                        <ul class="UserPage__events__list"></ul>
-                    </li>
                 </ul>
 
                 <ul class="SinglePage__inputItemsList Calendar">
