@@ -1,6 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    <%--Spring Security csrf meta data--%>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -8,12 +14,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet">
-    <link rel="stylesheet" href="resources/jquery/jquery-ui.css">
-    <link rel="stylesheet" href="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
-    <link rel="stylesheet" href="resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
-    <link href='resources/css/fullcalendar.min.css' rel='stylesheet'/>
-    <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
-    <link href="resources/css/new_styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="../../resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.css">
+    <link rel="stylesheet" href="../../resources/multiselect-plugin/css/bootstrap-multiselect.css" type="text/css"/>
+    <link href='../../resources/css/fullcalendar.min.css' rel='stylesheet'/>
+    <link href='../../resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
+    <link href="../../resources/css/new_styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -66,7 +72,21 @@
                         <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
                     </li>
                     <li>
-                        <a class="logout" href="${pageContext.request.contextPath}/logout"></a>
+                        <c:url value="/j_spring_security_logout" var="logoutUrl" />
+                        <!-- csrt for log out-->
+                        <form action="${logoutUrl}" method="post" id="logoutForm">
+                            <input type="hidden"
+                                   name="${_csrf.parameterName}"
+                                   value="${_csrf.token}" />
+                        </form>
+                        <script>
+                            function formSubmit() {
+                                document.getElementById("logoutForm").submit();
+                            }
+                        </script>
+                        <c:if test="${pageContext.request.userPrincipal.name != null}">
+                            <a <%--class="logout" --%>href="javascript:formSubmit()">Logout</a>
+                        </c:if>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
@@ -76,20 +96,22 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <form class="form" role="form" method="post" accept-charset="UTF-8"
-                                              action="login" id="login-nav">
+                                              action="<c:url value='/j_spring_security_check' />" id="login-nav">
                                             <div class="form-group">
                                                 <label class="sr-only" for="userEmail">Email address</label>
                                                 <input type="email" class="form-control" id="userEmail"
-                                                       placeholder="Email address" required>
+                                                       name="userEmail" placeholder="Email address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="userPassword">Password</label>
                                                 <input type="password" class="form-control" id="userPassword"
-                                                       placeholder="Password" required>
+                                                       name="userPassword" placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-info btn-block">Sign in</button>
                                             </div>
+                                            <input type="hidden"
+                                                   name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         </form>
                                     </div>
                                     <div class="col-md-12 bottom">
@@ -174,14 +196,14 @@
 
                             <div class="start">
                                 <span>START <br></span>
-                                <div class="start_date"><img class="icons" src="resources/images/calendar.png"> {{actualStartDate}}</div>
-                                <div class="start_time"><img class="icons" src="resources/images/time.png"> {{actualStartTime}}</div>
+                                <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> {{actualStartDate}}</div>
+                                <div class="start_time"><img class="icons" src="../../resources/images/time.png"> {{actualStartTime}}</div>
                             </div>
 
                             <div class="end">
                                 <span>END <br></span>
-                                <div class="end_date"><img class="icons" src="resources/images/calendar.png">  {{actualEndDate}}</div>
-                                <div class="end_time"><img class="icons" src="resources/images/time.png">  {{actualEndTime}}</div>
+                                <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  {{actualEndDate}}</div>
+                                <div class="end_time"><img class="icons" src="../../resources/images/time.png">  {{actualEndTime}}</div>
 
                             </div>
                         </span>

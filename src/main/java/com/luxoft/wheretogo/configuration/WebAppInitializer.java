@@ -1,25 +1,24 @@
 package com.luxoft.wheretogo.configuration;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+@Order(1)
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-public class WebAppInitializer implements WebApplicationInitializer {
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class[] { AppConfig.class, ConfigureSpringSecurity.class };
+	}
 
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(AppConfig.class);
-		ctx.setServletContext(servletContext);
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return null;
+	}
 
-		ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
-
-		servlet.setLoadOnStartup(1);
-		servlet.addMapping("/");
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
 	}
 
 }
