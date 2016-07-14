@@ -32,6 +32,9 @@ $(document).ready(function () {
 	var $groupPage = $singlePage.find(".GroupPage");
 	var $groupDescription = $singlePage.find("#GroupDescription");
 	var $groupLocation = $singlePage.find("#GroupLocation");
+	var $buttonEditGroup = $singlePage.find('.SinglePage__button--editGroup');
+	var $buttonDeleteGroup = $singlePage.find('.SinglePage__button--deleteGroup');
+	var $buttonApplyGroup = $singlePage.find('.SinglePage__button--applyGroup');
 
 	var $buttons = $singlePage.find("button");
 	var $errors = $singlePage.find('.errors');
@@ -98,6 +101,12 @@ $(document).ready(function () {
 		});
 	});
 	
+	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
+	var $buttonConfirmDeleteGroup = $singlePage.find('.SinglePage__button--confirmDeleteGroup');
+	var $buttonCancelDeleteGroup = $singlePage.find('.SinglePage__button--cancelDeleteGroup');
+	
+	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
+
 	$buttonEdit.on('click', function (event) {
 		makeEventPageEditable();
 		$buttonEdit.hide();
@@ -108,8 +117,22 @@ $(document).ready(function () {
 		return false;
 	});
 
+	$buttonEditGroup.on('click', function(group){
+		makeGroupPageEditable();
+		$buttonEditGroup.hide();
+		$buttonDeleteGroup.hide();
+		$buttonApplyGroup.show();
+		$buttonCancelEditingGroup.show();
+		return false;
+	});
+	
 	$buttonApply.on('click', function () {
 		updateEvent(true);
+		return false;
+	});
+
+	$buttonApplyGroup.on('click', function () {
+		updateGroup(true);
 		return false;
 	});
 
@@ -127,8 +150,24 @@ $(document).ready(function () {
 		return false;
 	});
 
+	$buttonCancelEditingGroup.on('click', function (event) {
+		makeGroupPageUneditable();
+		var index = (window.location.hash).split('#group/')[1].trim();
+		renderSingleGroupPage(index, events);
+		$buttonEditGroup.show();
+		$buttonDeleteGroup.show();
+		$buttonApplyGroup.hide();
+		$buttonCancelEditingGroup.hide();
+		return false;
+	});
+
 	$buttonDelete.on('click', function () {
 		renderConfirmationPage();
+		return false;
+	});
+
+	$buttonDeleteGroup.on('click', function () {
+		renderConfirmationGroupPage();
 		return false;
 	});
 
@@ -182,6 +221,18 @@ $(document).ready(function () {
 		return false;
 	});
 
+	function renderConfirmationGroupPage() {
+
+	}
+
+	$buttonConfirmDeleteGroup.on('click', function () {
+
+	});
+
+	$buttonCancelDeleteGroup.on('click', function () {
+
+	});
+
 	function updateEvent(deleted) {
 		var categoriesList = [];
 		$eventCategories.find(":selected").each(function (i, selected) {
@@ -204,11 +255,25 @@ $(document).ready(function () {
 		deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
 	}
 
+	function updateGroup(deleted){
+		var groupJson = {
+			"id" : $singlePage.find('.GroupPage').attr('data-id'),
+			"name" : $singlePageTitle.val(),
+			"description" : $groupDescription.text(),
+			"location": $groupDescription.text()
+		}
+		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
+	}
+
 	function resetSinglePage() {
 		$eventCategoriesMultiselect = $singlePage.find('.btn-group');
 		//reset inputs
 		$singlePage.find(".reset").val("");
 		// Empty description
+
+		$eventPage.hide();
+		$groupPage.hide();
+
 		$eventDescription.empty();
 		$eventLocation.empty();
 		$eventCost.val("");
@@ -1223,7 +1288,7 @@ $(document).ready(function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-		$buttonAddGroup.show();
+
 		if (typeof data != 'undefined' && data.length) {
 			// Find the wanted event by iterating the data object and searching for the chosen index.
 			renderShowGroupPage(data);
@@ -1265,12 +1330,12 @@ $(document).ready(function () {
 					$pictureParent.show();
 				} else {
 					$pictureParent.hide();
-				}
+				}				
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
-
+				
 				if (user && (user.id === group.owner.id)) {
-					$buttonEdit.show();
-					$buttonDelete.show();
+					$buttonEditGroup.show();
+					$buttonDeleteGroup.show();
 				}
 			}
 			else {
