@@ -707,7 +707,7 @@ $(document).ready(function () {
 		showInlineAssignments(); //check!
 		var header = $('header');
 
-		$('.btn-add-group').on('click', function () {
+		$('.btn-add-event').on('click', function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
@@ -1110,6 +1110,10 @@ $(document).ready(function () {
 		function validateGroupFields(group) {
 			const GROUP_NAME_LENGTH_MIN = 3;
 			const GROUP_NAME_LENGTH_MAX = 20;
+			const GROUP_DESCRIPTION_LENGTH_MIN = 10;
+			const GROUP_DESCRIPTION_LENGTH_MAX = 200;
+			const GROUP_LOCATION_LENGTH_MIN = 7;
+			const GROUP_LOCATION_LENGTH_MAX = 100;
 			var valid = true;
 			$errors.empty();
 
@@ -1120,8 +1124,24 @@ $(document).ready(function () {
 					" and less than " + GROUP_NAME_LENGTH_MAX + " symbols");
 				valid = false;
 			}
+			var description = group.description.trim();
+			if (!description || description.length < GROUP_DESCRIPTION_LENGTH_MIN || description.length > GROUP_DESCRIPTION_LENGTH_MAX) {
+				addErrorListItem("Description should be greater than " + GROUP_DESCRIPTION_LENGTH_MIN +
+					" and less than " + GROUP_DESCRIPTION_LENGTH_MAX + " symbols");
+				valid = false;
+			}
+
+			var location = group.location.trim();
+			if (!location || location.length < GROUP_LOCATION_LENGTH_MIN || location.length > GROUP_LOCATION_LENGTH_MAX) {
+				addErrorListItem("Location should be greater than " + GROUP_LOCATION_LENGTH_MIN +
+					" and less than " + GROUP_LOCATION_LENGTH_MAX + " symbols");
+				valid = false;
+			}
 			
 			return valid;
+		}
+		function addErrorListItem(message) {
+			$errors.append('<li>' + message + '</li>');
 		}
 
 	}
