@@ -247,10 +247,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="category_color {{Nature}}"></div>
+                            <div class="category_color Nature"></div>
 
                             <div class="description" title="{{description}}">
-                                {{description}}
+                               <div class="description__center">{{description}}</div>
                             </div>
                         </span>
                     <!--<div class="highlight"></div> - with hover buttons became unclickable -->
