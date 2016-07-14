@@ -365,15 +365,29 @@
                     <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
                             onclick="this.blur();">Edit event
                     </button>
+                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editGroup"
+                            onclick="this.blur();">Edit group
+                    </button>
                     <button type="submit"
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--delete"
                             onclick="this.blur();">Delete event
                     </button>
+                    <button type="submit"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--deleteGroup"
+                            onclick="this.blur();">Delete group
+                    </button>
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply"
+                            onclick="this.blur();">Save changes
+                    </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--applyGroup"
                             onclick="this.blur();">Save changes
                     </button>
                     <button type="submit"
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingGroup"
                             onclick="this.blur();">Cancel
                     </button>
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
@@ -406,7 +420,15 @@
                                 onclick="this.blur();">Yes
                         </button>
                         <button type="submit"
+                                class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDeleteGroup"
+                                onclick="this.blur();">Yes
+                        </button>
+                        <button type="submit"
                                 class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
+                                onclick="this.blur();">No
+                        </button>
+                        <button type="submit"
+                                class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDeleteGroup"
                                 onclick="this.blur();">No
                         </button>
                     </div>
