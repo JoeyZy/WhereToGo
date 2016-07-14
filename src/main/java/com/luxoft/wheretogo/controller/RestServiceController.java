@@ -100,6 +100,10 @@ public class RestServiceController {
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event);
 	}
+	@RequestMapping("/group")
+	public Group group(Group group) {
+		return groupsService.findById(group.getId());
+	}
 
 	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
 	public ResponseEntity<String> addGroup(@RequestBody Group group, HttpServletRequest request) {
