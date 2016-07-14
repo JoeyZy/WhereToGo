@@ -10,12 +10,15 @@ import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -59,10 +62,14 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public void addEvent(@RequestBody Event event, HttpServletRequest request) {
+	public ResponseEntity<String> addEvent(@RequestBody Event event, HttpServletRequest request) {
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		event.setDeleted(NOT_DELETED);
-		eventsService.add(event);
+		boolean eventIsAdded = eventsService.add(event);
+		if (!eventIsAdded) {
+			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
@@ -97,31 +104,24 @@ public class RestServiceController {
 		return currenciesService.findAll();
 	}
 
+	// Hack. JavaScript gets its data from this response
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User user(HttpServletRequest request) {
-		return (User) request.getSession().getAttribute("user");
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public boolean logout(HttpServletRequest request) {
-		request.getSession().setAttribute("user", null);
-		return true;
+	public User user(HttpServletRequest request, Principal principal) {
+		User user = (User) request.getSession().getAttribute("user");
+		if ((user == null) && (principal != null)) {
+			String email = principal.getName();
+			if (email.isEmpty()) {
+				return null;
+			}
+			user = usersService.findByEmail(email);
+			request.getSession().setAttribute("user", user);
+		}
+		return user;
 	}
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public User getUserInfo(User user) {
 		return usersService.findByEmail(user.getEmail());
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public User login(@RequestBody User user, HttpServletRequest request) {
-		User sessionUser = usersService.findByEmail(user.getEmail());
-		if (sessionUser == null || !sessionUser.getPassword().equals(user.getPassword())) {
-			return null;
-		}
-		request.getSession().setAttribute("user", sessionUser);
-
-		return sessionUser;
 	}
 
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
@@ -153,7 +153,6 @@ public class RestServiceController {
 		return eventToUpdate;
 	}
 
-
 	@RequestMapping("/archivedEvents")
 	public List<EventResponse> archivedEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 			return eventsService.getArchivedEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
@@ -163,7 +162,6 @@ public class RestServiceController {
 	public List<EventResponse> archivedUsersEvents(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 			return eventsService.getArchivedUsersEventsResponse(request, (User) httpRequest.getSession().getAttribute("user"));
 	}
-
 
 	@RequestMapping(value = "/archivedEventsCategories", method = RequestMethod.GET)
 	public List<CategoryResponse> archivedEventsCategories(ArchiveServiceRequest request, HttpServletRequest httpRequest) {

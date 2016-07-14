@@ -43,6 +43,15 @@ $(document).ready(function () {
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
 
+	// Spring security. Attach csrf token to all request
+	$(function () {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+	
 	$buttonEdit.on('click', function (event) {
 		makeEventPageEditable();
 		$buttonEdit.hide();
@@ -272,36 +281,7 @@ $(document).ready(function () {
 		$eventCostCurrency.html(currListElement(data));
 	});
 	var checkboxes = $('.filters input[type=checkbox]');
-	var loginForm = $('#login-nav');
 	var $loginDropDown = $('.dropdown');
-	// Login handler
-	loginForm.submit(function (e) {
-		var email = loginForm.find("#userEmail").val();
-		var password = loginForm.find("#userPassword").val();
-		var json = {"email": email, "password": password};
-		$.ajax({
-			url: loginForm.attr("action"),
-			data: JSON.stringify(json),
-			type: "POST",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			success: function (sessionUser) {
-				if (sessionUser.length == 0) {
-					alert('Wrong credentials');
-					return;
-				}
-				setUser(sessionUser);
-				loadEvents();
-			},
-			error: function () {
-			},
-			complete: function () {
-			}
-		});
-		e.preventDefault();
-	});
 	var register = $('.btn-add-user');
 	register.on('click', function () {
 		window.location.hash = 'addUser';
@@ -715,6 +695,9 @@ $(document).ready(function () {
 	}
 
 	function enableAddEventsBtn() {
+		if (!user.active) {
+			return;
+		}
 		var $addEventBtn = $('.btn-add-event');
 		$addEventBtn.prop('disabled', false);
 		$addEventBtn.addClass('btn-success');

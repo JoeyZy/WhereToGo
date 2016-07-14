@@ -13,7 +13,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +33,12 @@ public class EventsServiceImpl implements EventsService {
 	private CategoriesService categoriesService;
 
 	@Override
-	public void add(Event event) {
-		eventsRepository.add(event);
+	public boolean add(Event event) {
+		if (event.getOwner().isActive()) {
+			eventsRepository.add(event);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -134,43 +143,33 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user) {
-		List<Event> archivedevents = findAll().stream().filter(event -> {
-				return event.getEndDateTime().after(request.getSearchFrom())
-                        && event.getEndDateTime().before(request.getSearchTo())
-                        && !(event.getDeleted() == 1);
-		}).collect(Collectors.toList());
-			return convertToEventResponses(filterArchivedEvents(archivedevents, user), user);
+		List<Event> archivedEvents = findAll().stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo())
+				&& !(event.getDeleted() == 1)).collect(Collectors.toList());
+		return convertToEventResponses(filterArchivedEvents(archivedEvents, user), user);
 	}
 
 	private List<Event> filterArchivedEvents(List<Event> events, User user) {
-		return events.stream().filter(event -> {
-			return event.getParticipants().contains(user) || event.getOwner().equals(user);
-		}).collect(Collectors.toList());
+		return events.stream().filter(event -> event.getParticipants().contains(user) || event.getOwner().equals(user)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user) {
-		List<Event> archivedevents = eventsRepository.findByOwner(user).stream().filter(event -> {
-			return event.getEndDateTime().after(request.getSearchFrom())
-					&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1);
-		}).collect(Collectors.toList());
-		return convertToEventResponses(archivedevents, user);
+		List<Event> archivedEvents = eventsRepository.findByOwner(user).stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1)).collect(Collectors.toList());
+		return convertToEventResponses(archivedEvents, user);
 	}
 
 	@Override
 	public List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user) {
-	return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream().filter(event -> {
-		return event.getEndDateTime().after(request.getSearchFrom())
+		return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo())
-				&& !(event.getDeleted() == 1);
-	}).collect(Collectors.toList()), user));
+				&& !(event.getDeleted() == 1)).collect(Collectors.toList()), user));
 	}
 
 	@Override
 	public List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user) {
-		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream().filter(event -> {
-			return event.getEndDateTime().after(request.getSearchFrom())
-					&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1);
-		}).collect(Collectors.toList()));
+		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1)).collect(Collectors.toList()));
 	}
 }
