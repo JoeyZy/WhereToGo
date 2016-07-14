@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 
+import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 
@@ -12,6 +13,10 @@ import java.util.List;
 public interface GroupsService {
 
     boolean add(Group group);
+
+    void update(Group group);
+
+    void delete(Group group);
 
     Long getNextGroupId();
 

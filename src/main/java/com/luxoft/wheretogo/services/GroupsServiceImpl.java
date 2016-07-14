@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.services;
 
+import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.repositories.GroupIdGeneratorRepository;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class GroupsServiceImpl implements GroupsService{
+public class GroupsServiceImpl implements GroupsService {
 
     @Autowired
     private GroupsRepository groupsRepository;
@@ -30,6 +31,18 @@ public class GroupsServiceImpl implements GroupsService{
 
         groupsRepository.add(group);
         return true;
+    }
+
+    @Override
+    public void update(Group group) {
+
+        groupsRepository.delete(group);
+    }
+
+    @Override
+    public void delete(Group group) {
+
+        groupsRepository.delete(group);
     }
 
     @Override

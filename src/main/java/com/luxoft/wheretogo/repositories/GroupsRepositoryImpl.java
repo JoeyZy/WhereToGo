@@ -24,6 +24,16 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
     }
 
     @Override
+    public void delete(Group group) {
+        super.delete(group);
+    }
+
+    @Override
+    public void update(Group group) {
+        super.update(group);
+    }
+
+    @Override
     public List<Group> findAll() {
         return super.findAll("id");
     }
@@ -40,5 +50,4 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
     public List<Group> findByOwner(User owner) {
         return super.findListByProperty("owner", owner);
     }
-
 }

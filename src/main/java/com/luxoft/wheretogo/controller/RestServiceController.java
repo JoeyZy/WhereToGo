@@ -101,6 +101,17 @@ public class RestServiceController {
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event);
 	}
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+    public void deleteEvent(@RequestBody Group group) {
+        groupsService.delete(group);
+    }
+
+    @RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
+    public void updateEvent(@RequestBody Group group, HttpServletRequest request) {
+        groupsService.update(group);
+    }
+
 	@RequestMapping("/group")
 	public Group group(Group group) {
 		return groupsService.findById(group.getId());
