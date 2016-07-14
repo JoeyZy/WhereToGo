@@ -1,7 +1,7 @@
-INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('1', 'root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin');
-INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('1', 'test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user');
-INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('1', 'serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user');
-INSERT INTO `users` (email, first_name, last_name, password, role) VALUES ('1', 'xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user');
+INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1);
+INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1);
+INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
+INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
   (1, 100, 0, 'Description of the event', concat(CURDATE(), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Concert....',

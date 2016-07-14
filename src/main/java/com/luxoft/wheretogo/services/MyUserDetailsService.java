@@ -41,7 +41,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private User buildUserForAuthentication(com.luxoft.wheretogo.models.User user,
                                             List<GrantedAuthority> authorities) {
         return new User(user.getEmail(), user.getPassword(),
-                user.isActive(), true, true, true, authorities);
+                true, true, true, true, authorities);
     }
 
     private List<GrantedAuthority> buildUserAuthority(String userRole) {

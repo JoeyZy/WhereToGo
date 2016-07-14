@@ -1,8 +1,5 @@
-INSERT INTO `categories` VALUES (1, 'Nature'), (2, 'Movie'), (3, 'Theatre'), (4, 'Pub'), (5, 'Sport'), (6, 'Other');
-INSERT INTO `users` VALUES (1, 'root@gmail.com', 'Root', 'Root', 'root', 'root');
-
-
-CREATE DATABASE IF NOT EXISTS `wheretogo` /*!40100 DEFAULT CHARACTER SET utf8 */;
+DROP DATABASE IF EXISTS `wheretogo`;
+CREATE DATABASE `wheretogo` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `wheretogo`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
@@ -121,7 +118,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id`         INT(11) NOT NULL AUTO_INCREMENT,
   `login`      VARCHAR(45)      DEFAULT NULL,
-  `password`   VARCHAR(45)      DEFAULT NULL,
+  `password`   VARCHAR(60)      DEFAULT NULL,
   `first_name` VARCHAR(45)      DEFAULT NULL,
   `last_name`  VARCHAR(45)      DEFAULT NULL,
   PRIMARY KEY (`id`)
