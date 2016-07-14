@@ -209,6 +209,10 @@ $(document).ready(function () {
 		//reset inputs
 		$singlePage.find(".reset").val("");
 		// Empty description
+
+		$eventPage.hide();
+		$groupPage.hide();
+
 		$eventDescription.empty();
 		$eventLocation.empty();
 		$eventCost.val("");
@@ -1223,7 +1227,7 @@ $(document).ready(function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-		$buttonAddGroup.show();
+
 		if (typeof data != 'undefined' && data.length) {
 			// Find the wanted event by iterating the data object and searching for the chosen index.
 			renderShowGroupPage(data);
@@ -1268,10 +1272,10 @@ $(document).ready(function () {
 				}
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
 
-				if (user && (user.id === group.owner.id)) {
-					$buttonEdit.show();
-					$buttonDelete.show();
-				}
+				//if (user && (user.id === group.owner.id)) {
+				//	$buttonEdit.show();
+				//	$buttonDelete.show();
+				//}
 			}
 			else {
 				makeGroupPageEditable();
