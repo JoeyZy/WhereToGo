@@ -71,7 +71,8 @@ $(document).ready(function () {
 		if (typeof user !== "undefined") {
 			var groupJson = {
 				"id": $singlePage.find('.GroupPage').attr('data-id'),
-				"name": $singlePageTitle.val()
+				"name": $singlePageTitle.val(),
+				"description": $groupDescription.text()
 			};
 			saveGroup(groupJson, "addGroup");
 		}

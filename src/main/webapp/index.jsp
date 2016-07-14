@@ -345,8 +345,18 @@
                 <%--bla--%>
 
                 <ul class="SinglePage__inputItemsList GroupPage" data-id="">
-
-
+                    <li class="SinglePage__inputItem GroupPage__owner">
+                        <label class="SinglePage__inputItem__label"><b>Owner</b></label>
+                        <input class="SinglePage__inputItem__inputField GroupPage__owner__name" readonly/>
+                    </li>
+                    <li class="SinglePage__inputItem GroupPage__description">
+                        <label class="SinglePage__inputItem__label"><b>Description:</b></label>
+                        <div contentEditable="false" id="GroupDescription" title="Description:"></div>
+                    </li>
+                    <li class="SinglePage__inputItem">
+                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
+                        <div contentEditable="false" id="GroupLocation"></div>
+                    </li>
 
                 </ul>
                 <%--bla--%>
