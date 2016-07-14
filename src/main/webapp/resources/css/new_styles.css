@@ -147,12 +147,28 @@ h1, h3 {
 .event-box-img::after {
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.87) 100%);
 }
+.group-box-img::after {
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.87) 100%);
+}
 .event-box-img, .event-box-img a {
   color: rgb(255, 255, 255);
   background-size: cover;
   position: relative;
 }
+.group-box-img, .group-box-img a {
+  color: rgb(255, 255, 255);
+  background-size: cover;
+  position: relative;
+}
 .event-box-img::after, .event-box-img::before {
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.group-box-img::after, .group-box-img::before {
   content: "";
   left: 0;
   position: absolute;
@@ -166,7 +182,22 @@ h1, h3 {
   right: 16px;
   z-index: 4;
 }
+.group-box-content {
+  bottom: 24px;
+  left: 20px;
+  right: 16px;
+  z-index: 4;
+}
 .event-box-title {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 400;
+  font-style: normal;
+  text-shadow: 1px 1px 1px #000;
+  z-index: 5;
+  position: relative;
+}
+.group-box-title {
   color: #fff;
   font-size: 30px;
   font-weight: 400;
@@ -184,14 +215,33 @@ h1, h3 {
   color: #CBCBCC;
   font-size: 15px;
 }
+.group-box-location-and-by {
+  text-align: center;
+  margin-top: 40px;
+  display: block;
+  z-index: 5;
+  position: relative;
+  color: #CBCBCC;
+  font-size: 15px;
+}
 .location, .created-by, .event-box-title {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.location, .created-by, .group-box-title {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 .small_event {
+  background-color: #fff;
+}
+.small_group {
   background-color: #fff;
 }
 /*	events List	*/
@@ -204,8 +254,23 @@ h1, h3 {
   opacity: 0;
   font-size: 0;
 }
+.groups-list {
+  list-style: none;
+  margin-left: 225px;
+  max-width: 1500px;
+  text-align: center;
+  padding: 0;
+  opacity: 0;
+  font-size: 0;
+}
 .all-events.visible .events-list,
 .all-events.visible .filters {
+  opacity: 1;
+  transition: 1s;
+  pointer-events: auto;
+}
+.all-groups.visible .groups-list,
+.all-groups.visible .filters {
   opacity: 1;
   transition: 1s;
   pointer-events: auto;
@@ -227,13 +292,45 @@ h1, h3 {
   margin: 0 12px 14px 0;
   min-width: 400px;
 }
+.groups-list > li {
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s;
+
+  text-align: left;
+  font: normal 12px sans-serif;
+
+  background-color: #ffffff;
+  border: 1px solid #dbe3e7;
+  border-radius: 3px;
+  box-shadow: 1px 3px 21px rgba(119, 119, 119, 0.7);
+  margin: 0 12px 14px 0;
+  min-width: 400px;
+}
 .events-list > li.hidden {
+  opacity: 0.2;
+  display: none;
+  pointer-events: none;
+}
+.groups-list > li.hidden {
   opacity: 0.2;
   display: none;
   pointer-events: none;
 }
 /* The event image */
 .events-list .event-photo {
+  display: block;
+  text-align: center;
+  box-shadow: 0 0 20px 8px #f3f3f3 inset;
+
+  width: 275px;
+  margin-bottom: 25px;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+.groups-list .event-photo {
   display: block;
   text-align: center;
   box-shadow: 0 0 20px 8px #f3f3f3 inset;
@@ -257,14 +354,34 @@ h1, h3 {
 
   list-style: none;
 }
+.groups-list .small_group {
+  margin-top: 20px;
+
+  color: #111111;
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: normal;
+
+  max-width: 260px;
+  margin-bottom: 20px;
+
+  list-style: none;
+}
 .events-list .small_event li {
+  display: block;
+  margin-right: 5px;
+}
+.groups-list .small_group li {
   display: block;
   margin-right: 5px;
 }
 .events-list .small_event li:first-child {
   display: block;
 }
-.events-list .small_event li span {
+.groups-list .small_group li:first-child {
+  display: block;
+}
+.groups-list .small_group li span {
   font-weight: bold;
 }
 /* Price and order button */
@@ -592,7 +709,7 @@ img.event_pic {
   display: block;
   border: 1px solid;
 }
-.total-counter {
+.total-counter, .total-counter-groups {
   text-align: initial;
   font-size: 16px;
   color:#90A4AE;
@@ -629,5 +746,4 @@ input.show-archive-input {
   font-size: 1px;
   color:#CBCBCC;
 }*/
-
 

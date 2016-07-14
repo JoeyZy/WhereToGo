@@ -30,6 +30,7 @@
                 </button>
                 <a class="navbar-brand home" href="#"><img class="icons" src="resources/images/list.png"><span> All Events</span></a>
                 <a class="navbar-brand my-events" href="#"><img class="icons" src="resources/images/star.png"><span> My Events</span></a>
+                <a class="navbar-brand groups" href="#"><img class="icons" src="resources/images/list.png"><span> All Groups</span></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
@@ -45,7 +46,8 @@
                     </li>
                     <li>
                         <div class="navbar-btn-container">
-                            <button class="btn btn-block btn-add-group" title="Please login with active profile to create a group">
+                            <button class="btn btn-block btn-add-group"
+                                    title="Please login with active profile to create a group">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Group
                             </button>
@@ -53,7 +55,8 @@
                     </li>
                     <li>
                         <div class="navbar-btn-container">
-                            <button class="btn btn-block btn-add-event" title="Please login with active profile to create an event">
+                            <button class="btn btn-block btn-add-event"
+                                    title="Please login with active profile to create an event">
                                 <span class="glyphicon glyphicon-plus"></span>
                                 Event
                             </button>
@@ -111,10 +114,11 @@
                         <div class="filter-categories">
                             <script id="categories-list" type="x-handlebars-template">
                                 {{#each this}}
-                                     <div class="categories-common {{category}}">
-                                    <label><input type="checkbox" name="category" value="{{category}}">{{category}}</label><span class="badge
+                                <div class="categories-common {{category}}">
+                                    <label><input type="checkbox" name="category"
+                                                  value="{{category}}">{{category}}</label><span class="badge
                                     {{category}}">{{counter}}</span>
-                                    </div>
+                                </div>
                                 {{/each}}
                             </script>
                         </div>
@@ -145,25 +149,27 @@
         </div>
 
         <ul class="events-list">
-        <div class="total-counter"></div>
+            <div class="total-counter"></div>
             <script id="events-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
 
                         <span class="content">
-			<div class="event-box-img">
-                            <div class="event-img {{category}}" style="background-image:url({{picture}})">
-                                <div class="event-box-content">
-                                    <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
+			                <div class="event-box-img">
+                                <div class="event-img {{category}}" style="background-image:url({{picture}})">
+                                    <div class="event-box-content">
+                                        <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
-                                    <div class="event-box-location-and-by">
-                                        <div class="location" title="{{location}}"><img class="icons" src="resources/images/location.png"> {{location}}</div>
-                                        <div class="created-by" title="{{owner}}"><img class="icons" src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                        <div class="event-box-location-and-by">
+                                            <div class="location" title="{{location}}"><img class="icons"
+                                                                                        src="resources/images/location.png"> {{location}}</div>
+                                            <div class="created-by" title="{{owner}}"><img class="icons"
+                                                                                       src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                             <div class="category_color {{category}}"></div>
 
                             <div class="start">
@@ -179,18 +185,60 @@
 
                             </div>
                         </span>
-                        <!--<div class="highlight"></div> - with hover buttons became unclickable -->
-                        <span class="button_group" visit={{attends}} >
-                            <button type ="button" class="btn assign-action-btn btn-success">
-                                <span class="glyphicon glyphicon-ok assign-action-img" />
+                    <!--<div class="highlight"></div> - with hover buttons became unclickable -->
+                        <span class="button_group" visit={{attends}}>
+                            <button type="button" class="btn assign-action-btn btn-success">
+                                <span class="glyphicon glyphicon-ok assign-action-img"/>
                                     Visit
                             </button>
                             <button type="button" class="btn assign-action-btn btn-default">
-                                <span class="glyphicon glyphicon-remove assign-action-img" />
+                                <span class="glyphicon glyphicon-remove assign-action-img"/>
                                     Cancel visit
                             </button>
                         </span>
-                   </li>
+                </li>
+                {{/each}}
+            </script>
+        </ul>
+    </div>
+
+    <div class="all-groups page">
+
+        <ul class="groups-list">
+            <div class="total-counter-groups" id="groups-hide"></div>
+            <script id="groups-template" type="x-handlebars-template">
+                {{#each this }}
+                <li data-index="{{id}}" class="small_group">
+
+                        <span class="content">
+			                <div class="group-box-img">
+                                <div class="event-img {{Nature}}" style="background-image:url({{picture}})">
+                                    <div class="group-box-content">
+                                        <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
+
+                                        <div class="group-box-location-and-by">
+                                            <%--<div class="location" title="{{location}}"><img class="icons"--%>
+                                                                                            <%--src="resources/images/location.png"> {{location}}</div>--%>
+                                            <%--<div class="created-by" title="{{owner}}"><img class="icons"--%>
+                                                                                           <%--src="resources/images/black.png"><span> Created by </span>{{owner}}</div>--%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category_color {{Nature}}"></div>
+                        </span>
+                    <!--<div class="highlight"></div> - with hover buttons became unclickable -->
+                        <span class="button_group" visit={{attends}}>
+                            <button type="button" class="btn assign-action-btn btn-success">
+                                <span class="glyphicon glyphicon-ok assign-action-img"/>
+                                    Join
+                            </button>
+                            <button type="button" class="btn assign-action-btn btn-default">
+                                <span class="glyphicon glyphicon-remove assign-action-img"/>
+                                    Cancel join
+                            </button>
+                        </span>
+                </li>
                 {{/each}}
             </script>
         </ul>
@@ -286,10 +334,11 @@
                         </script>
                     </li>
                     <li class='event_pic'>
-                        <div contentEditable="false" id="picture"  class='event_pic'>
+                        <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
                                  class="event_pic uploadPlaceholderEvent"/>
-                            <input  style='display:none;' type='file' class="SinglePage__button--upload" accept="image/jpeg,image/png" />
+                            <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                   accept="image/jpeg,image/png"/>
                         </div>
                     </li>
                 </ul>
@@ -299,32 +348,34 @@
 
 
 
-
                 </ul>
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
-                        onclick="this.blur();">Edit event
-                </button>
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--delete"
-                        onclick="this.blur();">Delete event
-                </button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply"
-                        onclick="this.blur();">Save changes
-                </button>
-                <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
-                        onclick="this.blur();">Cancel
-                </button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
-                        onclick="this.blur();">Visit
-                </button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelAttend"
-                        onclick="this.blur();">Cancel visit
-                </button>
-                <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
-                        onclick="this.blur();">Add user
-                </button>
+                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
+                            onclick="this.blur();">Edit event
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--delete"
+                            onclick="this.blur();">Delete event
+                    </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply"
+                            onclick="this.blur();">Save changes
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
+                            onclick="this.blur();">Visit
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelAttend"
+                            onclick="this.blur();">Cancel visit
+                    </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
+                            onclick="this.blur();">Add user
+                    </button>
                 </div>
                 <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addEvent"
                         onclick="this.blur();">Add event
@@ -340,10 +391,12 @@
                 <div id="ConfirmationPopUp">
                     <span>Are you sure that you want to delete this event?</span>
                     <div class="confirmDeleteButtons">
-                        <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDelete"
+                        <button type="submit"
+                                class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDelete"
                                 onclick="this.blur();">Yes
                         </button>
-                        <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
+                        <button type="submit"
+                                class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
                                 onclick="this.blur();">No
                         </button>
                     </div>

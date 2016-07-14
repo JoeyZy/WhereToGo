@@ -13,6 +13,7 @@ $(document).ready(function () {
 
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
+	var $allGroupsLink = $('.groups');
 	var $singlePage = $('.Page');
 	var $eventPage = $singlePage.find('.EventPage');
 	var $eventCategories = $singlePage.find('#event-categories');
@@ -291,6 +292,13 @@ $(document).ready(function () {
 		loadEvents();
 	});
 
+	$allGroupsLink.on("click", function (group) {
+		hideArchiveElements();
+		group.preventDefault();
+		window.location.hash = 'groups';
+		loadGroups();
+	});
+
 	function hideArchiveElements() {
 		$showArchiveCheckbox.find("input").prop("checked", false);
 		archiveDateFilters.addClass('hidden');
@@ -428,6 +436,23 @@ $(document).ready(function () {
 
 		});
 	}
+	function loadGroups(type) {
+		var type = type;
+		if (!type) {
+			type = "groups"
+		}
+
+		$.getJSON(type, function (data) {
+			groups = data;
+			groups.sort(function (a, b) {
+				return moment(a.name).isAfter(moment(b.name));
+			});
+
+			// Call a function to create HTML for all the events.
+			generateAllgroupsHTML(groups);
+
+		});
+	}
 	
 
 	// An event handler with calls the render function on every hashchange.
@@ -507,6 +532,16 @@ $(document).ready(function () {
 
 				renderEventsPage(events);
 			},
+			"#groups": function () {
+				if (typeof user == "undefined") {
+					window.location.hash = '#';
+				}
+				oldLocationHash = "#groups";
+					loadGroups("groups");
+
+
+				renderGroupsPage(groups);
+			},
 			'#user': function () {
 				renderSingleUserPage(user);
 			},
@@ -580,6 +615,7 @@ $(document).ready(function () {
 		$('.total-counter').append("Total " +data.length + " events");
 		var list = $('.all-events .events-list');
 		var theTemplateScript = $('#events-template').html();
+		var theGroupTemplateScript = $('#groups-template').html();
 		//Compile the template​
 		var theTemplate = Handlebars.compile(theTemplateScript);
 		list.find('li').remove();
@@ -604,6 +640,72 @@ $(document).ready(function () {
 		var header = $('header');
 
 		$('.btn-add-event').on('click', function () {
+			window.location.hash = 'addEvent';
+			return false;
+		});
+
+		$('.btn-add-group').on('click', function () {
+			window.location.hash = 'addGroup';
+			return false;
+		});
+
+		$('.btn-calendar').on('click', function (event) {
+			event.preventDefault();
+			window.location.hash = 'calendar';
+		});
+
+		$('.userInfo').click(function (e) {
+			e.preventDefault();
+			window.location.hash = 'user/email=' + $(this).data('user');
+		});
+		$('.logout').click(function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: $(this).attr('href'),
+				type: "GET",
+				success: function (sessionUser) {
+					user = undefined;
+					$('.userInfo').hide();
+					$('.logout').hide();
+					$loginDropDown.show();
+					$(window).trigger('hashchange');
+					showInlineAssignments();
+				},
+				error: function () {
+					alert('Something wrong');
+				},
+				complete: function () {
+				}
+			});
+		});
+
+		attachClickEventToButtons();
+
+	}
+	function generateAllgroupsHTML(data) {
+		$('.total-counter-groups').empty();
+		$('.total-counter-groups').append("Total " +data.length + " groups");
+		var list = $('.all-groups .groups-list');
+		var theTemplateScript = $('#groups-template').html();
+		//Compile the template​
+		var theTemplate = Handlebars.compile(theTemplateScript);
+		list.find('li').remove();
+		list.append(theTemplate(data));
+
+		// Each events has a data-index attribute.
+		// On click change the url hash to open up a preview for this event only.
+		// Remember: every hashchange triggers the render function.
+		$.each(list.find('li'), function (index, item) {
+			$(item).find('span.content').on('click', function (e) {
+				e.preventDefault();
+				var groupIndex = $(item).data('index');
+				window.location.hash = 'group/' + groupIndex;
+			});
+		});
+		showInlineAssignments(); //check!
+		var header = $('header');
+
+		$('.btn-add-group').on('click', function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
@@ -835,12 +937,44 @@ $(document).ready(function () {
 			disableAddGroupsBtn();
 		}
 		var page = $('.all-events'),
-			allEvents = $('.all-events .events-list > li');
+			allEvents = $('.all-events .events-list > li'),
+			allGroups = $('.all-groups .groups-list > li');
 		// Hide all the events in the events list.
 		allEvents.addClass('hidden');
+		allGroups.addClass('hidden');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allEvents.each(function () {
+			var that = $(this);
+			data.forEach(function (item) {
+				if (that.data('index') == item.id) {
+					that.removeClass('hidden');
+				}
+			});
+		});
+		// Show the $singlePage itself.
+		// (the render function hides all pages so we need to show the one we want).
+		page.addClass('visible');
+	}
+	function renderGroupsPage(data) {
+		if (typeof data == 'undefined') {
+			return;
+		}
+
+		if (typeof user == "undefined") {
+			disableAddEventsBtn();
+			disableArchiveCheckbox();
+			disableAddGroupsBtn();
+		}
+		var page = $('.all-groups'),
+			allGroups = $('.all-groups .groups-list > li'),
+			allEvents = $('.all-events .events-list > li');
+		// Hide all the events in the events list.
+		allGroups.addClass('hidden');
+		allEvents.addClass('hidden');
+		// Iterate over all of the events.
+		// If their ID is somewhere in the data object remove the hidden class to reveal them.
+		allGroups.each(function () {
 			var that = $(this);
 			data.forEach(function (item) {
 				if (that.data('index') == item.id) {
@@ -1522,6 +1656,7 @@ $(document).ready(function () {
 		$('.logout').text('Logout');
 		$('.logout').show();
 		$myEventsLink.show();
+		$allGroupsLink.show();
 		$loginDropDown.toggle();
 		grantRightsToUser();
 	}
@@ -1537,6 +1672,7 @@ $(document).ready(function () {
 			success: function (sessionUser) {
 				if (sessionUser.length == 0) {
 					$myEventsLink.hide();
+					$allGroupsLink.hide();
 					return;
 				}
 				setUser(sessionUser);
