@@ -31,6 +31,7 @@ $(document).ready(function () {
 
 	var $groupPage = $singlePage.find(".GroupPage");
 	var $groupDescription = $singlePage.find("#GroupDescription");
+	var $groupPageParticipants = $('.GroupPage__participants');
 	var $groupLocation = $singlePage.find("#GroupLocation");
 	var $buttonEditGroup = $singlePage.find('.SinglePage__button--editGroup');
 	var $buttonDeleteGroup = $singlePage.find('.SinglePage__button--deleteGroup');
@@ -273,7 +274,7 @@ $(document).ready(function () {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
-			"location": $groupDescription.text()
+			"location": $groupLocation.text()
 		}
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
@@ -1051,6 +1052,12 @@ $(document).ready(function () {
 	var $participantsTemplate = Handlebars.compile($participantsTemplateScript);
 	var $participants = $('.EventPage__events__list');
 
+	var $groupParticipantsTemplateScript = $('#groupParticipants').html();
+	var $groupParticipantsTemplate = Handlebars.compile($groupParticipantsTemplateScript);
+	var $groupParticipants = $('.GroupPage__groups__list');
+
+
+
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
 			$errors.show();
@@ -1137,8 +1144,6 @@ $(document).ready(function () {
 			$errors.append('<li>' + message + '</li>');
 		}
 	}
-	
-
 
 
 	function saveGroup(groupJson, newGroup) {
@@ -1326,6 +1331,7 @@ $(document).ready(function () {
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
+						//$groupParticipants.html($groupParticipantsTemplate(group.participants)); // add field participants to group
 						populateSinglePageGroupPage($singlePage, group)
 					});
 				}
@@ -1338,6 +1344,7 @@ $(document).ready(function () {
 				$singlePageTitle.val(group.name);
 				$groupDescription.html(linkify(group.description));
 				$groupLocation.html(linkify(group.location));
+				$groupPageParticipants.show();
 				if (group.picture.length) {
 					$picture.attr('src', group.picture);
 					$pictureParent.show();
@@ -1354,6 +1361,7 @@ $(document).ready(function () {
 			else {
 				makeGroupPageEditable();
 				$buttonAddGroup.show();
+				$groupPageParticipants.hide();
 				if(typeof user !== 'undefined'){
 					singlePage.find('.GroupPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
@@ -1421,6 +1429,10 @@ $(document).ready(function () {
 		function refreshParticipantsList(event) {
 			$participants.html($participantsTemplate(event.participants));
 			allowAttendEvent();
+		}
+
+		function refreshParticipantsListGroup(group) {
+			//$groupParticipants.html($groupParticipantsTemplate(group.participants)); // add field participants to group
 		}
 
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//

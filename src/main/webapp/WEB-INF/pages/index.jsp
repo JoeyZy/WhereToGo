@@ -379,6 +379,16 @@
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
                         <div contentEditable="false" id="GroupLocation"></div>
                     </li>
+                    <li class="SinglePage__inputItem GroupPage__participants">
+                        <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
+                        <ul class="GroupPage__groups__list">
+                        </ul>
+                        <script id="groupParticipants" type="x-handlebars-template">
+                            {{#each this}}
+                            <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
+                            {{/each}}
+                        </script>
+                    </li>
 
                 </ul>
                 <%--bla--%>
