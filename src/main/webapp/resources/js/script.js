@@ -1143,8 +1143,8 @@ $(document).ready(function () {
 				xhr.setRequestHeader("Content-Type", "application/json");
 			},
 			success: function () {
-				loadEvents();
-				createQueryHash(filters);
+				window.location.hash = '#groups';
+				loadGroups();
 			},
 			error: function (error) {
 				alert("ERROR!" + error);
@@ -1154,9 +1154,9 @@ $(document).ready(function () {
 		});
 		function validateGroupFields(group) {
 			const GROUP_NAME_LENGTH_MIN = 3;
-			const GROUP_NAME_LENGTH_MAX = 20;
+			const GROUP_NAME_LENGTH_MAX = 40;
 			const GROUP_DESCRIPTION_LENGTH_MIN = 10;
-			const GROUP_DESCRIPTION_LENGTH_MAX = 200;
+			const GROUP_DESCRIPTION_LENGTH_MAX = 250;
 			const GROUP_LOCATION_LENGTH_MIN = 7;
 			const GROUP_LOCATION_LENGTH_MAX = 100;
 			var valid = true;
