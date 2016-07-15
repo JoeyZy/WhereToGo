@@ -273,7 +273,7 @@ $(document).ready(function () {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
-			"location": $groupDescription.text()
+			"location": $groupLocation.text()
 		}
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
