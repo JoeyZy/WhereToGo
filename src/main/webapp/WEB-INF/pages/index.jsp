@@ -442,15 +442,20 @@
                                 onclick="this.blur();">Yes
                         </button>
                         <button type="submit"
-                                class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDeleteGroup"
+                                class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
+                                onclick="this.blur();">No
+                        </button>
+                    </div>
+                </div>
+                <div id="ConfirmationPopUpGroup">
+                    <span>Are you sure that you want to delete this group?</span>
+                    <div class="confirmDeleteButtons">
+                        <button type="submit"
+                                class="btn btn-action btn-danger SinglePage__button SinglePage__button--confirmDelete"
                                 onclick="this.blur();">Yes
                         </button>
                         <button type="submit"
                                 class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDelete"
-                                onclick="this.blur();">No
-                        </button>
-                        <button type="submit"
-                                class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelDeleteGroup"
                                 onclick="this.blur();">No
                         </button>
                     </div>

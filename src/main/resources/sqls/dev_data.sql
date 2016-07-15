@@ -1,3 +1,4 @@
+use wheretogo;
 INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1);
 INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1);
 INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);

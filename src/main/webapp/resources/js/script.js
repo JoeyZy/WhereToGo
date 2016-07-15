@@ -102,8 +102,6 @@ $(document).ready(function () {
 	});
 	
 	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
-	var $buttonConfirmDeleteGroup = $singlePage.find('.SinglePage__button--confirmDeleteGroup');
-	var $buttonCancelDeleteGroup = $singlePage.find('.SinglePage__button--cancelDeleteGroup');
 	
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
@@ -204,34 +202,49 @@ $(document).ready(function () {
 		confirmationPopUp.addClass('visible');
 		$buttonCancelDelete.show();
 		$buttonConfirmDelete.show();
+
+		$buttonConfirmDelete.on('click', function () {
+			updateEvent(false);
+			createQueryHash(filters);
+		});
+
+		$buttonCancelDelete.on('click', function () {
+			var confirmationPopUp = $('#ConfirmationPopUp');
+			confirmationPopUp.removeClass('visible');
+			var parentDisable = $('.parentDisable');
+			parentDisable.removeClass('visible');
+			$buttonEdit.show();
+			$buttonDelete.show();
+			return false;
+		});
 	}
-
-	$buttonConfirmDelete.on('click', function () {
-		updateEvent(false);
-		createQueryHash(filters);
-	});
-
-	$buttonCancelDelete.on('click', function () {
-		var confirmationPopUp = $('#ConfirmationPopUp');
-		confirmationPopUp.removeClass('visible');
-		var parentDisable = $('.parentDisable');
-		parentDisable.removeClass('visible');
-		$buttonEdit.show();
-		$buttonDelete.show();
-		return false;
-	});
+	
 
 	function renderConfirmationGroupPage() {
+		var parentDisable = $('.parentDisable');
+		parentDisable.addClass('visible');
+		var confirmationPopUp = $('#ConfirmationPopUpGroup');
+		confirmationPopUp.addClass('visible');
+		$buttonCancelDelete.show();
+		$buttonConfirmDelete.show();
 
+		$buttonConfirmDelete.on('click', function () {
+			updateGroup(false);
+			window.location.hash = 'groups';
+			loadGroups();
+		});
+
+		$buttonCancelDelete.on('click', function () {
+			var confirmationPopUp = $('#ConfirmationPopUpGroup');
+			confirmationPopUp.removeClass('visible');
+			var parentDisable = $('.parentDisable');
+			parentDisable.removeClass('visible');
+			$buttonEditGroup.show();
+			$buttonDeleteGroup.show();
+			return false;
+		});
 	}
-
-	$buttonConfirmDeleteGroup.on('click', function () {
-
-	});
-
-	$buttonCancelDeleteGroup.on('click', function () {
-
-	});
+	
 
 	function updateEvent(deleted) {
 		var categoriesList = [];

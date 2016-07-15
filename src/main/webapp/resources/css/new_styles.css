@@ -528,6 +528,9 @@ h1, h3 {
 #ConfirmationPopUp {
   opacity: 0;
 }
+#ConfirmationPopUpGroup {
+  opacity: 0;
+}
 #ConfirmationPopUp.visible {
   position: absolute;
   top: 100px;
@@ -541,7 +544,24 @@ h1, h3 {
   padding-bottom: 15px;
   padding-top: 15px;
 }
+#ConfirmationPopUpGroup.visible {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  border: 3px solid #000;
+  border-radius: 7px;
+  z-index: 9002;
+  background-color: #ffffff;
+  opacity: 1;
+  text-align: center;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
 #ConfirmationPopUp.visible span {
+  font-size: 30px;
+  color: #5a96b9;
+}
+#ConfirmationPopUpGroup.visible span {
   font-size: 30px;
   color: #5a96b9;
 }
