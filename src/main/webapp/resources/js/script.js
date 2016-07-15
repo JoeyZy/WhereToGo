@@ -376,9 +376,19 @@ $(document).ready(function () {
 		}
 	}
 
+	function hideSideBar() {
+		$(".side-bar").addClass('not-displayed');
+	}
+
+	function showSideBar() {
+		$(".side-bar").removeClass('not-displayed');
+	}
+	
 	$('.home').click(function () {
 		hideArchiveElements();
 		loadEvents();
+
+		showSideBar()
 	});
 
 	$allGroupsLink.on("click", function (group) {
@@ -386,6 +396,8 @@ $(document).ready(function () {
 		group.preventDefault();
 		window.location.hash = 'groups';
 		loadGroups();
+
+		hideSideBar();
 	});
 
 	function hideArchiveElements() {
@@ -398,6 +410,8 @@ $(document).ready(function () {
 		event.preventDefault();
 		window.location.hash = 'myEvents';
 		loadEvents("myEvents");
+
+		showSideBar()
 	});
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();

@@ -198,14 +198,30 @@ h1, h3 {
   background-color: #fff;
 }
 /*	events List	*/
-.events-list, .groups-list {
+.events-list {
   list-style: none;
   margin-left: 225px;
-  max-width: 1500px;
   text-align: center;
   padding: 0;
   opacity: 0;
   font-size: 0;
+}
+
+.groups-list {
+  list-style: none;
+  max-width: 50%;
+  text-align: center;
+  padding: 0;
+  opacity: 0;
+  font-size: 0;
+}
+
+.my-groups-list {
+  float:left;
+}
+
+.all-groups-list {
+  float:right;
 }
 
 .all-events.visible .events-list,
@@ -634,7 +650,7 @@ img.event_pic {
   border: 1px solid;
 }
 .total-counter, .total-counter-groups {
-  text-align: initial;
+  text-align: center;
   font-size: 16px;
   color:#90A4AE;
 }
@@ -671,3 +687,6 @@ input.show-archive-input {
   color:#CBCBCC;
 }*/
 
+.not-displayed {
+  display:none;
+}
