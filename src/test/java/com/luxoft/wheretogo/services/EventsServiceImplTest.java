@@ -88,9 +88,9 @@ public class EventsServiceImplTest {
 
     @Test
     public void add() throws Exception {
-        doNothing().when(eventsRepository).add(any(Event.class));
-        eventsService.add(any(Event.class));
-        verify(eventsRepository, atLeastOnce()).add(any(Event.class));
+        boolean expectedResult = false;
+        boolean actualResult = eventsService.add(events.get(0));
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Test
