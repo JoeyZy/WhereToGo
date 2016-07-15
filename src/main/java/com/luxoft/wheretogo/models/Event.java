@@ -123,9 +123,6 @@ public class Event {
 	@Column(name="picture")
 	private Blob picture;
 
-	public Event() {
-	}
-
 	public void setPicture(String value) {
 		try {
 			this.picture = new SerialBlob(value.getBytes());

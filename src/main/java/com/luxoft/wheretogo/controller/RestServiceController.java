@@ -101,6 +101,23 @@ public class RestServiceController {
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event);
 	}
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+    public void deleteGroup(@RequestBody Group group, Principal principal) {
+        if (principal != null) {
+            group.setDeleted(DELETED);
+            groupsService.update(group, principal.getName());
+        }
+    }
+
+    @RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
+    public void updateGroup(@RequestBody Group group, Principal principal) {
+        if (principal != null) {
+            group.setDeleted(NOT_DELETED);
+            groupsService.update(group, principal.getName());
+        }
+    }
+
 	@RequestMapping("/group")
 	public Group group(Group group) {
 		return groupsService.findById(group.getId());
@@ -109,6 +126,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
 	public ResponseEntity<String> addGroup(@RequestBody Group group, HttpServletRequest request) {
 		group.setOwner((User) request.getSession().getAttribute("user"));
+        group.setDeleted(NOT_DELETED);
 		boolean groupIsAdded = groupsService.add(group);
 		if (!groupIsAdded) {
 			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);

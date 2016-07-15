@@ -39,6 +39,10 @@ public abstract class AbstractRepository<T> {
 		sessionFactory.getCurrentSession().merge(object);
 	}
 
+	protected void delete(T object) {
+		sessionFactory.getCurrentSession().delete(object);
+	}
+
 	protected T findByProperty(String property, Object value) {
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));
