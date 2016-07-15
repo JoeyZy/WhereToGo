@@ -7,10 +7,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.log4j.Logger;
 
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Set;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -22,9 +25,8 @@ import java.sql.Blob;
 @EqualsAndHashCode(of = {"id", "name"})
 @ToString(of = {"id", "name"})
 public class Group {
-
     @Transient
-    private static final Logger LOG = Logger.getLogger(Event.class);
+    private static final Logger LOG = Logger.getLogger(Group.class);
 
     @Id
     private long id;
@@ -37,21 +39,40 @@ public class Group {
     @JoinColumn(name = "owner")
     private User owner;
 
+    @Column(name = "deleted", columnDefinition = "int(1)", nullable = false)
+    private Integer deleted;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="location")
+    private String location;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> participants;
+
     @Column(name="picture")
     private Blob picture;
 
-    private String description;
-    private String location;
+    public void setPicture(String value) {
+        try {
+            this.picture = new SerialBlob(value.getBytes());
+        } catch (SQLException e) {
+            LOG.warn("Can not convert image for saving", e);
+        }
+    }
 
-    public String getPicture(){
-        if(this.picture == null){
+    public String getPicture() {
+        if(this.picture == null) {
             return "";
         }
 
-        try{
+        try {
             return new String(ByteStreams.toByteArray(this.picture.getBinaryStream()));
-        } catch (Exception e){
-            LOG.warn("Cannot convert image",e);
+        } catch (Exception e) {
+            LOG.warn("Can not convert image", e);
         }
         return "";
     }

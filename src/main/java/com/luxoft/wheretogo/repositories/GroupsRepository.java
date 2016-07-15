@@ -13,9 +13,7 @@ public interface GroupsRepository {
 
     void add(Group group);
 
-    void update(Group group);
-
-    void delete(Group group);
+    void merge(Group group);
 
     List<Group> findAll();
 

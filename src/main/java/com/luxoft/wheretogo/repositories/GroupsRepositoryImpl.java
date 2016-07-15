@@ -19,18 +19,14 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
         super(Group.class);
     }
 
+    @Override
     public void add(Group group) {
         super.add(group);
     }
 
     @Override
-    public void delete(Group group) {
-        super.delete(group);
-    }
-
-    @Override
-    public void update(Group group) {
-        super.update(group);
+    public void merge(Group group) {
+        super.merge(group);
     }
 
     @Override
@@ -39,7 +35,7 @@ public class GroupsRepositoryImpl extends AbstractRepository<Group> implements G
     }
 
     @Override
-    public Group findById(long groupId){ return super.findByProperty("id",groupId); }
+    public Group findById(long groupId){ return super.findByProperty("id", groupId); }
 
     @Override
     public Group findByName(String groupName) {

@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.repositories.GroupIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.GroupsRepository;
@@ -28,31 +29,46 @@ public class GroupsServiceImpl implements GroupsService {
 
     @Override
     public boolean add(Group group) {
-
-        groupsRepository.add(group);
-        return true;
+        if (group.getOwner().isActive()) {
+            groupsRepository.add(group);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void update(Group group) {
-
-        groupsRepository.delete(group);
+    public void update(Group group, String ownerEmail) {
+        Group oldEvent = findById(group.getId());
+        User owner;
+        if (oldEvent != null) {
+            owner = oldEvent.getOwner();
+            if (!owner.getEmail().equals(ownerEmail)) {
+                return;
+            }
+            group.setOwner(owner);
+            if (group.getParticipants() == null) {
+                group.setParticipants(oldEvent.getParticipants());
+            }
+        }
+        groupsRepository.merge(group);
     }
 
     @Override
-    public void delete(Group group) {
-
-        groupsRepository.delete(group);
+    public Group findById(long groupId){
+        Group group = groupsRepository.findById(groupId);
+        if (group != null) {
+            Hibernate.initialize(group.getParticipants());
+        }
+        return group;
     }
 
     @Override
-    public Group findById(long id){
-        return groupsRepository.findById(id);
-    }
-
-    @Override
-    public Group findByName(String groupName){
-        return groupsRepository.findByName(groupName);
+    public Group findByName(String groupName) {
+        Group group = groupsRepository.findByName(groupName);
+        if (group != null) {
+            Hibernate.initialize(group.getParticipants());
+        }
+        return group;
     }
 
     @Override
@@ -73,8 +89,8 @@ public class GroupsServiceImpl implements GroupsService {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
             groupResponses.add(new GroupResponse(group.getId(), group.getName(),
-                    group.getOwner().getFirstName()+" "+group.getOwner().getLastName(),
-                    group.getLocation(),group.getDescription(),group.getPicture()));
+                    group.getOwner().getFirstName()+ " " +group.getOwner().getLastName(),
+                    group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted()));
                 }
         return groupResponses;
     }

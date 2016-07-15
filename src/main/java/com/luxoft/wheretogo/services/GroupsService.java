@@ -14,9 +14,7 @@ public interface GroupsService {
 
     boolean add(Group group);
 
-    void update(Group group);
-
-    void delete(Group group);
+    void update(Group group, String ownerEmail);
 
     Long getNextGroupId();
 
