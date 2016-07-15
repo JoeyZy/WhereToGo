@@ -31,6 +31,7 @@ $(document).ready(function () {
 
 	var $groupPage = $singlePage.find(".GroupPage");
 	var $groupDescription = $singlePage.find("#GroupDescription");
+	var $groupPageParticipants = $('.GroupPage__participants');
 	var $groupLocation = $singlePage.find("#GroupLocation");
 	var $buttonEditGroup = $singlePage.find('.SinglePage__button--editGroup');
 	var $buttonDeleteGroup = $singlePage.find('.SinglePage__button--deleteGroup');
@@ -1056,6 +1057,12 @@ $(document).ready(function () {
 	var $participantsTemplate = Handlebars.compile($participantsTemplateScript);
 	var $participants = $('.EventPage__events__list');
 
+	var $groupParticipantsTemplateScript = $('#groupParticipants').html();
+	var $groupParticipantsTemplate = Handlebars.compile($groupParticipantsTemplateScript);
+	var $groupParticipants = $('.GroupPage__groups__list');
+
+
+
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
 			$errors.show();
@@ -1142,8 +1149,6 @@ $(document).ready(function () {
 			$errors.append('<li>' + message + '</li>');
 		}
 	}
-	
-
 
 
 	function saveGroup(groupJson, newGroup) {
@@ -1331,7 +1336,7 @@ $(document).ready(function () {
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
-						$participants.html($participantsTemplate(event.participants));
+						$$groupParticipants.html($$groupParticipantsTemplate(group.participants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {
@@ -1350,6 +1355,7 @@ $(document).ready(function () {
 				$singlePageTitle.val(group.name);
 				$groupDescription.html(linkify(group.description));
 				$groupLocation.html(linkify(group.location));
+				$groupPageParticipants.show();
 				if (group.picture.length) {
 					$picture.attr('src', group.picture);
 					$pictureParent.show();
@@ -1366,6 +1372,7 @@ $(document).ready(function () {
 			else {
 				makeGroupPageEditable();
 				$buttonAddGroup.show();
+				$groupPageParticipants.hide();
 				if(typeof user !== 'undefined'){
 					singlePage.find('.GroupPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
@@ -1435,7 +1442,7 @@ $(document).ready(function () {
 			allowAttendEvent();
 		}
 		function refreshGroupParticipantsList(group) {
-			$participants.html($participantsTemplate(group.participants));
+			$groupParticipants.html($groupParticipantsTemplate(group.participants));
 			allowAttendGroup();
 		}
 
@@ -1502,7 +1509,7 @@ $(document).ready(function () {
 	function allowAttendGroup() {
 		$buttonSubscribe.hide();
 		if (user) {
-			if ($participants.find("[data-id=" + user.id + "]").length == 0) {
+			if ($groupParticipants.find("[data-id=" + user.id + "]").length == 0) {
 				$buttonSubscribe.show();
 			}
 		}

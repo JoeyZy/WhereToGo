@@ -16,6 +16,8 @@ public interface EventsService {
 
 	void update(Event event);
 
+	void update(Event event, String ownerEmail);
+
 	List<Event> findAll();
 
 	List<Event> findByPeriod(LocalDateTime from, LocalDateTime to);
