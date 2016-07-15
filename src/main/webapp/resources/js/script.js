@@ -42,6 +42,7 @@ $(document).ready(function () {
 	var $buttonDelete = $singlePage.find(".SinglePage__button--delete");
 	var $buttonApply = $singlePage.find('.SinglePage__button--apply');
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
+	var $buttonSubscribe = $singlePage.find('.SinglePage__button--subscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	$buttonAddEvent.on('click', function () {
@@ -121,6 +122,7 @@ $(document).ready(function () {
 		$buttonDeleteGroup.hide();
 		$buttonApplyGroup.show();
 		$buttonCancelEditingGroup.show();
+		$buttonSubscribe.hide();
 		return false;
 	});
 	
@@ -154,6 +156,9 @@ $(document).ready(function () {
 		renderSingleGroupPage(index, events);
 		$buttonEditGroup.show();
 		$buttonDeleteGroup.show();
+		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
+			$buttonSubscribe.show();
+		}
 		$buttonApplyGroup.hide();
 		$buttonCancelEditingGroup.hide();
 		return false;
@@ -1326,10 +1331,17 @@ $(document).ready(function () {
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
-						populateSinglePageGroupPage($singlePage, group)
+						$participants.html($participantsTemplate(event.participants));
+						populateSinglePageGroupPage($singlePage, group);
+						$buttonSubscribe.off();
+						$buttonSubscribe.on('click', function (group) {
+							group.preventDefault();
+							assignUnassignGroup('assignGroupToUser', item.id, refreshGroupParticipantsList);
+							//assignEvent(item.id);
+						});
 					});
 				}
-			});
+			})
 		}
 
 		function populateSinglePageGroupPage(singlePage, group) {
@@ -1422,6 +1434,10 @@ $(document).ready(function () {
 			$participants.html($participantsTemplate(event.participants));
 			allowAttendEvent();
 		}
+		function refreshGroupParticipantsList(group) {
+			$participants.html($participantsTemplate(group.participants));
+			allowAttendGroup();
+		}
 
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
@@ -1480,6 +1496,14 @@ $(document).ready(function () {
 				$buttonAttend.show();
 			} else {
 				$buttonCancelAttend.show();
+			}
+		}
+	}
+	function allowAttendGroup() {
+		$buttonSubscribe.hide();
+		if (user) {
+			if ($participants.find("[data-id=" + user.id + "]").length == 0) {
+				$buttonSubscribe.show();
 			}
 		}
 	}
