@@ -91,15 +91,15 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
-	public void deleteEvent(@RequestBody Event event) {
+	public void deleteEvent(@RequestBody Event event, Principal principal) {
 		event.setDeleted(DELETED);
-		eventsService.update(event);
+		eventsService.update(event, principal.getName());
 	}
 
 	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
-	public void updateEvent(@RequestBody Event event, HttpServletRequest request) {
+	public void updateEvent(@RequestBody Event event, Principal principal) {
 		event.setDeleted(NOT_DELETED);
-		eventsService.update(event);
+		eventsService.update(event, principal.getName());
 	}
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
