@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
@@ -39,6 +40,23 @@ public class EventsServiceImpl implements EventsService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void update(Event event, String ownerEmail) {
+		Event oldEvent = findById(event.getId());
+		User owner;
+		if (oldEvent != null) {
+			owner = oldEvent.getOwner();
+			if (!owner.getEmail().equals(ownerEmail)) {
+				return;
+			}
+			event.setOwner(oldEvent.getOwner());
+			if (event.getParticipants() == null) {
+				event.setParticipants(oldEvent.getParticipants());
+			}
+		}
+		eventsRepository.merge(event);
 	}
 
 	@Override
