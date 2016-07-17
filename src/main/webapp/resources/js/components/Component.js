@@ -51,6 +51,7 @@ var Component = Class.extend({
         }
     },
     // WARNING: This will break in case this element does not have val()
+    // TODO Rename to elementValue: current name is confusing
     /**
      * @param {string} id  model-id of the element
      * @param {string} [v] value to set if defined
