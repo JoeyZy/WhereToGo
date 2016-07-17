@@ -346,6 +346,7 @@
 <script src="resources/js/lib/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src='resources/js/lib/fullcalendar/fullcalendar.min.js'></script>
 
+<script src="resources/js/lib/Class.js"></script>
 <script src="resources/js/core.js"></script>
 <script src="resources/js/mvc.js"></script>
 <script src="resources/js/script.js"></script>
