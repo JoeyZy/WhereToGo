@@ -1336,7 +1336,7 @@ $(document).ready(function () {
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
-						$$groupParticipants.html($$groupParticipantsTemplate(group.participants));
+						$groupParticipants.html($groupParticipantsTemplate(group.participants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {

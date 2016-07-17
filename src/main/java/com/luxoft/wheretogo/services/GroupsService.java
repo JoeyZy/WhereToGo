@@ -16,6 +16,8 @@ public interface GroupsService {
 
     void update(Group group, String ownerEmail);
 
+    public void update(Group group);
+
     Long getNextGroupId();
 
     Group findById(long groupId);
