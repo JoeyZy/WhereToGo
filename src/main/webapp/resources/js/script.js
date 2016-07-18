@@ -887,6 +887,28 @@ $(document).ready(function () {
 		});
 		return false;
 	}
+	function assignUnassignGroup(action, id, callback) {
+		var json = {
+			id: id
+		};
+		$.ajax({
+			url: action,
+			data: JSON.stringify(json),
+			type: "POST",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/json");
+			},
+			success: function (group) {
+				callback(group)
+			},
+			error: function () {
+			},
+			complete: function () {
+			}
+		});
+		return false;
+	}
 
 
 	//$('.assign-action-btn.btn-default').on("click",
@@ -1330,6 +1352,7 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
+			$buttonSubscribe.show();
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
