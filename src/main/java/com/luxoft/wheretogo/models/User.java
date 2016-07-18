@@ -55,6 +55,11 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "participants")
 	private Set<Event> events;
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "participants")
+	private Set<Group> groups;
+
 	@NotNull
 	private boolean active;
 

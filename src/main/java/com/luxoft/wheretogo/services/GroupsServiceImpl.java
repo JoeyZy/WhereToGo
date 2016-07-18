@@ -54,6 +54,18 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     @Override
+    public void update(Group group) {
+        Group oldGroup = findById(group.getId());
+        if (oldGroup != null) {
+            group.setOwner(oldGroup.getOwner());
+            if (group.getParticipants() == null) {
+                group.setParticipants(oldGroup.getParticipants());
+            }
+        }
+        groupsRepository.merge(group);
+    }
+
+    @Override
     public Group findById(long groupId){
         Group group = groupsRepository.findById(groupId);
         if (group != null) {
