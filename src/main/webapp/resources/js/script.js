@@ -151,10 +151,10 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$buttonCancelEditingGroup.on('click', function (event) {
+	$buttonCancelEditingGroup.on('click', function (group) {
 		makeGroupPageUneditable();
 		var index = (window.location.hash).split('#group/')[1].trim();
-		renderSingleGroupPage(index, events);
+		renderSingleGroupPage(index,groups);
 		$buttonEditGroup.show();
 		$buttonDeleteGroup.show();
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
@@ -758,8 +758,8 @@ $(document).ready(function () {
 		list.find('li').remove();
 		list.append(theTemplate(data));
 
-		// Each events has a data-index attribute.
-		// On click change the url hash to open up a preview for this event only.
+		// Each group has a data-index attribute.
+		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
 		$.each(list.find('li'), function (index, item) {
 			$(item).find('span.content').on('click', function (e) {
@@ -811,7 +811,7 @@ $(document).ready(function () {
 			});
 		});
 
-		attachClickEventToButtons();
+		//attachClickEventToButtons();
 
 	}
 
@@ -1352,7 +1352,7 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
-			$buttonSubscribe.show();
+			//$buttonSubscribe.show();
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
@@ -1388,6 +1388,7 @@ $(document).ready(function () {
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
+				allowAttendGroup();
 			}
 			else {
 				makeGroupPageEditable();
@@ -1398,6 +1399,10 @@ $(document).ready(function () {
 				}
 			}
 
+		}
+		function refreshGroupParticipantsList(group) {
+			$groupParticipants.html($groupParticipantsTemplate(group.participants));
+			allowAttendGroup();
 		}
 	}
 
@@ -1460,10 +1465,6 @@ $(document).ready(function () {
 		function refreshParticipantsList(event) {
 			$participants.html($participantsTemplate(event.participants));
 			allowAttendEvent();
-		}
-		function refreshGroupParticipantsList(group) {
-			$groupParticipants.html($groupParticipantsTemplate(group.participants));
-			allowAttendGroup();
 		}
 
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
