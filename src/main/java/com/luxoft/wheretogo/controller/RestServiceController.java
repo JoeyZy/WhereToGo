@@ -177,7 +177,9 @@ public class RestServiceController {
 
 	@RequestMapping("/myGroups")
 	public Set<GroupResponse> myGroups(HttpServletRequest request) {
-		return groupsService.getUserRelevantGroupResponses((User) request.getSession().getAttribute("user"));
+        User user = (User) request.getSession().getAttribute("user");
+        user = usersService.initGroups(user.getId());
+		return groupsService.getUserRelevantGroupResponses(user);
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
