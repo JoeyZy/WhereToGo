@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
@@ -51,10 +52,14 @@ public class Group {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "groups_users", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> participants;
+    private Set<User> groupParticipants;
 
     @Column(name="picture")
     private Blob picture;
+
+    public Set<User> getGroupParticipants() {
+        return groupParticipants;
+    }
 
     public void setPicture(String value) {
         try {

@@ -53,7 +53,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	@Override
 	public List<User> getNotParticipants(long groupId) {
 		Criterion criterion = Restrictions.
-				sqlRestriction("from User u where u.id not in ( select g.participants from Group where g.id=?)",
+				sqlRestriction("from User u where u.id not in ( select g.groupParticipants from Group where g.id=?)",
 						groupId, LongType.INSTANCE);
 		return super.executeCriterion(criterion);
 	}

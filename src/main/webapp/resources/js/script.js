@@ -814,8 +814,7 @@ $(document).ready(function () {
 				}
 			});
 		});
-
-		//attachClickEventToButtons();
+		
 
 	}
 
@@ -1079,7 +1078,7 @@ $(document).ready(function () {
 		page.addClass('visible');
 	}
 
-	var $participantsTemplateScript = $('#participants').html();
+	var $participantsTemplateScript = $('#groupParticipants').html();
 	var $participantsTemplate = Handlebars.compile($participantsTemplateScript);
 	var $participants = $('.EventPage__events__list');
 
@@ -1359,12 +1358,12 @@ $(document).ready(function () {
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
-						$groupParticipants.html($groupParticipantsTemplate(group.participants));
+						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
-							assignUnassignGroup('assignGroupToUser', item.id, refreshGroupParticipantsList);
+							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
 						});
 						$buttonUnSubscribe.on('click', function (group) {
 							group.preventDefault();
@@ -1373,6 +1372,10 @@ $(document).ready(function () {
 					});
 				}
 			})
+		}
+		function refreshGroupParticipantsList(group) {
+			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
+			allowSubscribeGroup();
 		}
 
 		function populateSinglePageGroupPage(singlePage, group) {
@@ -1394,7 +1397,7 @@ $(document).ready(function () {
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
-				allowAttendGroup();
+				allowSubscribeGroup();
 			}
 			else {
 				makeGroupPageEditable();
@@ -1405,10 +1408,6 @@ $(document).ready(function () {
 				}
 			}
 
-		}
-		function refreshGroupParticipantsList(group) {
-			$groupParticipants.html($groupParticipantsTemplate(group.participants));
-			allowAttendGroup();
 		}
 	}
 
@@ -1533,7 +1532,7 @@ $(document).ready(function () {
 			}
 		}
 	}
-	function allowAttendGroup() {
+	function allowSubscribeGroup() {
 		$buttonSubscribe.hide();
 		if (user) {
 			if ($groupParticipants.find("[data-id=" + user.id + "]").length == 0) {

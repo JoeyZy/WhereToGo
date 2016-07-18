@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.CascadeType;
@@ -57,7 +58,7 @@ public class User {
 	private Set<Event> events;
 
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "participants")
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "groupParticipants")
 	private Set<Group> groups;
 
 	@NotNull

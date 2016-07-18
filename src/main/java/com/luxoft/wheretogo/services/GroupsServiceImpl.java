@@ -1,6 +1,5 @@
 package com.luxoft.wheretogo.services;
 
-import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -46,8 +45,8 @@ public class GroupsServiceImpl implements GroupsService {
                 return;
             }
             group.setOwner(owner);
-            if (group.getParticipants() == null) {
-                group.setParticipants(oldEvent.getParticipants());
+            if (group.getGroupParticipants() == null) {
+                group.setGroupParticipants(oldEvent.getGroupParticipants());
             }
         }
         groupsRepository.merge(group);
@@ -58,8 +57,8 @@ public class GroupsServiceImpl implements GroupsService {
         Group oldGroup = findById(group.getId());
         if (oldGroup != null) {
             group.setOwner(oldGroup.getOwner());
-            if (group.getParticipants() == null) {
-                group.setParticipants(oldGroup.getParticipants());
+            if (group.getGroupParticipants() == null) {
+                group.setGroupParticipants(oldGroup.getGroupParticipants());
             }
         }
         groupsRepository.merge(group);
@@ -69,7 +68,7 @@ public class GroupsServiceImpl implements GroupsService {
     public Group findById(long groupId){
         Group group = groupsRepository.findById(groupId);
         if (group != null) {
-            Hibernate.initialize(group.getParticipants());
+            Hibernate.initialize(group.getGroupParticipants());
         }
         return group;
     }
@@ -78,7 +77,7 @@ public class GroupsServiceImpl implements GroupsService {
     public Group findByName(String groupName) {
         Group group = groupsRepository.findByName(groupName);
         if (group != null) {
-            Hibernate.initialize(group.getParticipants());
+            Hibernate.initialize(group.getGroupParticipants());
         }
         return group;
     }
@@ -100,6 +99,7 @@ public class GroupsServiceImpl implements GroupsService {
     private List<GroupResponse> convertToGroupResponses(List<Group> groups) {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
+            Hibernate.initialize(group.getGroupParticipants());
             if (group.getDeleted() == 0) {
                 groupResponses.add(new GroupResponse(group.getId(), group.getName(),
                         group.getOwner().getFirstName() + " " + group.getOwner().getLastName(),

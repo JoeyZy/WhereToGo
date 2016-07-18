@@ -133,14 +133,14 @@ public class RestServiceController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-    @RequestMapping(value = "/assignGroupToUser", method = RequestMethod.POST)
-    public Group assignGroupToEvent(@RequestBody Group group, HttpServletRequest request) {
+    @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
+    public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         Group groupToUpdate = groupsService.findById(group.getId());
 
-        if (!(groupToUpdate.getParticipants() == null) &&
-                !groupToUpdate.getParticipants().contains(user)) {
-            groupToUpdate.getParticipants().add(user);
+        if (!(groupToUpdate.getGroupParticipants() == null) &&
+                !groupToUpdate.getGroupParticipants().contains(user)) {
+            groupToUpdate.getGroupParticipants().add(user);
             user.getGroups().add(groupToUpdate);
             groupsService.update(groupToUpdate);
             usersService.update(user);
@@ -148,12 +148,12 @@ public class RestServiceController {
         return groupToUpdate;
     }
 
-    @RequestMapping(value="/unassignGroupFromUser", method = RequestMethod.POST)
-    public Group unassignEventFromUser(@RequestBody Group event, HttpServletRequest request) {
+    @RequestMapping(value="/unassignUserFromGroup", method = RequestMethod.POST)
+    public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        Group groupToUpdate = groupsService.findById(event.getId());
+        Group groupToUpdate = groupsService.findById(group.getId());
 
-        if(groupToUpdate != null && groupToUpdate.getParticipants().remove(user)) {
+        if(groupToUpdate != null && groupToUpdate.getGroupParticipants().remove(user)) {
             groupsService.update(groupToUpdate);
         }
 
@@ -218,7 +218,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
-	public Event unassignEventFromUser(@RequestBody Event event, HttpServletRequest request) {
+	public Event unassignGroupFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		Event eventToUpdate = eventsService.findById(event.getId());
 
