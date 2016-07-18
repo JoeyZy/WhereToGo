@@ -48,4 +48,9 @@ public class UsersServiceImpl implements UsersService {
 	public void update(User user) {
 		usersRepository.update(user);
 	}
+
+	@Override
+	public List<User> getNotParticipants(long groupId) {
+		return usersRepository.getNotParticipants(groupId);
+	}
 }

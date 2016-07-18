@@ -1,6 +1,9 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.User;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.LongType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -45,6 +48,14 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	@Override
 	public void update(User user) {
 		super.update(user);
+	}
+
+	@Override
+	public List<User> getNotParticipants(long groupId) {
+		Criterion criterion = Restrictions.
+				sqlRestriction("from User u where u.id not in ( select g.participants from Group where g.id=?)",
+						groupId, LongType.INSTANCE);
+		return super.executeCriterion(criterion);
 	}
 
 }

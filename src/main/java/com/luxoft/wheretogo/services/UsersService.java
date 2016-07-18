@@ -16,4 +16,5 @@ public interface UsersService {
 
 	void update(User user);
 
+	List<User> getNotParticipants(long groupId);
 }
