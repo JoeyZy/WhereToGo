@@ -1566,6 +1566,7 @@ $(document).ready(function () {
 	}
 	function allowSubscribeGroup() {
 		$buttonSubscribe.hide();
+		$buttonUnSubscribe.hide();
 		if (user) {
 			if ($groupParticipants.find("[data-id=" + user.id + "]").length == 0) {
 				$buttonSubscribe.show();

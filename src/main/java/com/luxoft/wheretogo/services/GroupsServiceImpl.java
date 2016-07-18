@@ -114,7 +114,10 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public Set<GroupResponse> getUserRelevantGroupResponses(User user) {
         List<Group> groups = groupsRepository.findByOwner(user);
-
+        Set<Group> d = user.getGroups();
+        for (Group g : d) {
+            groups.add(groupsRepository.findById(g.getId()));
+        }
         return new HashSet<>(convertToGroupResponses(groups));
     }
 
