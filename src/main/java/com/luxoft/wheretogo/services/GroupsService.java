@@ -29,4 +29,6 @@ public interface GroupsService {
     List<GroupResponse> getRelevantGroupResponses();
 
     Group initGroupParticipants(long groupId);
+    Set<GroupResponse> getUserRelevantGroupResponses(User user);
+
 }

@@ -3,6 +3,7 @@ $(document).ready(function () {
 	// 	An array containing objects with information about the events.
 	var events = [],
 		groups = [],
+		myGroups = [],
 		filters = {},
 		filterColors = {},
 		user = undefined;
@@ -44,6 +45,7 @@ $(document).ready(function () {
 	var $buttonApply = $singlePage.find('.SinglePage__button--apply');
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
 	var $buttonSubscribe = $singlePage.find('.SinglePage__button--subscribe');
+	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	$buttonAddEvent.on('click', function () {
@@ -124,6 +126,7 @@ $(document).ready(function () {
 		$buttonApplyGroup.show();
 		$buttonCancelEditingGroup.show();
 		$buttonSubscribe.hide();
+		$buttonUnSubscribe.hide();
 		return false;
 	});
 	
@@ -151,14 +154,16 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$buttonCancelEditingGroup.on('click', function (event) {
+	$buttonCancelEditingGroup.on('click', function (group) {
 		makeGroupPageUneditable();
 		var index = (window.location.hash).split('#group/')[1].trim();
-		renderSingleGroupPage(index, events);
+		renderSingleGroupPage(index,groups);
 		$buttonEditGroup.show();
 		$buttonDeleteGroup.show();
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
 			$buttonSubscribe.show();
+		} else {
+			$buttonUnSubscribe.show();
 		}
 		$buttonApplyGroup.hide();
 		$buttonCancelEditingGroup.hide();
@@ -382,9 +387,19 @@ $(document).ready(function () {
 		}
 	}
 
+	function hideSideBar() {
+		$(".side-bar").addClass('not-displayed');
+	}
+
+	function showSideBar() {
+		$(".side-bar").removeClass('not-displayed');
+	}
+	
 	$('.home').click(function () {
 		hideArchiveElements();
 		loadEvents();
+
+		showSideBar()
 	});
 
 	$allGroupsLink.on("click", function (group) {
@@ -392,6 +407,8 @@ $(document).ready(function () {
 		group.preventDefault();
 		window.location.hash = 'groups';
 		loadGroups();
+
+		hideSideBar();
 	});
 
 	function hideArchiveElements() {
@@ -404,6 +421,8 @@ $(document).ready(function () {
 		event.preventDefault();
 		window.location.hash = 'myEvents';
 		loadEvents("myEvents");
+
+		showSideBar()
 	});
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
@@ -508,16 +527,25 @@ $(document).ready(function () {
 			type = "groups"
 		}
 
-		$.getJSON(type, function (data) {
+		$.getJSON("groups", function (data) {
 			groups = data;
 			groups.sort(function (a, b) {
 				return moment(a.name).isAfter(moment(b.name));
 			});
 
-			// Call a function to create HTML for all the events.
-			generateAllgroupsHTML(groups);
-
+			generateGroupsHTML("all-groups-list", "groups", groups);
 		});
+
+		$.getJSON("myGroups", function (data) {
+			myGroups = data;
+			myGroups.sort(function (a, b) {
+				return moment(a.name).isAfter(moment(b.name));
+			});
+
+			generateGroupsHTML("my-groups-list", "myGroups", myGroups);
+		});
+
+
 	}
 	
 
@@ -748,27 +776,31 @@ $(document).ready(function () {
 		attachClickEventToButtons();
 
 	}
-	function generateAllgroupsHTML(data) {
-		$('.total-counter-groups').empty();
-		$('.total-counter-groups').append("Total " +data.length + " groups");
-		var list = $('.all-groups .groups-list');
+
+	function generateGroupsHTML(listType, dataType, groupsData) {
+		$('.total-counter-'+listType).empty();
+		$('.total-counter-'+listType).append(groupsData.length + " groups");
+		var GroupsList = $('.'+listType);
 		var theTemplateScript = $('#groups-template').html();
 		//Compile the template​
 		var theTemplate = Handlebars.compile(theTemplateScript);
-		list.find('li').remove();
-		list.append(theTemplate(data));
+		GroupsList.find('li').remove();
+		GroupsList.append(theTemplate(groupsData));
 
-		// Each events has a data-index attribute.
-		// On click change the url hash to open up a preview for this event only.
+		// Each group has a data-index attribute.
+		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
-		$.each(list.find('li'), function (index, item) {
+		$.each(GroupsList.find('li'), function (index, item) {
 			$(item).find('span.content').on('click', function (e) {
 				e.preventDefault();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
 			});
 		});
+
 		showInlineAssignments(); //check!
+
+		showInlineAssignments();
 		var header = $('header');
 
 		$('.btn-add-event').on('click', function () {
@@ -788,7 +820,7 @@ $(document).ready(function () {
 
 		$('.userInfo').click(function (e) {
 			e.preventDefault();
-			window.location.hash = 'user/email=' + $(this).data('user');
+			window.location.hash = 'user/email=' + $(this).groupsData('user');
 		});
 		$('.logout').click(function (e) {
 			e.preventDefault();
@@ -810,8 +842,7 @@ $(document).ready(function () {
 				}
 			});
 		});
-
-		attachClickEventToButtons();
+		
 
 	}
 
@@ -1030,6 +1061,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allEvents.addClass('hidden');
 		allGroups.addClass('hidden');
+		$('.add-group-div').addClass('not-displayed');
+		$('.add-event-div').removeClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allEvents.each(function () {
@@ -1060,6 +1093,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allGroups.addClass('hidden');
 		allEvents.addClass('hidden');
+		$('.add-group-div').removeClass('not-displayed');
+		$('.add-event-div').addClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allGroups.each(function () {
@@ -1082,8 +1117,6 @@ $(document).ready(function () {
 	var $groupParticipantsTemplateScript = $('#groupParticipants').html();
 	var $groupParticipantsTemplate = Handlebars.compile($groupParticipantsTemplateScript);
 	var $groupParticipants = $('.GroupPage__groups__list');
-
-
 
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
@@ -1171,7 +1204,6 @@ $(document).ready(function () {
 			$errors.append('<li>' + message + '</li>');
 		}
 	}
-
 
 	function saveGroup(groupJson, newGroup) {
 		if (!validateGroupFields(groupJson)) {
@@ -1355,7 +1387,6 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
-			$buttonSubscribe.show();
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
@@ -1365,7 +1396,10 @@ $(document).ready(function () {
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
 							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
-							//assignEvent(item.id);
+						});
+						$buttonUnSubscribe.on('click', function (group) {
+							group.preventDefault();
+							assignUnassignGroup('unassignUserFromGroup', item.id, refreshGroupParticipantsList);
 						});
 					});
 				}
@@ -1395,6 +1429,7 @@ $(document).ready(function () {
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
+				allowSubscribeGroup();
 			}
 			else {
 				makeGroupPageEditable();
@@ -1469,7 +1504,6 @@ $(document).ready(function () {
 			allowAttendEvent();
 		}
 
-
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
@@ -1532,11 +1566,12 @@ $(document).ready(function () {
 	}
 	function allowSubscribeGroup() {
 		$buttonSubscribe.hide();
+		$buttonUnSubscribe.hide();
 		if (user) {
 			if ($groupParticipants.find("[data-id=" + user.id + "]").length == 0) {
 				$buttonSubscribe.show();
 			} else {
-				$buttonSubscribe.hide();
+				$buttonUnSubscribe.show();
 			}
 		}
 	}

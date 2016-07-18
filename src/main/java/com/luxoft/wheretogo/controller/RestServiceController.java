@@ -175,6 +175,11 @@ public class RestServiceController {
         return groupToUpdate;
     }
 
+	@RequestMapping("/myGroups")
+	public Set<GroupResponse> myGroups(HttpServletRequest request) {
+		return groupsService.getUserRelevantGroupResponses((User) request.getSession().getAttribute("user"));
+	}
+
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
 		usersService.add(user);
