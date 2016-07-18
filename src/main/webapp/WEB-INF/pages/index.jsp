@@ -241,7 +241,7 @@
         </ul>
 
         <ul class="groups-list my-groups-list">
-            <div id="my-groups-header"><h4>My Groups</h4></div>
+            <div id="my-groups-header" class="groups-header"><h4>My Groups</h4></div>
             <div class="total-counter-my-groups-list" id="groups-hide1"></div>
             <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}

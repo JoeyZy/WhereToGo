@@ -179,7 +179,7 @@ h1, h3 {
 
 .group-box-title {
   color: #000;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
   font-style: normal;
   z-index: 5;
@@ -749,5 +749,5 @@ input.show-archive-input {
 }
 
 .groups-header {
-  text-align: center;
+  text-align: left;
 }
