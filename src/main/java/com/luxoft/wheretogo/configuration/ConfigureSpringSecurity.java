@@ -35,7 +35,7 @@ public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
                .antMatchers("/myEvents", "/sessionUser", "/getEventId",
                         "/addEvent", "/deleteEvent", "/updateEvent", "/myEventsCategories",
                         "/userInfo", "/assignEventToUser",
-                        "/unassignEventFromUser", "/archivedEvents", "/archivedUsersEvents",
+                        "/unassignGroupFromUser", "/archivedEvents", "/archivedUsersEvents",
                         "/archivedEventsCategories", "/archivedUsersEventsCategories").authenticated()
                 .anyRequest().permitAll().and()
                 .formLogin().loginProcessingUrl("/j_spring_security_check")
