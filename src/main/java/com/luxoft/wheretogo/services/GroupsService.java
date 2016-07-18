@@ -30,7 +30,7 @@ public interface GroupsService {
 
     List<GroupResponse> getRelevantGroupResponses();
 
-    Group initGroupParticipants(long groupId);
+    Group initGroupParticipants(Group group);
 
     Set<GroupResponse> getUserRelevantGroupResponses(User user);
 

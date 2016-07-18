@@ -49,8 +49,11 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User initGroups(long userId) {
-		User user = usersRepository.findById(userId);
+	public User initGroups(User user) {
+		if (Hibernate.isInitialized(user.getGroups())) {
+			return user;
+		}
+		user = usersRepository.findById(user.getId());
 		if (user != null) {
 			Hibernate.initialize(user.getGroups());
 		}
@@ -58,8 +61,11 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User initEvents(long userId) {
-		User user = usersRepository.findById(userId);
+	public User initEvents(User user) {
+		if (Hibernate.isInitialized(user.getEvents())) {
+			return user;
+		}
+		user = usersRepository.findById(user.getId());
 		if (user != null) {
 			Hibernate.initialize(user.getEvents());
 		}

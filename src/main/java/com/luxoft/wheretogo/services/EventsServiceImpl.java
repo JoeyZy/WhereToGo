@@ -179,8 +179,8 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
-	public Event initParticipants(long eventId) {
-		Event event = eventsRepository.findById(eventId);
+	public Event initParticipants(Event event) {
+		event = eventsRepository.findById(event.getId());
 		if (event != null) {
 			Hibernate.initialize(event.getParticipants());
 		}

@@ -102,8 +102,8 @@ public class GroupsServiceImpl implements GroupsService {
         return groupResponses;
     }
 
-    public Group initGroupParticipants(long groupId) {
-        Group group = groupsRepository.findById(groupId);
+    public Group initGroupParticipants(Group group) {
+        group = groupsRepository.findById(group.getId());
         if (group != null) {
             Hibernate.initialize(group.getGroupParticipants());
         }

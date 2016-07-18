@@ -61,13 +61,13 @@ public class RestServiceController {
 	@RequestMapping("/myEvents")
 	public Set<EventResponse> myEvents(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        user = usersService.initEvents(user.getId());
+        user = usersService.initEvents(user);
 		return eventsService.getUserRelevantEventResponses(user);
 	}
 
 	@RequestMapping("/event")
 	public Event event(Event event) {
-		return eventsService.initParticipants(event.getId());
+		return eventsService.initParticipants(event);
 	}
 
 	@RequestMapping(value = "/sessionUser", method = RequestMethod.GET)
@@ -121,7 +121,7 @@ public class RestServiceController {
 
 	@RequestMapping("/group")
 	public Group group(Group group) {
-        return groupsService.initGroupParticipants(group.getId());
+        return groupsService.initGroupParticipants(group);
 	}
 
 	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
@@ -138,14 +138,13 @@ public class RestServiceController {
     @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
     public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        Group groupToUpdate = groupsService.findById(group.getId());
-        groupToUpdate = groupsService.initGroupParticipants(groupToUpdate.getId());
+        Group groupToUpdate = groupsService.initGroupParticipants(group);
 
         if (!(groupToUpdate.getGroupParticipants() == null) &&
                 !groupToUpdate.getGroupParticipants().contains(user)) {
             groupToUpdate.getGroupParticipants().add(user);
 
-            user = usersService.initGroups(user.getId());
+            user.setGroups(usersService.initGroups(user).getGroups());
 
             user.getGroups().add(groupToUpdate);
             groupsService.update(groupToUpdate);
@@ -160,13 +159,13 @@ public class RestServiceController {
     public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         Group groupToUpdate = groupsService.findById(group.getId());
-        groupToUpdate = groupsService.initGroupParticipants(groupToUpdate.getId());
+        groupToUpdate = groupsService.initGroupParticipants(groupToUpdate);
 
         if(groupToUpdate != null && groupToUpdate.getGroupParticipants().remove(user)) {
             groupsService.update(groupToUpdate);
         }
 
-        user = usersService.initGroups(user.getId());
+        user.setGroups(usersService.initGroups(user).getGroups());
         request.getSession().setAttribute("user", user);
 
         if (user != null && user.getGroups().remove(groupToUpdate)) {
@@ -178,7 +177,7 @@ public class RestServiceController {
 	@RequestMapping("/myGroups")
 	public Set<GroupResponse> myGroups(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        user = usersService.initGroups(user.getId());
+        user = usersService.initGroups(user);
 		return groupsService.getUserRelevantGroupResponses(user);
 	}
 
@@ -190,7 +189,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/myEventsCategories", method = RequestMethod.GET)
 	public Set<CategoryResponse> myEventsCategories(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        user = usersService.initEvents(user.getId());
+        user = usersService.initEvents(user);
 		return eventsService.getUserEventsCounterByCategories(user);
 	}
 
@@ -227,8 +226,8 @@ public class RestServiceController {
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event.getId());
-        user = usersService.initEvents(user.getId());
+		Event eventToUpdate = eventsService.initParticipants(event);
+        user.setEvents(usersService.initEvents(user).getEvents());
 
 		if (!(eventToUpdate.getParticipants() == null) && !eventToUpdate.getParticipants().contains(user)) {
 			eventToUpdate.getParticipants().add(user);
@@ -236,22 +235,24 @@ public class RestServiceController {
 			eventsService.update(eventToUpdate);
 			usersService.update(user);
 		}
+        request.getSession().setAttribute("user", user);
 		return eventToUpdate;
 	}
 
 	@RequestMapping(value="/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignGroupFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event.getId());
+		Event eventToUpdate = eventsService.initParticipants(event);
 
 		if(eventToUpdate !=null && !eventToUpdate.getParticipants().isEmpty() && eventToUpdate.getParticipants().remove(user)) {
 			eventsService.update(eventToUpdate);
 		}
 
-        user = usersService.initEvents(user.getId());
+        user.setEvents(usersService.initEvents(user).getEvents());
 		if (user != null && !user.getEvents().isEmpty() && user.getEvents().remove(eventToUpdate)) {
 			usersService.update(user);
 		}
+        request.getSession().setAttribute("user", user);
 		return eventToUpdate;
 	}
 
