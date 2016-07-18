@@ -44,6 +44,7 @@ $(document).ready(function () {
 	var $buttonApply = $singlePage.find('.SinglePage__button--apply');
 	var $buttonAttend = $singlePage.find('.SinglePage__button--attend');
 	var $buttonSubscribe = $singlePage.find('.SinglePage__button--subscribe');
+	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	$buttonAddEvent.on('click', function () {
@@ -124,6 +125,7 @@ $(document).ready(function () {
 		$buttonApplyGroup.show();
 		$buttonCancelEditingGroup.show();
 		$buttonSubscribe.hide();
+		$buttonUnSubscribe.hide();
 		return false;
 	});
 	
@@ -159,6 +161,8 @@ $(document).ready(function () {
 		$buttonDeleteGroup.show();
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
 			$buttonSubscribe.show();
+		} else {
+			$buttonUnSubscribe.show();
 		}
 		$buttonApplyGroup.hide();
 		$buttonCancelEditingGroup.hide();
@@ -1352,7 +1356,6 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
-			//$buttonSubscribe.show();
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("group", {id: item.id}, function (group) {
@@ -1362,7 +1365,10 @@ $(document).ready(function () {
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
 							assignUnassignGroup('assignGroupToUser', item.id, refreshGroupParticipantsList);
-							//assignEvent(item.id);
+						});
+						$buttonUnSubscribe.on('click', function (group) {
+							group.preventDefault();
+							assignUnassignGroup('unassignUserFromGroup', item.id, refreshGroupParticipantsList);
 						});
 					});
 				}
@@ -1532,6 +1538,8 @@ $(document).ready(function () {
 		if (user) {
 			if ($groupParticipants.find("[data-id=" + user.id + "]").length == 0) {
 				$buttonSubscribe.show();
+			} else {
+				$buttonUnSubscribe.show();
 			}
 		}
 	}

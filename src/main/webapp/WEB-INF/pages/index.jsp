@@ -428,6 +428,9 @@
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--subscribe"
                             onclick="this.blur();">Subscribe
                     </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--unsubscribe"
+                            onclick="this.blur();">Unsubscribe
+                    </button>
                     <button type="submit"
                             class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelAttend"
                             onclick="this.blur();">Cancel visit
