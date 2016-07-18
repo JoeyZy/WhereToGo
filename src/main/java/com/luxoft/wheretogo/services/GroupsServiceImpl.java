@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -95,6 +97,13 @@ public class GroupsServiceImpl implements GroupsService {
             }
         }
         return groupResponses;
+    }
+
+    @Override
+    public Set<GroupResponse> getUserRelevantGroupResponses(User user) {
+        List<Group> groups = groupsRepository.findByOwner(user);
+
+        return new HashSet<>(convertToGroupResponses(groups));
     }
 
 }

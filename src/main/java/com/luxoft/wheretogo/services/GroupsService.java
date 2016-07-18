@@ -1,11 +1,12 @@
 package com.luxoft.wheretogo.services;
 
 
-import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -25,5 +26,7 @@ public interface GroupsService {
     Group findByName(String groupName);
 
     List<GroupResponse> getRelevantGroupResponses();
+
+    Set<GroupResponse> getUserRelevantGroupResponses(User user);
 
 }

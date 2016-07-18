@@ -209,8 +209,10 @@ h1, h3 {
 
 .groups-list {
   list-style: none;
-  max-width: 50%;
+  max-width: 30%;
   text-align: center;
+  margin-left:8%;
+  margin-right:8%;
   padding: 0;
   opacity: 0;
   font-size: 0;
@@ -326,6 +328,12 @@ h1, h3 {
   background-size: cover;
   padding: 40px 5% 10px;
 }
+
+.group-img {
+  background-size: cover;
+  padding: 10px 5% 10px;
+}
+
 .description{
   display: block;
   padding: 35px 10px 20px 10px;
@@ -366,6 +374,10 @@ h1, h3 {
 }
 .content {
   min-width: 400px;
+}
+
+.group-content {
+  min-width: 30%;
 }
 /* Making the list responsive */
 @media (max-width: 800px) {
@@ -649,7 +661,10 @@ img.event_pic {
   display: block;
   border: 1px solid;
 }
-.total-counter, .total-counter-groups {
+.total-counter, .total-counter-groups,
+.total-counter-all-groups-list,
+.total-counter-my-groups-list
+{
   text-align: center;
   font-size: 16px;
   color:#90A4AE;
