@@ -1056,8 +1056,6 @@ $(document).ready(function () {
 	var $groupParticipantsTemplate = Handlebars.compile($groupParticipantsTemplateScript);
 	var $groupParticipants = $('.GroupPage__groups__list');
 
-
-
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
 			$errors.show();
@@ -1144,7 +1142,6 @@ $(document).ready(function () {
 			$errors.append('<li>' + message + '</li>');
 		}
 	}
-
 
 	function saveGroup(groupJson, newGroup) {
 		if (!validateGroupFields(groupJson)) {
