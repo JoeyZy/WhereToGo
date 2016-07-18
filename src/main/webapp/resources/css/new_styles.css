@@ -228,13 +228,13 @@ h1, h3 {
 }
 
 .my-groups-list {
-  margin-left:0;
-  margin-right:30%;
-  float:right;
+  margin-left:10%;
+  margin-right:0;
+  float:left;
 }
 
 .all-groups-list {
-  margin-left:30%;
+  margin-left:5%;
   margin-right:0;
   float:left;
 }
