@@ -49,7 +49,7 @@ public class Group {
     private String location;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "groups_users", joinColumns = @JoinColumn(name = "groups_id"),
+    @JoinTable(name = "groups_users", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> participants;
 

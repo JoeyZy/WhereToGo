@@ -8,7 +8,6 @@ import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
-import com.luxoft.wheretogo.repositories.GroupsRepository;
 import com.luxoft.wheretogo.services.CurrenciesService;
 import com.luxoft.wheretogo.services.EventsService;
 import com.luxoft.wheretogo.services.GroupsService;
@@ -133,6 +132,36 @@ public class RestServiceController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+    @RequestMapping(value = "/assignGroupToUser", method = RequestMethod.POST)
+    public Group assignGroupToEvent(@RequestBody Group group, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        Group groupToUpdate = groupsService.findById(group.getId());
+
+        if (!(groupToUpdate.getParticipants() == null) &&
+                !groupToUpdate.getParticipants().contains(user)) {
+            groupToUpdate.getParticipants().add(user);
+            user.getGroups().add(groupToUpdate);
+            groupsService.update(groupToUpdate);
+            usersService.update(user);
+        }
+        return groupToUpdate;
+    }
+
+    @RequestMapping(value="/unassignGroupFromUser", method = RequestMethod.POST)
+    public Group unassignEventFromUser(@RequestBody Group event, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        Group groupToUpdate = groupsService.findById(event.getId());
+
+        if(groupToUpdate != null && groupToUpdate.getParticipants().remove(user)) {
+            groupsService.update(groupToUpdate);
+        }
+
+        if (user != null && user.getGroups().remove(groupToUpdate)) {
+            usersService.update(user);
+        }
+        return groupToUpdate;
+    }
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public void addUser(@RequestBody User user) {
