@@ -45,4 +45,6 @@ public interface EventsService {
 	List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user);
 
 	List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user);
+
+	Event initParticipants(long eventId);
 }

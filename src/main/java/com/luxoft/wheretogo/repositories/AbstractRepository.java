@@ -1,6 +1,5 @@
 package com.luxoft.wheretogo.repositories;
 
-import com.luxoft.wheretogo.models.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -10,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Set;
 
 public class AbstractRepository<T> {
 

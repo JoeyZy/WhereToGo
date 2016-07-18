@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 
+import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -17,7 +18,7 @@ public interface GroupsService {
 
     void update(Group group, String ownerEmail);
 
-    public void update(Group group);
+    void update(Group group);
 
     Long getNextGroupId();
 
@@ -28,6 +29,8 @@ public interface GroupsService {
     Group findByName(String groupName);
 
     List<GroupResponse> getRelevantGroupResponses();
+
+    Group initGroupParticipants(long groupId);
 
     Set<GroupResponse> getUserRelevantGroupResponses(User user);
 

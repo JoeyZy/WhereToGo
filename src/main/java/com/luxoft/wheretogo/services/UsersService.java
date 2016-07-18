@@ -19,7 +19,7 @@ public interface UsersService {
 
 	List<User> getNotParticipants(long groupId);
 
-	User initGroups(User user);
+	User initGroups(long userId);
 
-	User initEvents(User user);
+	User initEvents(long userId);
 }

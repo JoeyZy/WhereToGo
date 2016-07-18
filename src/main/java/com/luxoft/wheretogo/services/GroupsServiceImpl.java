@@ -67,21 +67,13 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     @Override
-    public Group findById(long groupId){
-        Group group = groupsRepository.findById(groupId);
-        if (group != null) {
-            Hibernate.initialize(group.getGroupParticipants());
-        }
-        return group;
+    public Group findById(long groupId) {
+        return groupsRepository.findById(groupId);
     }
 
     @Override
     public Group findByName(String groupName) {
-        Group group = groupsRepository.findByName(groupName);
-        if (group != null) {
-            Hibernate.initialize(group.getGroupParticipants());
-        }
-        return group;
+        return groupsRepository.findByName(groupName);
     }
 
     @Override
@@ -101,7 +93,6 @@ public class GroupsServiceImpl implements GroupsService {
     private List<GroupResponse> convertToGroupResponses(List<Group> groups) {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
-            Hibernate.initialize(group.getGroupParticipants());
             if (group.getDeleted() == 0) {
                 groupResponses.add(new GroupResponse(group.getId(), group.getName(),
                         group.getOwner().getFirstName() + " " + group.getOwner().getLastName(),
@@ -111,6 +102,13 @@ public class GroupsServiceImpl implements GroupsService {
         return groupResponses;
     }
 
+    public Group initGroupParticipants(long groupId) {
+        Group group = groupsRepository.findById(groupId);
+        if (group != null) {
+            Hibernate.initialize(group.getGroupParticipants());
+        }
+        return group;
+    }
     @Override
     public Set<GroupResponse> getUserRelevantGroupResponses(User user) {
         List<Group> groups = groupsRepository.findByOwner(user);
