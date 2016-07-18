@@ -1,6 +1,5 @@
 package com.luxoft.wheretogo.services;
 
-import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.repositories.UsersRepository;
 import org.hibernate.Hibernate;
@@ -30,19 +29,12 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public User findById(long userId) {
 		User user = usersRepository.findById(userId);
-		if (user != null) {
-			Hibernate.initialize(user.getEvents());
-		}
 		return user;
 	}
 
 	@Override
 	public User findByEmail(String userLogin) {
 		User user = usersRepository.findByEmail(userLogin);
-		if (user != null) {
-			Hibernate.initialize(user.getEvents());
-			Hibernate.initialize(user.getGroups());
-		}
 		return user;
 	}
 
@@ -57,7 +49,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User initGroups(User user) {
+	public User initGroups(long userId) {
+		User user = usersRepository.findById(userId);
 		if (user != null) {
 			Hibernate.initialize(user.getGroups());
 		}
@@ -65,7 +58,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public User initEvents(User user)  {
+	public User initEvents(long userId) {
+		User user = usersRepository.findById(userId);
 		if (user != null) {
 			Hibernate.initialize(user.getEvents());
 		}

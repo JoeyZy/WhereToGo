@@ -16,7 +16,7 @@ public interface GroupsService {
 
     void update(Group group, String ownerEmail);
 
-    public void update(Group group);
+    void update(Group group);
 
     Long getNextGroupId();
 
@@ -28,4 +28,5 @@ public interface GroupsService {
 
     List<GroupResponse> getRelevantGroupResponses();
 
+    Group initGroupParticipants(long groupId);
 }

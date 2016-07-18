@@ -2,7 +2,6 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
@@ -79,28 +78,17 @@ public class EventsServiceImpl implements EventsService {
 	@Override
 	public List<Event> findByPeriod(LocalDateTime from, LocalDateTime to) {
 		List<Event> events = eventsRepository.findByPeriod(from, to);
-		for (Event event : events) {
-			Hibernate.initialize(event.getParticipants());
-		}
 		return events;
 	}
 
 	@Override
 	public Event findById(long eventId) {
-		Event event = eventsRepository.findById(eventId);
-		if (event != null) {
-			Hibernate.initialize(event.getParticipants());
-		}
-		return event;
+		return eventsRepository.findById(eventId);
 	}
 
 	@Override
 	public Event findByName(String eventName) {
-		Event event = eventsRepository.findByName(eventName);
-		if (event != null) {
-			Hibernate.initialize(event.getParticipants());
-		}
-		return event;
+		return eventsRepository.findByName(eventName);
 	}
 
 	@Override
@@ -128,7 +116,6 @@ public class EventsServiceImpl implements EventsService {
 	private List<EventResponse> convertToEventResponses(List<Event> events, User user) {
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
-			Hibernate.initialize(event.getParticipants());
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
 					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
 					event.getStartDateTime(),
@@ -189,5 +176,14 @@ public class EventsServiceImpl implements EventsService {
 	public List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user) {
 		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1)).collect(Collectors.toList()));
+	}
+
+	@Override
+	public Event initParticipants(long eventId) {
+		Event event = eventsRepository.findById(eventId);
+		if (event != null) {
+			Hibernate.initialize(event.getParticipants());
+		}
+		return event;
 	}
 }

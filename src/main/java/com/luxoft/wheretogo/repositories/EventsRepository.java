@@ -21,5 +21,4 @@ public interface EventsRepository {
 	Event findByName(String eventName);
 
 	List<Event> findByOwner(User owner);
-
 }
