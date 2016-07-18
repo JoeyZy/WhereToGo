@@ -227,87 +227,28 @@
     <div class="all-groups page">
 
         <ul class="groups-list all-groups-list">
-            <div id="all-groups-header"><h3>All Groups</h3></div>
+            <div id="all-groups-header" class="groups-header"><h4>All Groups</h4></div>
             <div class="total-counter-all-groups-list" id="groups-hide"></div>
-            <script id="groups-template" type="x-handlebars-template">
+            <script type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
-
-                        <span class="content">
-			                <div class="group-box-img">
-                                <div class="group-img {{Nature}}" style="background-image:url({{picture}})">
-                                    <%--<div class="group-box-content">--%>
-                                        <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
-
-                                        <%--<div class="group-box-location-and-by">--%>
-                                            <%--<div class="location" title="{{location}}"><img class="icons"--%>
-                                                                                            <%--src="resources/images/location.png"> {{location}}</div>--%>
-                                            <%--<div class="created-by" title="{{owner}}"><img class="icons"--%>
-                                                                                           <%--src="resources/images/black.png"><span> Created by </span>{{owner}}</div>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                </div>
-                            </div>
-                            <%--<div class="category_color Nature"></div>--%>
-
-                            <%--<div class="description" title="{{description}}">--%>
-                               <%--<div class="description__center">{{description}}</div>--%>
-                            <%--</div>--%>
+                        <span class="content group-content">
+                            <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
                         </span>
-                    <!--<div class="highlight"></div> - with hover buttons became unclickable -->
-                        <%--<span class="button_group" visit={{attends}}>--%>
-                            <%--<button type="button" class="btn assign-action-btn btn-success">--%>
-                                <%--<span class="glyphicon glyphicon-ok assign-action-img"/>--%>
-                                    <%--Join--%>
-                            <%--</button>--%>
-                            <%--<button type="button" class="btn assign-action-btn btn-default">--%>
-                                <%--<span class="glyphicon glyphicon-remove assign-action-img"/>--%>
-                                    <%--Cancel join--%>
-                            <%--</button>--%>
-                        <%--</span>--%>
                 </li>
                 {{/each}}
             </script>
         </ul>
 
         <ul class="groups-list my-groups-list">
-            <div id="my-groups-header"><h3>My Groups</h3></div>
+            <div id="my-groups-header"><h4>My Groups</h4></div>
             <div class="total-counter-my-groups-list" id="groups-hide1"></div>
-            <script id="groups-template1" type="x-handlebars-template">
+            <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
 
                         <span class="content group-content">
-			                <div class="group-box-img">
-                                <div class="group-img {{Nature}}" style="background-image:url({{picture}})">
-                                    <div class="group-box-content">
-                                        <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
-
-                                        <div class="group-box-location-and-by">
-                                            <div class="location" title="{{location}}"><img class="icons"
-                                                                                            src="resources/images/location.png"> {{location}}</div>
-                                            <div class="created-by" title="{{owner}}"><img class="icons"
-                                                                                           src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="category_color Nature"></div>
-
-                            <%--<div class="description" title="{{description}}">--%>
-                               <%--<div class="description__center">{{description}}</div>--%>
-                            <%--</div>--%>
-                        </span>
-                    <!--<div class="highlight"></div> - with hover buttons became unclickable -->
-                        <span class="button_group" visit={{attends}}>
-                            <button type="button" class="btn assign-action-btn btn-success">
-                                <span class="glyphicon glyphicon-ok assign-action-img"/>
-                                    Join
-                            </button>
-                            <button type="button" class="btn assign-action-btn btn-default">
-                                <span class="glyphicon glyphicon-remove assign-action-img"/>
-                                    Cancel join
-                            </button>
+                            <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
                         </span>
                 </li>
                 {{/each}}
