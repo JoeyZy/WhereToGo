@@ -99,6 +99,7 @@ public class GroupsServiceImpl implements GroupsService {
     private List<GroupResponse> convertToGroupResponses(List<Group> groups) {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
+            Hibernate.initialize(group.getGroupParticipants());
             if (group.getDeleted() == 0) {
                 groupResponses.add(new GroupResponse(group.getId(), group.getName(),
                         group.getOwner().getFirstName() + " " + group.getOwner().getLastName(),
