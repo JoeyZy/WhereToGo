@@ -3,6 +3,7 @@ $(document).ready(function () {
 	// 	An array containing objects with information about the events.
 	var events = [],
 		groups = [],
+		myGroups = [],
 		filters = {},
 		filterColors = {},
 		user = undefined;
@@ -386,9 +387,19 @@ $(document).ready(function () {
 		}
 	}
 
+	function hideSideBar() {
+		$(".side-bar").addClass('not-displayed');
+	}
+
+	function showSideBar() {
+		$(".side-bar").removeClass('not-displayed');
+	}
+	
 	$('.home').click(function () {
 		hideArchiveElements();
 		loadEvents();
+
+		showSideBar()
 	});
 
 	$allGroupsLink.on("click", function (group) {
@@ -396,6 +407,8 @@ $(document).ready(function () {
 		group.preventDefault();
 		window.location.hash = 'groups';
 		loadGroups();
+
+		hideSideBar();
 	});
 
 	function hideArchiveElements() {
@@ -408,6 +421,8 @@ $(document).ready(function () {
 		event.preventDefault();
 		window.location.hash = 'myEvents';
 		loadEvents("myEvents");
+
+		showSideBar()
 	});
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
@@ -512,16 +527,25 @@ $(document).ready(function () {
 			type = "groups"
 		}
 
-		$.getJSON(type, function (data) {
+		$.getJSON("groups", function (data) {
 			groups = data;
 			groups.sort(function (a, b) {
 				return moment(a.name).isAfter(moment(b.name));
 			});
 
-			// Call a function to create HTML for all the events.
-			generateAllgroupsHTML(groups);
-
+			generateGroupsHTML("all-groups-list", "groups", groups);
 		});
+
+		$.getJSON("myGroups", function (data) {
+			myGroups = data;
+			myGroups.sort(function (a, b) {
+				return moment(a.name).isAfter(moment(b.name));
+			});
+
+			generateGroupsHTML("my-groups-list", "myGroups", myGroups);
+		});
+
+
 	}
 	
 
@@ -752,27 +776,31 @@ $(document).ready(function () {
 		attachClickEventToButtons();
 
 	}
-	function generateAllgroupsHTML(data) {
-		$('.total-counter-groups').empty();
-		$('.total-counter-groups').append("Total " +data.length + " groups");
-		var list = $('.all-groups .groups-list');
+
+	function generateGroupsHTML(listType, dataType, groupsData) {
+		$('.total-counter-'+listType).empty();
+		$('.total-counter-'+listType).append(groupsData.length + " groups");
+		var GroupsList = $('.'+listType);
 		var theTemplateScript = $('#groups-template').html();
 		//Compile the template​
 		var theTemplate = Handlebars.compile(theTemplateScript);
-		list.find('li').remove();
-		list.append(theTemplate(data));
+		GroupsList.find('li').remove();
+		GroupsList.append(theTemplate(groupsData));
 
 		// Each group has a data-index attribute.
 		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
-		$.each(list.find('li'), function (index, item) {
+		$.each(GroupsList.find('li'), function (index, item) {
 			$(item).find('span.content').on('click', function (e) {
 				e.preventDefault();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
 			});
 		});
+
 		showInlineAssignments(); //check!
+
+		showInlineAssignments();
 		var header = $('header');
 
 		$('.btn-add-event').on('click', function () {
@@ -792,7 +820,7 @@ $(document).ready(function () {
 
 		$('.userInfo').click(function (e) {
 			e.preventDefault();
-			window.location.hash = 'user/email=' + $(this).data('user');
+			window.location.hash = 'user/email=' + $(this).groupsData('user');
 		});
 		$('.logout').click(function (e) {
 			e.preventDefault();
@@ -1033,6 +1061,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allEvents.addClass('hidden');
 		allGroups.addClass('hidden');
+		$('.add-group-div').addClass('not-displayed');
+		$('.add-event-div').removeClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allEvents.each(function () {
@@ -1063,6 +1093,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allGroups.addClass('hidden');
 		allEvents.addClass('hidden');
+		$('.add-group-div').removeClass('not-displayed');
+		$('.add-event-div').addClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allGroups.each(function () {
