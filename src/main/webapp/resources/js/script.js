@@ -1030,6 +1030,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allEvents.addClass('hidden');
 		allGroups.addClass('hidden');
+		$('.add-group-div').addClass('not-displayed');
+		$('.add-event-div').removeClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allEvents.each(function () {
@@ -1060,6 +1062,8 @@ $(document).ready(function () {
 		// Hide all the events in the events list.
 		allGroups.addClass('hidden');
 		allEvents.addClass('hidden');
+		$('.add-group-div').removeClass('not-displayed');
+		$('.add-event-div').addClass('not-displayed');
 		// Iterate over all of the events.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
 		allGroups.each(function () {

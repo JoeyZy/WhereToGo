@@ -51,7 +51,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="navbar-btn-container">
+                        <div class="navbar-btn-container add-group-div">
                             <button class="btn btn-block btn-add-group"
                                     title="Please login with active profile to create a group">
                                 <span class="glyphicon glyphicon-plus"></span>
@@ -60,7 +60,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="navbar-btn-container">
+                        <div class="navbar-btn-container add-event-div">
                             <button class="btn btn-block btn-add-event"
                                     title="Please login with active profile to create an event">
                                 <span class="glyphicon glyphicon-plus"></span>
