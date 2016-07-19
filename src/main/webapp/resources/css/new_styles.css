@@ -503,7 +503,7 @@ h1, h3 {
   border: none;
   background-color: white;
 }
-.SinglePage form #description, .SinglePage form #location, .SinglePage form #GroupDescription {
+.SinglePage form #description, .SinglePage form #location, .SinglePage form #GroupDescription, .SinglePage form #GroupLocation {
   padding: 5px;
   clear: both;
   width: 100%;
@@ -515,7 +515,7 @@ h1, h3 {
   background-color: #87bae1;
   margin: 12px;
 }
-.SinglePage #description.editable, .SinglePage #location.editable, .SinglePage #GroupDescription.editable {
+.SinglePage #description.editable, .SinglePage #location.editable, .SinglePage #GroupDescription.editable, .SinglePage #GroupLocation.editable {
   border: 1px solid #dbe3e7;
 }
 .SinglePage img {
