@@ -1392,6 +1392,7 @@ $(document).ready(function () {
 						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
+						$buttonUnSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
 							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
