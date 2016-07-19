@@ -317,6 +317,7 @@ $(document).ready(function () {
 		if ($showArchiveCheckbox.find("input").prop("checked")) {
 			showArchiveDateFilters();
 			makeEventPageUneditable();
+			makeGroupPageUneditable();
 			hideShowSinglePageAllButtons(true);
 		}
 		else {
@@ -325,6 +326,7 @@ $(document).ready(function () {
 			$archiveTo.val(null);
 			loadEvents();
 			makeEventPageEditable();
+			makeGroupPageEditable();
 			hideShowSinglePageAllButtons(false);
 		}
 	});
@@ -1427,9 +1429,11 @@ $(document).ready(function () {
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
 				
 				if (user && (user.id === group.owner.id)) {
+					$singlePage.find('.SinglePage__all_buttons').removeClass("hidden");
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
+
 				allowSubscribeGroup();
 			}
 			else {
