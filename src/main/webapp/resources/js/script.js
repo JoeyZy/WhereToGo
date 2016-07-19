@@ -91,6 +91,7 @@ $(document).ready(function () {
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
 	var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
 	var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
+	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
@@ -298,6 +299,8 @@ $(document).ready(function () {
 		$groupPage.hide();
 
 		$eventDescription.empty();
+		$groupDescription.empty();
+		$groupLocation.empty();
 		$eventLocation.empty();
 		$eventCost.val("");
 		$eventCostCurrency.val("");
@@ -316,6 +319,7 @@ $(document).ready(function () {
 		if ($showArchiveCheckbox.find("input").prop("checked")) {
 			showArchiveDateFilters();
 			makeEventPageUneditable();
+			makeGroupPageUneditable();
 			hideShowSinglePageAllButtons(true);
 		}
 		else {
@@ -324,6 +328,7 @@ $(document).ready(function () {
 			$archiveTo.val(null);
 			loadEvents();
 			makeEventPageEditable();
+			makeGroupPageEditable();
 			hideShowSinglePageAllButtons(false);
 		}
 	});
@@ -1420,7 +1425,8 @@ $(document).ready(function () {
 				}				
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
 				
-				if (user && (user.id === group.owner.id || user.role === "admin")) {
+				if (user && (user.id === group.owner.id)) {
+					$singlePage.find('.SinglePage__all_buttons').removeClass("hidden");
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
@@ -1522,7 +1528,7 @@ $(document).ready(function () {
 				$eventEnd.val(endDate);
 				$eventCost.val(event.cost);
 				$eventCostCurrency.val(event.currency.name);
-				if (user && (user.id === event.owner.id || user.role === "admin")) {
+				if (user && (user.id === event.owner.id || user.role === adminRole)) {
 					$buttonEdit.show();
 					$buttonDelete.show();
 				}
