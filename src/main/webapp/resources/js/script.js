@@ -1388,6 +1388,7 @@ $(document).ready(function () {
 						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
+						$buttonUnSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
 							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
@@ -1397,9 +1398,14 @@ $(document).ready(function () {
 							assignUnassignGroup('unassignUserFromGroup', item.id, refreshGroupParticipantsList);
 						});
 					});
+
 				}
+
 			})
+
 		}
+
+
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 			allowSubscribeGroup();
@@ -1479,13 +1485,11 @@ $(document).ready(function () {
 						$buttonAttend.on('click', function (event) {
 							event.preventDefault();
 							assignUnassignEvent('assignEventToUser', item.id, refreshParticipantsList);
-							//assignEvent(item.id);
 						});
 
 						$buttonCancelAttend.on('click', function (event) {
 							event.preventDefault();
 							assignUnassignEvent('unassignEventFromUser', item.id, refreshParticipantsList);
-							//unassignEvent(item.id);
 						});
 					});
 				}
