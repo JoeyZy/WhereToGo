@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.services;
 
+import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -7,13 +8,11 @@ import com.luxoft.wheretogo.repositories.GroupIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.GroupsRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -38,12 +37,13 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     @Override
-    public void update(Group group, String ownerEmail) {
+    public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
         Group oldGroup = initGroupParticipants(group);
         User owner;
         if (oldGroup != null) {
             owner = oldGroup.getOwner();
-            if (!owner.getEmail().equals(ownerEmail)) {
+            if (!owner.getEmail().equals(ownerEmail) &&
+                    !authorities.contains(ConfigureSpringSecurity.grantedAdminRole)) {
                 return;
             }
             group.setOwner(owner);

@@ -12,6 +12,7 @@ import com.luxoft.wheretogo.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -88,29 +89,27 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
-	public void deleteEvent(@RequestBody Event event, Principal principal) {
+	public void deleteEvent(@RequestBody Event event, Authentication authentication) {
 		event.setDeleted(DELETED);
-		eventsService.update(event, principal.getName());
+		eventsService.update(event, authentication.getName(), authentication.getAuthorities());
 	}
 
 	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
-	public void updateEvent(@RequestBody Event event, Principal principal) {
+	public void updateEvent(@RequestBody Event event, Authentication authentication) {
 		event.setDeleted(NOT_DELETED);
-		eventsService.update(event, principal.getName());
+		eventsService.update(event, authentication.getName(), authentication.getAuthorities());
 	}
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
-    public void deleteGroup(@RequestBody Group group, Principal principal) {
+    public void deleteGroup(@RequestBody Group group, Authentication authentication) {
             group.setDeleted(DELETED);
-            groupsService.update(group, principal.getName());
+            groupsService.update(group, authentication.getName(), authentication.getAuthorities());
     }
 
     @RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
-    public void updateGroup(@RequestBody Group group, Principal principal) {
-        if (principal != null) {
-            group.setDeleted(NOT_DELETED);
-            groupsService.update(group, principal.getName());
-        }
+    public void updateGroup(@RequestBody Group group, Authentication authentication) {
+        group.setDeleted(NOT_DELETED);
+        groupsService.update(group, authentication.getName(), authentication.getAuthorities());
     }
 
 	@RequestMapping("/group")

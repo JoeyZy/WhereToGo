@@ -91,7 +91,6 @@ $(document).ready(function () {
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
 	var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
 	var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
-	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
@@ -207,8 +206,8 @@ $(document).ready(function () {
 	}
 
 	function renderConfirmationPage() {
-		var parentDisable = $('.parentDisable');
-		parentDisable.addClass('visible');
+		/*var parentDisable = $('.parentDisable');
+		parentDisable.addClass('visible');*/
 		var confirmationPopUp = $('#ConfirmationPopUp');
 		confirmationPopUp.addClass('visible');
 		$buttonCancelDelete.show();
@@ -232,8 +231,8 @@ $(document).ready(function () {
 	
 
 	function renderConfirmationGroupPage() {
-		var parentDisable = $('.parentDisable');
-		parentDisable.addClass('visible');
+		/*var parentDisable = $('.parentDisable');
+		parentDisable.addClass('visible');*/
 		var confirmationPopUp = $('#ConfirmationPopUpGroup');
 		confirmationPopUp.addClass('visible');
 		$buttonCancelDelete.show();
@@ -1388,6 +1387,7 @@ $(document).ready(function () {
 						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
 						$buttonSubscribe.off();
+						$buttonUnSubscribe.off();
 						$buttonSubscribe.on('click', function (group) {
 							group.preventDefault();
 							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
@@ -1420,7 +1420,7 @@ $(document).ready(function () {
 				}				
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
 				
-				if (user && (user.id === group.owner.id)) {
+				if (user && (user.id === group.owner.id || user.role === "admin")) {
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
@@ -1522,7 +1522,7 @@ $(document).ready(function () {
 				$eventEnd.val(endDate);
 				$eventCost.val(event.cost);
 				$eventCostCurrency.val(event.currency.name);
-				if (user && (user.id === event.owner.id || user.role === adminRole)) {
+				if (user && (user.id === event.owner.id || user.role === "admin")) {
 					$buttonEdit.show();
 					$buttonDelete.show();
 				}

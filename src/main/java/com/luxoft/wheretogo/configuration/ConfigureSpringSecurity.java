@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class ConfigureSpringSecurity extends WebSecurityConfigurerAdapter {
+    public static final SimpleGrantedAuthority grantedAdminRole = new SimpleGrantedAuthority("admin");
+    public static final SimpleGrantedAuthority grantedUserRole = new SimpleGrantedAuthority("user");
 
     @Autowired
     @Qualifier("userDetailsService")
