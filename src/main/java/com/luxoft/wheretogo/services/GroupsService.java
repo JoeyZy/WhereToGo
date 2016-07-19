@@ -5,7 +5,9 @@ import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public interface GroupsService {
 
     boolean add(Group group);
 
-    void update(Group group, String ownerEmail);
+    void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities);
 
     void update(Group group);
 

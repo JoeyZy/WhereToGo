@@ -1,5 +1,7 @@
 package com.luxoft.wheretogo.services;
 
+import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
+import com.luxoft.wheretogo.configuration.SpringSecurityInitializer;
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.User;
@@ -9,16 +11,13 @@ import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,12 +41,13 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
-	public void update(Event event, String ownerEmail) {
+	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
 		Event oldEvent = initParticipants(event);
 		User owner;
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
-			if (!owner.getEmail().equals(ownerEmail)) {
+			if (!owner.getEmail().equals(ownerEmail) &&
+					!authorities.contains(ConfigureSpringSecurity.grantedAdminRole)) {
 				return;
 			}
 			event.setOwner(oldEvent.getOwner());

@@ -1,6 +1,5 @@
 package com.luxoft.wheretogo.repositories;
-import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
-import com.luxoft.wheretogo.configuration.HibernateTestConfiguration;
+import com.luxoft.wheretogo.configuration.*;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -13,7 +12,7 @@ import javax.sql.DataSource;
 /**
  * Created by eleonora on 19.07.16.
  */
-@ContextConfiguration(classes = { HibernateTestConfiguration.class})
+@ContextConfiguration(classes = { HibernateTestConfiguration.class, WebAppInitializer.class})
 public abstract class AbstractRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired
     DataSource dataSource;

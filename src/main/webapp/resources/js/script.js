@@ -207,8 +207,8 @@ $(document).ready(function () {
 	}
 
 	function renderConfirmationPage() {
-		var parentDisable = $('.parentDisable');
-		parentDisable.addClass('visible');
+		/*var parentDisable = $('.parentDisable');
+		parentDisable.addClass('visible');*/
 		var confirmationPopUp = $('#ConfirmationPopUp');
 		confirmationPopUp.addClass('visible');
 		$buttonCancelDelete.show();
@@ -232,8 +232,8 @@ $(document).ready(function () {
 	
 
 	function renderConfirmationGroupPage() {
-		var parentDisable = $('.parentDisable');
-		parentDisable.addClass('visible');
+		/*var parentDisable = $('.parentDisable');
+		parentDisable.addClass('visible');*/
 		var confirmationPopUp = $('#ConfirmationPopUpGroup');
 		confirmationPopUp.addClass('visible');
 		$buttonCancelDelete.show();
@@ -1400,14 +1400,9 @@ $(document).ready(function () {
 							assignUnassignGroup('unassignUserFromGroup', item.id, refreshGroupParticipantsList);
 						});
 					});
-
 				}
-
 			})
-
 		}
-
-
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 			allowSubscribeGroup();
@@ -1433,7 +1428,6 @@ $(document).ready(function () {
 					$buttonEditGroup.show();
 					$buttonDeleteGroup.show();
 				}
-
 				allowSubscribeGroup();
 			}
 			else {
@@ -1489,11 +1483,13 @@ $(document).ready(function () {
 						$buttonAttend.on('click', function (event) {
 							event.preventDefault();
 							assignUnassignEvent('assignEventToUser', item.id, refreshParticipantsList);
+							//assignEvent(item.id);
 						});
 
 						$buttonCancelAttend.on('click', function (event) {
 							event.preventDefault();
 							assignUnassignEvent('unassignEventFromUser', item.id, refreshParticipantsList);
+							//unassignEvent(item.id);
 						});
 					});
 				}
