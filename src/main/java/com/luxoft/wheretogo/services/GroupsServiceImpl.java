@@ -47,9 +47,7 @@ public class GroupsServiceImpl implements GroupsService {
                 return;
             }
             group.setOwner(owner);
-            if (group.getGroupParticipants() == null) {
-                group.setGroupParticipants(oldGroup.getGroupParticipants());
-            }
+            group.setGroupParticipants(oldGroup.getGroupParticipants());
         }
         groupsRepository.merge(group);
     }
@@ -109,6 +107,7 @@ public class GroupsServiceImpl implements GroupsService {
         }
         return group;
     }
+
     @Override
     public Set<GroupResponse> getUserRelevantGroupResponses(User user) {
         List<Group> groups = groupsRepository.findByOwner(user);
