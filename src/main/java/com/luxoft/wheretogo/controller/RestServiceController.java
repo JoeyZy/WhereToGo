@@ -89,24 +89,20 @@ public class RestServiceController {
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
 	public void deleteEvent(@RequestBody Event event, Principal principal) {
-        event = eventsService.initParticipants(event);
 		event.setDeleted(DELETED);
 		eventsService.update(event, principal.getName());
 	}
 
 	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
 	public void updateEvent(@RequestBody Event event, Principal principal) {
-        event = eventsService.initParticipants(event);
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event, principal.getName());
 	}
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
     public void deleteGroup(@RequestBody Group group, Principal principal) {
-        if (principal != null) {
             group.setDeleted(DELETED);
             groupsService.update(group, principal.getName());
-        }
     }
 
     @RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
