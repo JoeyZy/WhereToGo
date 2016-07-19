@@ -25,6 +25,9 @@
         <guava.version>19.0</guava.version>
         <javax.mail-api.version>1.5.5</javax.mail-api.version>
         <jackson-databind.version>2.4.3</jackson-databind.version>
+        <quartz.version>2.1.6</quartz.version>
+        <hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
     </properties>
 
     <dependencies>
@@ -93,12 +96,12 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
+            <version>${validation-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.1.2.Final</version>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <!-- MySQL -->
@@ -122,7 +125,7 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.1.6</version>
+            <version>${quartz.version}</version>
         </dependency>
         <!-- spring's support for quartz -->
         <dependency>
