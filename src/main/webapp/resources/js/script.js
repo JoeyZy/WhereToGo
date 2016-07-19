@@ -299,6 +299,8 @@ $(document).ready(function () {
 		$groupPage.hide();
 
 		$eventDescription.empty();
+		$groupDescription.empty();
+		$groupLocation.empty();
 		$eventLocation.empty();
 		$eventCost.val("");
 		$eventCostCurrency.val("");
