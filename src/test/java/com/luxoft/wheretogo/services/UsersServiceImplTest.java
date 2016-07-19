@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.repositories.UsersRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,9 +40,9 @@ public class UsersServiceImplTest {
 
     @org.junit.Test
     public void add() throws Exception {
-        doNothing().when(usersRepository).add(any(User.class));
-        usersService.add(any(User.class));
-        verify(usersRepository, atLeastOnce()).add(any(User.class));
+        doNothing().when(usersRepository).add(any(UserInfo.class));
+        usersService.add(any(UserInfo.class));
+        verify(usersRepository, atLeastOnce()).add(any(UserInfo.class));
     }
 
     @org.junit.Test

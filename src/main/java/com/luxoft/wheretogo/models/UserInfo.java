@@ -17,6 +17,7 @@ public class UserInfo {
     private String email;
     private String firstName;
     private String lastName;
+    private String password;
     private boolean active;
 
     public UserInfo(String role, String email, String firstName, String lastName, boolean active) {
@@ -26,4 +27,6 @@ public class UserInfo {
         this.lastName = lastName;
         this.active = active;
     }
+
+    public UserInfo() {}
 }

@@ -1,13 +1,14 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.UserInfo;
 
 import java.util.List;
 import java.util.Set;
 
 public interface UsersRepository {
 
-	void add(User user);
+	void add(UserInfo user);
 
 	List<User> findAll();
 

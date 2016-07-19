@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.repositories.UsersRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class UsersServiceImpl implements UsersService {
 	private UsersRepository usersRepository;
 
 	@Override
-	public void add(User user) {
+	public void add(UserInfo user) {
 		usersRepository.add(user);
 	}
 

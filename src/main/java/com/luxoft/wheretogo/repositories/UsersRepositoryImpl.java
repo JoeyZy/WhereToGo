@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.models.UserInfo;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.LongType;
@@ -21,13 +22,17 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 	}
 
 	@Override
-	public void add(User user) {
-		if (findByEmail(user.getEmail()) == null) {
-			user.setPassword(encoder.encode(user.getPassword()));
-			user.setActive(true);
-			super.add(user);
+	public void add(UserInfo user) {
+		User u = new User();
+		u.setEmail(user.getEmail());
+		u.setPassword(encoder.encode(user.getPassword()));
+		u.setFirstName(user.getFirstName());
+		u.setLastName(user.getLastName());
+		u.setActive(true);
+		if (findByEmail(u.getEmail()) == null) {
+			super.add(u);
 		}
-		super.update(user);
+		super.update(u);
 	}
 
 	@Override

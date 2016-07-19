@@ -175,7 +175,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public void addUser(@RequestBody User user) {
+	public void addUser(@RequestBody UserInfo user) {
 		usersService.add(user);
 	}
 
