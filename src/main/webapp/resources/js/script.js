@@ -488,8 +488,7 @@ $(document).ready(function () {
 				window.location.hash = oldLocationHash;
 			}
 		}
-	});
-	
+	});	
 	function loadEvents(type, searchFrom, searchTo) {
 		var type = type;
 		if (!type) {
@@ -737,11 +736,7 @@ $(document).ready(function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
-
-		$('.btn-add-group').on('click', function () {
-			window.location.hash = 'addGroup';
-			return false;
-		});
+		
 
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();

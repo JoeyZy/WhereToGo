@@ -5,27 +5,27 @@ INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUE
 INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
-  (1, 100, 0, 'Description of the event', concat(CURDATE(), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Concert....',
+  (1, 100, 'N' , 'Description of the event', concat(CURDATE(), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Concert....',
    concat(CURDATE(), ' 22:00:00'), 1, 1),
-  (2, 200, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 1), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Movie......',
+  (2, 200, 'N' , 'Description of the event', concat(ADDDATE(CURDATE(), 1), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Movie......',
    concat(ADDDATE(CURDATE(), 1), ' 22:00:00'), 2, 1),
-  (3, 300, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 2), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Nature.....',
+  (3, 300, 'N' , 'Description of the event', concat(ADDDATE(CURDATE(), 2), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Nature.....',
    concat(ADDDATE(CURDATE(), 2), ' 22:00:00'), 3, 1),
-  (4, 400, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 3), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Pub........',
+  (4, 400, 'N' , 'Description of the event', concat(ADDDATE(CURDATE(), 3), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Pub........',
    concat(ADDDATE(CURDATE(), 3), ' 22:00:00'), 1, 2),
-  (5, 500, 0, 'Description of the event', concat(ADDDATE(CURDATE(), 4), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......0',
+  (5, 500, 'N' , 'Description of the event', concat(ADDDATE(CURDATE(), 4), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......0',
    concat(ADDDATE(CURDATE(), 4), ' 22:00:00'), 2, 1),
-  (9, 500, 0, 'Description of the event1', concat(ADDDATE(CURDATE(), 5), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......1',
+  (9, 500, 'N' , 'Description of the event1', concat(ADDDATE(CURDATE(), 5), ' 23:38:00'), 'Lepse Street, 6z, Kiev', 'Sport......1',
    concat(ADDDATE(CURDATE(), 5), ' 22:00:00'), 2, 1),
-  (10, 500, 0, 'Description of the event2', '2016-04-27 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......2', '2016-04-27 22:00:00', 2, 1),
-  (11, 500, 0, 'Description of the event3', '2016-04-28 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......3', '2016-04-28 22:00:00', 2, 1),
-  (6, 600, 0, 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....0', '2016-04-22 22:00:00', 3, 1),
-  (12, 600, 0, 'Description of the event', '2016-04-23 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....1', '2016-04-23 22:00:00', 3, 1),
-  (13, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....2', '2016-04-24 22:00:00', 3, 1),
-  (14, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....3', '2016-04-24 22:00:00', 3, 1),
-  (15, 600, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....4', '2016-04-24 22:00:00', 3, 1),
-  (7, 700, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Trip.......', '2016-04-24 13:38:00', 1, 1),
-  (8, 800, 0, 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Other......', '2016-04-24 22:00:00', 2, 1);
+  (10, 500, 'N' , 'Description of the event2', '2016-04-27 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......2', '2016-04-27 22:00:00', 2, 1),
+  (11, 500, 'N' , 'Description of the event3', '2016-04-28 23:38:00', 'Lepse Street, 6z, Kiev', 'Sport......3', '2016-04-28 22:00:00', 2, 1),
+  (6, 600, 'N' , 'Description of the event', '2016-04-22 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....0', '2016-04-22 22:00:00', 3, 1),
+  (12, 600, 'N' , 'Description of the event', '2016-04-23 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....1', '2016-04-23 22:00:00', 3, 1),
+  (13, 600, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....2', '2016-04-24 22:00:00', 3, 1),
+  (14, 600, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....3', '2016-04-24 22:00:00', 3, 1),
+  (15, 600, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Theatre....4', '2016-04-24 22:00:00', 3, 1),
+  (7, 700, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Trip.......', '2016-04-24 13:38:00', 1, 1),
+  (8, 800, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Other......', '2016-04-24 22:00:00', 2, 1);
 
 INSERT INTO `events_categories` (category_id, event_id) VALUES
   (1, 1),

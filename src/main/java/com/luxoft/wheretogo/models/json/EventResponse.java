@@ -18,12 +18,13 @@ public class EventResponse {
 	private String description;
 	private String startTime;
 	private String endTime;
-	private Integer deleted;
+	private Boolean deleted;
 	private String picture;
 	private String location;
 	private boolean attends;
 
-	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime, Date endDateTime, Integer deleted, String picture, String location, boolean attends) {
+	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime,
+						 Date endDateTime, Boolean deleted, String picture, String location, boolean attends) {
 		this.id = id;
 		this.name = name;
 		setCategories(category);

@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.configuration;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @Configuration
@@ -23,7 +25,7 @@ public class HibernateConfiguration {
 	private Environment environment;
 
 	@Bean
-	public LocalSessionFactoryBean sessionFactory() {
+	public LocalSessionFactoryBean sessionFactory() throws PropertyVetoException {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
 		sessionFactory.setPackagesToScan("com.luxoft.wheretogo.models");
@@ -32,12 +34,17 @@ public class HibernateConfiguration {
 	}
 
 	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-		dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-		dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+	public DataSource dataSource() throws PropertyVetoException {
+		ComboPooledDataSource dataSource = new ComboPooledDataSource();
+		dataSource.setDriverClass(environment.getRequiredProperty("jdbc.driverClassName"));
+		dataSource.setJdbcUrl(environment.getRequiredProperty("jdbc.url"));
+		dataSource.setUser(environment.getRequiredProperty("jdbc.username"));
 		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+		dataSource.setMinPoolSize(Integer.valueOf(environment.getRequiredProperty("c3po.minPoolSize")));
+		dataSource.setMaxPoolSize(Integer.valueOf(environment.getRequiredProperty("c3po.maxPoolSize")));
+		dataSource.setCheckoutTimeout(Integer.valueOf(environment.getRequiredProperty("c3po.timeout")));
+		dataSource.setMaxStatements(Integer.valueOf(environment.getRequiredProperty("c3po.max_statements")));
+		dataSource.setIdleConnectionTestPeriod(Integer.valueOf(environment.getRequiredProperty("c3po.idle_test_period")));
 		return dataSource;
 	}
 

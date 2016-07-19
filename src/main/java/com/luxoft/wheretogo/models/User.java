@@ -37,6 +37,7 @@ public class User {
 	@NotNull
 	private String role = "user";
 
+	@JsonIgnore
 	@Email
 	@Column(unique = true)
 	private String email;
@@ -63,9 +64,6 @@ public class User {
 
 	@NotNull
 	private boolean active;
-
-	public User() {
-	}
 
 	@JsonIgnore
 	public String getPassword() {

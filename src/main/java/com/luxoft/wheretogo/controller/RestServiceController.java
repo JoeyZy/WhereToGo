@@ -1,10 +1,6 @@
 package com.luxoft.wheretogo.controller;
 
-import com.luxoft.wheretogo.models.ArchiveServiceRequest;
-import com.luxoft.wheretogo.models.Currency;
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.User;
-import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.*;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -28,8 +24,8 @@ import java.util.Set;
 
 @RestController
 public class RestServiceController {
-	private static final Integer DELETED = 1;
-	private static final Integer NOT_DELETED = 0;
+	private static final Boolean DELETED = true;
+	private static final Boolean NOT_DELETED = false;
 
 	@Autowired
 	private EventsService eventsService;
@@ -93,12 +89,14 @@ public class RestServiceController {
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
 	public void deleteEvent(@RequestBody Event event, Principal principal) {
+        event = eventsService.initParticipants(event);
 		event.setDeleted(DELETED);
 		eventsService.update(event, principal.getName());
 	}
 
 	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
 	public void updateEvent(@RequestBody Event event, Principal principal) {
+        event = eventsService.initParticipants(event);
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event, principal.getName());
 	}
@@ -219,8 +217,9 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-	public User getUserInfo(User user) {
-		return usersService.findByEmail(user.getEmail());
+	public UserInfo getUserInfo(Principal principal) {
+        User user = usersService.findByEmail(principal.getName());
+        return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive());
 	}
 
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)

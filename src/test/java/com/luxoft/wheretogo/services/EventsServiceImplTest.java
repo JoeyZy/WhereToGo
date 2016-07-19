@@ -257,7 +257,7 @@ public class EventsServiceImplTest {
         e1.setCost(100);
         e1.setCurrency(new Currency());
         e1.setStartDateTime(dateStart1);
-        e1.setDeleted(0);
+        e1.setDeleted(false);
         e1.setDescription("blaaaaaaaaaa");
         e1.setEndDateTime(dateFinish1);
         e1.setId(1);
@@ -277,7 +277,7 @@ public class EventsServiceImplTest {
         e2.setCost(100);
         e2.setCurrency(new Currency());
         e2.setStartDateTime(dateStart2);
-        e2.setDeleted(0);
+        e2.setDeleted(false);
         e2.setDescription("blyaaaaaaaaaa");
         e2.setEndDateTime(dateFinish2);
         e2.setId(2);
@@ -301,7 +301,7 @@ public class EventsServiceImplTest {
                 "vasya pupkin",
                 dateStart1,
                 dateFinish1,
-                0,
+                false,
                 "blaaa",
                 "blaaaq",
                 true));
@@ -310,7 +310,7 @@ public class EventsServiceImplTest {
                 "vasya pupkin",
                 dateStart1,
                 dateFinish1,
-                0,
+                false,
                 "blaaa",
                 "blaaaq",
                 false));
@@ -319,7 +319,7 @@ public class EventsServiceImplTest {
                 "user3 user3",
                 dateStart2,
                 dateFinish2,
-                0,
+                false,
                 "blyaaa",
                 "blyaaaq",
                 true));
@@ -343,12 +343,12 @@ public class EventsServiceImplTest {
 
         e1.setCategories(listCat1);
         e1.setId(0);
-        e1.setDeleted(0);
+        e1.setDeleted(false);
         e1.setStartDateTime(new Date(1356991200000L));
         eventsTestSet.add(e1);
 
         e2.setCategories(listCat2);
-        e2.setDeleted(0);
+        e2.setDeleted(false);
         e2.setId(1);
         e2.setStartDateTime(new Date(1470614400000L));
         eventsTestSet.add(e2);

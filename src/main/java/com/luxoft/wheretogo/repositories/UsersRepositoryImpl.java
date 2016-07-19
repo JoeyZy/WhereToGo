@@ -50,6 +50,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		super.update(user);
 	}
 
+	// XXX
 	@Override
 	public List<User> getNotParticipants(long groupId) {
 		Criterion criterion = Restrictions.
