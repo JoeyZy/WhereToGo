@@ -736,11 +736,7 @@ $(document).ready(function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
-
-		$('.btn-add-group').on('click', function () {
-			window.location.hash = 'addGroup';
-			return false;
-		});
+		
 
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
