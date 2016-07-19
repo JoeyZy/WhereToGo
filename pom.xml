@@ -15,13 +15,21 @@
         <mockito.version>1.10.19</mockito.version>
         <h2.version>1.4.187</h2.version>
         <dbunit.version>2.2</dbunit.version>
+        <c3po.version>3.6.3.Final</c3po.version>
+        <log4j.version>1.2.17</log4j.version>
+        <cglib.version>2.2.2</cglib.version>
+        <junit.version>4.12</junit.version>
+        <servlet-api.vesion>3.0.1</servlet-api.vesion>
+        <jstl.version>1.2</jstl.version>
+        <lombok.version>1.16.4</lombok.version>
+        <guava.version>19.0</guava.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -45,7 +53,7 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
+            <version>${cglib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -57,18 +65,18 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
+            <version>${servlet-api.vesion}</version>
             <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.4</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -106,7 +114,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -115,11 +123,6 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
         </dependency>
         <!-- spring's support for quartz -->
         <dependency>
@@ -138,7 +141,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- Spring Security -->
@@ -179,10 +182,11 @@
             <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Hibernate c3p0 connection pool -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-           <version>RELEASE</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${c3po.version}</version>
         </dependency>
 
     </dependencies>
