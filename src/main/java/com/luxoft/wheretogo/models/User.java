@@ -37,6 +37,7 @@ public class User {
 	@NotNull
 	private String role = "user";
 
+	@JsonIgnore
 	@Email
 	@Column(unique = true)
 	private String email;
