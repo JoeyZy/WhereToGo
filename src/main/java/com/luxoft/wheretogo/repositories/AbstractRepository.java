@@ -53,7 +53,8 @@ public class AbstractRepository<T> {
 	}
 
 	protected Criteria getCriteria() {
-		return sessionFactory.getCurrentSession().createCriteria(clazz).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		return sessionFactory.getCurrentSession().createCriteria(clazz).
+				setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 	}
 
 	public List<T> executeCriterion(Criterion criterion) {

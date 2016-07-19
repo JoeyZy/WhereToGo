@@ -65,9 +65,6 @@ public class User {
 	@NotNull
 	private boolean active;
 
-	public User() {
-	}
-
 	@JsonIgnore
 	public String getPassword() {
 		return password;

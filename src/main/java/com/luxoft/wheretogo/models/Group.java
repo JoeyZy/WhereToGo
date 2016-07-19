@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Type;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
@@ -33,6 +34,7 @@ public class Group {
     private long id;
 
     @Size(min = 2, max = 30)
+    @Column(name = "name")
     private String name;
 
     @NotNull
@@ -40,12 +42,15 @@ public class Group {
     @JoinColumn(name = "owner")
     private User owner;
 
-    @Column(name = "deleted", columnDefinition = "int(1)", nullable = false)
-    private Integer deleted;
+    @Column(name = "deleted", nullable = false)
+    @Type(type = "yes_no")
+    private Boolean deleted;
 
+    @Size(min = 10, max = 250)
     @Column(name="description")
     private String description;
 
+    @Size(min = 7, max = 100)
     @Column(name="location")
     private String location;
 
@@ -56,10 +61,6 @@ public class Group {
 
     @Column(name="picture")
     private Blob picture;
-
-    public Set<User> getGroupParticipants() {
-        return groupParticipants;
-    }
 
     public void setPicture(String value) {
         try {

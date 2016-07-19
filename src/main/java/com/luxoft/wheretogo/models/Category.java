@@ -26,8 +26,4 @@ public class Category {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
 	private List<Event> events;
-
-	public Category() {
-	}
-
 }

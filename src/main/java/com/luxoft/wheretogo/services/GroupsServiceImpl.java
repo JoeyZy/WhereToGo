@@ -39,16 +39,16 @@ public class GroupsServiceImpl implements GroupsService {
 
     @Override
     public void update(Group group, String ownerEmail) {
-        Group oldEvent = findById(group.getId());
+        Group oldGroup = initGroupParticipants(group);
         User owner;
-        if (oldEvent != null) {
-            owner = oldEvent.getOwner();
+        if (oldGroup != null) {
+            owner = oldGroup.getOwner();
             if (!owner.getEmail().equals(ownerEmail)) {
                 return;
             }
             group.setOwner(owner);
             if (group.getGroupParticipants() == null) {
-                group.setGroupParticipants(oldEvent.getGroupParticipants());
+                group.setGroupParticipants(oldGroup.getGroupParticipants());
             }
         }
         groupsRepository.merge(group);
@@ -93,7 +93,7 @@ public class GroupsServiceImpl implements GroupsService {
     private List<GroupResponse> convertToGroupResponses(List<Group> groups) {
         List<GroupResponse> groupResponses = new ArrayList<>();
         for (Group group : groups) {
-            if (group.getDeleted() == 0) {
+            if (!group.getDeleted()) {
                 groupResponses.add(new GroupResponse(group.getId(), group.getName(),
                         group.getOwner().getFirstName() + " " + group.getOwner().getLastName(),
                         group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted()));

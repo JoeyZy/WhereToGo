@@ -43,7 +43,7 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public void update(Event event, String ownerEmail) {
-		Event oldEvent = findById(event.getId());
+		Event oldEvent = initParticipants(event);
 		User owner;
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
@@ -51,9 +51,7 @@ public class EventsServiceImpl implements EventsService {
 				return;
 			}
 			event.setOwner(oldEvent.getOwner());
-			if (event.getParticipants() == null) {
-				event.setParticipants(oldEvent.getParticipants());
-			}
+			event.setParticipants(oldEvent.getParticipants());
 		}
 		eventsRepository.merge(event);
 	}
@@ -129,7 +127,8 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	private List<Event> getRelevantEvents(List<Event> events) {
-		return events.stream().filter(event -> event.getStartDateTime().after(new Date()) && !(event.getDeleted() == 1)).collect(Collectors.toList());
+		return events.stream().filter(event -> event.getStartDateTime().after(new Date()) &&
+				!event.getDeleted()).collect(Collectors.toList());
 
 	}
 
@@ -137,7 +136,8 @@ public class EventsServiceImpl implements EventsService {
 	public Set<CategoryResponse> getUserEventsCounterByCategories(User user) {
 		Set<Event> events = new HashSet<>(eventsRepository.findByOwner(user));
 		events.addAll(user.getEvents());
-		return new LinkedHashSet<>(categoriesService.countEventsByCategories(getRelevantEvents(new ArrayList<>(events))));
+		return new LinkedHashSet<>(categoriesService.countEventsByCategories(getRelevantEvents(
+				new ArrayList<>(events))));
 	}
 
 	@Override
@@ -148,34 +148,41 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user) {
-		List<Event> archivedEvents = findAll().stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+		List<Event> archivedEvents = findAll().stream().filter(event -> event.getEndDateTime()
+					.after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo())
-				&& !(event.getDeleted() == 1)).collect(Collectors.toList());
+				&& !event.getDeleted()).collect(Collectors.toList());
 		return convertToEventResponses(filterArchivedEvents(archivedEvents, user), user);
 	}
 
 	private List<Event> filterArchivedEvents(List<Event> events, User user) {
-		return events.stream().filter(event -> event.getParticipants().contains(user) || event.getOwner().equals(user)).collect(Collectors.toList());
+		return events.stream().filter(event -> event.getParticipants().contains(user) ||
+				event.getOwner().equals(user)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user) {
-		List<Event> archivedEvents = eventsRepository.findByOwner(user).stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
-				&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1)).collect(Collectors.toList());
+		List<Event> archivedEvents = eventsRepository.findByOwner(user).stream().filter(event -> event
+					.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo())
+				&& !event.getDeleted()).collect(Collectors.toList());
 		return convertToEventResponses(archivedEvents, user);
 	}
 
 	@Override
 	public List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user) {
-		return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+		return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream()
+					.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo())
-				&& !(event.getDeleted() == 1)).collect(Collectors.toList()), user));
+				&& !event.getDeleted()).collect(Collectors.toList()), user));
 	}
 
 	@Override
 	public List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user) {
-		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream().filter(event -> event.getEndDateTime().after(request.getSearchFrom())
-				&& event.getEndDateTime().before(request.getSearchTo()) && !(event.getDeleted() == 1)).collect(Collectors.toList()));
+		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream()
+					.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+				&& event.getEndDateTime().before(request.getSearchTo())
+				&& !event.getDeleted()).collect(Collectors.toList()));
 	}
 
 	@Override

@@ -1,27 +1,24 @@
 package com.luxoft.wheretogo.models;
 
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.google.common.io.ByteStreams;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.log4j.Logger;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.io.ByteStreams;
-import org.apache.log4j.Logger;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -38,57 +35,15 @@ public class Event {
 	private long id;
 
 	@Size(min = 2, max = 30)
+	@Column(name = "name")
 	private String name;
 
-	public long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public Set<User> getParticipants() {
-		return participants;
-	}
-
-	public Date getStartDateTime() {
-		return startDateTime;
-	}
-
-	public Date getEndDateTime() {
-		return endDateTime;
-	}
-
-	public Integer getDeleted() {
-		return deleted;
-	}
-
-	public Integer getCost() {
-		return cost;
-	}
-
-	public Currency getCurrency() {
-		return currency;
-	}
-
+	@Size(min = 10, max = 1000)
+	@Column(name = "description")
 	private String description;
+
+	@Size(min = 7, max = 100)
+	@Column(name = "location")
 	private String location;
 
 	@NotNull
@@ -98,11 +53,13 @@ public class Event {
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> participants;
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
@@ -111,9 +68,11 @@ public class Event {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
 	private Date endDateTime;
 
-	@Column(name = "deleted", columnDefinition = "int(1)", nullable = false)
-	private Integer deleted;
+	@Column(name = "deleted", nullable = false)
+	@Type(type = "yes_no")
+	private Boolean deleted;
 
+	@Column(name = "cost")
 	private Integer cost;
 
 	@ManyToOne(fetch = FetchType.EAGER)
