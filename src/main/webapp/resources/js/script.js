@@ -488,8 +488,7 @@ $(document).ready(function () {
 				window.location.hash = oldLocationHash;
 			}
 		}
-	});
-	
+	});	
 	function loadEvents(type, searchFrom, searchTo) {
 		var type = type;
 		if (!type) {
