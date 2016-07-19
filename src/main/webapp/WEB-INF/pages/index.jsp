@@ -316,7 +316,7 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="location"></div>
+                        <div contentEditable="false" id="location" title="Location:"></div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
@@ -363,7 +363,7 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="GroupLocation"></div>
+                        <div contentEditable="false" id="GroupLocation" title="Location:"></div>
                     </li>
                     <li class="SinglePage__inputItem GroupPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
