@@ -618,6 +618,7 @@ $(document).ready(function () {
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
+				filters = {};
 				oldLocationHash = "#myEvents";
 				if($showArchiveCheckbox.find("input").prop("checked")) {
 					loadEvents("archivedEvents", $archiveFrom.val(), $archiveTo.val())
