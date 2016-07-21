@@ -116,9 +116,10 @@ public class EventsServiceImpl implements EventsService {
 		for (Event event : events) {
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
 					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
+					event.getTargetGroup().getName(),
 					event.getStartDateTime(),
 					event.getEndDateTime(),
-					event.getDeleted(),//
+					event.getDeleted(),
 					event.getPicture(),
 					event.getLocation(),
 					user != null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user)));

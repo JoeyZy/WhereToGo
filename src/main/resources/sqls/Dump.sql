@@ -58,6 +58,7 @@ CREATE TABLE `events` (
   `category`    VARCHAR(45) NOT NULL,
   `description` VARCHAR(45)          DEFAULT NULL,
   `owner`       VARCHAR(45) NOT NULL,
+  `target_group` VARCHAR(45)          DEFAULT NULL,
   `categories`  INT(11)     NOT NULL,
   `deleted`     INT(2)              DEFAULT NULL,
   PRIMARY KEY (`id`),

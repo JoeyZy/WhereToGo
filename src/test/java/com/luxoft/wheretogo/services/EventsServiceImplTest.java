@@ -299,6 +299,7 @@ public class EventsServiceImplTest {
         List<EventResponse> eventResponses = new ArrayList<>();
         eventResponses.add(new EventResponse(1, "bluka", lc1,
                 "vasya pupkin",
+                "Group1",
                 dateStart1,
                 dateFinish1,
                 false,
@@ -308,6 +309,7 @@ public class EventsServiceImplTest {
 
         eventResponses.add(new EventResponse(1, "bluka", lc1,
                 "vasya pupkin",
+                "Group2",
                 dateStart1,
                 dateFinish1,
                 false,
@@ -317,6 +319,7 @@ public class EventsServiceImplTest {
 
         eventResponses.add(new EventResponse(2, "blyuka", lc1,
                 "user3 user3",
+                "Group3",
                 dateStart2,
                 dateFinish2,
                 false,

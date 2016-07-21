@@ -15,6 +15,7 @@ public class EventResponse {
 	private String name;
 	private List<String> category;
 	private String owner;
+	private String targetGroup;
 	private String description;
 	private String startTime;
 	private String endTime;
@@ -23,12 +24,14 @@ public class EventResponse {
 	private String location;
 	private boolean attends;
 
-	public EventResponse(long id, String name, List<Category> category, String owner, Date startDateTime,
-						 Date endDateTime, Boolean deleted, String picture, String location, boolean attends) {
+	public EventResponse(long id, String name, List<Category> category, String owner, String targetGroup,
+						 Date startDateTime, Date endDateTime, Boolean deleted, String picture, String location,
+						 boolean attends) {
 		this.id = id;
 		this.name = name;
 		setCategories(category);
 		this.owner = owner;
+		this.targetGroup = targetGroup;
 		this.startTime = timeToString(startDateTime);
 		this.endTime = timeToString(endDateTime);
 		this.deleted = deleted;

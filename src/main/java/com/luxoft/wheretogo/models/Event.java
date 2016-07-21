@@ -51,6 +51,10 @@ public class Event {
 	@JoinColumn(name = "owner")
 	private User owner;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "target_group")
+	private Group targetGroup;
+
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"),

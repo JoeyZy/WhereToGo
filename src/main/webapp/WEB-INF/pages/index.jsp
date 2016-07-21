@@ -331,6 +331,9 @@
                             </script>
                         </select>
                     </li>
+                    <li>
+                        <label class="SinglePage__inputItem__label"><b>Group:</b></label>
+                    </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
                         <ul class="EventPage__events__list">
