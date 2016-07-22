@@ -6,7 +6,8 @@ var Event = {
     SET   : "set",
     ADD   : "add",
     CHANGE: "change",
-    CLEAR : "clear"
+    CLEAR : "clear",
+    SUBMIT: "submit"
 };
 
 var ObserverMap = Class.extend({
@@ -67,7 +68,7 @@ var Model = AbstractSubject.extend({
      */
     init: function(v) {
         this._super();
-        this.value = deepCopy(v);
+        this.value = defined(v)? deepCopy(v) : {};
     },
 
     /**

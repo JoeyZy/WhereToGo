@@ -1,12 +1,18 @@
-var Component = Class.extend({
+var Component = AbstractSubject.extend({
     // constructor
     /**
      * @param {string} id
+     * @param {ModelFacade} model
      */
-    init: function(id) { // TODO Pass the root element also
+    init: function(id, model) { // TODO Pass the root element also
+        this._super();
         this.id = id;
         this.selector = selector;
-        this.elements = {}; // child components (elements)
+        this.element = null;
+        this.elements = {}; // child components (map of model-ids to elements) // TODO Consider renaming it to "children"
+        this.model = model;
+        this.modelIds = [];
+        this.bind();
         this.wrap(this.selector); // TODO Consider (possible) lazy wrapping
     },
     wrap: function (selector) {
@@ -19,13 +25,29 @@ var Component = Class.extend({
         elements.forEach(function (e) { // @compat es5
             var id = e.attr(Component.MODEL_ATTR);
             that.elements[id] = e;
+            that.modelIds.push(id);
         });
+        this.registerListeners();
     },
     render: function () { // TODO Is it needed? Or only wrapping is supported?
         throw new Error("Cannot invoke an abstract method");
     },
     registerListeners: function () {
-        throw new Error("Cannot invoke an abstract method");
+        // no listeners for abstract component
+    },
+    bind: function () {
+        var that = this;
+        this.modelIds.forEach(function (id) { // @compat es5
+            var model = that.model[id];
+            if (defined(model)) {
+                model.observe(Event.SET, function (v) {
+                    that.elementValue(id, v);
+                });
+            } else {
+                console.warn("No model matching model-id '" + id
+                    + "' found, bind it manually!"); // TODO Implement logger
+            }
+        });
     },
     /**
      * @param {string} [id]
@@ -51,12 +73,11 @@ var Component = Class.extend({
         }
     },
     // WARNING: This will break in case this element does not have val()
-    // TODO Rename to elementValue: current name is confusing
     /**
      * @param {string} id  model-id of the element
      * @param {string} [v] value to set if defined
      */
-    value: function (id, v) {
+    elementValue: function (id, v) {
         if (defined(v)) {
             // TODO Apply some validation
             return this.elements[id].val(v);
