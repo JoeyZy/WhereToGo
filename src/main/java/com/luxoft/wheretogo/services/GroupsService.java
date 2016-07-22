@@ -36,4 +36,6 @@ public interface GroupsService {
 
     Set<GroupResponse> getUserRelevantGroupResponses(User user);
 
+    Set<GroupResponse> getUserGroups(User user);
+
 }

@@ -117,5 +117,9 @@ public class GroupsServiceImpl implements GroupsService {
         }
         return new HashSet<>(convertToGroupResponses(groups));
     }
+    public Set<GroupResponse> getUserGroups(User user) {
+        List<Group> groups = groupsRepository.findByOwner(user);
+        return new HashSet<>(convertToGroupResponses(groups));
+    }
 
 }
