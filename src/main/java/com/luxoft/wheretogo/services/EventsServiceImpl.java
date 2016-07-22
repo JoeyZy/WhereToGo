@@ -116,7 +116,7 @@ public class EventsServiceImpl implements EventsService {
 		for (Event event : events) {
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
 					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
-					event.getTargetGroup().getName(),
+					(event.getTargetGroup() == null)? "" : event.getTargetGroup().getName(),
 					event.getStartDateTime(),
 					event.getEndDateTime(),
 					event.getDeleted(),

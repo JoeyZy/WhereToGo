@@ -331,8 +331,9 @@
                             </script>
                         </select>
                     </li>
-                    <li>
-                        <label class="SinglePage__inputItem__label"><b>Group:</b></label>
+                    <li class="SinglePage__inputItem">
+                        <label class="SinglePage__inputItem__label"><b>Shared in:</b></label>
+                        <div contentEditable="false" id="target-group" title="Shared in:"></div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>

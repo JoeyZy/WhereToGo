@@ -24,6 +24,7 @@ $(document).ready(function () {
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
 	var $eventLocation = $singlePage.find("#location");
+	var $eventTargetGroup = $singlePage.find("#target-group");
 	var $eventCost = $singlePage.find("#cost");
 	var $eventCostCurrency = $singlePage.find("#currencies");
 	var $eventPageParticipants = $('.EventPage__participants');
@@ -61,6 +62,7 @@ $(document).ready(function () {
 				"startDateTime": $eventStart.val(),
 				"endDateTime": $eventEnd.val(),
 				"description": $eventDescription.text(),
+				"target-group": $eventTargetGroup.text(),
 				"location": $eventLocation.text(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
@@ -270,6 +272,7 @@ $(document).ready(function () {
 			"endDateTime": $eventEnd.val(),
 			"description": $eventDescription.text(),
 			"location": $eventLocation.text(),
+			"target-group": $eventDescription.text(),
 			"cost": $eventCost.val(),
 			"currency": {
 				"id": getCurrencyId(), "name": $eventCostCurrency.val()
@@ -302,6 +305,7 @@ $(document).ready(function () {
 		$groupDescription.empty();
 		$groupLocation.empty();
 		$eventLocation.empty();
+		$eventTargetGroup.empty(),
 		$eventCost.val("");
 		$eventCostCurrency.val("");
 		$buttons.hide();
@@ -1272,10 +1276,12 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', false);
 		$eventDescription.attr('contenteditable', true);
 		$eventLocation.attr('contenteditable', true);
+		$eventTargetGroup.attr('contenteditable', true);
 		$eventStart.datepicker('enable');
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
 		$eventLocation.addClass('editable');
+		$eventTargetGroup.addClass('editable');
 		$eventCost.prop('disabled', false);
 		$eventCostCurrency.prop('disabled', false);
 		$eventCategories.multiselect('enable');
@@ -1294,9 +1300,9 @@ $(document).ready(function () {
 		$eventDescription.removeClass('editable');
 		$eventLocation.attr('contenteditable', false);
 		$eventLocation.removeClass('editable');
+		$eventTargetGroup.attr('contenteditable', false);
+		$eventTargetGroup.removeClass('editable');
 		$eventCategories.multiselect('disable');
-		$eventDescription.attr('contenteditable', false);
-		$eventLocation.attr('contenteditable', false);
 		$eventCost.prop('disabled', true);
 		$eventCostCurrency.prop('disabled', true);
 		$eventPage.find('editable').attr('readonly', true);
@@ -1516,6 +1522,7 @@ $(document).ready(function () {
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.text(linkify(event.location));
+				$eventTargetGroup.text(linkify(event.targetGroup));
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
 					$pictureParent.show();

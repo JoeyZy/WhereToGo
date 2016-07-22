@@ -1,14 +1,16 @@
 use wheretogo;
-INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1);
-INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1);
-INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
-INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
+INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUES
+  ('root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1),
+  ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1),
+  ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1),
+  ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
 
-# INSERT INTO `groups` (deleted, description, location, name, picture, owner) VALUES (0, 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1);
-# INSERT INTO `groups` (deleted, description, location, name, picture, owner) VALUES ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1);
-# INSERT INTO `groups` (deleted, description, location, name, picture, owner) VALUES ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
-# INSERT INTO `groups` (deleted, description, location, name, picture, owner) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
-# INSERT INTO `groups` (deleted, description, location, name, picture, owner) VALUES ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
+INSERT INTO `groups` (id, name, description, location, picture, owner, deleted) VALUES
+  (1, 'Kyiv office', 'The workers from Kyiv office', 'Kyiv, Ukraine', NULL, 1, 'N'),
+  (2, 'Odessa office', 'The workers from Odessa office', 'Odessa, Ukraine', NULL, 2, 'N'),
+  (3, 'London office', 'The workers from London office', 'London, UK', NULL, 1, 'N'),
+  (4, 'Tokio office', 'The workers from Tokio office', 'Tokio, Japan', NULL, 3, 'N'),
+  (5, 'Berlin office', 'The workers from Berlin office', 'Berlin, Germany', NULL, 4, 'N');
 
 
 INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `location`, `name`, `startDateTime`, `currencyId`, `owner`) VALUES
