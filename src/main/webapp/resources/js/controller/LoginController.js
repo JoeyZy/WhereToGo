@@ -4,26 +4,27 @@ var LoginController = AbstractController.extend({
      * {ModelFacade} model
      * {ViewFacade} view
      */
-    init: function (model, view) {
+    init: function LoginController(model, view) {
         this._super(model, view);
     },
     bind: function () {
         var that = this;
-        this.view.login.observe(Event.SUBMIT, function () {
+        this.view.observe(Event.SUBMIT, function () {
             that.login();
         });
-        this.view.login.observe(Event.ADD, function () { // TODO Consider having a special "ADD_USER" event
+        this.view.observe(Event.ADD, function () { // TODO Consider having a special "ADD_USER" event
             this.signup();
         });
         // ...
     },
 
     login: function () {
+        this.sync();
         $.ajax({ // TODO Create AJAX wrapper running on promises
-            url: that.view.login.action(), // action is not modified, no sense to hold it in model
+            url: this.view.action(), // action is not modified, no sense to hold it in model
             data: JSON.stringify({
-                email   : that.model.login.email,
-                password: that.model.login.password
+                email   : this.model.email.val(),
+                password: this.model.password.val()
             }),
             type: "POST",
             beforeSend: function (xhr) {

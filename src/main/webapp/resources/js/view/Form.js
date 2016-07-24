@@ -3,9 +3,11 @@ var Form = Component.extend({
      * @override
      * Constructor
      */
-    init: function(id, model) {
+    init: function Form(id, model) {
         this._super(id, model);
-        this.form = this.element.is("form") ? this.element : $("form", this);
+        this.form = this.element.is("form")
+            ? this.element
+            : $("form", this.element);
     },
 
     registerListeners: function () {

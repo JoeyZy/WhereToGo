@@ -12,7 +12,7 @@ var Event = {
 
 var ObserverMap = Class.extend({
     // constructor
-    init: function() {
+    init: function ObserverMap() {
         this.map = {};
     },
     /**
@@ -40,7 +40,7 @@ var ObserverMap = Class.extend({
 
 var AbstractSubject = Class.extend({
     // constructor
-    init: function() {
+    init: function AbstractSubject() {
         this.observers = new ObserverMap();
     },
 
@@ -66,7 +66,7 @@ var Model = AbstractSubject.extend({
     /**
      * @param {any} [v] value for the model; {} if absent
      */
-    init: function(v) {
+    init: function Model(v) {
         this._super();
         this.value = defined(v)? deepCopy(v) : {};
     },
@@ -78,8 +78,9 @@ var Model = AbstractSubject.extend({
     val: function (v) {
         if (defined(v)) {
             this.value = v;
+            this.notify(Event.SET, v);
         }
-        return value;
+        return this.value;
     }
 });
 
@@ -88,7 +89,7 @@ var ArrayModel = Model.extend({
     /**
      * @param {array} [a] value for the model; [] if absent
      */
-    init: function(a) {
+    init: function ArrayModel(a) {
         this._super(a);
     },
     add: function (v) {
@@ -104,9 +105,3 @@ var ArrayModel = Model.extend({
         }
     }
 });
-
-var model = {
-    user   : new Model(),
-    events : new ArrayModel(),
-    filters: new ArrayModel()
-};

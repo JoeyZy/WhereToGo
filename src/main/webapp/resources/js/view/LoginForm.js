@@ -1,6 +1,7 @@
+// TODO Consider removal
 var LoginForm = Form.extend({
     // constructor
-    init: function(id, model) {
+    init: function LoginForm(id, model) {
         this._super(id, model);
     },
     email: function (v) {

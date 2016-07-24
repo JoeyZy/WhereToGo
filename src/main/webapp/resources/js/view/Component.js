@@ -4,16 +4,15 @@ var Component = AbstractSubject.extend({
      * @param {string} id
      * @param {ModelFacade} model
      */
-    init: function(id, model) { // TODO Pass the root element also
+    init: function Component(id, model) { // TODO Pass the root element also
         this._super();
         this.id = id;
-        this.selector = selector;
+        this.selector = this.getSelector();
         this.element = null;
         this.elements = {}; // child components (map of model-ids to elements) // TODO Consider renaming it to "children"
         this.model = model;
-        this.modelIds = [];
-        this.bind();
         this.wrap(this.selector); // TODO Consider (possible) lazy wrapping
+        this.bind();
     },
     wrap: function (selector) {
         if (defined(selector)) {
@@ -22,12 +21,15 @@ var Component = AbstractSubject.extend({
         this.validateElement();
         var that = this;
         var elements = $("[" + Component.MODEL_ATTR + "]", this.element);
-        elements.forEach(function (e) { // @compat es5
-            var id = e.attr(Component.MODEL_ATTR);
-            that.elements[id] = e;
-            that.modelIds.push(id);
+        elements.each(function (i, e) { // @compat es5
+            var element = $(e);
+            var id = element.attr(Component.MODEL_ATTR);
+            that.elements[id] = element;
         });
-        this.registerListeners();
+        // postpone registration to ensure the component is initialized
+        setTimeout(function () {
+            that.registerListeners();
+        }, 0);
     },
     render: function () { // TODO Is it needed? Or only wrapping is supported?
         throw new Error("Cannot invoke an abstract method");
@@ -37,9 +39,9 @@ var Component = AbstractSubject.extend({
     },
     bind: function () {
         var that = this;
-        this.modelIds.forEach(function (id) { // @compat es5
+        this.getModelNames().forEach(function (id) { // @compat es5
             var model = that.model[id];
-            if (defined(model)) {
+            if (model != null) {
                 model.observe(Event.SET, function (v) {
                     that.elementValue(id, v);
                 });
@@ -48,6 +50,26 @@ var Component = AbstractSubject.extend({
                     + "' found, bind it manually!"); // TODO Implement logger
             }
         });
+    },
+    getModelNames: function () {
+        var that = this, names = [];
+        var modelIds = Object.keys(this.elements); // @compat es5
+        modelIds.forEach(function (fullId) { // @compat es5
+            var id = that.extractModelName(fullId);
+            names.push(id);
+        });
+        return names;
+    },
+    extractModelName: function (modelId) {
+        var name = null;
+        var re = /\.([^\.]+)$/ig;
+        var matches = re.exec(modelId);
+        if (matches.length == 2) {
+            name = matches[1];
+        } else {
+            console.warn("Can't extract model name from model ID '" + modelId + "'");
+        }
+        return name;
     },
     /**
      * @param {string} [id]
@@ -72,17 +94,31 @@ var Component = AbstractSubject.extend({
                 .replace(new RegExp("{}", "g"), this.selector)); // TODO Write utility String.format
         }
     },
+    /**
+     * @param {string} name name of the model, e.g. "email" for the model-id "login.email"
+     */
+    getElementByModelName: function (name) {
+        for (var key in this.elements) {
+            if (this.elements.hasOwnProperty(key)
+                && key.endsWith(name))
+            {
+                return this.elements[key];
+            }
+        }
+        return null;
+    },
     // WARNING: This will break in case this element does not have val()
     /**
      * @param {string} id  model-id of the element
      * @param {string} [v] value to set if defined
      */
     elementValue: function (id, v) {
+        var element = this.getElementByModelName(id);
         if (defined(v)) {
             // TODO Apply some validation
-            return this.elements[id].val(v);
+            return element.val(v);
         }
-        return this.elements[id].val();
+        return element.val();
     }
 });
 

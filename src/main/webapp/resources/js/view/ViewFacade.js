@@ -1,7 +1,6 @@
 var ViewFacade = Class.extend({
     // constructor
-    init: function() {
-        this._super();
-        this.login = new LoginForm("login");
+    init: function ViewFacade(model) {
+        this.login = new LoginForm("login", model.login);
     }
 });

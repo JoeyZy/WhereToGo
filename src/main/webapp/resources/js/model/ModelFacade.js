@@ -1,7 +1,6 @@
 var ModelFacade = Class.extend({
     // constructor
-    init: function() {
-        this._super();
+    init: function ModelFacade() {
         this.login = new LoginModel("", "");
     }
 });

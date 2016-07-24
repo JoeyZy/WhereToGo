@@ -349,6 +349,21 @@
 <script src="resources/js/lib/Class.js"></script>
 <script src="resources/js/core.js"></script>
 <script src="resources/js/mvc.js"></script>
+
+<!-- Controllers -->
+<script src="resources/js/controller/AbstractController.js"></script>
+<script src="resources/js/controller/LoginController.js"></script>
+
+<!-- Models -->
+<script src="resources/js/model/LoginModel.js"></script>
+<script src="resources/js/model/ModelFacade.js"></script>
+
+<!-- Views -->
+<script src="resources/js/view/Component.js"></script>
+<script src="resources/js/view/Form.js"></script>
+<script src="resources/js/view/LoginForm.js"></script>
+<script src="resources/js/view/ViewFacade.js"></script>
+
 <script src="resources/js/script.js"></script>
 
 <script>
