@@ -4,6 +4,7 @@ $(document).ready(function () {
 	var events = [],
 		groups = [],
 		myGroups = [],
+		userGroups=[],
 		filters = {},
 		filterColors = {},
 		user = undefined;
@@ -410,7 +411,6 @@ $(document).ready(function () {
 		hideArchiveElements();
 		group.preventDefault();
 		window.location.hash = 'groups';
-		loadGroups();
 
 		hideSideBar();
 	});
@@ -535,19 +535,31 @@ $(document).ready(function () {
 			groups.sort(function (a, b) {
 				return moment(a.name).isAfter(moment(b.name));
 			});
-
 			generateGroupsHTML("all-groups-list", "groups", groups);
 		});
-
-		$.getJSON("myGroups", function (data) {
-			myGroups = data;
-			myGroups.sort(function (a, b) {
-				return moment(a.name).isAfter(moment(b.name));
+		var promise = new Promise(function (resolve, reject) {
+			$.getJSON("myGroups", function (data) {
+				myGroups = data;
+				myGroups.sort(function (a, b) {
+					return moment(a.name).isAfter(moment(b.name));
+				});
+				generateGroupsHTML("my-groups-list", "myGroups", myGroups);
+				resolve(loadPluses());
 			});
-
-			generateGroupsHTML("my-groups-list", "myGroups", myGroups);
 		});
 
+		function loadPluses(){
+		$.getJSON("getUserGroups", function (data) {
+			userGroups = data;
+			$.each(userGroups, function(index1, value){
+				$.each($('.my-groups-list').find('li'), function (index, item) {
+						if($(item).attr('data-index') == value.id){
+							$(item).find('h2').append('<span class="btn-plus-user-to-group">+</span>');
+						}
+					});
+				});
+		});
+		}
 
 	}
 	
@@ -791,7 +803,7 @@ $(document).ready(function () {
 		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
 		$.each(GroupsList.find('li'), function (index, item) {
-			$(item).find('span.content').on('click', function (e) {
+			$(item).find('h2 span.clickGroupName').on('click', function (e) {
 				e.preventDefault();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
