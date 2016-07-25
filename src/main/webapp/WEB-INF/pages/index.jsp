@@ -249,6 +249,7 @@
 
                         <span class="content group-content">
                             <h2 class="group-box-title" title="{{name}}"><span class="clickGroupName"> {{name}} </span></h2>
+
                         </span>
                 </li>
                 {{/each}}
