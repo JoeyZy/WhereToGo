@@ -13,7 +13,7 @@ var Form = Component.extend({
     registerListeners: function () {
         var that = this;
         this.form.on("submit", function (event) {
-            that.notify(Event.SUBMIT);
+            that.notify(ModelEvent.SUBMIT);
             event.preventDefault(); // we have a 1-page app!
         });
     },

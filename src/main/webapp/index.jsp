@@ -347,22 +347,29 @@
 <script src='resources/js/lib/fullcalendar/fullcalendar.min.js'></script>
 
 <script src="resources/js/lib/Class.js"></script>
-<script src="resources/js/core.js"></script>
-<script src="resources/js/mvc.js"></script>
 
-<!-- Controllers -->
-<script src="resources/js/controller/AbstractController.js"></script>
-<script src="resources/js/controller/LoginController.js"></script>
+<script src="resources/js/helpers.js"></script>
 
-<!-- Models -->
-<script src="resources/js/model/LoginModel.js"></script>
-<script src="resources/js/model/ModelFacade.js"></script>
+<!-- MVC: Commons -->
+<script src="resources/js/mvc/ModelEvent.js"></script>
+<script src="resources/js/mvc/ObserverMap.js"></script>
+<script src="resources/js/mvc/AbstractSubject.js"></script>
 
-<!-- Views -->
-<script src="resources/js/view/Component.js"></script>
-<script src="resources/js/view/Form.js"></script>
-<script src="resources/js/view/LoginForm.js"></script>
-<script src="resources/js/view/ViewFacade.js"></script>
+<!-- MVC: Controllers -->
+<script src="resources/js/mvc/controller/AbstractController.js"></script>
+<script src="resources/js/mvc/controller/LoginController.js"></script>
+
+<!-- MVC: Models -->
+<script src="resources/js/mvc/model/Model.js"></script>
+<script src="resources/js/mvc/model/ArrayModel.js"></script>
+<script src="resources/js/mvc/model/LoginModel.js"></script>
+<script src="resources/js/mvc/model/ModelFacade.js"></script>
+
+<!-- MVC: Views -->
+<script src="resources/js/mvc/view/Component.js"></script>
+<script src="resources/js/mvc/view/Form.js"></script>
+<script src="resources/js/mvc/view/LoginForm.js"></script>
+<script src="resources/js/mvc/view/ViewFacade.js"></script>
 
 <script src="resources/js/script.js"></script>
 

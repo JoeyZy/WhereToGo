@@ -1,4 +1,3 @@
-// TODO Consider removal
 var LoginForm = Form.extend({
     // constructor
     init: function LoginForm(id, model) {

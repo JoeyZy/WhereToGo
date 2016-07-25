@@ -272,7 +272,7 @@ $(document).ready(function () {
 		$eventCostCurrency.html(currListElement(data));
 	});
 	var checkboxes = $('.filters input[type=checkbox]');
-	var loginForm = $('#login-nav');
+//	var loginForm = $('#login-nav');
 	var $loginDropDown = $('.dropdown');
 //	// Login handler
 //	loginForm.submit(function (e) {
@@ -1296,7 +1296,7 @@ $(document).ready(function () {
 		}
 	}
 
-	function setUser(sessionUser) {
+	window.setUser = function setUser(sessionUser) {
 		user = sessionUser;
 		$('.userInfo').text(user.firstName + " " + user.lastName);
 		$('.userInfo').data('user', user.email);
@@ -1306,7 +1306,7 @@ $(document).ready(function () {
 		$myEventsLink.show();
 		$loginDropDown.toggle();
 		grantRightsToUser();
-	}
+	};
 
 	function checkSession() {
 		if (typeof user !== 'undefined') {
@@ -1360,10 +1360,16 @@ $(document).ready(function () {
 	);
 	$(window).trigger('hashchange');
 
+    /*
+     * Initializing MVC entities
+     */
     var model = new ModelFacade();
     var view = new ViewFacade(model);
     var controllers = [
+
+        // PUT YOUR CONTROLLERS HERE
         new LoginController(model.login, view.login)
+
     ];
 
 });

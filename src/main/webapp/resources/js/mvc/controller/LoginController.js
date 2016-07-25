@@ -9,11 +9,11 @@ var LoginController = AbstractController.extend({
     },
     bind: function () {
         var that = this;
-        this.view.observe(Event.SUBMIT, function () {
-            this.syncModel();
+        this.view.observe(ModelEvent.SUBMIT, function () {
+            that.syncModel();
             that.login();
         });
-        this.view.observe(Event.ADD, function () { // TODO Consider having a special "ADD_USER" event
+        this.view.observe(ModelEvent.ADD, function () { // TODO Consider having a special "ADD_USER" event
             this.signup();
         });
         // ...

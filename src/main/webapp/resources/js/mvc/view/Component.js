@@ -42,7 +42,7 @@ var Component = AbstractSubject.extend({
         this.getModelNames().forEach(function (id) { // @compat es5
             var model = that.model[id];
             if (model != null) {
-                model.observe(Event.SET, function (v) {
+                model.observe(ModelEvent.SET, function (v) {
                     that.elementValue(id, v);
                 });
             } else {
