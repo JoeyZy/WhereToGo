@@ -14,7 +14,7 @@ var LoginController = AbstractController.extend({
             that.login();
         });
         this.view.observe(ModelEvent.ADD, function () { // TODO Consider having a special "ADD_USER" event
-            this.signup();
+            that.signup();
         });
         // ...
     },
