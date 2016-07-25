@@ -10,6 +10,7 @@ var LoginController = AbstractController.extend({
     bind: function () {
         var that = this;
         this.view.observe(Event.SUBMIT, function () {
+            this.syncModel();
             that.login();
         });
         this.view.observe(Event.ADD, function () { // TODO Consider having a special "ADD_USER" event
@@ -19,7 +20,6 @@ var LoginController = AbstractController.extend({
     },
 
     login: function () {
-        this.sync();
         $.ajax({ // TODO Create AJAX wrapper running on promises
             url: this.view.action(), // action is not modified, no sense to hold it in model
             data: JSON.stringify({

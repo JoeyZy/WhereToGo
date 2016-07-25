@@ -8,7 +8,7 @@ var AbstractController = Class.extend({
     bind: function () {
         // nothing to bind here
     },
-    sync: function () {
+    syncModel: function () {
         var that = this;
         var names = this.view.getModelNames();
         names.forEach(function (id) { // @compat es5
