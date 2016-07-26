@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.io.ByteStreams;
+import com.luxoft.wheretogo.repositories.GroupsRepositoryImpl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -105,5 +106,18 @@ public class Event {
 			LOG.warn("Can not convert image", e);
 		}
 		return "";
+	}
+
+	public void setInfo(EventInfo eventInfo) {
+		this.id = eventInfo.getId();
+		this.name = eventInfo.getName();
+		this.categories = eventInfo.getCategories();
+		this.startDateTime = eventInfo.getStartTime();
+		this.endDateTime = eventInfo.getEndTime();
+		this.description = eventInfo.getDescription();
+		this.location = eventInfo.getLocation();
+		this.cost = eventInfo.getCost();
+		this.currency = eventInfo.getCurrency();
+		setPicture(eventInfo.getPicture());
 	}
 }

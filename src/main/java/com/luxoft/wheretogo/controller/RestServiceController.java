@@ -78,7 +78,11 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/addEvent", method = RequestMethod.POST)
-	public ResponseEntity<String> addEvent(@RequestBody Event event, HttpServletRequest request) {
+	public ResponseEntity<String> addEvent(@RequestBody EventInfo eventInfo, HttpServletRequest request) {
+
+		Event event = new Event();
+		event.setInfo(eventInfo);
+		event.setTargetGroup(groupsService.findByName(eventInfo.getTargetGroup()));
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		event.setDeleted(NOT_DELETED);
 		boolean eventIsAdded = eventsService.add(event);
@@ -86,6 +90,13 @@ public class RestServiceController {
 			return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/addEventInfo", method = RequestMethod.POST)
+	public void addEventInfo(@RequestBody EventInfo eventInfo, HttpServletRequest request) {
+
+		Event event = new Event();
+
 	}
 
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
