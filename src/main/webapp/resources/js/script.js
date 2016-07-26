@@ -871,6 +871,13 @@ $(document).ready(function () {
 
 					e.preventDefault();
 				});
+				$(document).click(function(event){
+					var target = $(event.target);
+					if (target.is('div.accordion') || target.parents('div.accordion').length) return;
+					$(document).unbind('click', arguments.callee);
+					$('div.accordion').remove();
+					event.stopPropagation();
+				});
 			});
 		}
 		$.each($('.my-groups-list').find('li'), function (event, item) {
@@ -881,16 +888,10 @@ $(document).ready(function () {
 				$(document).ready(function() {
 					$(item).find('h2').append("<div class='accordion'><div class='accordion-section'><a class='accordion-section-title' href='#accordion-1'>Accordion Section #1</a><div id='accordion-1' class='accordion-section-content'><p>Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.</p></div></div></div>");
 				});
+				e.stopPropagation();
 				loadAccordion();
-				// $('h2>span.btn-plus-user-to-group').unbind('click', arguments.callee);
 			});
-			// $(document).click(function(event){
-			// 	var target = $(event.target);
-			// 	if (target.is('div.accordion') || target.parents('div.accordion').length) return;
-			// 	$(document).unbind('click', arguments.callee);
-			// 	$('div.accordion').remove();
-			// 	event.stopPropagation();
-			// });
+
 		});
 
 		showInlineAssignments(); //check!
