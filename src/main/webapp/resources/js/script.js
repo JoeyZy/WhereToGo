@@ -556,47 +556,15 @@ $(document).ready(function () {
 			$.each(userGroups, function(index1, value){
 				$.each($('.my-groups-list').find('li'), function (index, item) {
 						if($(item).attr('data-index') == value.id){
+							if($(item).find('h2 span.btn-plus-user-to-group').length){
+								return true;
+							}
 							$(item).find('h2').append('<span class="btn-plus-user-to-group">+</span>');
 						}
 					});
 				});
 		});
 		}
-		// function loadAccordion(){
-		// 	$(document).ready(function() {
-		// 		function close_accordion_section() {
-		// 			$('.accordion .accordion-section-title').removeClass('active');
-		// 			$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
-		// 		}
-        //
-		// 		$('.accordion-section-title').click(function(e) {
-		// 			// Grab current anchor value
-		// 			var currentAttrValue = $(this).attr('href');
-        //
-		// 			if($(e.target).is('.active')) {
-		// 				close_accordion_section();
-		// 			}else {
-		// 				close_accordion_section();
-        //
-		// 				// Add active class to section title
-		// 				$(this).addClass('active');
-		// 				// Open up the hidden content panel
-		// 				$('.accordion ' + currentAttrValue).slideDown(300).addClass('open');
-		// 			}
-        //
-		// 			e.preventDefault();
-		// 		});
-		// 	});
-		// }
-		// $.each($('.my-groups-list').find('li'), function (index, item) {
-		// 	$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
-		// 		console.log("bla");
-		// 		e.preventDefault();
-		// 		var groupIndex = $(item).data('index');
-		// 		$(item).find('data-index="'+groupIndex+'"').append('<div class="accordion"><div class="accordion-section"><a class="accordion-section-title" href="#accordion-1">Accordion Section #1</a><div id="accordion-1" class="accordion-section-content"><p>Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.</p></div></div></div>');
-		// 		loadAccordion();
-		// 	});
-		// });
 
 	}
 	
@@ -882,11 +850,19 @@ $(document).ready(function () {
 		}
 		$.each($('.my-groups-list').find('li'), function (event, item) {
 			$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
-				e.preventDefault();
+				e.preventDefault(); //creating accordion list of groups where current user is owner
 				var groupIndex = $(item).data('index');
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
-					$(item).find('h2').append("<div class='accordion'><div class='accordion-section'><a class='accordion-section-title' href='#accordion-1'>Accordion Section #1</a><div id='accordion-1' class='accordion-section-content'><p>Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.</p></div></div></div>");
+					var needElement = $(item).find('h2');
+					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
+					$.each(userGroups, function(index, value){
+						if(groupIndex === value.id){
+							return true;
+						}
+						needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-" + value.id + "'>" + value.name + "</a>");
+					});
+					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
 				});
 				e.stopPropagation();
 				loadAccordion();
