@@ -825,7 +825,6 @@ $(document).ready(function () {
 				$('.accordion-section-title').click(function(e) {
 					// Grab current anchor value
 					var currentAttrValue = $(this).attr('href');
-
 					if($(e.target).is('.active')) {
 						close_accordion_section();
 					}else {
@@ -833,6 +832,22 @@ $(document).ready(function () {
 
 						// Add active class to section title
 						$(this).addClass('active');
+						$(currentAttrValue).remove();
+						$(this).after("<div id='" + currentAttrValue.slice(1) + "' class='accordion-section-content'>");
+						$(currentAttrValue).append('<ul></ul>');
+						if(currentAttrValue == "#accordion-0"){
+							$.getJSON("getAllUsers", function (users) {
+								$.each(users, function(event, item){
+									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '>' + item.firstName + ' ' + item.lastName + '</li>');
+								});
+							});
+						} else {
+							$.getJSON("group", {id: currentAttrValue.slice(11)}, function (group) {
+								$.each(group.groupParticipants, function(event, item){
+									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '>' + item.firstName + ' ' + item.lastName + '</li>');
+								});
+							});
+						}
 						// Open up the hidden content panel
 						$('.accordion ' + currentAttrValue).slideDown(300).addClass('open');
 					}

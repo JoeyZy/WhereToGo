@@ -174,10 +174,15 @@ public class RestServiceController {
 		return groupsService.getUserGroups(user);
 	}
 
+	@RequestMapping("/getAllUsers")
+	public List<User> getAllUsers(HttpServletRequest request) {
+       	List<User> users = usersService.findAll();
+		return users;
+	}
 	@RequestMapping("/myGroups")
 	public Set<GroupResponse> myGroups(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        user = usersService.initGroups(user);
+		User user = (User) request.getSession().getAttribute("user");
+		user = usersService.initGroups(user);
 		return groupsService.getUserRelevantGroupResponses(user);
 	}
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
