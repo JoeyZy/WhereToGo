@@ -183,7 +183,7 @@
                                     <div class="event-box-content">
                                         <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
-                                        <div class = "event-box-location-and-by" title="{{targetGroup}}">{{targetGroup}}</div>
+                                        <div class = "event-target-group" title="{{targetGroup}}">{{targetGroup}}</div>
                                         <div class="event-box-location-and-by">
                                             <div class="location" title="{{location}}"><img class="icons"
                                                                                         src="resources/images/location.png"> {{location}}</div>
@@ -334,7 +334,13 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Shared in:</b></label>
-                        <div contentEditable="false" id="target-group" title="Shared in:"></div>
+                        <select contentEditable="false" id="target-group" class = "form-control" title="Shared in:">
+                            <script id="group-list-script" type="x-handlebars-template">
+                                {{#each this}}
+                                <option data-id="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </script>
+                        </select>
                     </li>
                     <li class="SinglePage__inputItem EventPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>

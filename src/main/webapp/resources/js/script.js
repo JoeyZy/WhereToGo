@@ -11,6 +11,7 @@ $(document).ready(function () {
 	var oldLocationHash = "#";
 	$('.userInfo').hide();
 	$('.logout').hide();
+	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all users)";
 
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
@@ -63,7 +64,7 @@ $(document).ready(function () {
 				"startTime": $eventStart.val(),
 				"endTime": $eventEnd.val(),
 				"description": $eventDescription.text(),
-				"targetGroup": $eventTargetGroup.text(),
+				"targetGroup": getTargetGroupID(),
 				"location": $eventLocation.text(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
@@ -73,7 +74,6 @@ $(document).ready(function () {
 		}
 		return false;
 	});
-
 
 	var $buttonAddGroup = $singlePage.find('.SinglePage__button--addGroup');
 
@@ -273,7 +273,7 @@ $(document).ready(function () {
 			"endTime": $eventEnd.val(),
 			"description": $eventDescription.text(),
 			"location": $eventLocation.text(),
-			"targetGroup": $eventTargetGroup.text(),
+			"targetGroup": getTargetGroupID(),
 			"cost": $eventCost.val(),
 			"currency": {
 				"id": getCurrencyId(), "name": $eventCostCurrency.val()
@@ -306,7 +306,7 @@ $(document).ready(function () {
 		$groupDescription.empty();
 		$groupLocation.empty();
 		$eventLocation.empty();
-		$eventTargetGroup.empty(),
+		//$eventTargetGroup.val("");
 		$eventCost.val("");
 		$eventCostCurrency.val("");
 		$buttons.hide();
@@ -522,6 +522,8 @@ $(document).ready(function () {
 				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
 				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
 				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
+
+				if(!item.targetGroup) item.targetGroup = DEFAULT_PUBLIC_EVENT_TEXT;
 			});
 			// Call a function to create HTML for all the events.
 			displayCategoriesListFilter(type, searchFrom, searchTo);
@@ -1277,7 +1279,7 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', false);
 		$eventDescription.attr('contenteditable', true);
 		$eventLocation.attr('contenteditable', true);
-		$eventTargetGroup.attr('contenteditable', true);
+		$eventTargetGroup.prop('disabled', false);
 		$eventStart.datepicker('enable');
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
@@ -1301,7 +1303,7 @@ $(document).ready(function () {
 		$eventDescription.removeClass('editable');
 		$eventLocation.attr('contenteditable', false);
 		$eventLocation.removeClass('editable');
-		$eventTargetGroup.attr('contenteditable', false);
+		$eventTargetGroup.prop('disabled', true);
 		$eventTargetGroup.removeClass('editable');
 		$eventCategories.multiselect('disable');
 		$eventCost.prop('disabled', true);
@@ -1489,7 +1491,7 @@ $(document).ready(function () {
 					$.getJSON("event", {id: item.id}, function (event) {
 						$participants.html($participantsTemplate(event.participants));
 						if(!event.targetGroup) {
-							event.targetGroup = { "name": "Public (open for all users)"};
+							event.targetGroup = { "id": -1, "name": DEFAULT_PUBLIC_EVENT_TEXT };
 						}
 
 						populateSinglePageEventPage($singlePage, event);
@@ -1527,7 +1529,23 @@ $(document).ready(function () {
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.text(linkify(event.location));
-				$eventTargetGroup.text(linkify(event.targetGroup.name));
+				//$eventTargetGroup.text(linkify(event.targetGroup.name));
+
+				/*$.getJSON("currencies", function (data) {
+					var currTemplate = $('#curr-list').html();
+					var currListElement = Handlebars.compile(currTemplate);
+					$eventCostCurrency.html(currListElement(data));
+				});
+
+				$.getJSON("myGroups", function (data) {
+					myGroups = data;
+					myGroups.sort(function (a, b) {
+						return moment(a.name).isAfter(moment(b.name));
+					});
+
+					generateGroupsHTML("my-groups-list", "myGroups", myGroups);
+				});*/
+
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
 					$pictureParent.show();
@@ -1548,6 +1566,7 @@ $(document).ready(function () {
 				allowAttendEvent();
 				$eventCategories.multiselect('refresh');
 			} else {
+
 				makeEventPageEditable();
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
@@ -1556,6 +1575,16 @@ $(document).ready(function () {
 					singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
 			}
+
+			$.getJSON("myGroups", function (data) {
+				var targetGroupTemplate = $('#group-list-script').html();
+				var groupListElement = Handlebars.compile(targetGroupTemplate);
+				groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
+				for(i = 0; i < data.length; i++) {
+					groupList.push(data[i]);
+				}
+				$eventTargetGroup.html(groupListElement(groupList));
+			});
 
 			function getEventCategoriesAsList(categories) {
 				var res = categories[0].name;
@@ -1592,6 +1621,10 @@ $(document).ready(function () {
 
 	function getCurrencyId() {
 		return $eventCostCurrency.find("option:contains('" + $eventCostCurrency.val() + "')").attr("data-id");
+	}
+
+	function getTargetGroupID() {
+		return $eventTargetGroup.find("option:contains('" + $eventTargetGroup.val() + "')").attr("data-id");
 	}
 
 	function renderCalendarPage() {

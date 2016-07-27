@@ -186,9 +186,9 @@ h1, h3 {
   position: relative;
 }
 
-.event-box-location-and-by, .group-box-location-and-by {
+.event-target-group, .event-box-location-and-by, .group-box-location-and-by {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
   display: block;
   z-index: 5;
   position: relative;

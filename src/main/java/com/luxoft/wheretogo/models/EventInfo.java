@@ -38,7 +38,7 @@ public class EventInfo {
     private Date endTime;
 
     private String description;
-    private String targetGroup;
+    private long targetGroup;
     private String location;
     private Integer cost;
     private Currency currency;
@@ -66,7 +66,7 @@ public class EventInfo {
     }
 
     public EventInfo(long id, String name, List<Category> categories, Date startTime, Date endTime,
-                     String description, String targetGroup, String location, Integer cost,
+                     String description, long targetGroup, String location, Integer cost,
                      Currency currency, Blob picture) {
         this.id = id;
         this.name = name;

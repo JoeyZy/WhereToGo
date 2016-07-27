@@ -82,7 +82,10 @@ public class RestServiceController {
 
 		Event event = new Event();
 		event.setInfo(eventInfo);
-		event.setTargetGroup(groupsService.findByName(eventInfo.getTargetGroup()));
+		long targetGroupID = eventInfo.getTargetGroup();
+		if(targetGroupID != -1) {
+			event.setTargetGroup(groupsService.findById(targetGroupID));
+		}
 		event.setOwner((User) request.getSession().getAttribute("user"));
 		event.setDeleted(NOT_DELETED);
 		boolean eventIsAdded = eventsService.add(event);
@@ -103,6 +106,7 @@ public class RestServiceController {
 	public void updateEvent(@RequestBody EventInfo eventInfo, Authentication authentication) {
 		Event event = eventsService.findById(eventInfo.getId());
 		event.setInfo(eventInfo);
+		event.setTargetGroup(groupsService.findById(eventInfo.getTargetGroup()));
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event, authentication.getName(), authentication.getAuthorities());
 	}
