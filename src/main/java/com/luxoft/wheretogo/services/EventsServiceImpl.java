@@ -103,7 +103,7 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public List<EventResponse> getRelevantEventResponses(User user) {
-		return convertToEventResponses(getRelevantEvents(findAll()), user);
+		return convertToEventResponses(getAvailableEvents(getRelevantEvents(findAll()), user), user);
 	}
 
 	@Override
@@ -197,4 +197,12 @@ public class EventsServiceImpl implements EventsService {
 		}
 		return event;
 	}
+
+	private List<Event> getAvailableEvents(List<Event> events, User user) {
+		return events.stream().filter(event -> (event.getTargetGroup() == null ||
+				(user != null && (event.getTargetGroup().getOwner().equals(user)
+				||event.getTargetGroup().getGroupParticipants().contains(user)))))
+				.collect(Collectors.toList());
+	}
+
 }
