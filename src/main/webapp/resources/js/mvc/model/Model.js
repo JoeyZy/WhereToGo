@@ -1,4 +1,4 @@
-var Model = AbstractSubject.extend({
+var Model = Observable.extend({
     // constructor
     /**
      * @param {any} [v] value for the model; {} if absent

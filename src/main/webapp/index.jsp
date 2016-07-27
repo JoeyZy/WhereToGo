@@ -353,7 +353,7 @@
 <!-- MVC: Commons -->
 <script src="resources/js/mvc/ModelEvent.js"></script>
 <script src="resources/js/mvc/ObserverMap.js"></script>
-<script src="resources/js/mvc/AbstractSubject.js"></script>
+<script src="resources/js/mvc/Observable.js"></script>
 
 <!-- MVC: Controllers -->
 <script src="resources/js/mvc/controller/AbstractController.js"></script>

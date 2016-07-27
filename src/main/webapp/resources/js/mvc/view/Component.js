@@ -1,4 +1,4 @@
-var Component = AbstractSubject.extend({
+var Component = Observable.extend({
     // constructor
     /**
      * @param {string} id
