@@ -13,6 +13,7 @@ var LoginController = AbstractController.extend({
             that.syncModel();
             that.login();
         });
+        // TODO Not working for now! Need to fire this event on clicking "Sign up" button (add Button component)...
         this.view.observe(ModelEvent.ADD, function () { // TODO Consider having a special "ADD_USER" event
             that.signup();
         });
