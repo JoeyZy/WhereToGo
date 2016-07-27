@@ -191,6 +191,9 @@ public class EventsServiceImpl implements EventsService {
 		event = eventsRepository.findById(event.getId());
 		if (event != null) {
 			Hibernate.initialize(event.getParticipants());
+			if(event.getTargetGroup() != null) {
+				Hibernate.initialize(event.getTargetGroup().getGroupParticipants());
+			}
 		}
 		return event;
 	}

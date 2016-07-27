@@ -51,44 +51,7 @@ $(document).ready(function () {
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	$buttonAddEvent.on('click', function () {
 
-		var categoriesList = [];
-		$eventCategories.find(":selected").each(function (i, selected) {
-			categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-		});
-		var eventJson = {
-			"id": $singlePage.find('.EventPage').attr('data-id'),
-			"name": $singlePageTitle.val(),
-			"categories": categoriesList,
-			"startTime": $eventStart.val(),
-			"endTime": $eventEnd.val(),
-			"description": $eventDescription.text(),
-			"targetGroup": $eventTargetGroup.text(),
-			"location": $eventLocation.text(),
-			"cost": $eventCost.val(),
-			"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
-			"picture": isDefaultPicture() ? "" : $picture.attr('src')
-		};
-
-		$.ajax({
-			url: "addEvent",
-			data: JSON.stringify(eventJson),
-			type: "POST",
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			success: function () {
-				loadEvents();
-				createQueryHash(filters);
-			},
-			error: function (error) {
-				alert("ERROR!" + error);
-			},
-			complete: function () {
-			}
-		});
-
-		/*if (typeof user !== "undefined") {
+		if (typeof user !== "undefined") {
 			var categoriesList = [];
 			$eventCategories.find(":selected").each(function (i, selected) {
 				categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
@@ -97,8 +60,8 @@ $(document).ready(function () {
 				"id": $singlePage.find('.EventPage').attr('data-id'),
 				"name": $singlePageTitle.val(),
 				"categories": categoriesList,
-				"startDateTime": $eventStart.val(),
-				"endDateTime": $eventEnd.val(),
+				"startTime": $eventStart.val(),
+				"endTime": $eventEnd.val(),
 				"description": $eventDescription.text(),
 				"targetGroup": $eventTargetGroup.text(),
 				"location": $eventLocation.text(),
@@ -107,7 +70,7 @@ $(document).ready(function () {
 				"picture": isDefaultPicture() ? "" : $picture.attr('src')
 			};
 			saveEvent(eventJson, "addEvent");
-		}*/
+		}
 		return false;
 	});
 
@@ -306,11 +269,11 @@ $(document).ready(function () {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
 			"name": $singlePageTitle.val(),
 			"categories": categoriesList,
-			"startDateTime": $eventStart.val(),
-			"endDateTime": $eventEnd.val(),
+			"startTime": $eventStart.val(),
+			"endTime": $eventEnd.val(),
 			"description": $eventDescription.text(),
 			"location": $eventLocation.text(),
-			"target-group": $eventDescription.text(),
+			"targetGroup": $eventTargetGroup.text(),
 			"cost": $eventCost.val(),
 			"currency": {
 				"id": getCurrencyId(), "name": $eventCostCurrency.val()
@@ -1209,7 +1172,7 @@ $(document).ready(function () {
 				addErrorListItem("Choose a category");
 				valid = false;
 			}
-			if (!event.startDateTime) {
+			if (!event.startTime) {
 				addErrorListItem("Add date for event");
 				valid = false;
 			}
@@ -1525,6 +1488,10 @@ $(document).ready(function () {
 				if (item.id == index) {
 					$.getJSON("event", {id: item.id}, function (event) {
 						$participants.html($participantsTemplate(event.participants));
+						if(!event.targetGroup) {
+							event.targetGroup = { "name": "Public (open for all users)"};
+						}
+
 						populateSinglePageEventPage($singlePage, event);
 						$buttonAttend.off();
 						$buttonAttend.on('click', function (event) {
@@ -1560,7 +1527,7 @@ $(document).ready(function () {
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.text(linkify(event.location));
-				$eventTargetGroup.text(linkify(event.targetGroup));
+				$eventTargetGroup.text(linkify(event.targetGroup.name));
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
 					$pictureParent.show();

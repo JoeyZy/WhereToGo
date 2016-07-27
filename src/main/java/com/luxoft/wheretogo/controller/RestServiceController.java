@@ -92,21 +92,17 @@ public class RestServiceController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/addEventInfo", method = RequestMethod.POST)
-	public void addEventInfo(@RequestBody EventInfo eventInfo, HttpServletRequest request) {
-
-		Event event = new Event();
-
-	}
-
 	@RequestMapping(value = "/deleteEvent", method = RequestMethod.POST)
-	public void deleteEvent(@RequestBody Event event, Authentication authentication) {
+	public void deleteEvent(@RequestBody EventInfo eventInfo, Authentication authentication) {
+		Event event = eventsService.findById(eventInfo.getId());
 		event.setDeleted(DELETED);
 		eventsService.update(event, authentication.getName(), authentication.getAuthorities());
 	}
 
 	@RequestMapping(value = "/updateEvent", method = RequestMethod.POST)
-	public void updateEvent(@RequestBody Event event, Authentication authentication) {
+	public void updateEvent(@RequestBody EventInfo eventInfo, Authentication authentication) {
+		Event event = eventsService.findById(eventInfo.getId());
+		event.setInfo(eventInfo);
 		event.setDeleted(NOT_DELETED);
 		eventsService.update(event, authentication.getName(), authentication.getAuthorities());
 	}

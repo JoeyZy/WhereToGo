@@ -183,6 +183,7 @@
                                     <div class="event-box-content">
                                         <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
 
+                                        <div class = "event-box-location-and-by" title="{{targetGroup}}">{{targetGroup}}</div>
                                         <div class="event-box-location-and-by">
                                             <div class="location" title="{{location}}"><img class="icons"
                                                                                         src="resources/images/location.png"> {{location}}</div>
