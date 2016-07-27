@@ -822,6 +822,7 @@ $(document).ready(function () {
 					$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
 				}
 
+
 				$('.accordion-section-title').click(function(e) {
 					// Grab current anchor value
 					var currentAttrValue = $(this).attr('href');
@@ -838,22 +839,44 @@ $(document).ready(function () {
 						if(currentAttrValue == "#accordion-0"){
 							$.getJSON("getAllUsers", function (users) {
 								$.each(users, function(event, item){
-									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '>' + item.firstName + ' ' + item.lastName + '</li>');
+									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '> <input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
 								});
 							});
 						} else {
 							$.getJSON("group", {id: currentAttrValue.slice(11)}, function (group) {
 								$.each(group.groupParticipants, function(event, item){
-									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '>' + item.firstName + ' ' + item.lastName + '</li>');
+									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '><input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
 								});
+								if($("a[href='" + currentAttrValue + "']").find("input[type=checkbox]").is(":checked")){
+									$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+									console.log(1);
+								}
 							});
 						}
+
+
+
 						// Open up the hidden content panel
 						$('.accordion ' + currentAttrValue).slideDown(300).addClass('open');
+
 					}
+
 
 					e.preventDefault();
 				});
+
+				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
+					var currentAttrValue = $(this).parent().parent().parent().attr("id");
+					console.log($(this));
+					event.stopPropagation();
+					if($(this).is(':checked')){
+						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", true );
+					} else {
+						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
+					}
+				});
+
+
 				$(document).click(function(event){
 					var target = $(event.target);
 					if (target.is('div.accordion') || target.parents('div.accordion').length) return;
@@ -869,15 +892,25 @@ $(document).ready(function () {
 				var groupIndex = $(item).data('index');
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
-					var needElement = $(item).find('h2');
+					var needElement = $(item).find('div');
 					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
 					$.each(userGroups, function(index, value){
 						if(groupIndex === value.id){
 							return true;
 						}
-						needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-" + value.id + "'>" + value.name + "</a>");
+						needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-" + value.id + "'><input type='checkbox'/>  " + value.name + "</a>");
 					});
 					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
+				});
+				$('.accordion-section-title input[type="checkbox"]').click(function(event) {
+					event.stopPropagation();
+					var currentAttrValue = $(this).parent().attr('href');
+					if($(this).is(':checked')){
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+					} else {
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
+					}
+
 				});
 				e.stopPropagation();
 				loadAccordion();
@@ -1318,7 +1351,7 @@ $(document).ready(function () {
 		});
 		function validateGroupFields(group) {
 			const GROUP_NAME_LENGTH_MIN = 3;
-			const GROUP_NAME_LENGTH_MAX = 40;
+			const GROUP_NAME_LENGTH_MAX = 30;
 			const GROUP_DESCRIPTION_LENGTH_MIN = 10;
 			const GROUP_DESCRIPTION_LENGTH_MAX = 250;
 			const GROUP_LOCATION_LENGTH_MIN = 7;
