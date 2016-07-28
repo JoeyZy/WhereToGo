@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -188,6 +189,9 @@ public class RestServiceController {
 	@RequestMapping("/myGroups")
 	public Set<GroupResponse> myGroups(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
+		if(user == null) {
+			return new HashSet<>();
+		}
         user = usersService.initGroups(user);
 		return groupsService.getUserRelevantGroupResponses(user);
 	}
@@ -205,8 +209,9 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/eventsCategories", method = RequestMethod.GET)
-	public List<CategoryResponse> categories() {
-		return eventsService.getEventsCounterByCategories();
+	public List<CategoryResponse> categories(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		return eventsService.getEventsCounterByCategories(user);
 	}
 
 	@RequestMapping(value = "/currencies", method = RequestMethod.GET)

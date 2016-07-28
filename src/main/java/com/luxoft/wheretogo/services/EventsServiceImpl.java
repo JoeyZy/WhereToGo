@@ -147,13 +147,13 @@ public class EventsServiceImpl implements EventsService {
 	public Set<CategoryResponse> getUserEventsCounterByCategories(User user) {
 		Set<Event> events = new HashSet<>(eventsRepository.findByOwner(user));
 		events.addAll(user.getEvents());
-		return new LinkedHashSet<>(categoriesService.countEventsByCategories(getRelevantEvents(
-				new ArrayList<>(events))));
+		return new LinkedHashSet<>(categoriesService.countEventsByCategories(getAvailableEvents(getRelevantEvents(
+				new ArrayList<>(events)), user)));
 	}
 
 	@Override
-	public List<CategoryResponse> getEventsCounterByCategories() {
-		return categoriesService.countEventsByCategories(getRelevantEvents(findAll()));
+	public List<CategoryResponse> getEventsCounterByCategories(User user) {
+		return categoriesService.countEventsByCategories(getAvailableEvents(getRelevantEvents(findAll()), user));
 	}
 
 

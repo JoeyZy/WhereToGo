@@ -199,7 +199,7 @@ public class EventsServiceImplTest {
 
         when(categoriesService.countEventsByCategories(any(List.class))).thenReturn(new ArrayList<>(expectedResult));
 
-        Assert.assertEquals(expectedResult,eventsService.getEventsCounterByCategories());
+        Assert.assertEquals(expectedResult,eventsService.getEventsCounterByCategories(userTest));
     }
 
     @Test

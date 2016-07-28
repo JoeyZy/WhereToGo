@@ -306,7 +306,7 @@ $(document).ready(function () {
 		$groupDescription.empty();
 		$groupLocation.empty();
 		$eventLocation.empty();
-		//$eventTargetGroup.val("");
+		$eventTargetGroup.val("");
 		$eventCost.val("");
 		$eventCostCurrency.val("");
 		$buttons.hide();
@@ -1538,6 +1538,7 @@ $(document).ready(function () {
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.text(linkify(event.location));
+				$eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
@@ -1571,12 +1572,16 @@ $(document).ready(function () {
 
 			$.getJSON("myGroups", function (data) {
 				var targetGroupTemplate = $('#group-list-script').html();
-				var groupListElement = Handlebars.compile(targetGroupTemplate);
+				if(targetGroupTemplate != undefined) {
+					var groupListElement = Handlebars.compile(targetGroupTemplate);
+				}
 				groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
 				for(i = 0; i < data.length; i++) {
 					groupList.push(data[i]);
 				}
-				$eventTargetGroup.html(groupListElement(groupList));
+				if(groupListElement!=undefined) {
+					$eventTargetGroup.html(groupListElement(groupList));
+				}
 			});
 
 			function getEventCategoriesAsList(categories) {

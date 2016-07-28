@@ -41,7 +41,7 @@ public interface EventsService {
 
 	Set<CategoryResponse> getUserEventsCounterByCategories(User user);
 
-	List<CategoryResponse> getEventsCounterByCategories();
+	List<CategoryResponse> getEventsCounterByCategories(User user);
 
 	List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user);
 
