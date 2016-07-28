@@ -880,11 +880,6 @@ $(document).ready(function () {
 					} else {
 						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
 					}
-					// if($(this).is(':checked')){
-					// 	$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", true );
-					// } else {
-					// 	$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
-					// }
 				});
 
 
