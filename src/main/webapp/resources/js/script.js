@@ -869,11 +869,22 @@ $(document).ready(function () {
 					var currentAttrValue = $(this).parent().parent().parent().attr("id");
 					console.log($(this));
 					event.stopPropagation();
-					if($(this).is(':checked')){
+					var check = true;
+					$.each($(this).parent().parent().find('li input[type=checkbox]'), function(index, value){
+						if (!$(this).is(':checked')){
+							check = false;
+						}
+					});
+					if (check === true){
 						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", true );
 					} else {
 						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
 					}
+					// if($(this).is(':checked')){
+					// 	$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", true );
+					// } else {
+					// 	$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
+					// }
 				});
 
 
