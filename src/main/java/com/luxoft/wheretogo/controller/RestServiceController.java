@@ -141,7 +141,9 @@ public class RestServiceController {
 
 	@RequestMapping("/groupEvents")
 	public Set<EventResponse> groupEvents(Group group, HttpServletRequest request) {
-		return eventsService.getGroupRelevantEventResponses(group);
+		User user = (User) request.getSession().getAttribute("user");
+		group = groupsService.initParticipants(group);
+		return eventsService.getGroupUserRelevantEventResponses(group, user);
 	}
 
     @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)

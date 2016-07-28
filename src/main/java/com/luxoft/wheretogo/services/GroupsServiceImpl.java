@@ -118,4 +118,13 @@ public class GroupsServiceImpl implements GroupsService {
         return new HashSet<>(convertToGroupResponses(groups));
     }
 
+    @Override
+    public Group initParticipants(Group group) {
+        group = groupsRepository.findById(group.getId());
+        if (group != null) {
+            Hibernate.initialize(group.getGroupParticipants());
+        }
+        return group;
+    }
+
 }

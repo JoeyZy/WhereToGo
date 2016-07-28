@@ -33,7 +33,7 @@ public interface EventsService {
 
 	Set<EventResponse> getUserRelevantEventResponses(User user);
 
-	Set<EventResponse> getGroupRelevantEventResponses(Group group);
+	Set<EventResponse> getGroupUserRelevantEventResponses(Group group, User user);
 
 	List<EventResponse> getRelevantEventResponses(User user);
 

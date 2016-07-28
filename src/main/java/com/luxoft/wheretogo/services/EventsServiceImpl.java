@@ -103,7 +103,10 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
-	public Set<EventResponse> getGroupRelevantEventResponses(Group group) {
+	public Set<EventResponse> getGroupUserRelevantEventResponses(Group group, User user) {
+		if(!(group.getGroupParticipants().contains(user) || group.getOwner().equals(user))) {
+			return new HashSet<>();
+		}
 		List<Event> events = eventsRepository.findByTargetGroup(group);
 		return new HashSet<>(convertToEventResponses(getRelevantEvents(events), null));
 	}
