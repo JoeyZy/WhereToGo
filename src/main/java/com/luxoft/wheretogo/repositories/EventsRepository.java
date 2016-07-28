@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 
 import java.time.LocalDateTime;
@@ -21,4 +22,6 @@ public interface EventsRepository {
 	Event findByName(String eventName);
 
 	List<Event> findByOwner(User owner);
+
+	List<Event> findByTargetGroup(Group targetGroup);
 }

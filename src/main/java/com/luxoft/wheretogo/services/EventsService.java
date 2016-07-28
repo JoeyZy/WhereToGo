@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
@@ -31,6 +32,8 @@ public interface EventsService {
 	List<EventResponse> getEventResponses();
 
 	Set<EventResponse> getUserRelevantEventResponses(User user);
+
+	Set<EventResponse> getGroupRelevantEventResponses(Group group);
 
 	List<EventResponse> getRelevantEventResponses(User user);
 

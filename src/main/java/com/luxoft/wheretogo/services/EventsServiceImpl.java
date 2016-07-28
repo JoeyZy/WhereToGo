@@ -4,6 +4,7 @@ import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
 import com.luxoft.wheretogo.configuration.SpringSecurityInitializer;
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
@@ -99,6 +100,12 @@ public class EventsServiceImpl implements EventsService {
 		List<Event> events = eventsRepository.findByOwner(user);
 		events.addAll(user.getEvents());
 		return new HashSet<>(convertToEventResponses(getRelevantEvents(events), user));
+	}
+
+	@Override
+	public Set<EventResponse> getGroupRelevantEventResponses(Group group) {
+		List<Event> events = eventsRepository.findByTargetGroup(group);
+		return new HashSet<>(convertToEventResponses(getRelevantEvents(events), null));
 	}
 
 	@Override

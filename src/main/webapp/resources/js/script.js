@@ -1125,6 +1125,10 @@ $(document).ready(function () {
 	var $groupParticipantsTemplate = Handlebars.compile($groupParticipantsTemplateScript);
 	var $groupParticipants = $('.GroupPage__groups__list');
 
+	var $groupEventsTemplateScript = $('#groupEvents').html();
+	var $groupEventsTemplate = Handlebars.compile($groupEventsTemplateScript);
+	var $groupEvents = $('.GroupPage__groups__events__list');
+
 	function saveEvent(eventJson, newEvent) {
 		if (!validateEventFields(eventJson)) {
 			$errors.show();
@@ -1441,6 +1445,11 @@ $(document).ready(function () {
 					$buttonDeleteGroup.show();
 				}
 				allowSubscribeGroup();
+
+				$.getJSON("groupEvents", {id: group.id, name: group.name}, function (data) {
+					$groupEvents.html($groupEventsTemplate(data));
+				});
+
 			}
 			else {
 				makeGroupPageEditable();
@@ -1529,22 +1538,6 @@ $(document).ready(function () {
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.text(linkify(event.location));
-				//$eventTargetGroup.text(linkify(event.targetGroup.name));
-
-				/*$.getJSON("currencies", function (data) {
-					var currTemplate = $('#curr-list').html();
-					var currListElement = Handlebars.compile(currTemplate);
-					$eventCostCurrency.html(currListElement(data));
-				});
-
-				$.getJSON("myGroups", function (data) {
-					myGroups = data;
-					myGroups.sort(function (a, b) {
-						return moment(a.name).isAfter(moment(b.name));
-					});
-
-					generateGroupsHTML("my-groups-list", "myGroups", myGroups);
-				});*/
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);

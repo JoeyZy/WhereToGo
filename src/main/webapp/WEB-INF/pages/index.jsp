@@ -386,6 +386,17 @@
                             {{/each}}
                         </script>
                     </li>
+                    <li class="SinglePage__inputItem GroupPage__events">
+                        <label class="SinglePage__inputItem__label"><b>Events:</b></label>
+                        <ul class="GroupPage__groups__events__list">
+                        </ul>
+                        <script id="groupEvents" type="x-handlebars-template">
+                            {{#each this}}
+                            <li data-id="{{id}}">{{name}}</li>
+                            {{/each}}
+                        </script>
+                    </li>
+
 
                 </ul>
                 <%--bla--%>

@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.Event;
+import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.utils.DateUtils;
 import org.apache.log4j.Logger;
@@ -59,4 +60,10 @@ public class EventsRepositoryImpl extends AbstractRepository<Event> implements E
 	public List<Event> findByOwner(User owner) {
 		return super.findListByProperty("owner", owner);
 	}
+
+	@Override
+	public List<Event> findByTargetGroup(Group targetGroup) {
+		return super.findListByProperty("targetGroup", targetGroup);
+	}
+
 }
