@@ -773,7 +773,7 @@ div.accordion{
 }
 
 /*----- Section Titles -----*/
-.accordion-section-title {
+.accordion-section-title, .accordion-section-button {
   width:100%;
   padding:15px;
   display:inline-block;
@@ -786,7 +786,7 @@ div.accordion{
   color:#fff;
 }
 
-.accordion-section-title.active, .accordion-section-title:hover {
+.accordion-section-title.active, .accordion-section-title:hover, .accordion-section-button:hover {
   background:#4c4c4c;
   /* Type */
   text-decoration:none;

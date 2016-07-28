@@ -815,24 +815,61 @@ $(document).ready(function () {
 			});
 		});
 
+		var groupsUsers = new Object();
 		function loadAccordion(){
+			var usersId = [];
+
+			function checkArrayInArray(where, what){
+				if (!what) {
+					return true;
+				}
+				for(var i=0; i < what.length; i++){
+					if(where.indexOf(what[i]) == -1) return false;
+				}
+				return true;
+			}
+
 			$(document).ready(function() {
 				function close_accordion_section() {
 					$('.accordion .accordion-section-title').removeClass('active');
 					$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
 				}
 
+
+
 				var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
 				checkboxGroup.click(function(event) {
 					event.stopPropagation();
 					var currentAttrValue = $(this).parent().attr('href');
+					var userId;
 					if($(this).is(':checked')){
 						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+						$.each($(currentAttrValue).find("ul li"), function(){
+							userId = $(this).data('index');
+							if(usersId.indexOf(userId) === -1){
+								usersId.push(userId);
+							}
+						})
 					} else {
 						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
+						$.each($(currentAttrValue).find("ul li"), function(){
+							userId = $(this).data('index');
+							if(usersId.indexOf(userId) !== -1){
+								usersId.splice(usersId.indexOf(userId), 1)
+							}
+						})
 					}
+
+					$.each(groupsUsers, function(key, value){
+						if (checkArrayInArray(usersId), value){
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', true);
+						} else {
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', false);
+
+						}
+					});
+
 					if(($(this).is(':checked')) && !($(this).parent().parent().find('.accordion-section-content')).length){
-						console.log(1);
 						$(this).parent().trigger('click');
 					}
 
@@ -858,6 +895,11 @@ $(document).ready(function () {
 								$.each(users, function(event, item){
 									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '> <input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
 								});
+								$.each($(currentAttrValue).find("ul li"), function(){
+									if(usersId.indexOf($(this).data('index')) !== -1){
+										$(this).find('input[type=checkbox]').prop("checked", true);
+									}
+								})
 							});
 						} else {
 							$.getJSON("group", {id: currentAttrValue.slice(11)}, function (group) {
@@ -866,8 +908,12 @@ $(document).ready(function () {
 								});
 								if($("a[href='" + currentAttrValue + "']").find("input[type=checkbox]").is(":checked")){
 									$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
-									console.log(1);
 								}
+								$.each($(currentAttrValue).find("ul li"), function(){
+									if(usersId.indexOf($(this).data('index')) !== -1){
+										$(this).find('input[type=checkbox]').prop("checked", true);
+									}
+								})
 							});
 						}
 
@@ -882,11 +928,50 @@ $(document).ready(function () {
 					e.preventDefault();
 				});
 
+				$('button.accordion-section-button').on('click', function(){
+					var json = {
+						groupId: activeGroupId,
+						usersToAdd: usersId 
+					};
+					$.ajax({
+						url: '/addAllUsersToGroup',
+						type: "POST",
+						data: JSON.stringify(json),
+						success: function () {
+							alert('Users were added');
+						},
+						error: function () {
+							alert('Something wrong');
+						},
+						complete: function () {
+						}
+					});
+				})
+
 				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
 					var currentAttrValue = $(this).parent().parent().parent().attr("id");
-					console.log($(this));
 					event.stopPropagation();
 					var check = true;
+					var userId = $(this).parent().data('index');
+					if($(this).is(':checked')){
+						if(usersId.indexOf(userId) === -1){
+							usersId.push(userId);
+						}
+					} else {
+						if(usersId.indexOf(userId) !== -1){
+							usersId.splice(usersId.indexOf(userId), 1)
+						}
+					}
+
+					$.each(groupsUsers, function(key, value){
+						if (checkArrayInArray(usersId, value)){
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', true);
+						} else {
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', false);
+
+						}
+					});
+
 					$.each($(this).parent().parent().find('li input[type=checkbox]'), function(index, value){
 						if (!$(this).is(':checked')){
 							check = false;
@@ -909,9 +994,11 @@ $(document).ready(function () {
 				});
 			});
 		}
+		var activeGroupId;
 		$.each($('.my-groups-list').find('li'), function (event, item) {
 			$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
 				e.preventDefault(); //creating accordion list of groups where current user is owner
+				activeGroupId = $(this).parent().parent().parent().parent().data('index');
 				var groupIndex = $(item).data('index');
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
@@ -922,16 +1009,27 @@ $(document).ready(function () {
 							return true;
 						}
 						needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-" + value.id + "'><input type='checkbox'/>  " + value.name + "</a>");
+						groupsUsers[value.id] = [];
+						$.getJSON("group", {id: value.id}, function (group) {
+							$.each(group.groupParticipants, function(event, item){
+								groupsUsers[value.id].push(item.id);
+							});
+						});
 					});
 					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
+					needElement.find('.accordion-section').append("<button class='accordion-section-button'>Add selected users to group</button>");
+					groupsUsers[0] = [];
+					$.getJSON("getAllUsers", function (users) {
+						$.each(users, function(event, item){
+							groupsUsers[0].push(item.id);
+						});
+					});
 				});
 				e.stopPropagation();
 				loadAccordion();
 			});
 
 		});
-
-		showInlineAssignments(); //check!
 
 		showInlineAssignments();
 		var header = $('header');
