@@ -831,8 +831,11 @@ $(document).ready(function () {
 					} else {
 						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
 					}
+					if(($(this).is(':checked')) && !($(this).parent().parent().find('.accordion-section-content')).length){
+						console.log(1);
+						$(this).parent().trigger('click');
+					}
 
-					$(this).parent().trigger('click');
 
 				});
 
@@ -922,17 +925,6 @@ $(document).ready(function () {
 					});
 					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
 				});
-				// var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
-				// checkboxGroup.click(function(event) {
-				// 	 event.stopPropagation();
-				// 	var currentAttrValue = $(this).parent().attr('href');
-				// 	if($(this).is(':checked')){
-				// 		$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
-				// 	} else {
-				// 		$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
-				// 	}
-                //
-				// });
 				e.stopPropagation();
 				loadAccordion();
 			});
