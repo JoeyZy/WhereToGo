@@ -1,7 +1,23 @@
 package com.luxoft.wheretogo.services;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Service;
+
 import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
-import com.luxoft.wheretogo.configuration.SpringSecurityInitializer;
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
@@ -10,16 +26,6 @@ import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -156,11 +162,10 @@ public class EventsServiceImpl implements EventsService {
 		return categoriesService.countEventsByCategories(getAvailableEvents(getRelevantEvents(findAll()), user));
 	}
 
-
 	@Override
 	public List<EventResponse> getArchivedEventsResponse(ArchiveServiceRequest request, User user) {
 		List<Event> archivedEvents = findAll().stream().filter(event -> event.getEndDateTime()
-					.after(request.getSearchFrom())
+				.after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo())
 				&& !event.getDeleted()).collect(Collectors.toList());
 		return convertToEventResponses(filterArchivedEvents(archivedEvents, user), user);
@@ -174,7 +179,7 @@ public class EventsServiceImpl implements EventsService {
 	@Override
 	public List<EventResponse> getArchivedUsersEventsResponse(ArchiveServiceRequest request, User user) {
 		List<Event> archivedEvents = eventsRepository.findByOwner(user).stream().filter(event -> event
-					.getEndDateTime().after(request.getSearchFrom())
+				.getEndDateTime().after(request.getSearchFrom())
 				&& event.getEndDateTime().before(request.getSearchTo())
 				&& !event.getDeleted()).collect(Collectors.toList());
 		return convertToEventResponses(archivedEvents, user);
@@ -183,17 +188,17 @@ public class EventsServiceImpl implements EventsService {
 	@Override
 	public List<CategoryResponse> getArchivedEventsCounterByCategories(ArchiveServiceRequest request, User user) {
 		return categoriesService.countEventsByCategories(filterArchivedEvents(findAll().stream()
-					.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
-				&& event.getEndDateTime().before(request.getSearchTo())
-				&& !event.getDeleted()).collect(Collectors.toList()), user));
+				.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+						&& event.getEndDateTime().before(request.getSearchTo())
+						&& !event.getDeleted()).collect(Collectors.toList()), user));
 	}
 
 	@Override
 	public List<CategoryResponse> getArchivedUsersEventsCounterByCategories(ArchiveServiceRequest request, User user) {
 		return categoriesService.countEventsByCategories(eventsRepository.findByOwner(user).stream()
-					.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
-				&& event.getEndDateTime().before(request.getSearchTo())
-				&& !event.getDeleted()).collect(Collectors.toList()));
+				.filter(event -> event.getEndDateTime().after(request.getSearchFrom())
+						&& event.getEndDateTime().before(request.getSearchTo())
+						&& !event.getDeleted()).collect(Collectors.toList()));
 	}
 
 	@Override

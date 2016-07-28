@@ -1,10 +1,9 @@
 package com.luxoft.wheretogo.services;
 
+import java.util.List;
+
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.UserInfo;
-import org.hibernate.Hibernate;
-
-import java.util.List;
 
 public interface UsersService {
 
