@@ -822,6 +822,20 @@ $(document).ready(function () {
 					$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
 				}
 
+				var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
+				checkboxGroup.click(function(event) {
+					event.stopPropagation();
+					var currentAttrValue = $(this).parent().attr('href');
+					if($(this).is(':checked')){
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+					} else {
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
+					}
+
+					$(this).parent().trigger('click');
+
+				});
+
 
 				$('.accordion-section-title').click(function(e) {
 					// Grab current anchor value
@@ -908,16 +922,17 @@ $(document).ready(function () {
 					});
 					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
 				});
-				$('.accordion-section-title input[type="checkbox"]').click(function(event) {
-					event.stopPropagation();
-					var currentAttrValue = $(this).parent().attr('href');
-					if($(this).is(':checked')){
-						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
-					} else {
-						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
-					}
-
-				});
+				// var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
+				// checkboxGroup.click(function(event) {
+				// 	 event.stopPropagation();
+				// 	var currentAttrValue = $(this).parent().attr('href');
+				// 	if($(this).is(':checked')){
+				// 		$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+				// 	} else {
+				// 		$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
+				// 	}
+                //
+				// });
 				e.stopPropagation();
 				loadAccordion();
 			});
