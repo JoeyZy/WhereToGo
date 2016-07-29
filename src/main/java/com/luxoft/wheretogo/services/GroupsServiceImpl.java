@@ -108,6 +108,15 @@ public class GroupsServiceImpl implements GroupsService {
         return group;
     }
 
+    public Group initGroupParticipantslist(long id) {
+        Group group = groupsRepository.findById(id);
+        if (group != null) {
+            Hibernate.initialize(group.getGroupParticipants());
+        }
+        return group;
+    }
+
+
     @Override
     public Set<GroupResponse> getUserRelevantGroupResponses(User user) {
         List<Group> groups = groupsRepository.findByOwner(user);

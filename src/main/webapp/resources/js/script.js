@@ -844,24 +844,24 @@ $(document).ready(function () {
 					var userId;
 					if($(this).is(':checked')){
 						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
-						$.each($(currentAttrValue).find("ul li"), function(){
-							userId = $(this).data('index');
-							if(usersId.indexOf(userId) === -1){
-								usersId.push(userId);
-							}
-						})
+							$.each(groupsUsers[currentAttrValue.slice(11)], function(index, value){
+								userId = value;
+								if(usersId.indexOf(userId) === -1){
+									usersId.push(userId);
+								}
+							})
 					} else {
 						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
-						$.each($(currentAttrValue).find("ul li"), function(){
-							userId = $(this).data('index');
-							if(usersId.indexOf(userId) !== -1){
-								usersId.splice(usersId.indexOf(userId), 1)
-							}
-						})
+							$.each(groupsUsers[currentAttrValue.slice(11)], function(index, value){
+								userId = value;
+								if(usersId.indexOf(userId) !== -1){
+									usersId.splice(usersId.indexOf(userId), 1);
+								}
+							})
 					}
 
 					$.each(groupsUsers, function(key, value){
-						if (checkArrayInArray(usersId), value){
+						if (checkArrayInArray(usersId, value)){
 							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', true);
 						} else {
 							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', false);
@@ -869,7 +869,7 @@ $(document).ready(function () {
 						}
 					});
 
-					if(($(this).is(':checked')) && !($(this).parent().parent().find('.accordion-section-content')).length){
+					if(($(this).is(':checked')) && (!($(this).parent().parent().find('.accordion-section-content')).length || ($(this).parent().parent().find('.accordion-section-content').css('display') == 'none') )){
 						$(this).parent().trigger('click');
 					}
 
@@ -929,14 +929,18 @@ $(document).ready(function () {
 				});
 
 				$('button.accordion-section-button').on('click', function(){
-					var json = {
-						groupId: activeGroupId,
-						usersToAdd: usersId 
+					var jsonGroup = {
+						"groupId" : activeGroupId,
+						"usersToAdd" : usersId 
 					};
 					$.ajax({
-						url: '/addAllUsersToGroup',
+						url: 'addAllUsersToGroup',
 						type: "POST",
-						data: JSON.stringify(json),
+						data: JSON.stringify(jsonGroup),
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
 						success: function () {
 							alert('Users were added');
 						},

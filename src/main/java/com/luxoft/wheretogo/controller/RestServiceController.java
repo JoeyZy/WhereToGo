@@ -148,6 +148,32 @@ public class RestServiceController {
         return groupToUpdate;
     }
 
+	@RequestMapping(value = "/addAllUsersToGroup", method = RequestMethod.POST)
+	public Group addAllUsersToGroup(@RequestBody SubscribeGroup group, HttpServletRequest request) {
+//		User user;
+		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getGroupId());
+		long[] subscribersList = group.getUsersToAdd();
+
+		for(long i : subscribersList){
+			groupToUpdate = groupsService.initGroupParticipantslist(group.getGroupId());
+
+			User user = usersService.findById(i);
+			if (!(groupToUpdate.getGroupParticipants() == null) &&
+					!groupToUpdate.getGroupParticipants().contains(user)) {
+				groupToUpdate.getGroupParticipants().add(user);
+
+				user.setGroups(usersService.initGroups(user).getGroups());
+
+				user.getGroups().add(groupToUpdate);
+				groupsService.update(groupToUpdate);
+				usersService.update(user);
+//
+//				request.getSession().setAttribute("user", user);
+			}
+		}
+		return groupToUpdate;
+	}
+
     @RequestMapping(value="/unassignUserFromGroup", method = RequestMethod.POST)
     public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
