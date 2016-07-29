@@ -1,24 +1,28 @@
-/**
- * ObserverMap holds observers for the supported events,
- * and provides means to execute those callbacks with data provided.
- */
 var ObserverMap = Class.extend({
-
-    // constructor
+    /**
+     * @class ObserverMap
+     * @classdesc ObserverMap holds observers for the supported events,
+     * and provides means to execute those callbacks with data provided.
+     *
+     * @constructs ObserverMap
+     */
     init: function ObserverMap() {
-        this.map = {};
+        /** @access private*/ this.map = {};
     },
 
     /**
-     * Adds an observer for an event
-     * TODO Add validations
+     * @summary Adds an observer for an event
+     *
+     * @todo TODO Add validations
+     * @memberof ObserverMap#
      */
     put: function (event, observer) {
         this.map[event] = observer;
     },
 
     /**
-     * Invokes an observer with the data provided
+     * @summary Invokes an observer with the data provided
+     * @memberof ObserverMap#
      *
      * @param {string} event    ModelEvent that occurred
      * @param         [data]    Data to be passed to the event (undefined is allowed)
@@ -28,14 +32,18 @@ var ObserverMap = Class.extend({
     },
 
     /**
-     * Removes an observer of an event
+     * @summary Removes an observer of an event
+     * @memberof ObserverMap#
+     *
+     * @param {string} event    ModelEvent that occurred
      */
     remove: function (event) {
         delete this.map[event];
     },
 
     /**
-     * Removes all observers (of all events)
+     * @summary Removes all observers (of all events)
+     * @memberof ObserverMap#
      */
     clear: function () {
         this.map = {}; // the old value will be GC'ed eventually

@@ -225,6 +225,44 @@
                 </executions>
             </plugin>
 
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/resources/doc/latest</directory>
+							<includes>
+								<include>**/*.*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
         </plugins>
     </build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>com.phasebash.jsdoc</groupId>
+				<artifactId>jsdoc3-maven-plugin</artifactId>
+				<version>1.2.0</version>
+				<configuration>
+					<recursive>true</recursive>
+					<directoryRoots>
+						<directoryRoot>${basedir}/src/main/webapp/resources/js/mvc</directoryRoot>
+					</directoryRoots>
+					<sourceFiles>
+						<sourceFile>${basedir}/src/main/webapp/resources/js/helpers.js</sourceFile>
+					</sourceFiles>
+					<tutorialsDirectory>${basedir}/src/main/webapp/resources/doc/tutorials</tutorialsDirectory>
+					<outputDirectory>${basedir}/src/main/webapp/resources/doc/latest</outputDirectory>
+					<configFile>${basedir}/src/main/frontend/jsdoc/conf.json</configFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

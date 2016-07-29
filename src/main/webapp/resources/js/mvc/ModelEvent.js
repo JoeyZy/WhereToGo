@@ -1,6 +1,8 @@
 /**
- * Model and View communicate firing ("notifying") and receiving ("observing") various ModelEvent's
- * such as SET, SUBMIT (for forms), and the like.
+ * @classdesc Model and View communicate firing ("notifying") and receiving ("observing") various ModelEvent's
+ * such as SET, SUBMIT (for forms), and the like
+ * @readonly
+ * @enum {string}
  */
 var ModelEvent = {
     /**
