@@ -45,5 +45,7 @@ function defined(o) {
  * @return {any} either a deep copy of a passed object, or the exact value of a passed primitive
  */
 function deepCopy(o) {
-    return (typeof o == "object") ? JSON.parse(JSON.stringify(o)) : o; // @compat es5
+    return (typeof o == "object")
+        ? JSON.parse(JSON.stringify(o)) // @compat es5
+        : o;
 }

@@ -1,18 +1,30 @@
 var Component = Observable.extend({
-
     /**
      * @class Component
+     * @extends Observable
+     *
+     * @classdesc A _Component_ is the _View_ part of MVC model.
+     * A view can be any output representation of information.
+     *
+     * Here, it is responsible for
+     *   - attaching listeners on DOM events;
+     *   - self-notifying of the SET event.
+     *
+     * See [How does Component work? ]{@tutorial Component-tutorial} for more details.
+     *
+     * @constructs Component
      * @param {string} id
      * @param {ModelFacade} model
-     * @constructs Component
      */
     init: function Component(id, model) { // TODO Pass the root element also
         this._super();
+
         this.id = id;
         this.selector = this.getSelector();
         this.element = null;
         this.elements = {}; // child components (map of model-ids to elements) // TODO Consider renaming it to "children"
         this.model = model;
+
         this.wrap(this.selector); // TODO Consider (possible) lazy wrapping
         this.bind();
     },

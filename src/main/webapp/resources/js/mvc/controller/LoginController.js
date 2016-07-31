@@ -1,5 +1,4 @@
 var LoginController = AbstractController.extend({
-
     /**
      * @class LoginController
      * @extends AbstractController

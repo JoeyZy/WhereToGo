@@ -1,0 +1,55 @@
+<html>
+<body>
+<h1>How does Component work?</h1>
+
+<p>Component is constructed upon the existing DOM. To do so, it looks for an element
+with attribute <code>data-model</code> (see {@link Component.MODEL_ATTR}) set to the
+<code>id</code> value passed as an argument to a constructor. If this element has children
+with model-ids (hereafter, a <i>model-id</i> is a value of the <code>data-model</code>
+attribute) in the form <code>&lt;model-id of the parent&gt;.&lt;model-id&gt;</code>, these
+elements get stored and <i>observed.</i></p>
+
+<p>For example, given the following markup:</p>
+
+<pre>
+    &lt;form data-model="userForm"&gt;
+        Name: &lt;input type="text"   data-model="userForm.name"&gt;&lt;br/&gt;
+        Age : &lt;input type="number" data-model="userForm.age" &gt;&lt;br/&gt;
+    &lt;/form&gt;
+</pre>
+
+<p>you may construct a view like so:</p>
+
+<pre>
+    var userView = new Component("userForm", userModel);
+</pre>
+
+<p>Now userView has the following properties:</p>
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Value (DOM element)</th>
+    </tr>
+    <tr>
+        <td>userView.element</td>
+        <td>form[data-model=userForm]</td>
+    </tr>
+    <tr>
+        <td>userView.elements["userForm.name"]</td>
+        <td>input[data-model=userForm.name]</td>
+    </tr>
+    <tr>
+        <td>userView.elements["userForm.age"]</td>
+        <td>input[data-model=userForm.age]</td>
+    </tr>
+</table>
+
+<p>To get (or set) the value of one of component's elements, you may call method elementValue(), e.g.</p>
+
+<pre>
+    userView.elementValue("userForm.name"   ); // get the value of "Name" input
+    userView.elementValue("userForm.age", 25); // set the value of "Age"  input
+</pre>
+
+</body>
+</html>

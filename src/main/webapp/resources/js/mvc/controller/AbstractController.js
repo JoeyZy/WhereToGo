@@ -1,5 +1,4 @@
 var AbstractController = Class.extend({
-
     /**
      * @class AbstractController
      * @classdesc Abstract controller implementation:
