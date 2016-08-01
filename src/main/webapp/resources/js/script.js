@@ -816,7 +816,7 @@ $(document).ready(function () {
 		});
 
 		var groupsUsers = new Object();
-		function loadAccordion(){
+		function loadAccordion(activeGroupParticipants){
 			var usersId = [];
 
 			function checkArrayInArray(where, what){
@@ -892,9 +892,17 @@ $(document).ready(function () {
 						$(currentAttrValue).append('<ul></ul>');
 						if(currentAttrValue == "#accordion-0"){
 							$.getJSON("getAllUsers", function (users) {
+								var numberOfProposedSubscribers = 0;
 								$.each(users, function(event, item){
-									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '> <input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										numberOfProposedSubscribers++;
+										$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '> <input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									}
 								});
+								if (numberOfProposedSubscribers  === 0){
+									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+
+								}
 								$.each($(currentAttrValue).find("ul li"), function(){
 									if(usersId.indexOf($(this).data('index')) !== -1){
 										$(this).find('input[type=checkbox]').prop("checked", true);
@@ -903,9 +911,17 @@ $(document).ready(function () {
 							});
 						} else {
 							$.getJSON("group", {id: currentAttrValue.slice(11)}, function (group) {
+								var numberOfProposedSubscribers = 0;
 								$.each(group.groupParticipants, function(event, item){
-									$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '><input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										numberOfProposedSubscribers++;
+										$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '><input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									}
 								});
+								if (numberOfProposedSubscribers  === 0){
+									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+
+								}
 								if($("a[href='" + currentAttrValue + "']").find("input[type=checkbox]").is(":checked")){
 									$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
 								}
@@ -1002,8 +1018,15 @@ $(document).ready(function () {
 		$.each($('.my-groups-list').find('li'), function (event, item) {
 			$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
 				e.preventDefault(); //creating accordion list of groups where current user is owner
-				activeGroupId = $(this).parent().parent().parent().parent().data('index');
-				var groupIndex = $(item).data('index');
+				activeGroupId = $(item).data('index');
+				var groupIndex = activeGroupId;
+				var activeGroupParticipants = [];       //list of users that already subscribed on this group
+				$.getJSON("group", {id: activeGroupId}, function (group) {
+					$.each(group.groupParticipants, function(event, item){
+						activeGroupParticipants.push(item.id);
+						console.log(activeGroupParticipants);
+					});
+				});
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
 					var needElement = $(item).find('div');
@@ -1016,7 +1039,9 @@ $(document).ready(function () {
 						groupsUsers[value.id] = [];
 						$.getJSON("group", {id: value.id}, function (group) {
 							$.each(group.groupParticipants, function(event, item){
-								groupsUsers[value.id].push(item.id);
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										groupsUsers[value.id].push(item.id);
+									}
 							});
 						});
 					});
@@ -1025,12 +1050,14 @@ $(document).ready(function () {
 					groupsUsers[0] = [];
 					$.getJSON("getAllUsers", function (users) {
 						$.each(users, function(event, item){
-							groupsUsers[0].push(item.id);
+							if(activeGroupParticipants.indexOf(item.id) === -1){
+								groupsUsers[0].push(item.id);
+							}
 						});
 					});
 				});
 				e.stopPropagation();
-				loadAccordion();
+				loadAccordion(activeGroupParticipants);
 			});
 
 		});
