@@ -1024,7 +1024,6 @@ $(document).ready(function () {
 				$.getJSON("group", {id: activeGroupId}, function (group) {
 					$.each(group.groupParticipants, function(event, item){
 						activeGroupParticipants.push(item.id);
-						console.log(activeGroupParticipants);
 					});
 				});
 				if($('div.accordion').length) return false;
