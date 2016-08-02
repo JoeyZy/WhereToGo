@@ -152,7 +152,7 @@ h1, h3 {
   background-size: cover;
   position: relative;
 }
-.event-box-img::after, .event-box-img::before, .group-box-img::after, .group-box-img::before {
+.event-box-img::after, .event-box-img::before,.group-box-img::after, .group-box-img::before {
   content: "";
   left: 0;
   position: absolute;
@@ -166,6 +166,7 @@ h1, h3 {
   right: 16px;
   z-index: 4;
 }
+
 .event-box-title {
   color: #fff;
   font-size: 30px;
@@ -175,6 +176,7 @@ h1, h3 {
   z-index: 5;
   position: relative;
 }
+
 .group-box-title {
   color: #000;
   font-size: 16px;
@@ -183,9 +185,11 @@ h1, h3 {
   z-index: 5;
   position: relative;
 }
+
 .event-target-group, .event-box-location-and-by, .group-box-location-and-by {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 15px;
+  min-height: 21px;
   display: block;
   z-index: 5;
   position: relative;
@@ -199,6 +203,7 @@ h1, h3 {
     text-overflow: ellipsis;
     text-align: center;
 }
+
 .small_event, .small_group {
   background-color: #fff;
 }
@@ -212,6 +217,7 @@ h1, h3 {
   opacity: 0;
   font-size: 0;
 }
+
 .groups-list {
   list-style: none;
   max-width: 30%;
@@ -221,16 +227,19 @@ h1, h3 {
   opacity: 0;
   font-size: 0;
 }
+
 .my-groups-list {
   margin-left:10%;
   margin-right:0;
   float:left;
 }
+
 .all-groups-list {
   margin-left:5%;
   margin-right:0;
   float:left;
 }
+
 .all-events.visible .events-list,
 .all-events.visible .filters,
 .all-groups.visible .groups-list,
@@ -239,6 +248,7 @@ h1, h3 {
   transition: 1s;
   pointer-events: auto;
 }
+
 .events-list > li {
   box-sizing: border-box;
   display: inline-block;
@@ -256,6 +266,7 @@ h1, h3 {
   margin: 0 12px 14px 0;
   min-width: 400px;
 }
+
 .groups-list > li {
   box-sizing: border-box;
   display: inline-block;
@@ -266,11 +277,13 @@ h1, h3 {
   text-align: left;
   font: normal 12px sans-serif;
 }
+
 .events-list > li.hidden, .groups-list > li.hidden {
   opacity: 0.2;
   display: none;
   pointer-events: none;
 }
+
 /* The event image */
 .events-list .event-photo, .groups-list .group-photo {
   display: block;
@@ -296,6 +309,7 @@ h1, h3 {
 
   list-style: none;
 }
+
 .li .small_group {
   box-sizing: unset;
   display: none;
@@ -313,6 +327,7 @@ h1, h3 {
   margin: 0 0 0 0;
   min-width: 400px;
 }
+
 .events-list .small_event li, .groups-list li {
   display: block;
   margin-right: 5px;
@@ -751,4 +766,3 @@ div.accordion{
 .accordion-section-content.open>ul>li{
   padding-left: 10px;
 }
-
