@@ -247,10 +247,12 @@
             <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
-
+                    <div>
                         <span class="content group-content">
-                            <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
+                            <h2 class="group-box-title" title="{{name}}"><span class="clickGroupName"> {{name}} </span></h2>
+
                         </span>
+                    </div>
                 </li>
                 {{/each}}
             </script>

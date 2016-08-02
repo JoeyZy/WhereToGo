@@ -1,12 +1,14 @@
 package com.luxoft.wheretogo.controller;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.luxoft.wheretogo.models.*;
+import com.luxoft.wheretogo.models.json.CategoryResponse;
+import com.luxoft.wheretogo.models.json.EventResponse;
+import com.luxoft.wheretogo.models.json.GroupResponse;
+import com.luxoft.wheretogo.services.CurrenciesService;
+import com.luxoft.wheretogo.services.EventsService;
+import com.luxoft.wheretogo.services.GroupsService;
+import com.luxoft.wheretogo.services.UsersService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.luxoft.wheretogo.models.json.CategoryResponse;
-import com.luxoft.wheretogo.models.json.EventResponse;
-import com.luxoft.wheretogo.models.json.GroupResponse;
-import com.luxoft.wheretogo.services.CurrenciesService;
-import com.luxoft.wheretogo.services.EventsService;
-import com.luxoft.wheretogo.services.GroupsService;
-import com.luxoft.wheretogo.services.UsersService;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
@@ -191,6 +186,44 @@ public class RestServiceController {
 		return groupToUpdate;
 	}
 
+	@RequestMapping(value = "/addAllUsersToGroup", method = RequestMethod.POST)
+	public Group addAllUsersToGroup(@RequestBody SubscribeGroup group, HttpServletRequest request) {
+//		User user;
+		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getGroupId());
+		long[] subscribersList = group.getUsersToAdd();
+
+		for(long i : subscribersList){
+			groupToUpdate = groupsService.initGroupParticipantslist(group.getGroupId());
+
+			User user = usersService.findById(i);
+			if (!(groupToUpdate.getGroupParticipants() == null) &&
+					!groupToUpdate.getGroupParticipants().contains(user)) {
+				groupToUpdate.getGroupParticipants().add(user);
+
+				user.setGroups(usersService.initGroups(user).getGroups());
+
+				user.getGroups().add(groupToUpdate);
+				groupsService.update(groupToUpdate);
+				usersService.update(user);
+//
+//				request.getSession().setAttribute("user", user);
+			}
+		}
+		return groupToUpdate;
+	}
+
+	@RequestMapping("/getUserGroups")
+	public Set<GroupResponse> getUserGroups(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		user = usersService.initGroups(user);
+		return groupsService.getUserGroups(user);
+	}
+
+	@RequestMapping("/getAllUsers")
+	public List<User> getAllUsers(HttpServletRequest request) {
+       	List<User> users = usersService.findAll();
+		return users;
+	}
 	@RequestMapping("/myGroups")
 	public Set<GroupResponse> myGroups(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");

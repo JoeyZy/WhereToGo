@@ -4,6 +4,7 @@ $(document).ready(function () {
 	var events = [],
 		groups = [],
 		myGroups = [],
+		userGroups=[],
 		filters = {},
 		filterColors = {},
 		user = undefined;
@@ -415,7 +416,6 @@ $(document).ready(function () {
 		hideArchiveElements();
 		group.preventDefault();
 		window.location.hash = 'groups';
-		loadGroups();
 
 		hideSideBar();
 	});
@@ -531,6 +531,8 @@ $(document).ready(function () {
 
 		});
 	}
+
+
 	function loadGroups(type) {
 		var type = type;
 		if (!type) {
@@ -542,19 +544,34 @@ $(document).ready(function () {
 			groups.sort(function (a, b) {
 				return moment(a.name).isAfter(moment(b.name));
 			});
-
 			generateGroupsHTML("all-groups-list", "groups", groups);
 		});
-
-		$.getJSON("myGroups", function (data) {
-			myGroups = data;
-			myGroups.sort(function (a, b) {
-				return moment(a.name).isAfter(moment(b.name));
+		var promise = new Promise(function (resolve, reject) {
+			$.getJSON("myGroups", function (data) {
+				myGroups = data;
+				myGroups.sort(function (a, b) {
+					return moment(a.name).isAfter(moment(b.name));
+				});
+				generateGroupsHTML("my-groups-list", "myGroups", myGroups);
+				resolve(loadPluses());
 			});
-
-			generateGroupsHTML("my-groups-list", "myGroups", myGroups);
 		});
 
+		function loadPluses(){
+		$.getJSON("getUserGroups", function (data) {
+			userGroups = data;
+			$.each(userGroups, function(index1, value){
+				$.each($('.my-groups-list').find('li'), function (index, item) {
+						if($(item).attr('data-index') == value.id){
+							if($(item).find('h2 span.btn-plus-user-to-group').length){
+								return true;
+							}
+							$(item).find('h2').append('<span class="btn-plus-user-to-group">+</span>');
+						}
+					});
+				});
+		});
+		}
 
 	}
 	
@@ -798,14 +815,258 @@ $(document).ready(function () {
 		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
 		$.each(GroupsList.find('li'), function (index, item) {
-			$(item).find('span.content').on('click', function (e) {
+			$(item).find('h2 span.clickGroupName').on('click', function (e) {
 				e.preventDefault();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
 			});
 		});
 
-		showInlineAssignments(); //check!
+		var groupsUsers = new Object();
+		function loadAccordion(activeGroupParticipants){
+			var usersId = [];
+
+			function checkArrayInArray(where, what){
+				if (!what) {
+					return true;
+				}
+				for(var i=0; i < what.length; i++){
+					if(where.indexOf(what[i]) == -1) return false;
+				}
+				return true;
+			}
+
+			$(document).ready(function() {
+				function close_accordion_section() {
+					$('.accordion .accordion-section-title').removeClass('active');
+					$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
+				}
+
+
+
+				var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
+				checkboxGroup.click(function(event) {
+					event.stopPropagation();
+					var currentAttrValue = $(this).parent().attr('href');
+					var userId;
+					if($(this).is(':checked')){
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+							$.each(groupsUsers[currentAttrValue.slice(11)], function(index, value){
+								userId = value;
+								if(usersId.indexOf(userId) === -1){
+									usersId.push(userId);
+								}
+							})
+					} else {
+						$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", false );
+							$.each(groupsUsers[currentAttrValue.slice(11)], function(index, value){
+								userId = value;
+								if(usersId.indexOf(userId) !== -1){
+									usersId.splice(usersId.indexOf(userId), 1);
+								}
+							})
+					}
+
+					$.each(groupsUsers, function(key, value){
+						if (checkArrayInArray(usersId, value)){
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', true);
+						} else {
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', false);
+
+						}
+					});
+
+					if(($(this).is(':checked')) && (!($(this).parent().parent().find('.accordion-section-content')).length || ($(this).parent().parent().find('.accordion-section-content').css('display') == 'none') )){
+						$(this).parent().trigger('click');
+					}
+
+
+				});
+
+
+				$('.accordion-section-title').click(function(e) {
+					// Grab current anchor value
+					var currentAttrValue = $(this).attr('href');
+					if($(e.target).is('.active')) {
+						close_accordion_section();
+					}else {
+						close_accordion_section();
+
+						// Add active class to section title
+						$(this).addClass('active');
+						$(currentAttrValue).remove();
+						$(this).after("<div id='" + currentAttrValue.slice(1) + "' class='accordion-section-content'>");
+						$(currentAttrValue).append('<ul></ul>');
+						if(currentAttrValue == "#accordion-0"){
+							$.getJSON("getAllUsers", function (users) {
+								var numberOfProposedSubscribers = 0;
+								$.each(users, function(event, item){
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										numberOfProposedSubscribers++;
+										$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '> <input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									}
+								});
+								if (numberOfProposedSubscribers  === 0){
+									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+
+								}
+								$.each($(currentAttrValue).find("ul li"), function(){
+									if(usersId.indexOf($(this).data('index')) !== -1){
+										$(this).find('input[type=checkbox]').prop("checked", true);
+									}
+								})
+							});
+						} else {
+							$.getJSON("group", {id: currentAttrValue.slice(11)}, function (group) {
+								var numberOfProposedSubscribers = 0;
+								$.each(group.groupParticipants, function(event, item){
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										numberOfProposedSubscribers++;
+										$(currentAttrValue).find('ul').append('<li data-index='+ item.id + '><input type="checkbox"/>  ' + item.firstName + ' ' + item.lastName + '</li>');
+									}
+								});
+								if (numberOfProposedSubscribers  === 0){
+									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+
+								}
+								if($("a[href='" + currentAttrValue + "']").find("input[type=checkbox]").is(":checked")){
+									$(currentAttrValue).find("ul li input[type=checkbox]").prop( "checked", true );
+								}
+								$.each($(currentAttrValue).find("ul li"), function(){
+									if(usersId.indexOf($(this).data('index')) !== -1){
+										$(this).find('input[type=checkbox]').prop("checked", true);
+									}
+								})
+							});
+						}
+
+
+
+						// Open up the hidden content panel
+						$('.accordion ' + currentAttrValue).slideDown(300).addClass('open');
+
+					}
+
+
+					e.preventDefault();
+				});
+
+				$('button.accordion-section-button').on('click', function(){
+					var jsonGroup = {
+						"groupId" : activeGroupId,
+						"usersToAdd" : usersId 
+					};
+					$.ajax({
+						url: 'addAllUsersToGroup',
+						type: "POST",
+						data: JSON.stringify(jsonGroup),
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
+						success: function () {
+							alert('Users were added');
+						},
+						error: function () {
+							alert('Something wrong');
+						},
+						complete: function () {
+						}
+					});
+				})
+
+				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
+					var currentAttrValue = $(this).parent().parent().parent().attr("id");
+					event.stopPropagation();
+					var check = true;
+					var userId = $(this).parent().data('index');
+					if($(this).is(':checked')){
+						if(usersId.indexOf(userId) === -1){
+							usersId.push(userId);
+						}
+					} else {
+						if(usersId.indexOf(userId) !== -1){
+							usersId.splice(usersId.indexOf(userId), 1)
+						}
+					}
+
+					$.each(groupsUsers, function(key, value){
+						if (checkArrayInArray(usersId, value)){
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', true);
+						} else {
+							$("a[href='#accordion-" + key + "']").find('input[type=checkbox]').prop('checked', false);
+
+						}
+					});
+
+					$.each($(this).parent().parent().find('li input[type=checkbox]'), function(index, value){
+						if (!$(this).is(':checked')){
+							check = false;
+						}
+					});
+					if (check === true){
+						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", true );
+					} else {
+						$('a[href="#' + currentAttrValue + '"]').find('input[type=checkbox]').prop( "checked", false );
+					}
+				});
+
+
+				$(document).click(function(event){
+					var target = $(event.target);
+					if (target.is('div.accordion') || target.parents('div.accordion').length) return;
+					$(document).unbind('click', arguments.callee);
+					$('div.accordion').remove();
+					event.stopPropagation();
+				});
+			});
+		}
+		var activeGroupId;
+		$.each($('.my-groups-list').find('li'), function (event, item) {
+			$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
+				e.preventDefault(); //creating accordion list of groups where current user is owner
+				activeGroupId = $(item).data('index');
+				var groupIndex = activeGroupId;
+				var activeGroupParticipants = [];       //list of users that already subscribed on this group
+				$.getJSON("group", {id: activeGroupId}, function (group) {
+					$.each(group.groupParticipants, function(event, item){
+						activeGroupParticipants.push(item.id);
+					});
+				});
+				if($('div.accordion').length) return false;
+				$(document).ready(function() {
+					var needElement = $(item).find('div');
+					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
+					$.each(userGroups, function(index, value){
+						if(groupIndex === value.id){
+							return true;
+						}
+						needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-" + value.id + "'><input type='checkbox'/>  " + value.name + "</a>");
+						groupsUsers[value.id] = [];
+						$.getJSON("group", {id: value.id}, function (group) {
+							$.each(group.groupParticipants, function(event, item){
+									if(activeGroupParticipants.indexOf(item.id) === -1){
+										groupsUsers[value.id].push(item.id);
+									}
+							});
+						});
+					});
+					needElement.find('.accordion-section').append("<a class='accordion-section-title' href='#accordion-0'>All Users</a>");
+					needElement.find('.accordion-section').append("<button class='accordion-section-button'>Add selected users to group</button>");
+					groupsUsers[0] = [];
+					$.getJSON("getAllUsers", function (users) {
+						$.each(users, function(event, item){
+							if(activeGroupParticipants.indexOf(item.id) === -1){
+								groupsUsers[0].push(item.id);
+							}
+						});
+					});
+				});
+				e.stopPropagation();
+				loadAccordion(activeGroupParticipants);
+			});
+
+		});
 
 		showInlineAssignments();
 		var header = $('header');
@@ -1242,7 +1503,7 @@ $(document).ready(function () {
 		});
 		function validateGroupFields(group) {
 			const GROUP_NAME_LENGTH_MIN = 3;
-			const GROUP_NAME_LENGTH_MAX = 40;
+			const GROUP_NAME_LENGTH_MAX = 30;
 			const GROUP_DESCRIPTION_LENGTH_MIN = 10;
 			const GROUP_DESCRIPTION_LENGTH_MAX = 250;
 			const GROUP_LOCATION_LENGTH_MIN = 7;
