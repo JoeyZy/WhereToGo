@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.*;
  * Created by maks on 05.07.16.
  */
 public class EventsServiceImplTest {
+
     @Mock
     EventsRepository eventsRepository;
 
@@ -41,13 +43,16 @@ public class EventsServiceImplTest {
     @Spy
     List<Event> events = new ArrayList<Event>();
 
+    private final long ONE_DAY_IN_MILISECONDS = 86400000L;
+    private final long ONE_WEEK_IN_MILISECONDS = 604800000L;
+
     // time in the future
-    private Date dateStart1 = new Date(1469397912107l);
-    private Date dateFinish1 = new Date(1469397912107l);
+    private Date dateStart1 = new Date(new Date().getTime() + ONE_WEEK_IN_MILISECONDS);
+    private Date dateFinish1 = new Date(new Date().getTime() + ONE_WEEK_IN_MILISECONDS);
 
     // time in the past
-    private Date dateStart2 = new Date(1467397912107l);
-    private Date dateFinish2 = new Date(1467397912107l);
+    private Date dateStart2 = new Date(new Date().getTime() - ONE_WEEK_IN_MILISECONDS);
+    private Date dateFinish2 = new Date(new Date().getTime() - ONE_WEEK_IN_MILISECONDS);
 
     private List<Category> lc1 = new ArrayList<Category>();
     private List<Category> lc2 = new ArrayList<Category>();
@@ -55,7 +60,9 @@ public class EventsServiceImplTest {
     private User user1 = new User();
     private User user2 = new User();
     private User user3 = new User();
-    ArchiveServiceRequest request = new ArchiveServiceRequest();
+
+    private SimpleDateFormat format =new SimpleDateFormat("dd-MM-yy");
+    private ArchiveServiceRequest request = new ArchiveServiceRequest();
 
     @Before
     public void setUp() throws Exception {
@@ -73,9 +80,8 @@ public class EventsServiceImplTest {
         copylist = new ArrayList<>();
         copylist.add(events.get(1));
         user3.setEvents(new HashSet<>(copylist));
-
-        request.setSearchFrom("20-06-16");
-        request.setSearchTo("10-07-16");
+        request.setSearchFrom(format.format(new Date(new Date().getTime() - 2*ONE_WEEK_IN_MILISECONDS)));
+        request.setSearchTo(format.format(new Date(new Date().getTime() + ONE_DAY_IN_MILISECONDS)));
 
         MockitoAnnotations.initMocks(this);
 
@@ -99,7 +105,6 @@ public class EventsServiceImplTest {
         when(eventsRepository.findById(anyInt())).thenReturn(e1);
         eventsService.update(e1);
         verify(eventsRepository, atLeastOnce()).findById(anyInt());
-
     }
 
     @Test
@@ -135,9 +140,9 @@ public class EventsServiceImplTest {
 
         List<EventResponse> expectedResult = new ArrayList<>();
         expectedResult.add(getEventResponseList().get(1));
-        List<Event> copyevents = new ArrayList<>();
-        copyevents.add(events.get(0));
-        when(eventsRepository.findAll()).thenReturn(copyevents);
+        List<Event> localEvents = new ArrayList<>();
+        localEvents.add(events.get(0));
+        when(eventsRepository.findAll()).thenReturn(localEvents);
         List<EventResponse> actualResult = eventsService.getEventResponses();
         Assert.assertEquals(actualResult, expectedResult);
     }
@@ -270,7 +275,6 @@ public class EventsServiceImplTest {
         users.add(user2);
         e1.setParticipants(users);
 
-
         events.add(e1);
 
         Event e2 = new Event();
@@ -299,7 +303,7 @@ public class EventsServiceImplTest {
         List<EventResponse> eventResponses = new ArrayList<>();
         eventResponses.add(new EventResponse(1, "bluka", lc1,
                 "vasya pupkin",
-                "Group1",
+                "",
                 dateStart1,
                 dateFinish1,
                 false,
@@ -309,7 +313,7 @@ public class EventsServiceImplTest {
 
         eventResponses.add(new EventResponse(1, "bluka", lc1,
                 "vasya pupkin",
-                "Group2",
+                "",
                 dateStart1,
                 dateFinish1,
                 false,
@@ -319,7 +323,7 @@ public class EventsServiceImplTest {
 
         eventResponses.add(new EventResponse(2, "blyuka", lc1,
                 "user3 user3",
-                "Group3",
+                "",
                 dateStart2,
                 dateFinish2,
                 false,
