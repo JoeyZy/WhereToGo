@@ -1037,7 +1037,7 @@ $(document).ready(function () {
 				$(document).ready(function() {
 					var needElement = $(item).find('div');
 					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
-					$.each(userGroups, function(index, value){
+					$.each(myGroups, function(index, value){
 						if(groupIndex === value.id){
 							return true;
 						}
