@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.luxoft.wheretogo.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.luxoft.wheretogo.models.ArchiveServiceRequest;
-import com.luxoft.wheretogo.models.Currency;
-import com.luxoft.wheretogo.models.Event;
-import com.luxoft.wheretogo.models.Group;
-import com.luxoft.wheretogo.models.User;
-import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -203,8 +198,6 @@ public class RestServiceController {
 			return new HashSet<>();
 		}
         user = usersService.initGroups(user);
-		User user = (User) request.getSession().getAttribute("user");
-		user = usersService.initGroups(user);
 		return groupsService.getUserRelevantGroupResponses(user);
 	}
 
