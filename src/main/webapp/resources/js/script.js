@@ -523,7 +523,7 @@ $(document).ready(function () {
 				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
 				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
 
-				if(!item.targetGroup) item.targetGroup = DEFAULT_PUBLIC_EVENT_TEXT;
+				if(!item.targetGroup) item.targetGroup = " ";
 			});
 			// Call a function to create HTML for all the events.
 			displayCategoriesListFilter(type, searchFrom, searchTo);

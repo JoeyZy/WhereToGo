@@ -189,6 +189,7 @@ h1, h3 {
 .event-target-group, .event-box-location-and-by, .group-box-location-and-by {
   text-align: center;
   margin-top: 15px;
+  min-height: 21px;
   display: block;
   z-index: 5;
   position: relative;
