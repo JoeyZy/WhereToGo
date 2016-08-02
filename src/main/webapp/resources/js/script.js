@@ -1459,8 +1459,8 @@ $(document).ready(function () {
 			}
 
 			var eventCost = event.cost.trim();
-			if (eventCost <= 0) {
-				addErrorListItem("Event cost must be greater then zero");
+			if (eventCost <= 0||eventCost>100000) {
+				addErrorListItem("Event cost must be greater than zero and less than 100 000 ");
 				valid = false;
 			}
 
