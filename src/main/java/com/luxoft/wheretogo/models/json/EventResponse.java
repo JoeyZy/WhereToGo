@@ -24,6 +24,9 @@ public class EventResponse {
 	private String location;
 	private boolean attends;
 
+	public EventResponse() {
+	}
+
 	public EventResponse(long id, String name, List<Category> category, String owner, String targetGroup,
 						 Date startDateTime, Date endDateTime, Boolean deleted, String picture, String location,
 						 boolean attends) {
