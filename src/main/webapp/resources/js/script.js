@@ -494,6 +494,7 @@ $(document).ready(function () {
 				// Change the url hash with the last used filters.
 
 				$(window).scrollTop(top);
+				$errors.hide();
 				window.location.hash = oldLocationHash;
 			}
 		}
@@ -1459,8 +1460,8 @@ $(document).ready(function () {
 			}
 
 			var eventCost = event.cost.trim();
-			if (eventCost <= 0) {
-				addErrorListItem("Event cost must be greater then zero");
+			if (eventCost <= 0||eventCost>100000) {
+				addErrorListItem("Event cost must be greater than zero and less than 100 000 ");
 				valid = false;
 			}
 
