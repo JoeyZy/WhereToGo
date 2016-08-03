@@ -494,6 +494,7 @@ $(document).ready(function () {
 				// Change the url hash with the last used filters.
 
 				$(window).scrollTop(top);
+				$errors.hide();
 				window.location.hash = oldLocationHash;
 			}
 		}
