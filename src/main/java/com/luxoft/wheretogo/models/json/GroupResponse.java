@@ -17,6 +17,9 @@ public class GroupResponse {
     private String picture;
     private Boolean deleted;
 
+    public GroupResponse() {
+    }
+
     public GroupResponse(long id, String name, String owner, String location,
                          String description, String picture, Boolean deleted) {
         this.id = id;
