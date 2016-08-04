@@ -908,7 +908,7 @@ $(document).ready(function () {
 									}
 								});
 								if (numberOfProposedSubscribers  === 0){
-									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+									$(currentAttrValue).find('ul').append('<li> There are no users to add from this group</li>');
 
 								}
 								$.each($(currentAttrValue).find("ul li"), function(){
@@ -927,7 +927,7 @@ $(document).ready(function () {
 									}
 								});
 								if (numberOfProposedSubscribers  === 0){
-									$(currentAttrValue).find('ul').append('<li> There is no users to add from this group</li>');
+									$(currentAttrValue).find('ul').append('<li> There are no users to add from this group</li>');
 
 								}
 								if($("a[href='" + currentAttrValue + "']").find("input[type=checkbox]").is(":checked")){
