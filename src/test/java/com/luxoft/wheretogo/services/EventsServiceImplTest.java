@@ -45,7 +45,6 @@ public class EventsServiceImplTest {
 
     List<EventResponse> eventResponses = new ArrayList<>();
 
-    private final long ONE_DAY_IN_MILISECONDS = 86400000L;
     private final long ONE_WEEK_IN_MILISECONDS = 604800000L;
 
     // time in the future
@@ -74,7 +73,6 @@ public class EventsServiceImplTest {
         user1.setLastName("user1");
         ArrayList<Event> copylist = new ArrayList<>();
         copylist.add(events.get(0));
-
         user1.setEvents(new HashSet<>(copylist));
 
         user2.setFirstName("user2");
@@ -84,7 +82,7 @@ public class EventsServiceImplTest {
         user2.setEvents(new HashSet<>(copylist));
 
         request.setSearchFrom(format.format(new Date(new Date().getTime() - 2*ONE_WEEK_IN_MILISECONDS)));
-        request.setSearchTo(format.format(new Date(new Date().getTime() + ONE_DAY_IN_MILISECONDS)));
+        request.setSearchTo(format.format(new Date().getTime()));
 
         MockitoAnnotations.initMocks(this);
 
@@ -198,7 +196,6 @@ public class EventsServiceImplTest {
     @Test
     public void getEventsCounterByCategories() throws Exception {
         User userTest = initUser();
-        List<Event> userEventsAsList = new ArrayList<>(userTest.getEvents());
         List<CategoryResponse> expectedResult = new ArrayList<>();
         List<Category> categoriesTest = getCategoryList();
 
@@ -353,13 +350,13 @@ public class EventsServiceImplTest {
         e1.setCategories(listCat1);
         e1.setId(0);
         e1.setDeleted(false);
-        e1.setStartDateTime(new Date(1356991200000L));
+        e1.setStartDateTime(dateStart2);
         eventsTestSet.add(e1);
 
         e2.setCategories(listCat2);
         e2.setDeleted(false);
         e2.setId(1);
-        e2.setStartDateTime(new Date(1470614400000L));
+        e2.setStartDateTime(dateStart1);
         eventsTestSet.add(e2);
 
         userTest.setEvents(eventsTestSet);
