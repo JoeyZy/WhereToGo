@@ -579,6 +579,9 @@ $(document).ready(function () {
 	// An event handler with calls the render function on every hashchange.
 	// The render function will show the appropriate content of out $singlePage.
 	$(window).on('hashchange', function () {
+		if (window.location.hash.indexOf('accordion', 0) >= 0){
+			return false;
+		}
 		render(window.location.hash);
 	});
 
