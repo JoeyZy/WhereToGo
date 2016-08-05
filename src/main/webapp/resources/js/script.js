@@ -51,6 +51,8 @@ $(document).ready(function () {
 	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
+	var $map = $singlePage.find('#map');
+	var $checkboxShowMap = $singlePage.find('#show-map-checkbox');
 	$buttonAddEvent.on('click', function () {
 
 		if (typeof user !== "undefined") {
@@ -66,7 +68,7 @@ $(document).ready(function () {
 				"endTime": $eventEnd.val(),
 				"description": $eventDescription.text(),
 				"targetGroup": getTargetGroupID(),
-				"location": $eventLocation.text(),
+				"location": $eventLocation.val(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 				"picture": isDefaultPicture() ? "" : $picture.attr('src')
@@ -114,13 +116,17 @@ $(document).ready(function () {
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
 	$buttonEdit.on('click', function (event) {
-		makeEventPageEditable();
-		$buttonEdit.hide();
-		$buttonDelete.hide();
-		$buttonApply.show();
-		$buttonCancelEditing.show();
-		$buttonAttend.hide();
-		return false;
+		if($buttonEdit.disabled === false) {
+			makeEventPageEditable();
+			$buttonEdit.hide();
+			$buttonEdit.disabled = true;
+			$buttonDelete.hide();
+			$buttonDelete.disabled = true;
+			$buttonApply.show();
+			$buttonCancelEditing.show();
+			$buttonAttend.hide();
+			return false;
+		}
 	});
 
 	$buttonEditGroup.on('click', function(group){
@@ -149,7 +155,9 @@ $(document).ready(function () {
 		var index = (window.location.hash).split('#event/')[1].trim();
 		renderSingleEventPage(index, events);
 		$buttonEdit.show();
+		$buttonEdit.disabled = false;
 		$buttonDelete.show();
+		$buttonDelete.disabled = false;
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
 			$buttonAttend.show();
 		}
@@ -175,8 +183,10 @@ $(document).ready(function () {
 	});
 
 	$buttonDelete.on('click', function () {
-		renderConfirmationPage();
-		return false;
+		if(buttonDelete.disabled == false) {
+			renderConfirmationPage();
+			return false;
+		}
 	});
 
 	$buttonDeleteGroup.on('click', function () {
@@ -229,7 +239,9 @@ $(document).ready(function () {
 			var parentDisable = $('.parentDisable');
 			parentDisable.removeClass('visible');
 			$buttonEdit.show();
+			$buttonEdit.disabled = false;
 			$buttonDelete.show();
+			$buttonDelete.disabled = false;
 			return false;
 		});
 	}
@@ -273,7 +285,7 @@ $(document).ready(function () {
 			"startTime": $eventStart.val(),
 			"endTime": $eventEnd.val(),
 			"description": $eventDescription.text(),
-			"location": $eventLocation.text(),
+			"location": $eventLocation.val(),
 			"targetGroup": getTargetGroupID(),
 			"cost": $eventCost.val(),
 			"currency": {
@@ -306,7 +318,7 @@ $(document).ready(function () {
 		$eventDescription.empty();
 		$groupDescription.empty();
 		$groupLocation.empty();
-		$eventLocation.empty();
+		$eventLocation.val("");
 		$eventTargetGroup.val("");
 		$eventCost.val("");
 		$eventCostCurrency.val("");
@@ -433,6 +445,16 @@ $(document).ready(function () {
 
 		showSideBar()
 	});
+
+	$checkboxShowMap.on("click", function() {
+		$checkboxShowMap.checked = !$checkboxShowMap.checked;
+		if($checkboxShowMap.checked) {
+			$map.removeClass("not-displayed");
+		} else {
+			$map.addClass("not-displayed");
+		}
+	});
+
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
 		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
@@ -1731,7 +1753,7 @@ $(document).ready(function () {
 	function renderSingleEventPage(index, data, addEvent) {
 		resetSinglePage();
 		hideCalendarPage();
-
+		$checkboxShowMap.checked = true;
 		$singlePageTitle.attr('placeholder', 'Event title');
 		$singlePage.find('.EventPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
@@ -1796,13 +1818,15 @@ $(document).ready(function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
+			initAutocomplete();
+
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
-				$eventLocation.text(linkify(event.location));
+				$eventLocation.val(event.location);
 				$eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
@@ -1820,7 +1844,9 @@ $(document).ready(function () {
 				$eventCostCurrency.val(event.currency.name);
 				if (user && (user.id === event.owner.id || user.role === adminRole)) {
 					$buttonEdit.show();
+					$buttonEdit.disabled = false;
 					$buttonDelete.show();
+					$buttonDelete.disabled = false;
 				}
 				allowAttendEvent();
 				$eventCategories.multiselect('refresh');

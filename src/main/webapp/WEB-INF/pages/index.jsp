@@ -6,7 +6,8 @@
     <%--Spring Security csrf meta data--%>
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -319,7 +320,10 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="location" title="Location:"></div>
+                        <input contentEditable="false" id="location" class="controls" title="Location:" type="text"
+                            placeholder="">
+                        <input type = "checkbox" id="show-map-checkbox" checked="checked"/> Show on map<br>
+                        <div id="map"></div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
@@ -502,6 +506,9 @@
 <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src='resources/google-maps-api/location.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&region=US&libraries=places&callback=initAutocomplete"
+        async defer></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>
 <script>
