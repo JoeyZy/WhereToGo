@@ -21,6 +21,12 @@
     <link href='../../resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
     <link href="../../resources/css/new_styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <%--comments--%>
+        <link rel="stylesheet" type="text/css" href="../../resources/comments-plugin/css/jquery-comments.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="../../resources/comments-plugin/data/comments-data.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<%--comments--%>
 </head>
 <body>
 <header>
@@ -398,8 +404,6 @@
                             {{/each}}
                         </script>
                     </li>
-
-
                 </ul>
                 <%--bla--%>
                 <ul class="errors"></ul>
@@ -504,6 +508,7 @@
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>
+<script src="../../resources/comments-plugin/js/jquery-comments.js"></script>
 <script>
     $('.dropdown-toggle').dropdown();
 </script>

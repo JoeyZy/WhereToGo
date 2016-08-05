@@ -4,19 +4,13 @@ import com.luxoft.wheretogo.models.*;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
-import com.luxoft.wheretogo.services.CurrenciesService;
-import com.luxoft.wheretogo.services.EventsService;
-import com.luxoft.wheretogo.services.GroupsService;
-import com.luxoft.wheretogo.services.UsersService;
+import com.luxoft.wheretogo.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -31,6 +25,9 @@ public class RestServiceController {
 
 	@Autowired
 	private EventsService eventsService;
+
+	@Autowired
+	private CommentsService commentsService;
 
 	@Autowired
 	private CurrenciesService currenciesService;
@@ -62,6 +59,12 @@ public class RestServiceController {
 		user = usersService.initEvents(user);
 		return eventsService.getUserRelevantEventResponses(user);
 	}
+
+	@RequestMapping(value = "/getComments", method = RequestMethod.GET)
+	public List<Comment> getComments(long id) {
+		return commentsService.findByEventId(id);
+	}
+
 
 	@RequestMapping("/event")
 	public Event event(Event event) {

@@ -623,7 +623,7 @@ $(document).ready(function () {
 		var singlePage = $('.SinglePage');
 
 		moveSinglePageToCenter();
-		$(window).scroll(moveSinglePageToCenter);
+		// $(window).scroll(moveSinglePageToCenter);
 		$(window).resize(moveSinglePageToCenter);
 
 		var map = {
@@ -1784,6 +1784,63 @@ $(document).ready(function () {
 					});
 				}
 			});
+			removeComments();
+			renderComments();
+			function removeComments(){
+				$('#comments-container').remove();
+			}
+			function renderComments() {
+				$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
+				$(function() {
+					$('#comments-container').comments({
+						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
+						roundProfilePictures: true,
+						textareaRows: 1,
+						enableAttachments: true,
+						fieldMappings: {
+							fullname: 'author',
+						},
+						getComments: function(success, error) {
+							$.ajax({
+								type: 'get',
+								url: '/getComments',
+								data: {
+									id : index
+								},
+								success: function(commentsArray) {
+									success(commentsArray)
+								},
+								error: error
+							});
+						},
+						postComment: function(data, success, error) {
+							setTimeout(function() {
+								success(data);
+							}, 500);
+						},
+						putComment: function(data, success, error) {
+							setTimeout(function() {
+								success(data);
+							}, 500);
+						},
+						deleteComment: function(data, success, error) {
+							setTimeout(function() {
+								success();
+							}, 500);
+						},
+						upvoteComment: function(data, success, error) {
+							setTimeout(function() {
+								success(data);
+							}, 500);
+						},
+						uploadAttachments: function(dataArray, success, error) {
+							setTimeout(function() {
+								success(dataArray);
+							}, 500);
+						},
+					});
+				});
+			}
 		}
 
 
