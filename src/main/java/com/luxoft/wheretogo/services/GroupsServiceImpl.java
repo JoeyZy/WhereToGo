@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -30,12 +31,38 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public boolean add(Group group) {
         if (group.getOwner().isActive()) {
+            //Generating image/file and path to store group data
+            String imageDataString = group.getPicture();
+            if(imageDataString.length()!=0){
+                Random rnd = new Random();
+                String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",6);
+                String path = "/home/bobbi/Bob/WhereToGo/"+fileName;
+                //Default path: apache-tomcat -> bin
+                File img = new File(path);
+                path = img.getAbsolutePath();
+                try {
+                    FileWriter wr = new FileWriter(img);
+                    wr.write(imageDataString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                group.setPicture(path);
+            }
+            //End of generation
             groupsRepository.add(group);
             return true;
         }
         return false;
     }
-
+    public static String generateString(Random rng, String characters, int length)
+    {
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+            text[i] = characters.charAt(rng.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
     @Override
     public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
         Group oldGroup = initGroupParticipants(group);
@@ -105,6 +132,7 @@ public class GroupsServiceImpl implements GroupsService {
         if (group != null) {
             Hibernate.initialize(group.getGroupParticipants());
         }
+        
         return group;
     }
 

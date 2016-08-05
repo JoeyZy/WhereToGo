@@ -60,7 +60,7 @@ public class Group {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> groupParticipants;
 
-    @Column(name="picture")
+    /*@Column(name="picture")
     private Blob picture;
 
     public void setPicture(String value) {
@@ -82,6 +82,19 @@ public class Group {
             LOG.warn("Can not convert image", e);
         }
         return "";
+    }*/
+
+    @Column(name="picture")
+    private String picture;
+
+    public void setPicture(String path){
+        this.picture = path;
+    }
+    public String getPicture(){
+        if(this.picture == null) {
+            return "";
+        }
+        return this.picture;
     }
 
 }

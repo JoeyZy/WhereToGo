@@ -2,6 +2,12 @@ package com.luxoft.wheretogo.models.json;
 
 import lombok.Data;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  * Created by maks on 08.07.16.
  */
@@ -27,6 +33,20 @@ public class GroupResponse {
         this.owner = owner;
         this.location = location;
         this.description = description;
+        if(!picture.equals("")){
+            File img = new File(picture);
+            try {
+                FileReader reader = new FileReader(img);
+                Scanner sc = new Scanner(img);
+                picture = sc.nextLine();
+                sc.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         this.picture = picture;
         this.deleted = deleted;
     }

@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.controller;
 
 import com.luxoft.wheretogo.models.*;
+import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
