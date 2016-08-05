@@ -354,14 +354,14 @@
                             {{/each}}
                         </script>
                     </li>
-                    <li class='event_pic'>
+                    <!--<li class='event_pic'>
                         <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
                                  class="event_pic uploadPlaceholderEvent"/>
                             <input style='display:none;' type='file' class="SinglePage__button--upload"
                                    accept="image/jpeg,image/png"/>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
                 <%--bla--%>
 
@@ -398,7 +398,18 @@
                             {{/each}}
                         </script>
                     </li>
+                    <!--Group image here-->
 
+                </ul>
+                <ul class="SinglePage__inputItemsList ">
+                    <li class='event_pic'>
+                        <div contentEditable="false" id="picture" class='event_pic'>
+                            <img style=''
+                                 class="event_pic uploadPlaceholderEvent"/>
+                            <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                   accept="image/jpeg,image/png"/>
+                        </div>
+                    </li>
 
                 </ul>
                 <%--bla--%>

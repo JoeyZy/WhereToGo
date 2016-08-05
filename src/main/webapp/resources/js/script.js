@@ -84,7 +84,8 @@ $(document).ready(function () {
 				"id": $singlePage.find('.GroupPage').attr('data-id'),
 				"name": $singlePageTitle.val(),
 				"description": $groupDescription.text(),
-				"location": $groupLocation.text()
+				"location": $groupLocation.text(),
+				"picture": isDefaultPicture() ? "" : $picture.attr('src')
 			};
 			saveGroup(groupJson, "addGroup");
 		}
@@ -108,9 +109,9 @@ $(document).ready(function () {
 			xhr.setRequestHeader(header, token);
 		});
 	});
-	
+
 	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
-	
+
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
 	$buttonEdit.on('click', function (event) {
@@ -133,7 +134,7 @@ $(document).ready(function () {
 		$buttonUnSubscribe.hide();
 		return false;
 	});
-	
+
 	$buttonApply.on('click', function () {
 		updateEvent(true);
 		return false;
@@ -233,7 +234,7 @@ $(document).ready(function () {
 			return false;
 		});
 	}
-	
+
 
 	function renderConfirmationGroupPage() {
 		/*var parentDisable = $('.parentDisable');
@@ -259,7 +260,7 @@ $(document).ready(function () {
 			return false;
 		});
 	}
-	
+
 
 	function updateEvent(deleted) {
 		var categoriesList = [];
@@ -289,8 +290,9 @@ $(document).ready(function () {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
-			"location": $groupLocation.text()
-		}
+			"location": $groupLocation.text(),
+			"picture": isDefaultPicture() ? "" : $picture.attr('src')
+		};
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
 
@@ -318,7 +320,7 @@ $(document).ready(function () {
 	}
 
 	resetSinglePage();
-	
+
 	var $showArchiveCheckbox = $('#show-archive');
 	var archiveDateFilters = $('#archiveDateFilters');
 	$showArchiveCheckbox.on('click', function () {
@@ -404,7 +406,7 @@ $(document).ready(function () {
 	function showSideBar() {
 		$(".side-bar").removeClass('not-displayed');
 	}
-	
+
 	$('.home').click(function () {
 		hideArchiveElements();
 		loadEvents();
@@ -498,7 +500,7 @@ $(document).ready(function () {
 				window.location.hash = oldLocationHash;
 			}
 		}
-	});	
+	});
 	function loadEvents(type, searchFrom, searchTo) {
 		var type = type;
 		if (!type) {
@@ -575,7 +577,7 @@ $(document).ready(function () {
 		}
 
 	}
-	
+
 
 	// An event handler with calls the render function on every hashchange.
 	// The render function will show the appropriate content of out $singlePage.
@@ -769,7 +771,7 @@ $(document).ready(function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
-		
+
 
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
@@ -958,7 +960,7 @@ $(document).ready(function () {
 				$('button.accordion-section-button').on('click', function(){
 					var jsonGroup = {
 						"groupId" : activeGroupId,
-						"usersToAdd" : usersId 
+						"usersToAdd" : usersId
 					};
 					$.ajax({
 						url: 'addAllUsersToGroup',
@@ -1114,7 +1116,7 @@ $(document).ready(function () {
 				}
 			});
 		});
-		
+
 
 	}
 
@@ -1215,7 +1217,7 @@ $(document).ready(function () {
 
 
 	//$('.assign-action-btn.btn-default').on("click",
-	//			assignUnassignEvent('unassignEventFromUser', 
+	//			assignUnassignEvent('unassignEventFromUser',
 	//                       nodeLI.attr('data-index'), inlineAssignmentCallBackFunction));
 
 
@@ -1535,7 +1537,7 @@ $(document).ready(function () {
 					" and less than " + GROUP_LOCATION_LENGTH_MAX + " symbols");
 				valid = false;
 			}
-			
+
 			return valid;
 		}
 		function addErrorListItem(message) {
@@ -1701,9 +1703,9 @@ $(document).ready(function () {
 					$pictureParent.show();
 				} else {
 					$pictureParent.hide();
-				}				
+				}
 				singlePage.find('.GroupPage__owner__name').val(group.owner.firstName + " " + group.owner.lastName);
-				
+
 				if (user && (user.id === group.owner.id)) {
 					$singlePage.find('.SinglePage__all_buttons').removeClass("hidden");
 					$buttonEditGroup.show();
