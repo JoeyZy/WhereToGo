@@ -46,7 +46,7 @@ public class GroupsServiceImpl implements GroupsService {
         if(imageDataString.length()!=0){
             Random rnd = new Random();
             String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",6);
-            String path = "/home/bobbi/Bob/WhereToGo/"+fileName;
+            String path = "../resourses/images/groups/"+fileName;
             //Default path: apache-tomcat -> bin
             File img = new File(path);
             path = img.getAbsolutePath();
@@ -83,7 +83,7 @@ public class GroupsServiceImpl implements GroupsService {
             }
             group.setOwner(owner);
             group.setGroupParticipants(oldGroup.getGroupParticipants());
-            //Deleting old image from server
+            //Deleting old image from server needed only if group profile is editing
             File file = new File(oldGroup.getPicture());
             file.delete();
         }
@@ -99,9 +99,6 @@ public class GroupsServiceImpl implements GroupsService {
             if (group.getGroupParticipants() == null) {
                 group.setGroupParticipants(oldGroup.getGroupParticipants());
             }
-            //Deleting old image from server
-            File file = new File(oldGroup.getPicture());
-            file.delete();
         }
         groupsRepository.merge(group);
     }
