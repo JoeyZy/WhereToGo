@@ -6,11 +6,11 @@
     <%--Spring Security csrf meta data--%>
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-        <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
+        <%--Google Maps API meta data for Android & iOS--%>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>WhereToGo</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -322,8 +322,15 @@
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
                         <input contentEditable="false" id="location" class="controls" title="Location:" type="text"
                             placeholder="">
-                        <input type = "checkbox" id="show-map-checkbox" checked="checked"/> Show on map<br>
-                        <div id="map"></div>
+                        <div id="show-map">
+                            <label>
+                                <input type = "checkbox" id="show-map-checkbox" checked="checked"/>
+                                Show on map
+                            </label>
+                        </div>
+                        <div id = "map-holder">
+                            <div id="map"></div>
+                        </div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
@@ -507,7 +514,7 @@
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src='resources/google-maps-api/location.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&region=US&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&region=US&libraries=places&callback=initGoogleMaps"
         async defer></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>

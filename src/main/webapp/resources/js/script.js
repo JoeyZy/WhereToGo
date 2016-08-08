@@ -51,8 +51,8 @@ $(document).ready(function () {
 	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
-	var $map = $singlePage.find('#map');
-	var $checkboxShowMap = $singlePage.find('#show-map-checkbox');
+	var $map = $singlePage.find('#map-holder');
+    var $checkboxShowMap = $singlePage.find('#show-map');
 	$buttonAddEvent.on('click', function () {
 
 		if (typeof user !== "undefined") {
@@ -296,7 +296,7 @@ $(document).ready(function () {
 		deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
 	}
 
-	function updateGroup(deleted){
+	function updateGroup(deleted) {
 		var groupJson = {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
@@ -305,6 +305,16 @@ $(document).ready(function () {
 		}
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
+
+
+    function showMap() {
+        $map.show();
+        initGoogleMaps();
+    }
+
+    function hideMap() {
+        $map.hide();
+    }
 
 	function resetSinglePage() {
 		$eventCategoriesMultiselect = $singlePage.find('.btn-group');
@@ -315,6 +325,8 @@ $(document).ready(function () {
 		$eventPage.hide();
 		$groupPage.hide();
 
+        hideMap();
+        $checkboxShowMap.find("input").prop("checked", false);
 		$eventDescription.empty();
 		$groupDescription.empty();
 		$groupLocation.empty();
@@ -325,6 +337,7 @@ $(document).ready(function () {
 		$buttons.hide();
 		$errors.hide();
 		$pictureParent.hide();
+
 
 		$picture.attr('src', "resources/images/camera.png");
 	}
@@ -443,15 +456,14 @@ $(document).ready(function () {
 		window.location.hash = 'myEvents';
 		loadEvents("myEvents");
 
-		showSideBar()
+		showSideBar();
 	});
 
 	$checkboxShowMap.on("click", function() {
-		$checkboxShowMap.checked = !$checkboxShowMap.checked;
-		if($checkboxShowMap.checked) {
-			$map.removeClass("not-displayed");
+		if($checkboxShowMap.find("input").prop("checked")) {
+			showMap();
 		} else {
-			$map.addClass("not-displayed");
+			hideMap();
 		}
 	});
 
@@ -645,7 +657,7 @@ $(document).ready(function () {
 		var singlePage = $('.SinglePage');
 
 		moveSinglePageToCenter();
-		$(window).scroll(moveSinglePageToCenter);
+		//$(window).scroll(moveSinglePageToCenter);
 		$(window).resize(moveSinglePageToCenter);
 
 		var map = {
@@ -1569,12 +1581,11 @@ $(document).ready(function () {
 	function makeEventPageEditable() {
 		$singlePageTitle.attr('readonly', false);
 		$eventDescription.attr('contenteditable', true);
-		$eventLocation.attr('contenteditable', true);
 		$eventTargetGroup.prop('disabled', false);
 		$eventStart.datepicker('enable');
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
-		$eventLocation.addClass('editable');
+		$eventLocation.attr('readonly', false);
 		$eventTargetGroup.addClass('editable');
 		$eventCost.prop('disabled', false);
 		$eventCostCurrency.prop('disabled', false);
@@ -1592,8 +1603,7 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', true);
 		$eventDescription.attr('contenteditable', false);
 		$eventDescription.removeClass('editable');
-		$eventLocation.attr('contenteditable', false);
-		$eventLocation.removeClass('editable');
+        $eventLocation.attr('readonly', true);
 		$eventTargetGroup.prop('disabled', true);
 		$eventTargetGroup.removeClass('editable');
 		$eventCategories.multiselect('disable');
@@ -1753,7 +1763,6 @@ $(document).ready(function () {
 	function renderSingleEventPage(index, data, addEvent) {
 		resetSinglePage();
 		hideCalendarPage();
-		$checkboxShowMap.checked = true;
 		$singlePageTitle.attr('placeholder', 'Event title');
 		$singlePage.find('.EventPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
@@ -1818,7 +1827,7 @@ $(document).ready(function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-			initAutocomplete();
+			initGoogleMaps();
 
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
