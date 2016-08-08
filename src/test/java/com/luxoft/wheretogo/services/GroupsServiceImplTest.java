@@ -150,7 +150,8 @@ public class GroupsServiceImplTest {
         groupOfUser1.setOwner(user1);
         Set<Group> groups = new HashSet<Group>();
         groups.add(groupOfUser1);
-        groupResponse1.setOwner("user1 user1");
+        User u = new User();
+        groupResponse1.setOwner(u);
         user1.setGroups(groups);
     }
 

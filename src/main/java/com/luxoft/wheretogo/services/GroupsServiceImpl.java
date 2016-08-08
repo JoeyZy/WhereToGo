@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
+
+import static java.nio.file.Paths.get;
 
 /**
  * Created by eleonora on 07.07.16.
@@ -31,29 +34,33 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public boolean add(Group group) {
         if (group.getOwner().isActive()) {
-            //Generating image/file and path to store group data
-            String imageDataString = group.getPicture();
-            if(imageDataString.length()!=0){
-                Random rnd = new Random();
-                String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",6);
-                String path = "/home/bobbi/Bob/WhereToGo/"+fileName;
-                //Default path: apache-tomcat -> bin
-                File img = new File(path);
-                path = img.getAbsolutePath();
-                try {
-                    FileWriter wr = new FileWriter(img);
-                    wr.write(imageDataString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                group.setPicture(path);
-            }
-            //End of generation
+            group.setPicture(generatePicturePath(group.getPicture()));
             groupsRepository.add(group);
             return true;
         }
         return false;
     }
+
+    private String generatePicturePath(String imageDataString) {
+        //Generating image/file and path to store group data
+        if(imageDataString.length()!=0){
+            Random rnd = new Random();
+            String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",6);
+            String path = "/home/bobbi/Bob/WhereToGo/"+fileName;
+            //Default path: apache-tomcat -> bin
+            File img = new File(path);
+            path = img.getAbsolutePath();
+            try {
+                Files.write(get(img.getPath()),imageDataString.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return path;
+        }
+        else return imageDataString;
+        //End of generation
+    }
+
     public static String generateString(Random rng, String characters, int length)
     {
         char[] text = new char[length];
@@ -65,8 +72,9 @@ public class GroupsServiceImpl implements GroupsService {
     }
     @Override
     public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
-        Group oldGroup = initGroupParticipants(group);
+        Group oldGroup = initGroupParticipantslist(group.getId());
         User owner;
+        group.setPicture(generatePicturePath(group.getPicture()));
         if (oldGroup != null) {
             owner = oldGroup.getOwner();
             if (!owner.getEmail().equals(ownerEmail) &&
@@ -82,6 +90,7 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public void update(Group group) {
         Group oldGroup = findById(group.getId());
+        group.setPicture(generatePicturePath(group.getPicture()));
         if (oldGroup != null) {
             group.setOwner(oldGroup.getOwner());
             if (group.getGroupParticipants() == null) {
@@ -120,20 +129,22 @@ public class GroupsServiceImpl implements GroupsService {
         for (Group group : groups) {
             if (!group.getDeleted()) {
                 groupResponses.add(new GroupResponse(group.getId(), group.getName(),
-                        group.getOwner().getFirstName() + " " + group.getOwner().getLastName(),
-                        group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted()));
+                        group.getOwner(), group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted(), group.getGroupParticipants()));
             }
         }
         return groupResponses;
     }
 
-    public Group initGroupParticipants(Group group) {
+    public GroupResponse initGroupParticipants(Group group) {
         group = groupsRepository.findById(group.getId());
         if (group != null) {
             Hibernate.initialize(group.getGroupParticipants());
         }
-        
-        return group;
+        GroupResponse response = new GroupResponse(
+                group.getId(), group.getName(),
+                group.getOwner(), group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted(), group.getGroupParticipants());
+        return response;
+        //return group;
     }
 
     public Group initGroupParticipantslist(long id) {

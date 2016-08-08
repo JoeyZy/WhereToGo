@@ -1,12 +1,16 @@
 package com.luxoft.wheretogo.models.json;
 
+import com.luxoft.wheretogo.models.Group;
+import com.luxoft.wheretogo.models.User;
 import lombok.Data;
+import org.hibernate.Hibernate;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.Scanner;
+import java.util.Set;
+
+import static java.nio.file.Paths.get;
 
 /**
  * Created by maks on 08.07.16.
@@ -17,29 +21,28 @@ public class GroupResponse {
 
     private long id;
     private String name;
-    private String owner;
+    private User owner;
     private String location;
     private String description;
     private String picture;
     private Boolean deleted;
+    private Set<User> groupParticipants;
 
     public GroupResponse() {
     }
 
-    public GroupResponse(long id, String name, String owner, String location,
-                         String description, String picture, Boolean deleted) {
+    public GroupResponse(long id, String name, User owner, String location,
+                         String description, String picture, Boolean deleted, Set<User> groupParticipants) {
         this.id = id;
         this.name = name;
         this.owner = owner;
         this.location = location;
         this.description = description;
+        this.groupParticipants = groupParticipants;
         if(!picture.equals("")){
             File img = new File(picture);
             try {
-                FileReader reader = new FileReader(img);
-                Scanner sc = new Scanner(img);
-                picture = sc.nextLine();
-                sc.close();
+                picture = new String(Files.readAllBytes(get(img.getPath())));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

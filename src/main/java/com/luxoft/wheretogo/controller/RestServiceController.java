@@ -126,7 +126,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/group")
-	public Group group(Group group) {
+	public GroupResponse group(Group group) {
 		return groupsService.initGroupParticipants(group);
 	}
 
@@ -151,7 +151,7 @@ public class RestServiceController {
     @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
     public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        Group groupToUpdate = groupsService.initGroupParticipants(group);
+        Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
 
 		if (!(groupToUpdate.getGroupParticipants() == null) &&
 				!groupToUpdate.getGroupParticipants().contains(user)) {
@@ -171,8 +171,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignUserFromGroup", method = RequestMethod.POST)
 	public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Group groupToUpdate = groupsService.findById(group.getId());
-		groupToUpdate = groupsService.initGroupParticipants(groupToUpdate);
+		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
 
 		if (groupToUpdate != null && groupToUpdate.getGroupParticipants().remove(user)) {
 			groupsService.update(groupToUpdate);

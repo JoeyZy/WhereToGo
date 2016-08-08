@@ -55,7 +55,7 @@ public class Group {
     @Column(name="location")
     private String location;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "groups_users", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> groupParticipants;
