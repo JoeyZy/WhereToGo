@@ -83,6 +83,9 @@ public class GroupsServiceImpl implements GroupsService {
             }
             group.setOwner(owner);
             group.setGroupParticipants(oldGroup.getGroupParticipants());
+            //Deleting old image from server
+            File file = new File(oldGroup.getPicture());
+            file.delete();
         }
         groupsRepository.merge(group);
     }
@@ -96,6 +99,9 @@ public class GroupsServiceImpl implements GroupsService {
             if (group.getGroupParticipants() == null) {
                 group.setGroupParticipants(oldGroup.getGroupParticipants());
             }
+            //Deleting old image from server
+            File file = new File(oldGroup.getPicture());
+            file.delete();
         }
         groupsRepository.merge(group);
     }
