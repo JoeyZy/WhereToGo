@@ -1801,8 +1801,11 @@ $(document).ready(function () {
 						fieldMappings: {
 							fullname: 'author',
 						},
+						readOnly: user === undefined ? true : false,
 						timeFormatter: function(time) {
-							return time.toLocaleString();
+							if(time !== undefined){
+								return time.toLocaleString();
+							}
 						},
 						getComments: function(success, error) {
 							$.ajax({
@@ -1817,15 +1820,12 @@ $(document).ready(function () {
 										var t = commentsArray[i].created.split(/[/ :]/);
 										commentsArray[i].created = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
 									}
-									success(commentsArray)
+									success(commentsArray);
 								},
 								error: error
 							});
 						},
 						postComment: function(commentJSON, success, error) {
-							if(user === undefined){
-								return false;
-							}
 							commentJSON.event = index;
 							delete commentJSON.author;
 							delete commentJSON.created_by_current_user;
