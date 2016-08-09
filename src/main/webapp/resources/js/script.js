@@ -1795,11 +1795,16 @@ $(document).ready(function () {
 					$('#comments-container').comments({
 						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
 						roundProfilePictures: true,
-						textareaRows: 2,
-						enableAttachments: false,
+						textareaRows: 1,
+						enableAttachments: true,
 						enableUpvoting: false,
 						fieldMappings: {
 							fullname: 'author',
+						},
+						timeFormatter: function(time) {
+							time = "20" + time;
+							var t = time.split(/[/ :]/);
+							return new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]).toLocaleString();
 						},
 						getComments: function(success, error) {
 							$.ajax({
@@ -1810,7 +1815,6 @@ $(document).ready(function () {
 								},
 								success: function(commentsArray) {
 									success(commentsArray)
-									console.log(commentsArray);
 								},
 								error: error
 							});
