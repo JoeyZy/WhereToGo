@@ -1796,15 +1796,13 @@ $(document).ready(function () {
 						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
 						roundProfilePictures: true,
 						textareaRows: 1,
-						enableAttachments: true,
+						enableAttachments: false,
 						enableUpvoting: false,
 						fieldMappings: {
 							fullname: 'author',
 						},
 						timeFormatter: function(time) {
-							time = "20" + time;
-							var t = time.split(/[/ :]/);
-							return new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]).toLocaleString();
+							return time.toLocaleString();
 						},
 						getComments: function(success, error) {
 							$.ajax({
@@ -1814,6 +1812,11 @@ $(document).ready(function () {
 									id : index
 								},
 								success: function(commentsArray) {
+									for(var i in commentsArray){
+										commentsArray[i].created = "20" + commentsArray[i].created;
+										var t = commentsArray[i].created.split(/[/ :]/);
+										commentsArray[i].created = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+									}
 									success(commentsArray)
 								},
 								error: error
@@ -1854,16 +1857,6 @@ $(document).ready(function () {
 						deleteComment: function(data, success, error) {
 							setTimeout(function() {
 								success();
-							}, 500);
-						},
-						upvoteComment: function(data, success, error) {
-							setTimeout(function() {
-								success(data);
-							}, 500);
-						},
-						uploadAttachments: function(dataArray, success, error) {
-							setTimeout(function() {
-								success(dataArray);
 							}, 500);
 						},
 					});

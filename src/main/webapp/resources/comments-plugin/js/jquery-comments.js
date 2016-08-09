@@ -628,8 +628,8 @@
             // Sort by date
             } else {
                 comments.sort(function(commentA, commentB) {
-                    var createdA = new Date(commentA.created).getTime();
-                    var createdB = new Date(commentB.created).getTime();
+                    var createdA = commentA.created.getTime();
+                    var createdB = commentB.created.getTime();
                     if(sortKey == 'oldest') {
                         return createdA - createdB;
                     } else {
