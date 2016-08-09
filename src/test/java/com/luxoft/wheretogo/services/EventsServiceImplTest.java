@@ -301,34 +301,46 @@ public class EventsServiceImplTest {
     public List<EventResponse> getEventResponseList(){
         List<EventResponse> eventResponses = new ArrayList<>();
         eventResponses.add(new EventResponse(1, "Event1", lc1,
-                "user1 user1",
+                new User(),
                 "",
                 dateStart1,
                 dateFinish1,
                 false,
                 "Picture1",
                 "Location1",
-                true));
+                true,
+                "description 1",
+                new Currency(),
+                50,
+                new HashSet<User>()));
 
         eventResponses.add(new EventResponse(1, "Event1", lc1,
-                "user1 user1",
+                new User(),
                 "",
                 dateStart1,
                 dateFinish1,
                 false,
                 "Picture1",
                 "Location1",
-                false));
+                false,
+                "description 1",
+                new Currency(),
+                50,
+                new HashSet<User>()));
 
         eventResponses.add(new EventResponse(2, "Event2", lc1,
-                "user2 user2",
+                new User(),
                 "",
                 dateStart2,
                 dateFinish2,
                 false,
                 "Picture2",
                 "Location2",
-                true));
+                true,
+                "description 1",
+                new Currency(),
+                50,
+                new HashSet<User>()));
 
         return eventResponses;
     }

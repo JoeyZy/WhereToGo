@@ -84,7 +84,7 @@ public class Event {
 	@JoinColumn(name = "currencyId")
 	private Currency currency;
 
-	@Column(name="picture")
+	/*@Column(name="picture")
 	private Blob picture;
 
 	public void setPicture(String value) {
@@ -106,6 +106,18 @@ public class Event {
 			LOG.warn("Can not convert image", e);
 		}
 		return "";
+	}*/
+	@Column(name="picture")
+	private String picture;
+
+	public void setPicture(String path){
+		this.picture = path;
+	}
+	public String getPicture(){
+		if(this.picture == null) {
+			return "";
+		}
+		return this.picture;
 	}
 
 	public void setInfo(EventInfo eventInfo) {

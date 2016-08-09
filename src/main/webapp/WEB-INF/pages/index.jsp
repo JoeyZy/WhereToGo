@@ -188,7 +188,7 @@
                                             <div class="location" title="{{location}}"><img class="icons"
                                                                                         src="resources/images/location.png"> {{location}}</div>
                                             <div class="created-by" title="{{owner}}"><img class="icons"
-                                                                                       src="resources/images/black.png"><span> Created by </span>{{owner}}</div>
+                                                                                       src="resources/images/black.png"><span> Created by </span>{{owner.firstName}} {{owner.lastName}}</div>
                                         </div>
                                     </div>
                                 </div>

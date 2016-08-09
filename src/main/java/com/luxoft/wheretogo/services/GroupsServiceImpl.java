@@ -49,7 +49,7 @@ public class GroupsServiceImpl implements GroupsService {
             String path = "../resourses/images/groups/"+fileName;
             //Default path: apache-tomcat -> bin
             File img = new File(path);
-            path = img.getAbsolutePath();
+            path = img.getPath();
             try {
                 Files.write(get(img.getPath()),imageDataString.getBytes());
             } catch (IOException e) {
@@ -93,7 +93,6 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public void update(Group group) {
         Group oldGroup = findById(group.getId());
-        group.setPicture(generatePicturePath(group.getPicture()));
         if (oldGroup != null) {
             group.setOwner(oldGroup.getOwner());
             if (group.getGroupParticipants() == null) {

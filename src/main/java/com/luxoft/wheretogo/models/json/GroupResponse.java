@@ -4,9 +4,13 @@ import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import lombok.Data;
 import org.hibernate.Hibernate;
+import sun.misc.IOUtils;
+import sun.nio.ch.IOUtil;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -39,18 +43,22 @@ public class GroupResponse {
         this.location = location;
         this.description = description;
         this.groupParticipants = groupParticipants;
+        String imageData = null;
         if(!picture.equals("")){
-            File img = new File(picture);
             try {
-                picture = new String(Files.readAllBytes(get(img.getPath())));
+                Path p = Paths.get(picture);
+                byte[] arr = Files.readAllBytes(p);
+                imageData = new String(arr);
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            this.picture = imageData;
+        }else{
+            this.picture = picture;
         }
-
-        this.picture = picture;
         this.deleted = deleted;
     }
 

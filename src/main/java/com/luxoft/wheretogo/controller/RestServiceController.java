@@ -65,7 +65,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/event")
-	public Event event(Event event) {
+	public EventResponse event(Event event) {
 		return eventsService.initParticipants(event);
 	}
 
@@ -281,7 +281,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event);
+		Event eventToUpdate = eventsService.initParticipants(event.getId());
 		user.setEvents(usersService.initEvents(user).getEvents());
 
 		if (!(eventToUpdate.getParticipants() == null) && !eventToUpdate.getParticipants().contains(user)) {
@@ -297,7 +297,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignGroupFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event);
+		Event eventToUpdate = eventsService.initParticipants(event.getId());
 
 		if (eventToUpdate != null && !eventToUpdate.getParticipants().isEmpty() && eventToUpdate.getParticipants().remove(user)) {
 			eventsService.update(eventToUpdate);

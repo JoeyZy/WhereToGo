@@ -1,13 +1,10 @@
 package com.luxoft.wheretogo.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -27,6 +24,8 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
 
+import static java.nio.file.Paths.get;
+
 @Service
 @Transactional
 public class EventsServiceImpl implements EventsService {
@@ -41,6 +40,7 @@ public class EventsServiceImpl implements EventsService {
 	@Override
 	public boolean add(Event event) {
 		if (event.getOwner().isActive()) {
+			event.setPicture(generatePicturePath(event.getPicture()));
 			eventsRepository.add(event);
 			return true;
 		}
@@ -49,8 +49,9 @@ public class EventsServiceImpl implements EventsService {
 
 	@Override
 	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
-		Event oldEvent = initParticipants(event);
+		Event oldEvent = initParticipants(event.getId());
 		User owner;
+		event.setPicture(generatePicturePath(event.getPicture()));
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
 			if (!owner.getEmail().equals(ownerEmail) &&
@@ -59,6 +60,9 @@ public class EventsServiceImpl implements EventsService {
 			}
 			event.setOwner(oldEvent.getOwner());
 			event.setParticipants(oldEvent.getParticipants());
+			//Old image deletion
+			File file = new File(oldEvent.getPicture());
+			file.delete();
 		}
 		eventsRepository.merge(event);
 	}
@@ -130,15 +134,20 @@ public class EventsServiceImpl implements EventsService {
 	private List<EventResponse> convertToEventResponses(List<Event> events, User user) {
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
+			Hibernate.initialize(event.getParticipants());
 			eventResponses.add(new EventResponse(event.getId(), event.getName(), event.getCategories(),
-					event.getOwner().getFirstName() + " " + event.getOwner().getLastName(),
+					event.getOwner(),
 					(event.getTargetGroup() == null)? "" : event.getTargetGroup().getName(),
 					event.getStartDateTime(),
 					event.getEndDateTime(),
 					event.getDeleted(),
 					event.getPicture(),
 					event.getLocation(),
-					user != null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user)));
+					user != null && !event.getParticipants().isEmpty() && event.getParticipants().contains(user),
+					event.getDescription(),
+					event.getCurrency(),
+					event.getCost(),
+					event.getParticipants()));
 		}
 		return eventResponses;
 	}
@@ -202,8 +211,24 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	@Override
-	public Event initParticipants(Event event) {
+	public EventResponse initParticipants(Event event) {
 		event = eventsRepository.findById(event.getId());
+		if (event != null) {
+			Hibernate.initialize(event.getParticipants());
+			if(event.getTargetGroup() != null) {
+				Hibernate.initialize(event.getTargetGroup().getGroupParticipants());
+			}
+		}
+		//Event e = event;
+		//e.setPicture("");
+		List<Event> list = new ArrayList<>();
+		list.add(event);
+		EventResponse response = convertToEventResponses(list, event.getOwner()).get(0);
+		return response;
+		//return event;
+	}
+	public Event initParticipants(long id) {
+		Event event = eventsRepository.findById(id);
 		if (event != null) {
 			Hibernate.initialize(event.getParticipants());
 			if(event.getTargetGroup() != null) {
@@ -219,5 +244,32 @@ public class EventsServiceImpl implements EventsService {
 				||event.getTargetGroup().getGroupParticipants().contains(user)))))
 				.collect(Collectors.toList());
 	}
-
+	private String generatePicturePath(String imageDataString) {
+		//Generating image/file and path to store event data
+		if(imageDataString.length()!=0){
+			Random rnd = new Random();
+			String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",8);
+			String path = "../resourses/images/events/"+fileName;
+			//Default path: apache-tomcat -> bin
+			File img = new File(path);
+			path = img.getPath();
+			try {
+				Files.write(get(img.getPath()),imageDataString.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return path;
+		}
+		else return imageDataString;
+		//End of generation
+	}
+	public static String generateString(Random rng, String characters, int length)
+	{
+		char[] text = new char[length];
+		for (int i = 0; i < length; i++)
+		{
+			text[i] = characters.charAt(rng.nextInt(characters.length()));
+		}
+		return new String(text);
+	}
 }
