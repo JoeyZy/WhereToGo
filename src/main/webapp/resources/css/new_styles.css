@@ -779,10 +779,6 @@ div.accordion{
   height: 200px;
 }
 
-.SinglePage__button--edit, .SinglePage__button--delete {
-  disabled: true;
-}
-
 #show-map-checkbox {
   margin-top: 10px;
 }

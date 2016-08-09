@@ -51,8 +51,10 @@ $(document).ready(function () {
 	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
-	var $map = $singlePage.find('#map-holder');
+	var $mapHolder = $singlePage.find('#map-holder');
     var $checkboxShowMap = $singlePage.find('#show-map');
+	var locationMap;
+	
 	$buttonAddEvent.on('click', function () {
 
 		if (typeof user !== "undefined") {
@@ -116,20 +118,17 @@ $(document).ready(function () {
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
 	$buttonEdit.on('click', function (event) {
-		if($buttonEdit.disabled === false) {
-			makeEventPageEditable();
-			$buttonEdit.hide();
-			$buttonEdit.disabled = true;
-			$buttonDelete.hide();
-			$buttonDelete.disabled = true;
-			$buttonApply.show();
-			$buttonCancelEditing.show();
-			$buttonAttend.hide();
-			return false;
-		}
+		makeEventPageEditable();
+		$buttonEdit.hide();
+		$buttonEdit.prop( "disabled", true );
+		$buttonDelete.hide();
+		$buttonDelete.prop( "disabled", true );
+		$buttonApply.show();
+		$buttonCancelEditing.show();
+		$buttonAttend.hide();
 	});
 
-	$buttonEditGroup.on('click', function(group){
+	$buttonEditGroup.on('click', function(group) {
 		makeGroupPageEditable();
 		$buttonEditGroup.hide();
 		$buttonDeleteGroup.hide();
@@ -155,9 +154,9 @@ $(document).ready(function () {
 		var index = (window.location.hash).split('#event/')[1].trim();
 		renderSingleEventPage(index, events);
 		$buttonEdit.show();
-		$buttonEdit.disabled = false;
+		$buttonEdit.prop( "disabled", false );
 		$buttonDelete.show();
-		$buttonDelete.disabled = false;
+		$buttonDelete.prop( "disabled", false );
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
 			$buttonAttend.show();
 		}
@@ -183,10 +182,8 @@ $(document).ready(function () {
 	});
 
 	$buttonDelete.on('click', function () {
-		if(buttonDelete.disabled == false) {
-			renderConfirmationPage();
-			return false;
-		}
+		renderConfirmationPage();
+		return false;
 	});
 
 	$buttonDeleteGroup.on('click', function () {
@@ -239,9 +236,9 @@ $(document).ready(function () {
 			var parentDisable = $('.parentDisable');
 			parentDisable.removeClass('visible');
 			$buttonEdit.show();
-			$buttonEdit.disabled = false;
+			$buttonEdit.prop( "disabled", false );
 			$buttonDelete.show();
-			$buttonDelete.disabled = false;
+			$buttonDelete.prop( "disabled", false );
 			return false;
 		});
 	}
@@ -306,16 +303,6 @@ $(document).ready(function () {
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
 
-
-    function showMap() {
-        $map.show();
-        initGoogleMaps();
-    }
-
-    function hideMap() {
-        $map.hide();
-    }
-
 	function resetSinglePage() {
 		$eventCategoriesMultiselect = $singlePage.find('.btn-group');
 		//reset inputs
@@ -325,7 +312,6 @@ $(document).ready(function () {
 		$eventPage.hide();
 		$groupPage.hide();
 
-        hideMap();
         $checkboxShowMap.find("input").prop("checked", false);
 		$eventDescription.empty();
 		$groupDescription.empty();
@@ -338,6 +324,8 @@ $(document).ready(function () {
 		$errors.hide();
 		$pictureParent.hide();
 
+		$buttonEdit.prop( "disabled", true );
+		$buttonDelete.prop( "disabled", true );
 
 		$picture.attr('src', "resources/images/camera.png");
 	}
@@ -461,9 +449,9 @@ $(document).ready(function () {
 
 	$checkboxShowMap.on("click", function() {
 		if($checkboxShowMap.find("input").prop("checked")) {
-			showMap();
+			$mapHolder.show();
 		} else {
-			hideMap();
+			$mapHolder.hide();
 		}
 	});
 
@@ -1591,6 +1579,8 @@ $(document).ready(function () {
 		$eventCostCurrency.prop('disabled', false);
 		$eventCategories.multiselect('enable');
 		$eventCategories.multiselect('refresh');
+		$buttonEdit.prop( "disabled", true );
+		$buttonDelete.prop( "disabled", true);
 		$pictureUploadPlaceholder.on('click', function () {
 			$buttonUploadPicture.click();
 			return false;
@@ -1615,6 +1605,8 @@ $(document).ready(function () {
 		$eventCategories.multiselect('refresh');
 		$pictureUploadPlaceholder.off('click');
 		$picture.attr('title', '');
+		$buttonEdit.prop( "disabled", false );
+		$buttonDelete.prop( "disabled", false );
 
 		if (isDefaultPicture()) {
 			$pictureParent.hide();
@@ -1791,6 +1783,7 @@ $(document).ready(function () {
 		}
 
 		function renderShowEventPage(data) {
+
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("event", {id: item.id}, function (event) {
@@ -1827,15 +1820,20 @@ $(document).ready(function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-			initGoogleMaps();
+
+			$mapHolder.show();
+			map = initGoogleMaps();
+			$mapHolder.hide();
 
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
+
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);
+				setLocationByAddress(map, event.location);
 				$eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
@@ -1862,6 +1860,7 @@ $(document).ready(function () {
 			} else {
 
 				makeEventPageEditable();
+				$showArchiveCheckbox.find("input").prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
