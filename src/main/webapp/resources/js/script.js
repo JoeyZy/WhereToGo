@@ -1943,7 +1943,7 @@ $(document).ready(function () {
 		$('#calendar').fullCalendar('today'); // show current day when calendar is opened
 
 		function getEventColor(event) {
-			var eventCategory = event.category[0];
+			var eventCategory = event.categories[0].name;
 			return filterColors[eventCategory.toLowerCase()];
 		}
 	}
