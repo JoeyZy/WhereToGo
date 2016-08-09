@@ -20,4 +20,9 @@ public class CommentsRepositoryImpl extends AbstractRepository<Comment> implemen
     public List<Comment> findByEventId(long eventId) {
         return super.findListByProperty("event", eventId);
     }
+
+    @Override
+    public void add(Comment comment) {
+        super.add(comment);
+    }
 }

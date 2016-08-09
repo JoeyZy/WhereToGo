@@ -8,7 +8,7 @@ import java.util.List;
  * Created by serhii on 05.08.16.
  */
 public interface CommentsService {
-//    boolean add(Comment comment);
+    void add(Comment comment);
 //
 //    void update(Comment comment);
 

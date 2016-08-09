@@ -35,7 +35,7 @@ public class Comment {
         @Column(name = "content")
         private String content;
 
-        @NotNull
+//        @NotNull
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "author")
         private User author;
@@ -47,9 +47,8 @@ public class Comment {
         @Column(name = "event")
         private long event;
 
-        @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
+        @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yy/MM/dd HH:mm:ss", timezone="default")
         private Date created;
-
 
 
     }

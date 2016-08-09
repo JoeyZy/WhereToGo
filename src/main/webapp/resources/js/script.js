@@ -1795,8 +1795,9 @@ $(document).ready(function () {
 					$('#comments-container').comments({
 						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
 						roundProfilePictures: true,
-						textareaRows: 1,
-						enableAttachments: true,
+						textareaRows: 2,
+						enableAttachments: false,
+						enableUpvoting: false,
 						fieldMappings: {
 							fullname: 'author',
 						},
@@ -1809,14 +1810,37 @@ $(document).ready(function () {
 								},
 								success: function(commentsArray) {
 									success(commentsArray)
+									console.log(commentsArray);
 								},
 								error: error
 							});
 						},
-						postComment: function(data, success, error) {
-							setTimeout(function() {
-								success(data);
-							}, 500);
+						postComment: function(commentJSON, success, error) {
+							if(user === undefined){
+								return false;
+							}
+							commentJSON.event = index;
+							delete commentJSON.author;
+							delete commentJSON.created_by_current_user;
+							delete commentJSON.id;
+							delete commentJSON.modified;
+							delete commentJSON.profile_picture_url;
+							delete commentJSON.upvote_count;
+							delete commentJSON.user_has_upvoted;
+							commentJSON.created = null;
+							$.ajax({
+								type: 'post',
+								url: '/postComment',
+								data: JSON.stringify(commentJSON),
+								beforeSend: function (xhr) {
+									xhr.setRequestHeader("Accept", "application/json");
+									xhr.setRequestHeader("Content-Type", "application/json");
+								},
+								success: function(comment) {
+									success(comment)
+								},
+								error: error
+							});
 						},
 						putComment: function(data, success, error) {
 							setTimeout(function() {

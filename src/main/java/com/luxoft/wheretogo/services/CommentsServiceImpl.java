@@ -17,6 +17,11 @@ public class CommentsServiceImpl implements CommentsService {
     @Autowired
     private CommentsRepository commentsRepository;
 
+    @Override
+    public void add(Comment comment) {
+        commentsRepository.add(comment);
+    }
+
     public List<Comment> findByEventId(long eventId) {
         return commentsRepository.findByEventId(eventId);
     }

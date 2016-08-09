@@ -8,6 +8,7 @@ import java.util.List;
  * Created by serhii on 05.08.16.
  */
 public interface CommentsRepository {
+    void add(Comment comment);
 
     List<Comment> findByEventId(long eventId);
 }

@@ -13,7 +13,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,6 +68,14 @@ public class RestServiceController {
 	@RequestMapping(value = "/getComments", method = RequestMethod.GET)
 	public List<Comment> getComments(long id) {
 		return commentsService.findByEventId(id);
+	}
+
+	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
+	public void postComment(@RequestBody Comment comment, HttpServletRequest request) {
+		comment.setAuthor((User) request.getSession().getAttribute("user"));
+		Calendar currenttime = Calendar.getInstance();
+		comment.setCreated(new Date((currenttime.getTime()).getTime()));
+		commentsService.add(comment);
 	}
 
 
