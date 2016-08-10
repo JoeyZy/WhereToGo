@@ -58,8 +58,8 @@ public class EventResponse {
 		this.currency = currency;
 		this.cost = cost;
 		this.participants = participants;
-		//this.picture = clearEmptyPicture(picture);
-		String imageData = null;
+		this.picture = clearEmptyPicture(picture);
+		String imageData = "";
 		if(!picture.equals("")){
 			try {
 				Path p = Paths.get(picture);

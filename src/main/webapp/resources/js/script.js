@@ -497,6 +497,7 @@ $(document).ready(function () {
 
 				$(window).scrollTop(top);
 				$errors.hide();
+				$pictureParent.hide();
 				window.location.hash = oldLocationHash;
 			}
 		}
@@ -521,10 +522,10 @@ $(document).ready(function () {
 				return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
 			});
 			events.forEach(function (item) {
-				item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
-				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
-				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("DD MMMM YYYY");
-				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").utc().format("HH:mm");
+				item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
+				item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
 
 				if(!item.targetGroup) item.targetGroup = " ";
 			});

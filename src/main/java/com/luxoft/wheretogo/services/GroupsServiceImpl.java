@@ -6,8 +6,10 @@ import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.repositories.GroupIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.GroupsRepository;
+import com.luxoft.wheretogo.utils.ImageUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -30,51 +32,23 @@ public class GroupsServiceImpl implements GroupsService {
     private GroupsRepository groupsRepository;
     @Autowired
     private GroupIdGeneratorRepository idGenerator;
+    @Autowired
+    private Environment environment;
 
     @Override
     public boolean add(Group group) {
         if (group.getOwner().isActive()) {
-            group.setPicture(generatePicturePath(group.getPicture()));
+            group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),environment.getProperty("groups.images.path")));
             groupsRepository.add(group);
             return true;
         }
         return false;
     }
-
-    private String generatePicturePath(String imageDataString) {
-        //Generating image/file and path to store group data
-        if(imageDataString.length()!=0){
-            Random rnd = new Random();
-            String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",6);
-            String path = "../resourses/images/groups/"+fileName;
-            //Default path: apache-tomcat -> bin
-            File img = new File(path);
-            path = img.getPath();
-            try {
-                Files.write(get(img.getPath()),imageDataString.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return path;
-        }
-        else return imageDataString;
-        //End of generation
-    }
-
-    public static String generateString(Random rng, String characters, int length)
-    {
-        char[] text = new char[length];
-        for (int i = 0; i < length; i++)
-        {
-            text[i] = characters.charAt(rng.nextInt(characters.length()));
-        }
-        return new String(text);
-    }
     @Override
     public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
         Group oldGroup = initGroupParticipantslist(group.getId());
         User owner;
-        group.setPicture(generatePicturePath(group.getPicture()));
+        group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),environment.getProperty("groups.images.path")));
         if (oldGroup != null) {
             owner = oldGroup.getOwner();
             if (!owner.getEmail().equals(ownerEmail) &&

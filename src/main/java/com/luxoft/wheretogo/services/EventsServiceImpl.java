@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.luxoft.wheretogo.utils.ImageUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +38,13 @@ public class EventsServiceImpl implements EventsService {
 	private EventIdGeneratorRepository idGenerator;
 	@Autowired
 	private CategoriesService categoriesService;
+	@Autowired
+	private Environment environment;
 
 	@Override
 	public boolean add(Event event) {
 		if (event.getOwner().isActive()) {
-			event.setPicture(generatePicturePath(event.getPicture()));
+			event.setPicture(ImageUtils.generatePicturePath(event.getPicture(),environment.getProperty("events.images.path")));
 			eventsRepository.add(event);
 			return true;
 		}
@@ -51,7 +55,7 @@ public class EventsServiceImpl implements EventsService {
 	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
 		Event oldEvent = initParticipants(event.getId());
 		User owner;
-		event.setPicture(generatePicturePath(event.getPicture()));
+		event.setPicture(ImageUtils.generatePicturePath(event.getPicture(),environment.getProperty("events.images.path")));
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
 			if (!owner.getEmail().equals(ownerEmail) &&
@@ -244,32 +248,5 @@ public class EventsServiceImpl implements EventsService {
 				||event.getTargetGroup().getGroupParticipants().contains(user)))))
 				.collect(Collectors.toList());
 	}
-	private String generatePicturePath(String imageDataString) {
-		//Generating image/file and path to store event data
-		if(imageDataString.length()!=0){
-			Random rnd = new Random();
-			String fileName = generateString(rnd,"qwertyuiop0987654321asdfghjklzxcvbnm",8);
-			String path = "../resourses/images/events/"+fileName;
-			//Default path: apache-tomcat -> bin
-			File img = new File(path);
-			path = img.getPath();
-			try {
-				Files.write(get(img.getPath()),imageDataString.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return path;
-		}
-		else return imageDataString;
-		//End of generation
-	}
-	public static String generateString(Random rng, String characters, int length)
-	{
-		char[] text = new char[length];
-		for (int i = 0; i < length; i++)
-		{
-			text[i] = characters.charAt(rng.nextInt(characters.length()));
-		}
-		return new String(text);
-	}
+
 }
