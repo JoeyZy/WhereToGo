@@ -22,6 +22,7 @@ public class EventResponse {
 	private long id;
 	private String name;
 	private List<Category> categories;
+	private List<String> category;
 	private User owner;
 	private String targetGroup;
 	private String description;
@@ -82,8 +83,10 @@ public class EventResponse {
 
 	public void setCategories(List<Category> categories) {
 		this.categories = new ArrayList<>();
+		this.category = new ArrayList<>();
 		for (Category category : categories) {
 			this.categories.add(category);
+			this.category.add(category.getName());
 		}
 	}
 

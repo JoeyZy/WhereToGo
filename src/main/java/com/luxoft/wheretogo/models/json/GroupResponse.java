@@ -49,7 +49,6 @@ public class GroupResponse {
                 Path p = Paths.get(picture);
                 byte[] arr = Files.readAllBytes(p);
                 imageData = new String(arr);
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
