@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.controller;
 
+import com.luxoft.wheretogo.mailer.SimpleNotification;
 import com.luxoft.wheretogo.models.*;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
@@ -203,8 +204,10 @@ public class RestServiceController {
 				user.setGroups(usersService.initGroups(user).getGroups());
 
 				user.getGroups().add(groupToUpdate);
-				groupsService.update(groupToUpdate);
-				usersService.update(user);
+				//groupsService.update(groupToUpdate);
+				//usersService.update(user);
+				//send notification
+				SimpleNotification.notifyUser(groupToUpdate,user,SimpleNotification.ADDED_TO_A_GROUP);
 //
 //				request.getSession().setAttribute("user", user);
 			}
