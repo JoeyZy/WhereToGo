@@ -25,4 +25,12 @@ public class CommentsRepositoryImpl extends AbstractRepository<Comment> implemen
     public void add(Comment comment) {
         super.add(comment);
     }
+
+    @Override
+    public Comment findById(long commentId){ return super.findByProperty("id", commentId); }
+
+    @Override
+    public void merge(Comment comment) {
+        super.merge(comment);
+    }
 }

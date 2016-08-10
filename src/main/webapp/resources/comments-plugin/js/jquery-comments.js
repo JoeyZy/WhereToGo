@@ -82,7 +82,7 @@
             // Other
             'click li.comment ul.child-comments .toggle-all': 'toggleReplies',
             'click li.comment button.reply': 'replyButtonClicked',
-            'click li.comment button.edit': 'editButtonClicked',
+            'click li.comment button.editComment': 'editButtonClicked',
 
             // Drag & dropping attachments
             'dragenter' : 'showDroppableOverlay',
@@ -178,7 +178,7 @@
                 },        
                 
                 getComments: function(success, error) {success([])},      
-                postComment: function(commentJSON, success, error) {success(commentJSON)},        
+                postComment: function(commentJSON, success, error) {success(commentJSON)},
                 putComment: function(commentJSON, success, error) {success(commentJSON)},     
                 deleteComment: function(commentJSON, success, error) {success()},     
                 upvoteComment: function(commentJSON, success, error) {success(commentJSON)},      
@@ -628,8 +628,8 @@
             // Sort by date
             } else {
                 comments.sort(function(commentA, commentB) {
-                    var createdA = commentA.created.getTime();
-                    var createdB = commentB.created.getTime();
+                    var createdA = new Date(commentA.created).getTime();
+                    var createdB = new Date(commentB.created).getTime();
                     if(sortKey == 'oldest') {
                         return createdA - createdB;
                     } else {
@@ -751,6 +751,7 @@
             mainControlRow.hide();
             closeButton.hide();
             mainTextarea.blur();
+            ev.stopPropagation();
         },
 
         increaseTextareaHeight: function(ev) {
@@ -816,12 +817,13 @@
             // Remove edit class from comment if user was editing the comment
             var textarea = closeButton.siblings('.textarea');
             if(textarea.attr('data-comment')) {
-                closeButton.parents('li.comment').first().removeClass('edit');
+                closeButton.parents('li.comment').first().removeClass('editComment');
             }
 
             // Remove the field
             var commentingField = closeButton.parents('.commenting-field').first();
             commentingField.remove();
+            ev.stopPropagation();
         },
 
         postComment: function(ev) {
@@ -1002,10 +1004,12 @@
         },
 
         editButtonClicked: function(ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
             var editButton = $(ev.currentTarget);
             var commentEl = editButton.parents('li.comment').first();
             var commentModel = commentEl.data().model;
-            commentEl.addClass('edit');
+            commentEl.addClass('editComment');
 
             // Create the editing field
             var editField = this.createCommentingFieldElement(commentModel.parent, commentModel.id);
@@ -1460,7 +1464,11 @@
             });
 
             // Name
-            var nameText = commentModel.createdByCurrentUser ? this.options.textFormatter(this.options.youText) : commentModel.fullname.firstName + ' ' + commentModel.fullname.lastName;
+            if(commentModel.fullname !== undefined){
+                var nameText = commentModel.createdByCurrentUser ? this.options.textFormatter(this.options.youText) : commentModel.fullname.firstName + ' ' + commentModel.fullname.lastName;
+            } else {
+                var nameText = this.options.textFormatter(this.options.youText);
+            }
             var name = $('<div/>', {
                 'class': 'name'
             });
@@ -1605,7 +1613,7 @@
             // Separator
             var separator = $('<span/>', {
                 'class': 'separator',
-                text: '·'
+                text: '|'
             });
 
             // Reply
@@ -1644,7 +1652,7 @@
                 // Case: edit button for regular comment
                 } else if(!isAttachment && this.options.enableEditing) {
                     var editButton = $('<button/>', {
-                        'class': 'action edit',
+                        'class': 'action editComment',
                         text: this.options.textFormatter(this.options.editText)
                     });
                     actions.append(editButton);

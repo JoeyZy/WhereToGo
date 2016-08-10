@@ -613,11 +613,11 @@ http://viima.github.io/jquery-comments/*/
 }
 
 /* Editing comment */
-.jquery-comments ul.main li.comment.edit > .comment-wrapper > *:not(.commenting-field) {
+.jquery-comments ul.main li.comment.editComment > .comment-wrapper > *:not(.commenting-field) {
 	display: none;
 }
 
-.jquery-comments ul.main li.comment.edit > .comment-wrapper .commenting-field {
+.jquery-comments ul.main li.comment.editComment > .comment-wrapper .commenting-field {
 	padding: 0 !important;	/* Parent element has the padding */
 }
 

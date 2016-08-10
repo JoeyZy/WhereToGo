@@ -9,8 +9,10 @@ import java.util.List;
  */
 public interface CommentsService {
     void add(Comment comment);
-//
-//    void update(Comment comment);
+
+    void update(Comment comment);
+
+    Comment findById(long commentId);
 
     List<Comment> findByEventId(long eventId);
 }

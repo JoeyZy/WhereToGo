@@ -1796,6 +1796,7 @@ $(document).ready(function () {
 						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
 						roundProfilePictures: true,
 						textareaRows: 1,
+						enableEditing: true,
 						enableAttachments: false,
 						enableUpvoting: false,
 						fieldMappings: {
@@ -1816,10 +1817,19 @@ $(document).ready(function () {
 								},
 								success: function(commentsArray) {
 									for(var i in commentsArray){
+										if(user !== undefined){
+											if(user.id == commentsArray[i].author.id){
+												commentsArray[i]["created_by_current_user"] = true;
+											} else {
+												commentsArray[i]["created_by_current_user"] = false;
+											}
+										}
+
 										commentsArray[i].created = "20" + commentsArray[i].created;
 										var t = commentsArray[i].created.split(/[/ :]/);
 										commentsArray[i].created = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
 									}
+
 									success(commentsArray);
 								},
 								error: error
@@ -1835,9 +1845,31 @@ $(document).ready(function () {
 							delete commentJSON.upvote_count;
 							delete commentJSON.user_has_upvoted;
 							commentJSON.created = null;
+								$.ajax({
+									type: 'post',
+									url: '/postComment',
+									data: JSON.stringify(commentJSON),
+									beforeSend: function (xhr) {
+										xhr.setRequestHeader("Accept", "application/json");
+										xhr.setRequestHeader("Content-Type", "application/json");
+									},
+									success: function (comment) {
+										success(comment)
+									},
+									error: error
+								});
+								// removeComments();
+								// renderComments();
+						},
+						putComment: function(commentJSON, success, error) {
+							delete commentJSON.author;
+							delete commentJSON.created_by_current_user;
+							commentJSON.event = index;
+							delete commentJSON.created;
+							delete commentJSON.modified;
 							$.ajax({
 								type: 'post',
-								url: '/postComment',
+								url: '/updateComment',
 								data: JSON.stringify(commentJSON),
 								beforeSend: function (xhr) {
 									xhr.setRequestHeader("Accept", "application/json");
@@ -1848,11 +1880,6 @@ $(document).ready(function () {
 								},
 								error: error
 							});
-						},
-						putComment: function(data, success, error) {
-							setTimeout(function() {
-								success(data);
-							}, 500);
 						},
 						deleteComment: function(data, success, error) {
 							setTimeout(function() {

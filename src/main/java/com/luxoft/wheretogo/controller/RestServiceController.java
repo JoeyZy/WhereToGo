@@ -139,6 +139,11 @@ public class RestServiceController {
 		group.setDeleted(NOT_DELETED);
 		groupsService.update(group, authentication.getName(), authentication.getAuthorities());
 	}
+	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
+	public void updateComment(@RequestBody Comment comment, Authentication authentication) {
+		commentsService.update(comment);
+	}
+
 
 	@RequestMapping("/group")
 	public Group group(Group group) {

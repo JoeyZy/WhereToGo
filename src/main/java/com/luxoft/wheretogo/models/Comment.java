@@ -50,5 +50,9 @@ public class Comment {
         @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yy/MM/dd HH:mm:ss", timezone="default")
         private Date created;
 
+        @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yy/MM/dd HH:mm:ss", timezone="default")
+        private Date modified;
 
-    }
+
+
+}
