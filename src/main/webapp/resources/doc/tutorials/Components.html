@@ -1,0 +1,66 @@
+<html>
+<head>
+<style type="text/css">
+    .italic {
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+<h1>How does Component work?</h1>
+
+<p>Component is constructed upon the existing DOM. To do so, it looks for an element
+with attribute <code>data-model</code> (see <a href="mvc_view_Component.js.html#line145">Component.MODEL_ATTR</a>)
+set to the <code>id</code> value passed as an argument to a constructor. If this element has children
+with model-ids (hereafter, a <i>model-id</i> is a value of the <code>data-model</code>
+attribute) in the form <span class="italic">ModelIdOfTheParent.ModelId</span>, these
+elements get stored and <i>observed.</i></p>
+
+<p>For example, given the following markup:</p>
+
+<pre>
+    &lt;form data-model="userForm"&gt;
+        Name: &lt;input type="text"   data-model="userForm.name"&gt;&lt;br/&gt;
+        Age : &lt;input type="number" data-model="userForm.age" &gt;&lt;br/&gt;
+    &lt;/form&gt;
+</pre>
+
+<p>you may create a view like so:</p>
+
+<pre>
+    var userView = new Component("userForm", userModel);
+</pre>
+
+<p>Now userView has the following properties:</p>
+<table class="props">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th class="last">Value (DOM element)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name">userView.element</td>
+            <td class="name last">form[data-model=userForm]</td>
+        </tr>
+        <tr>
+            <td class="name">userView.elements["userForm.name"]</td>
+            <td class="name last">input[data-model=userForm.name]</td>
+        </tr>
+        <tr>
+            <td class="name">userView.elements["userForm.age"]</td>
+            <td class="name last">input[data-model=userForm.age]</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>To get (or set) the value of one of component's elements, you may call method elementValue(), e.g.</p>
+
+<pre>
+    userView.elementValue("userForm.name");    // get the value of "Name" input
+    userView.elementValue("userForm.age", 25); // set the value of "Age"  input
+</pre>
+
+</body>
+</html>

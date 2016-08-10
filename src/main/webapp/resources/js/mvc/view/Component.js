@@ -136,5 +136,10 @@ var Component = Observable.extend({
     }
 });
 
-// statics
+// Statics
+
+/**
+ * @summary Name of the "model-id" attribute
+ * @memberof Component
+ */
 Component.MODEL_ATTR = "data-model";
