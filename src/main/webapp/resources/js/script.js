@@ -1042,8 +1042,11 @@ $(document).ready(function () {
 				});
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
-					var needElement = $(item).find('div');
+					var needElement = $(item).find('div'),
+						groupName =  $(item).find('.clickGroupName');
+					var width = groupName.width()+30;
 					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
+					$(".accordion").css("left", width);
 					$.each(myGroups, function(index, value){
 						if(groupIndex === value.id){
 							return true;

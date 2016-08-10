@@ -718,7 +718,7 @@ input.show-archive-input {
 }
 div.accordion{
   position: absolute;
-  left: 270px;
+  left: 0px;
   top: 0px;
   z-index: 10;
   width: 250px;

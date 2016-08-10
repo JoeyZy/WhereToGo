@@ -205,7 +205,7 @@ public class RestServiceController {
 				user.getGroups().add(groupToUpdate);
 				groupsService.update(groupToUpdate);
 				usersService.update(user);
-//
+
 //				request.getSession().setAttribute("user", user);
 			}
 		}
