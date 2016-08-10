@@ -53,7 +53,6 @@ $(document).ready(function () {
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
 	var $mapHolder = $singlePage.find('#map-holder');
     var $checkboxShowMap = $singlePage.find('#show-map');
-	var locationMap;
 	
 	$buttonAddEvent.on('click', function () {
 
@@ -1827,7 +1826,6 @@ $(document).ready(function () {
 
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
-
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
@@ -1860,7 +1858,7 @@ $(document).ready(function () {
 			} else {
 
 				makeEventPageEditable();
-				$showArchiveCheckbox.find("input").prop('disabled', true);
+				$checkboxShowMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();

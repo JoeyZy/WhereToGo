@@ -6,37 +6,33 @@
  *
  */
 
-const CUSTOM_ZOOM_LEVEL = 16;
+const DEFAULT_ZOOM_LEVEL = 16;
 
-// We have CheckBox as an argument because we
-// give it to the SearchBox listener.
-// When SearchBox gives no results or is empty,
-// we have nothing to show on the map and disable the CheckBox.
-
-function initGoogleMaps($checkboxShowMap) {
+function initGoogleMaps() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -33.8688, lng: 151.2195},
-        zoom: CUSTOM_ZOOM_LEVEL,
+        zoom: DEFAULT_ZOOM_LEVEL,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     // Create the search box and link it to the UI element.
     var input = document.getElementById('location');
     var searchBox = new google.maps.places.SearchBox(input);
-
     var markers = [];
-
+    var $checkboxShowMap = $('.Page').find('#show-map');
+    var $mapHolder = $('.Page').find('#map-holder');
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
         var places = searchBox.getPlaces();
 
         if (places.length == 0) {
-            $showArchiveCheckbox.find("input").prop('disabled', true);
+            $checkboxShowMap.find('input').prop('checked', false);
+            $checkboxShowMap.find('input').prop('disabled', true);
+            $mapHolder.hide();
             return;
         }
-
-        $showArchiveCheckbox.find("input").prop('disabled', false);
+        
         place = places[0];
         // Clear out the old markers.
         markers.forEach(function(marker) {
@@ -44,6 +40,7 @@ function initGoogleMaps($checkboxShowMap) {
         });
         markers = [];
 
+        $checkboxShowMap.find('input').prop('disabled', false);
         var bounds = new google.maps.LatLngBounds();
         var icon = {
             url: place.icon,
@@ -68,7 +65,7 @@ function initGoogleMaps($checkboxShowMap) {
         }
         map.fitBounds(bounds);
         map.setCenter(place.geometry.location);
-        map.setZoom(CUSTOM_ZOOM_LEVEL);
+        map.setZoom(DEFAULT_ZOOM_LEVEL);
     });
 
     return map;
@@ -76,16 +73,18 @@ function initGoogleMaps($checkboxShowMap) {
 
 function setLocationByAddress(map, address) {
     var geocoder = new google.maps.Geocoder();
+    var $checkboxShowMap = $('.Page').find('#show-map');
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
+            $checkboxShowMap.find('input').prop('disabled', false);
             map.setCenter(results[0].geometry.location);
-            map.setZoom(CUSTOM_ZOOM_LEVEL);
+            map.setZoom(DEFAULT_ZOOM_LEVEL);
             var marker = new google.maps.Marker({
                 map: map,
                 position: results[0].geometry.location
             });
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            $checkboxShowMap.find('input').prop('disabled', true);
         }
     });
 }
