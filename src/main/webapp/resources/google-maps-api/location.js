@@ -8,19 +8,20 @@
 
 const DEFAULT_ZOOM_LEVEL = 16;
 
-function initGoogleMaps() {
-    var map = new google.maps.Map(document.getElementById('map'), {
+function initGoogleMaps(inputID, checkboxHolderID, mapHolderID) {
+    var map = new google.maps.Map(document.getElementById('event-location-map'), {
         center: {lat: -33.8688, lng: 151.2195},
         zoom: DEFAULT_ZOOM_LEVEL,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
     });
 
     // Create the search box and link it to the UI element.
-    var input = document.getElementById('location');
+    var input = document.getElementById('event-location');
     var searchBox = new google.maps.places.SearchBox(input);
     var markers = [];
-    var $checkboxShowMap = $('.Page').find('#show-map');
-    var $mapHolder = $('.Page').find('#map-holder');
+    var $checkboxShowMap = $('.Page').find('#show-event-location-map');
+    var $mapHolder = $('.Page').find('#event-location-map-holder');
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
@@ -73,7 +74,7 @@ function initGoogleMaps() {
 
 function setLocationByAddress(map, address) {
     var geocoder = new google.maps.Geocoder();
-    var $checkboxShowMap = $('.Page').find('#show-map');
+    var $checkboxShowMap = $('.Page').find('#show-event-location-map');
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
             $checkboxShowMap.find('input').prop('disabled', false);

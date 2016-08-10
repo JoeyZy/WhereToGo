@@ -320,16 +320,16 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <input contentEditable="false" id="location" class="controls" title="Location:" type="text"
+                        <input contentEditable="false" id="event-location" class="controls" title="Location:" type="text"
                             placeholder="">
-                        <div id="show-map">
+                        <div id="show-event-location-map">
                             <label>
-                                <input type = "checkbox" id="show-map-checkbox" checked="checked"/>
+                                <input type = "checkbox" checked="checked"/>
                                 Show on map
                             </label>
                         </div>
-                        <div id = "map-holder">
-                            <div id="map"></div>
+                        <div id = "event-location-map-holder">
+                            <div id="event-location-map"></div>
                         </div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
@@ -387,7 +387,17 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="GroupLocation" title="Location:"></div>
+                        <input contentEditable="false" id="group-location" class="controls" title="Location:" type="text"
+                               placeholder="">
+                        <div id="show-group-location-map">
+                            <label>
+                                <input type = "checkbox" checked="checked"/>
+                                Show on map
+                            </label>
+                        </div>
+                        <div id = "group-location-map-holder">
+                            <div id="group-location-map"></div>
+                        </div>
                     </li>
                     <li class="SinglePage__inputItem GroupPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
@@ -514,7 +524,7 @@
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src='resources/google-maps-api/location.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&region=US&libraries=places&callback=initGoogleMaps"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMaps"
         async defer></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>

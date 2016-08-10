@@ -25,7 +25,8 @@ $(document).ready(function () {
 	var $eventStart = $singlePage.find('#start');
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
-	var $eventLocation = $singlePage.find("#location");
+	var $eventLocation = $singlePage.find("#event-location");
+	var $eventMapHolder = $singlePage.find('#event-location-map-holder');
 	var $eventTargetGroup = $singlePage.find("#target-group");
 	var $eventCost = $singlePage.find("#cost");
 	var $eventCostCurrency = $singlePage.find("#currencies");
@@ -33,10 +34,11 @@ $(document).ready(function () {
 	var $userPage = $singlePage.find(".UserPage");
 	var $calendarPage = $singlePage.find(".Calendar");
 
+	// Find all group fields
 	var $groupPage = $singlePage.find(".GroupPage");
 	var $groupDescription = $singlePage.find("#GroupDescription");
 	var $groupPageParticipants = $('.GroupPage__participants');
-	var $groupLocation = $singlePage.find("#GroupLocation");
+	var $groupLocation = $singlePage.find("#group-location");
 	var $buttonEditGroup = $singlePage.find('.SinglePage__button--editGroup');
 	var $buttonDeleteGroup = $singlePage.find('.SinglePage__button--deleteGroup');
 	var $buttonApplyGroup = $singlePage.find('.SinglePage__button--applyGroup');
@@ -51,8 +53,7 @@ $(document).ready(function () {
 	var $buttonUnSubscribe = $singlePage.find('.SinglePage__button--unsubscribe');
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
-	var $mapHolder = $singlePage.find('#map-holder');
-    var $checkboxShowMap = $singlePage.find('#show-map');
+    var $checkboxShowEventMap = $singlePage.find('#show-event-location-map');
 	
 	$buttonAddEvent.on('click', function () {
 
@@ -87,7 +88,7 @@ $(document).ready(function () {
 				"id": $singlePage.find('.GroupPage').attr('data-id'),
 				"name": $singlePageTitle.val(),
 				"description": $groupDescription.text(),
-				"location": $groupLocation.text()
+				"location": $groupLocation.val()
 			};
 			saveGroup(groupJson, "addGroup");
 		}
@@ -297,7 +298,7 @@ $(document).ready(function () {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
-			"location": $groupLocation.text()
+			"location": $groupLocation.val()
 		}
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
@@ -311,10 +312,10 @@ $(document).ready(function () {
 		$eventPage.hide();
 		$groupPage.hide();
 
-        $checkboxShowMap.find("input").prop("checked", false);
+        $checkboxShowEventMap.find("input").prop("checked", false);
 		$eventDescription.empty();
 		$groupDescription.empty();
-		$groupLocation.empty();
+		$groupLocation.val("");
 		$eventLocation.val("");
 		$eventTargetGroup.val("");
 		$eventCost.val("");
@@ -446,11 +447,11 @@ $(document).ready(function () {
 		showSideBar();
 	});
 
-	$checkboxShowMap.on("click", function() {
-		if($checkboxShowMap.find("input").prop("checked")) {
-			$mapHolder.show();
+	$checkboxShowEventMap.on("click", function() {
+		if($checkboxShowEventMap.find("input").prop("checked")) {
+			$eventMapHolder.show();
 		} else {
-			$mapHolder.hide();
+			$eventMapHolder.hide();
 		}
 	});
 
@@ -1617,8 +1618,7 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', true);
 		$groupDescription.attr('contenteditable', false);
 		$groupDescription.removeClass('editable');
-		$groupLocation.attr('contenteditable', false);
-		$groupLocation.removeClass('editable');
+		$groupLocation.attr('readonly', true);
 		$groupDescription.attr('contenteditable', false);
 		$groupLocation.attr('contenteditable', false);
 		$groupPage.find('editable').attr('readonly', true);
@@ -1634,9 +1634,8 @@ $(document).ready(function () {
 	function makeGroupPageEditable() {
 		$singlePageTitle.attr('readonly', false);
 		$groupDescription.attr('contenteditable', true);
-		$groupLocation.attr('contenteditable', true);
+		$groupLocation.attr('readonly', false);
 		$groupDescription.addClass('editable');
-		$groupLocation.addClass('editable');
 		$pictureUploadPlaceholder.on('click', function () {
 			$buttonUploadPicture.click();
 			return false;
@@ -1717,7 +1716,7 @@ $(document).ready(function () {
 				makeGroupPageUneditable();
 				$singlePageTitle.val(group.name);
 				$groupDescription.html(linkify(group.description));
-				$groupLocation.html(linkify(group.location));
+				$groupLocation.val(group.location);
 				$groupPageParticipants.show();
 				if (group.picture.length) {
 					$picture.attr('src', group.picture);
@@ -1820,9 +1819,9 @@ $(document).ready(function () {
 
 		function populateSinglePageEventPage(singlePage, event) {
 
-			$mapHolder.show();
-			map = initGoogleMaps();
-			$mapHolder.hide();
+			$eventMapHolder.show();
+			map = initGoogleMaps('event-location', '#show-event-location-map', '#event-location-map-holder');
+			$eventMapHolder.hide();
 
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
@@ -1858,7 +1857,7 @@ $(document).ready(function () {
 			} else {
 
 				makeEventPageEditable();
-				$checkboxShowMap.find('input').prop('disabled', true);
+				$checkboxShowEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
