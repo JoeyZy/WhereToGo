@@ -1802,12 +1802,9 @@ $(document).ready(function () {
 						fieldMappings: {
 							fullname: 'author',
 						},
+						maxRepliesVisible: 2,
 						readOnly: user === undefined ? true : false,
-						timeFormatter: function(time) {
-							if(time !== undefined){
-								return time.toLocaleString();
-							}
-						},
+
 						getComments: function(success, error) {
 							$.ajax({
 								type: 'get',
@@ -1824,10 +1821,11 @@ $(document).ready(function () {
 												commentsArray[i]["created_by_current_user"] = false;
 											}
 										}
-
-										commentsArray[i].created = "20" + commentsArray[i].created;
-										var t = commentsArray[i].created.split(/[/ :]/);
-										commentsArray[i].created = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+										commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'created');
+										if(commentsArray[i].modified !== null){
+											commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'modified');
+										}
+										delete commentsArray[i]['deleted'];
 									}
 
 									success(commentsArray);
@@ -1854,12 +1852,12 @@ $(document).ready(function () {
 										xhr.setRequestHeader("Content-Type", "application/json");
 									},
 									success: function (comment) {
+										comment = changeTimeFormatOfComment(comment, 'created');
+										comment["created_by_current_user"] = true;
 										success(comment)
 									},
 									error: error
 								});
-								// removeComments();
-								// renderComments();
 						},
 						putComment: function(commentJSON, success, error) {
 							delete commentJSON.author;
@@ -1876,18 +1874,41 @@ $(document).ready(function () {
 									xhr.setRequestHeader("Content-Type", "application/json");
 								},
 								success: function(comment) {
+									comment = changeTimeFormatOfComment(comment, 'created');
+									comment = changeTimeFormatOfComment(comment, 'modified');
 									success(comment)
 								},
 								error: error
 							});
 						},
 						deleteComment: function(data, success, error) {
-							setTimeout(function() {
-								success();
-							}, 500);
+							delete data.author;
+							delete data.created_by_current_user;
+							data.event = index;
+							delete data.created;
+							delete data.modified;
+							
+							$.ajax({
+								type: 'post',
+								url: '/deleteComment',
+								data: JSON.stringify(data),
+								beforeSend: function (xhr) {
+									xhr.setRequestHeader("Accept", "application/json");
+									xhr.setRequestHeader("Content-Type", "application/json");
+								},
+								success: success,
+								error: error
+							});
 						},
 					});
 				});
+			}
+
+			function changeTimeFormatOfComment(comment, parametr){
+				comment[parametr] = "20" + comment[parametr];
+				var t = comment[parametr].split(/[/ :]/);
+				comment[parametr] = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+				return comment;
 			}
 		}
 

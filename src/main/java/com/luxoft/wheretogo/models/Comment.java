@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.log4j.Logger;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,6 +54,10 @@ public class Comment {
 
         @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yy/MM/dd HH:mm:ss", timezone="default")
         private Date modified;
+
+        @Column(name = "deleted", nullable = false)
+        @Type(type = "yes_no")
+        private Boolean deleted;
 
 
 

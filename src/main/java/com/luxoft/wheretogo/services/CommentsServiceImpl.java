@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,10 +34,18 @@ public class CommentsServiceImpl implements CommentsService {
         }
         comment.setModified(new Date());
         commentsRepository.merge(comment);
+        comment.setModified(findById(comment.getId()).getModified());
     }
 
     public List<Comment> findByEventId(long eventId) {
-        return commentsRepository.findByEventId(eventId);
+        List<Comment> commentList = commentsRepository.findByEventId(eventId);
+        Iterator<Comment> i = commentList.iterator();
+        while(i.hasNext()){
+            if(i.next().getDeleted() == true){
+                i.remove();
+            }
+        }
+        return commentList;
     }
     @Override
     public Comment findById(long commentId) {

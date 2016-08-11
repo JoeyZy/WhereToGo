@@ -184,7 +184,7 @@
                 upvoteComment: function(commentJSON, success, error) {success(commentJSON)},      
                 uploadAttachments: function(commentArray, success, error) {success(commentArray)},        
                 refresh: function() {},       
-                timeFormatter: function(time) {return new Date(time).toLocaleDateString()}
+                timeFormatter: function(time) {return new Date(time).toLocaleString()}
             }
         },
 

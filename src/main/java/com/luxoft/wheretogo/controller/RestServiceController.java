@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -70,12 +70,26 @@ public class RestServiceController {
 		return commentsService.findByEventId(id);
 	}
 
+	@RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
+	public void deleteComments(@RequestBody Comment comment) {
+		comment.setDeleted(true);
+		commentsService.update(comment);
+	}
+
 	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
-	public void postComment(@RequestBody Comment comment, HttpServletRequest request) {
+	public Comment postComment(@RequestBody Comment comment, HttpServletRequest request) {
 		comment.setAuthor((User) request.getSession().getAttribute("user"));
 		Calendar currenttime = Calendar.getInstance();
-		comment.setCreated(new Date((currenttime.getTime()).getTime()));
+		comment.setCreated(new Date());
+		comment.setDeleted(false);
 		commentsService.add(comment);
+		return comment;
+	}
+
+	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
+	public Comment updateComment(@RequestBody Comment comment) {
+		commentsService.update(comment);
+		return comment;
 	}
 
 
@@ -139,10 +153,7 @@ public class RestServiceController {
 		group.setDeleted(NOT_DELETED);
 		groupsService.update(group, authentication.getName(), authentication.getAuthorities());
 	}
-	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
-	public void updateComment(@RequestBody Comment comment, Authentication authentication) {
-		commentsService.update(comment);
-	}
+
 
 
 	@RequestMapping("/group")
