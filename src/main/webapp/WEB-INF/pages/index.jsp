@@ -524,7 +524,7 @@
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <script src='resources/google-maps-api/location.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMaps"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
         async defer></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>

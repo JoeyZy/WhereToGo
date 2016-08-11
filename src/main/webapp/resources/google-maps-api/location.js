@@ -8,8 +8,8 @@
 
 const DEFAULT_ZOOM_LEVEL = 16;
 
-function initGoogleMaps(inputID, checkboxHolderID, mapHolderID) {
-    var map = new google.maps.Map(document.getElementById('event-location-map'), {
+function initGoogleMaps(mapID, inputID, checkboxHolderID, mapHolderID) {
+    var map = new google.maps.Map(document.getElementById(mapID), {
         center: {lat: -33.8688, lng: 151.2195},
         zoom: DEFAULT_ZOOM_LEVEL,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -17,11 +17,12 @@ function initGoogleMaps(inputID, checkboxHolderID, mapHolderID) {
     });
 
     // Create the search box and link it to the UI element.
-    var input = document.getElementById('event-location');
+    var input = document.getElementById(inputID);
     var searchBox = new google.maps.places.SearchBox(input);
     var markers = [];
-    var $checkboxShowMap = $('.Page').find('#show-event-location-map');
-    var $mapHolder = $('.Page').find('#event-location-map-holder');
+    var $checkboxShowMap = $('.Page').find(checkboxHolderID);
+    var $mapHolder = $('.Page').find(mapHolderID);
+    $mapHolder.show();
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {
@@ -72,9 +73,14 @@ function initGoogleMaps(inputID, checkboxHolderID, mapHolderID) {
     return map;
 }
 
-function setLocationByAddress(map, address) {
+function initGoogleMapsService() {
+    initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
+    initGoogleMaps('group-location-map', 'group-location', '#show-group-location-map', '#group-location-map-holder');
+}
+
+function setLocationByAddress(map, address, checkboxID) {
     var geocoder = new google.maps.Geocoder();
-    var $checkboxShowMap = $('.Page').find('#show-event-location-map');
+    var $checkboxShowMap = $('.Page').find(checkboxID);
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
             $checkboxShowMap.find('input').prop('disabled', false);
