@@ -11,7 +11,7 @@ public class SimpleNotification {
 
     public static void notifyUser(Group group, User user, int type){
         switch (type){
-            case 0:
+            case ADDED_TO_A_GROUP:
                 addedNotification(group,user);
             break;
         }
@@ -22,7 +22,7 @@ public class SimpleNotification {
         String userName = user.getFirstName()+" "+user.getLastName();
         String newGroupName = group.getName();
         String subject = "WhereToGo notification!";
-        String email = "<p>You were added to a group: "+newGroupName+"</p>";
+        String email = "<p>You were added to a group: <h1>"+newGroupName+"</h1></p>";
         Mailer.sendMail(userEmail,subject,email);
     }
 }
