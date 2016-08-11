@@ -22,7 +22,6 @@ function initGoogleMaps(mapID, inputID, checkboxHolderID, mapHolderID) {
     var markers = [];
     var $checkboxShowMap = $('.Page').find(checkboxHolderID);
     var $mapHolder = $('.Page').find(mapHolderID);
-    $mapHolder.show();
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function() {

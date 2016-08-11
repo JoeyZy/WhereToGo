@@ -318,7 +318,11 @@ $(document).ready(function () {
 		$eventDescription.empty();
 		$groupDescription.empty();
 		$groupLocation.val("");
+		$groupLocation.removeClass("disabled-input");
+		$groupLocation.addClass("enabled-input");
 		$eventLocation.val("");
+		$eventLocation.removeClass("disabled-input");
+		$eventLocation.addClass("enabled-input");
 		$eventTargetGroup.val("");
 		$eventCost.val("");
 		$eventCostCurrency.val("");
@@ -1584,6 +1588,8 @@ $(document).ready(function () {
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
 		$eventLocation.attr('readonly', false);
+		$eventLocation.removeClass("disabled-input");
+		$eventLocation.addClass("enabled-input");
 		$eventTargetGroup.addClass('editable');
 		$eventCost.prop('disabled', false);
 		$eventCostCurrency.prop('disabled', false);
@@ -1604,6 +1610,8 @@ $(document).ready(function () {
 		$eventDescription.attr('contenteditable', false);
 		$eventDescription.removeClass('editable');
         $eventLocation.attr('readonly', true);
+		$eventLocation.removeClass("enabled-input");
+		$eventLocation.addClass("disabled-input");
 		$eventTargetGroup.prop('disabled', true);
 		$eventTargetGroup.removeClass('editable');
 		$eventCategories.multiselect('disable');
@@ -1629,6 +1637,8 @@ $(document).ready(function () {
 		$groupDescription.attr('contenteditable', false);
 		$groupDescription.removeClass('editable');
 		$groupLocation.attr('readonly', true);
+		$groupLocation.removeClass("enabled-input");
+		$groupLocation.addClass("disabled-input");
 		$groupDescription.attr('contenteditable', false);
 		$groupLocation.attr('contenteditable', false);
 		$groupPage.find('editable').attr('readonly', true);
@@ -1645,6 +1655,8 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', false);
 		$groupDescription.attr('contenteditable', true);
 		$groupLocation.attr('readonly', false);
+		$groupLocation.removeClass("disabled-input");
+		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
 		$pictureUploadPlaceholder.on('click', function () {
 			$buttonUploadPicture.click();

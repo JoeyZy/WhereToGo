@@ -86,7 +86,7 @@
                             }
                         </script>
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a <%--class="logout" --%>href="javascript:formSubmit()">Logout</a>
+                            <a class="logout" href="javascript:formSubmit()">Logout</a>
                         </c:if>
                     </li>
                     <li class="dropdown">
@@ -320,16 +320,14 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <input contentEditable="false" id="event-location" class="controls" title="Location:" type="text"
+                        <input contentEditable="false" id="event-location" title="Location:" type="text"
                             placeholder="">
-                        <div id="show-event-location-map">
-                            <label>
-                                <input type = "checkbox" checked="checked"/>
-                                Show on map
-                            </label>
+                        <div class = "show-location-map" id="show-event-location-map">
+                            <input type = "checkbox" checked="checked" title = "Show on map"/>
+                            Show on map
                         </div>
                         <div id = "event-location-map-holder">
-                            <div id="event-location-map"></div>
+                            <div class = "location-map" id="event-location-map"></div>
                         </div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
@@ -387,16 +385,14 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <input contentEditable="false" id="group-location" class="controls" title="Location:" type="text"
+                        <input contentEditable="false" id="group-location" title="Location:" type="text"
                                placeholder="">
-                        <div id="show-group-location-map">
-                            <label>
-                                <input type = "checkbox" checked="checked"/>
+                        <div class = "show-location-map" id="show-group-location-map">
+                                <input type = "checkbox" checked="checked" title = "Show on map"/>
                                 Show on map
-                            </label>
                         </div>
                         <div id = "group-location-map-holder">
-                            <div id="group-location-map"></div>
+                            <div class = "location-map" id="group-location-map"></div>
                         </div>
                     </li>
                     <li class="SinglePage__inputItem GroupPage__participants">
