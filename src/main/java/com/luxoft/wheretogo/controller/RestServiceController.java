@@ -1,7 +1,7 @@
 package com.luxoft.wheretogo.controller;
 
+import com.luxoft.wheretogo.mailer.SimpleNotification;
 import com.luxoft.wheretogo.models.*;
-import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
@@ -65,7 +65,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/event")
-	public EventResponse event(Event event) {
+	public Event event(Event event) {
 		return eventsService.initParticipants(event);
 	}
 
@@ -126,7 +126,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/group")
-	public GroupResponse group(Group group) {
+	public Group group(Group group) {
 		return groupsService.initGroupParticipants(group);
 	}
 
@@ -151,7 +151,7 @@ public class RestServiceController {
     @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
     public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
+        Group groupToUpdate = groupsService.initGroupParticipants(group);
 
 		if (!(groupToUpdate.getGroupParticipants() == null) &&
 				!groupToUpdate.getGroupParticipants().contains(user)) {
@@ -171,7 +171,8 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignUserFromGroup", method = RequestMethod.POST)
 	public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
+		Group groupToUpdate = groupsService.findById(group.getId());
+		groupToUpdate = groupsService.initGroupParticipants(groupToUpdate);
 
 		if (groupToUpdate != null && groupToUpdate.getGroupParticipants().remove(user)) {
 			groupsService.update(groupToUpdate);
@@ -203,9 +204,11 @@ public class RestServiceController {
 				user.setGroups(usersService.initGroups(user).getGroups());
 
 				user.getGroups().add(groupToUpdate);
-				groupsService.update(groupToUpdate);
-				usersService.update(user);
-
+				//groupsService.update(groupToUpdate);
+				//usersService.update(user);
+				//send notification
+				SimpleNotification.notifyUser(groupToUpdate,user,SimpleNotification.ADDED_TO_A_GROUP);
+//
 //				request.getSession().setAttribute("user", user);
 			}
 		}
@@ -281,7 +284,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event.getId());
+		Event eventToUpdate = eventsService.initParticipants(event);
 		user.setEvents(usersService.initEvents(user).getEvents());
 
 		if (!(eventToUpdate.getParticipants() == null) && !eventToUpdate.getParticipants().contains(user)) {
@@ -297,7 +300,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignGroupFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event.getId());
+		Event eventToUpdate = eventsService.initParticipants(event);
 
 		if (eventToUpdate != null && !eventToUpdate.getParticipants().isEmpty() && eventToUpdate.getParticipants().remove(user)) {
 			eventsService.update(eventToUpdate);
