@@ -301,9 +301,7 @@ $(document).ready(function () {
 			"id" : $singlePage.find('.GroupPage').attr('data-id'),
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
-			"location": $groupLocation.val()
-		}
-			"location": $groupLocation.text(),
+			"location": $groupLocation.val(),
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");

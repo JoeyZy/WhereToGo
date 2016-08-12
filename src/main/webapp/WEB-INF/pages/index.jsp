@@ -92,7 +92,7 @@
                             }
                         </script>
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a class="logout" href="javascript:formSubmit()">Logout</a>
+                            <a href="javascript:formSubmit()">Logout</a>
                         </c:if>
                     </li>
                     <li class="dropdown">
