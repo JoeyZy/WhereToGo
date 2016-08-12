@@ -330,10 +330,11 @@ public class RestServiceController {
 		return eventsService.getArchivedUsersEventsCounterByCategories(request, (User) httpRequest.getSession().getAttribute("user"));
 	}
 	@RequestMapping(value = "/eventImage", method = RequestMethod.GET)
-	public ResponseEntity<String> getGroupImage(@RequestParam("id") String id , HttpServletRequest httpRequest){
-		String response = id+" ABBA";
+	public ResponseEntity<String> getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest){
+		String response = param+" ABBA";
 		User user = (User) httpRequest.getSession().getAttribute("user");
 		if(user!=null){
+			int id = Integer.parseInt(param);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		else return new ResponseEntity<>("Authenticate first!", HttpStatus.FORBIDDEN);
