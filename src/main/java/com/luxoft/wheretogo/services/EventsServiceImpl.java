@@ -1,22 +1,5 @@
 package com.luxoft.wheretogo.services;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Service;
-
 import com.luxoft.wheretogo.configuration.ConfigureSpringSecurity;
 import com.luxoft.wheretogo.models.ArchiveServiceRequest;
 import com.luxoft.wheretogo.models.Event;
@@ -26,6 +9,15 @@ import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -214,9 +206,9 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	private List<Event> getAvailableEvents(List<Event> events, User user) {
-		return events.stream().filter(event -> (event.getTargetGroup() == null ||
-				(user != null && (event.getTargetGroup().getOwner().equals(user)
-				||event.getTargetGroup().getGroupParticipants().contains(user)))))
+		return events.stream().filter(event -> event.getTargetGroup() == null ||
+				user != null && (event.getTargetGroup().getOwner().equals(user)
+				||event.getTargetGroup().getGroupParticipants().contains(user)))
 				.collect(Collectors.toList());
 	}
 

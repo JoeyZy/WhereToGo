@@ -193,7 +193,6 @@ h1, h3 {
   color: #CBCBCC;
   font-size: 15px;
 }
-
 .location, .created-by, .event-box-title {
   display: block;
   white-space: nowrap;
@@ -201,7 +200,6 @@ h1, h3 {
   text-overflow: ellipsis;
   text-align: center;
 }
-
 .small_event, .small_group {
   background-color: #fff;
 }
@@ -493,16 +491,13 @@ h1, h3 {
   min-height: 30px;
   border-radius: 5px;
 }
-
 .SinglePage form > ul.list-form > li > button {
   background-color: #87bae1;
   margin: 12px;
 }
-
 .SinglePage #description.editable, .SinglePage #descriptionGroup.editable, .SinglePage #target-group.editable, .SinglePage #GroupDescription.editable {
   border: 1px solid #dbe3e7;
 }
-
 .SinglePage img {
   width: 100%;
   height: 280px;
@@ -758,7 +753,6 @@ div.accordion{
 .accordion-section-content.open>ul>li{
   padding-left: 10px;
 }
-
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;
@@ -769,21 +763,18 @@ div.accordion{
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
-
 .location-map {
   margin-top: 20px;
   height: 200px;
 }
-
 .show-location-map {
   font-size: 15px;
   margin-top: 5px;
 }
-
 .disabled-input {
   border: none;
+  background-color: inherit;
 }
-
 .enabled-input {
   border: 1px solid #dbe3e7;
 }

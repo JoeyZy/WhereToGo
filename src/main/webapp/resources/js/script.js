@@ -1588,6 +1588,7 @@ $(document).ready(function () {
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
 		$eventLocation.attr('readonly', false);
+		$groupLocation.attr('disabled', false);
 		$eventLocation.removeClass("disabled-input");
 		$eventLocation.addClass("enabled-input");
 		$eventTargetGroup.addClass('editable');
@@ -1610,6 +1611,7 @@ $(document).ready(function () {
 		$eventDescription.attr('contenteditable', false);
 		$eventDescription.removeClass('editable');
         $eventLocation.attr('readonly', true);
+		$groupLocation.attr('disabled', true);
 		$eventLocation.removeClass("enabled-input");
 		$eventLocation.addClass("disabled-input");
 		$eventTargetGroup.prop('disabled', true);
@@ -1637,10 +1639,10 @@ $(document).ready(function () {
 		$groupDescription.attr('contenteditable', false);
 		$groupDescription.removeClass('editable');
 		$groupLocation.attr('readonly', true);
+		$groupLocation.attr('disabled', true);
 		$groupLocation.removeClass("enabled-input");
 		$groupLocation.addClass("disabled-input");
 		$groupDescription.attr('contenteditable', false);
-		$groupLocation.attr('contenteditable', false);
 		$groupPage.find('editable').attr('readonly', true);
 		$pictureUploadPlaceholder.off('click');
 		$picture.attr('title', '');
@@ -1655,6 +1657,7 @@ $(document).ready(function () {
 		$singlePageTitle.attr('readonly', false);
 		$groupDescription.attr('contenteditable', true);
 		$groupLocation.attr('readonly', false);
+		$groupLocation.attr('disabled', false);
 		$groupLocation.removeClass("disabled-input");
 		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
@@ -1737,7 +1740,7 @@ $(document).ready(function () {
 		function populateSinglePageGroupPage(singlePage, group) {
 
 			$groupMapHolder.show();
-			var groupMap = initGoogleMaps('group-location-map', 'group-location', '#show-group-location-map', '#-location-map-holder');
+			var groupMap = initGoogleMaps('group-location-map', 'group-location', '#show-group-location-map', '#group-location-map-holder');
 			$groupMapHolder.hide();
 
 			if (typeof group != 'undefined') {

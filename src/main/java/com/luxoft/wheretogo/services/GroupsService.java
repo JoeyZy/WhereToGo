@@ -1,7 +1,5 @@
 package com.luxoft.wheretogo.services;
 
-
-import com.luxoft.wheretogo.models.Event;
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.json.GroupResponse;
