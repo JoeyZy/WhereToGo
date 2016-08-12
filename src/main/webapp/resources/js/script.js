@@ -1588,7 +1588,7 @@ $(document).ready(function () {
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
 		$eventLocation.attr('readonly', false);
-		$groupLocation.attr('disabled', false);
+		$eventLocation.attr('disabled', false);
 		$eventLocation.removeClass("disabled-input");
 		$eventLocation.addClass("enabled-input");
 		$eventTargetGroup.addClass('editable');
@@ -1611,7 +1611,7 @@ $(document).ready(function () {
 		$eventDescription.attr('contenteditable', false);
 		$eventDescription.removeClass('editable');
         $eventLocation.attr('readonly', true);
-		$groupLocation.attr('disabled', true);
+		$eventLocation.attr('disabled', true);
 		$eventLocation.removeClass("enabled-input");
 		$eventLocation.addClass("disabled-input");
 		$eventTargetGroup.prop('disabled', true);
