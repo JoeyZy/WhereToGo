@@ -414,7 +414,7 @@ h1, h3 {
 ----------------------------*/
 .SinglePage {
   z-index: 100;
-  min-width: 550px
+  min-width: 550px;
 }
 .Overlay {
   height: 10%;
@@ -435,7 +435,7 @@ h1, h3 {
 }
 .SinglePage {
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto 7% auto;
   width: 60%;
   position: absolute;
   left: 0;

@@ -5,10 +5,7 @@ import com.luxoft.wheretogo.models.*;
 import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
-import com.luxoft.wheretogo.services.CurrenciesService;
-import com.luxoft.wheretogo.services.EventsService;
-import com.luxoft.wheretogo.services.GroupsService;
-import com.luxoft.wheretogo.services.UsersService;
+import com.luxoft.wheretogo.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
+
+import java.util.Date;
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +31,9 @@ public class RestServiceController {
 
 	@Autowired
 	private EventsService eventsService;
+
+	@Autowired
+	private CommentsService commentsService;
 
 	@Autowired
 	private CurrenciesService currenciesService;
@@ -60,6 +65,45 @@ public class RestServiceController {
 		user = usersService.initEvents(user);
 		return eventsService.getUserRelevantEventResponses(user);
 	}
+
+	@RequestMapping(value = "/getComments", method = RequestMethod.GET)
+	public List<Comment> getComments(long id) {
+		return commentsService.findByEventId(id);
+	}
+
+	@RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
+	public void deleteComments(@RequestBody Comment comment,  HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return;
+		}
+		comment.setDeleted(true);
+		commentsService.update(comment, user);
+	}
+
+	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
+	public Comment postComment(@RequestBody Comment comment, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		comment.setAuthor(user);
+		comment.setCreated(new Date());
+		comment.setDeleted(false);
+		commentsService.add(comment);
+		return comment;
+	}
+
+	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
+	public Comment updateComment(@RequestBody Comment comment, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		commentsService.update(comment, user);
+		return comment;
+	}
+
 
 	@RequestMapping("/event")
 	public EventResponse event(Event event) {
@@ -121,6 +165,8 @@ public class RestServiceController {
 		group.setDeleted(NOT_DELETED);
 		groupsService.update(group, authentication.getName(), authentication.getAuthorities());
 	}
+
+
 
 	@RequestMapping("/group")
 	public GroupResponse group(Group group) {
