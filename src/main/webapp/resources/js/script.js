@@ -1908,6 +1908,10 @@ $(document).ready(function () {
 				comment[parametr] = "20" + comment[parametr];
 				var t = comment[parametr].split(/[/ :]/);
 				comment[parametr] = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+				var milliseconds = comment[parametr].getTime();
+				var timeZoneMinutes = -(new Date().getTimezoneOffset());
+				milliseconds = milliseconds + timeZoneMinutes*60*1000;
+				comment[parametr] = new Date(milliseconds);
 				return comment;
 			}
 		}

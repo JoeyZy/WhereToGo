@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Comment;
+import com.luxoft.wheretogo.models.User;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public interface CommentsService {
     void add(Comment comment);
 
-    void update(Comment comment);
+    void update(Comment comment, User user);
 
     Comment findById(long commentId);
 

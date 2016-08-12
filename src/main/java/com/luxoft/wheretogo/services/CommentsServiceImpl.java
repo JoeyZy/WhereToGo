@@ -1,6 +1,7 @@
 package com.luxoft.wheretogo.services;
 
 import com.luxoft.wheretogo.models.Comment;
+import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.repositories.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,15 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public void update(Comment comment) {
+    public void update(Comment comment, User user) {
         Comment oldComment = findById(comment.getId());
         if (oldComment != null) {
             comment.setCreated(oldComment.getCreated());
             comment.setAuthor(oldComment.getAuthor());
             comment.setParent(oldComment.getParent());
+        }
+        if(comment.getAuthor() != user){
+            return;
         }
         comment.setModified(new Date());
         commentsRepository.merge(comment);

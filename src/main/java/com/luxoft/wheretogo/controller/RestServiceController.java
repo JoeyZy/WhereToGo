@@ -71,15 +71,22 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-	public void deleteComments(@RequestBody Comment comment) {
+	public void deleteComments(@RequestBody Comment comment,  HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return;
+		}
 		comment.setDeleted(true);
-		commentsService.update(comment);
+		commentsService.update(comment, user);
 	}
 
 	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
 	public Comment postComment(@RequestBody Comment comment, HttpServletRequest request) {
-		comment.setAuthor((User) request.getSession().getAttribute("user"));
-		Calendar currenttime = Calendar.getInstance();
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		comment.setAuthor(user);
 		comment.setCreated(new Date());
 		comment.setDeleted(false);
 		commentsService.add(comment);
@@ -87,8 +94,12 @@ public class RestServiceController {
 	}
 
 	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
-	public Comment updateComment(@RequestBody Comment comment) {
-		commentsService.update(comment);
+	public Comment updateComment(@RequestBody Comment comment, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		commentsService.update(comment, user);
 		return comment;
 	}
 
