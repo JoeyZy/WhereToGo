@@ -3,6 +3,7 @@ package com.luxoft.wheretogo.models.json;
 import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.Currency;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.utils.ImageUtils;
 import lombok.Data;
 
 import java.io.FileNotFoundException;
@@ -60,19 +61,8 @@ public class EventResponse {
 		this.cost = cost;
 		this.participants = participants;
 		this.picture = clearEmptyPicture(picture);
-		String imageData = "";
 		if(!picture.equals("")){
-			try {
-				Path p = Paths.get(picture);
-				byte[] arr = Files.readAllBytes(p);
-				imageData = new String(arr);
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			this.picture = imageData;
+			this.picture = ImageUtils.giveMeImage(picture,true);
 		}else{
 			picture.replace(EMPTY_PICTURE, "");
 			this.picture = picture;

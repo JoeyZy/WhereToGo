@@ -1,8 +1,6 @@
 package com.luxoft.wheretogo.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,8 +23,6 @@ import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
-
-import static java.nio.file.Paths.get;
 
 @Service
 @Transactional
@@ -243,9 +239,9 @@ public class EventsServiceImpl implements EventsService {
 	}
 
 	private List<Event> getAvailableEvents(List<Event> events, User user) {
-		return events.stream().filter(event -> (event.getTargetGroup() == null ||
-				(user != null && (event.getTargetGroup().getOwner().equals(user)
-				||event.getTargetGroup().getGroupParticipants().contains(user)))))
+		return events.stream().filter(event -> event.getTargetGroup() == null ||
+				user != null && event.getTargetGroup().getOwner().equals(user)
+				||event.getTargetGroup().getGroupParticipants().contains(user))
 				.collect(Collectors.toList());
 	}
 

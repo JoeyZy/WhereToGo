@@ -2,6 +2,7 @@ package com.luxoft.wheretogo.models.json;
 
 import com.luxoft.wheretogo.models.Group;
 import com.luxoft.wheretogo.models.User;
+import com.luxoft.wheretogo.utils.ImageUtils;
 import lombok.Data;
 import org.hibernate.Hibernate;
 import sun.misc.IOUtils;
@@ -43,18 +44,8 @@ public class GroupResponse {
         this.location = location;
         this.description = description;
         this.groupParticipants = groupParticipants;
-        String imageData = null;
         if(!picture.equals("")){
-            try {
-                Path p = Paths.get(picture);
-                byte[] arr = Files.readAllBytes(p);
-                imageData = new String(arr);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            this.picture = imageData;
+            this.picture = ImageUtils.giveMeImage(picture,false);
         }else{
             this.picture = picture;
         }

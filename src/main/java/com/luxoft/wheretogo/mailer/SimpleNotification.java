@@ -19,7 +19,7 @@ public class SimpleNotification {
 
     private static void addedNotification(Group group, User user) {
         String userEmail = user.getEmail();
-        String userName = user.getFirstName()+" "+user.getLastName();
+        //String userName = user.getFirstName()+" "+user.getLastName();
         String newGroupName = group.getName();
         String subject = "WhereToGo notification!";
         String email = "<p>You were added to a group: <h1>"+newGroupName+"</h1></p>";

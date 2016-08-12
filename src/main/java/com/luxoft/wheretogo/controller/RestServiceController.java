@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -65,7 +62,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/event")
-	public Event event(Event event) {
+	public EventResponse event(Event event) {
 		return eventsService.initParticipants(event);
 	}
 
@@ -126,7 +123,7 @@ public class RestServiceController {
 	}
 
 	@RequestMapping("/group")
-	public Group group(Group group) {
+	public GroupResponse group(Group group) {
 		return groupsService.initGroupParticipants(group);
 	}
 
@@ -148,10 +145,10 @@ public class RestServiceController {
 		return eventsService.getGroupUserRelevantEventResponses(group, user);
 	}
 
-    @RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
-    public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        Group groupToUpdate = groupsService.initGroupParticipants(group);
+	@RequestMapping(value = "/assignUserToGroup", method = RequestMethod.POST)
+	public Group assignUserToGroup(@RequestBody Group group, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
 
 		if (!(groupToUpdate.getGroupParticipants() == null) &&
 				!groupToUpdate.getGroupParticipants().contains(user)) {
@@ -171,8 +168,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignUserFromGroup", method = RequestMethod.POST)
 	public Group unassignUserFromGroup(@RequestBody Group group, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Group groupToUpdate = groupsService.findById(group.getId());
-		groupToUpdate = groupsService.initGroupParticipants(groupToUpdate);
+		Group groupToUpdate = groupsService.initGroupParticipantslist(group.getId());
 
 		if (groupToUpdate != null && groupToUpdate.getGroupParticipants().remove(user)) {
 			groupsService.update(groupToUpdate);
@@ -284,7 +280,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
 	public Event assignUserToEvent(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event);
+		Event eventToUpdate = eventsService.initParticipants(event.getId());
 		user.setEvents(usersService.initEvents(user).getEvents());
 
 		if (!(eventToUpdate.getParticipants() == null) && !eventToUpdate.getParticipants().contains(user)) {
@@ -300,7 +296,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/unassignEventFromUser", method = RequestMethod.POST)
 	public Event unassignGroupFromUser(@RequestBody Event event, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
-		Event eventToUpdate = eventsService.initParticipants(event);
+		Event eventToUpdate = eventsService.initParticipants(event.getId());
 
 		if (eventToUpdate != null && !eventToUpdate.getParticipants().isEmpty() && eventToUpdate.getParticipants().remove(user)) {
 			eventsService.update(eventToUpdate);
@@ -332,6 +328,15 @@ public class RestServiceController {
 	@RequestMapping(value = "/archivedUsersEventsCategories", method = RequestMethod.GET)
 	public List<CategoryResponse> archivedUsersEventsCategories(ArchiveServiceRequest request, HttpServletRequest httpRequest) {
 		return eventsService.getArchivedUsersEventsCounterByCategories(request, (User) httpRequest.getSession().getAttribute("user"));
+	}
+	@RequestMapping(value = "/eventImage", method = RequestMethod.GET)
+	public ResponseEntity<String> getGroupImage(@RequestParam("id") String id , HttpServletRequest httpRequest){
+		String response = id+" ABBA";
+		User user = (User) httpRequest.getSession().getAttribute("user");
+		if(user!=null){
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+		else return new ResponseEntity<>("Authenticate first!", HttpStatus.FORBIDDEN);
 	}
 
 }

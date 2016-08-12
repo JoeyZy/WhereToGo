@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
-
-import static java.nio.file.Paths.get;
 
 /**
  * Created by eleonora on 07.07.16.

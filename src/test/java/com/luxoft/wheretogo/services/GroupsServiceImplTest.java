@@ -47,11 +47,11 @@ public class GroupsServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+    /*@Test
     public void addWhenOwnerIsActive() throws Exception {
         assertTrue(groupsService.add(groupOfUser1));
 
-    }
+    }*/
 
     @Test
     public void addWhenOwnerIsNotActive() throws Exception {

@@ -1,8 +1,11 @@
 package com.luxoft.wheretogo.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import static java.nio.file.Paths.get;
@@ -29,6 +32,33 @@ public class ImageUtils {
         }
         else return imageDataString;
         //End of generation
+    }
+    public static String giveMeImage(String picture, boolean fromEvent){
+        String imageData = "", pathToImage="", absolutePath="../webapps/ROOT/"; //move to config
+        /*if(fromEvent) pathToImage = "resources/images/"; //move to config
+        else pathToImage = "resources/images/"; //move to config
+        String[] tmp = picture.split("/");
+        pathToImage+=tmp[tmp.length-1];
+        absolutePath+=pathToImage;*/
+        //File image = new File(picture);
+        //if(image.exists()){
+            //if(!Files.isSymbolicLink(get(absolutePath))){
+                try {
+                    //Files.createSymbolicLink(get(absolutePath),get(picture));
+                    Path p = Paths.get(picture);
+                    byte[] arr = Files.readAllBytes(p);
+                    imageData = new String(arr);
+                    //imageData=pathToImage;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            //}
+            //else imageData=pathToImage;
+            return imageData;
+        //}
+        //else return "";
     }
     private static String generateString(Random rng, String characters, int length)
     {
