@@ -6,10 +6,11 @@
     <%--Spring Security csrf meta data--%>
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
+        <%--Google Maps API meta data for Android & iOS--%>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>WhereToGo</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -91,7 +92,7 @@
                             }
                         </script>
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a <%--class="logout" --%>href="javascript:formSubmit()">Logout</a>
+                            <a class="logout" href="javascript:formSubmit()">Logout</a>
                         </c:if>
                     </li>
                     <li class="dropdown">
@@ -325,7 +326,15 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="location" title="Location:"></div>
+                        <input contentEditable="false" id="event-location" title="Location:" type="text"
+                            placeholder="">
+                        <div class = "show-location-map" id="show-event-location-map">
+                            <input type = "checkbox" checked="checked" title = "Show on map"/>
+                            Show on map
+                        </div>
+                        <div id = "event-location-map-holder">
+                            <div class = "location-map" id="event-location-map"></div>
+                        </div>
                     </li>
                     <li class="SinglePage__inputItem EventPage__cost">
                         <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
@@ -382,7 +391,15 @@
                     </li>
                     <li class="SinglePage__inputItem">
                         <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <div contentEditable="false" id="GroupLocation" title="Location:"></div>
+                        <input contentEditable="false" id="group-location" title="Location:" type="text"
+                               placeholder="">
+                        <div class = "show-location-map" id="show-group-location-map">
+                                <input type = "checkbox" checked="checked" title = "Show on map"/>
+                                Show on map
+                        </div>
+                        <div id = "group-location-map-holder">
+                            <div class = "location-map" id="group-location-map"></div>
+                        </div>
                     </li>
                     <li class="SinglePage__inputItem GroupPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
@@ -519,6 +536,9 @@
 <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src='resources/google-maps-api/location.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
+        async defer></script>
 <script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>
 <script src="../../resources/comments-plugin/js/jquery-comments.js"></script>

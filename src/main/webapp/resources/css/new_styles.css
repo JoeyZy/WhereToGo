@@ -194,11 +194,11 @@ h1, h3 {
   font-size: 15px;
 }
 .location, .created-by, .event-box-title {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 .small_event, .small_group {
   background-color: #fff;
@@ -415,6 +415,8 @@ h1, h3 {
 .SinglePage {
   z-index: 100;
   min-width: 550px;
+  border-radius: 5px;
+  min-width: 550px;
 }
 .Overlay {
   height: 10%;
@@ -480,7 +482,7 @@ h1, h3 {
   border: none;
   background-color: white;
 }
-.SinglePage form #description, .SinglePage form #location, .SinglePage form #descriptionGroup, .SinglePage form #target-group, .SinglePage form #GroupDescription, .SinglePage form #GroupLocation {
+.SinglePage form #description, .SinglePage form #event-location, .SinglePage form #descriptionGroup, .SinglePage form #target-group, .SinglePage form #GroupDescription, .SinglePage form #group-location, #map {
   padding: 5px;
   clear: both;
   width: 100%;
@@ -488,12 +490,13 @@ h1, h3 {
   height: 100%;
   outline: none;
   min-height: 30px;
+  border-radius: 5px;
 }
 .SinglePage form > ul.list-form > li > button {
   background-color: #87bae1;
   margin: 12px;
 }
-.SinglePage #description.editable, .SinglePage #location.editable, .SinglePage #descriptionGroup.editable, .SinglePage #target-group.editable, .SinglePage #GroupDescription.editable, .SinglePage #GroupLocation.editable {
+.SinglePage #description.editable, .SinglePage #descriptionGroup.editable, .SinglePage #target-group.editable, .SinglePage #GroupDescription.editable {
   border: 1px solid #dbe3e7;
 }
 .SinglePage img {
@@ -751,4 +754,28 @@ div.accordion{
 .accordion-section-content.open>ul>li{
   padding-left: 10px;
 }
-
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.location-map {
+  margin-top: 20px;
+  height: 200px;
+}
+.show-location-map {
+  font-size: 15px;
+  margin-top: 5px;
+}
+.disabled-input {
+  border: none;
+  background-color: inherit;
+}
+.enabled-input {
+  border: 1px solid #dbe3e7;
+}
