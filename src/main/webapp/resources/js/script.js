@@ -2088,6 +2088,7 @@ $(document).ready(function () {
 	}
 
 	function renderCalendarPage() {
+		resetSinglePage();
 		$eventPage.hide();
 		$userPage.hide();
 		$groupPage.hide();
