@@ -62,7 +62,9 @@ public class EventResponse {
 		this.participants = participants;
 		this.picture = clearEmptyPicture(picture);
 		if(!picture.equals("")){
-			this.picture = ImageUtils.giveMeImage(picture,true);
+			//this.picture = ImageUtils.giveMeImage(picture,true);
+			//eventImage?id=9
+			this.picture = "eventImage?id="+id;
 		}else{
 			picture.replace(EMPTY_PICTURE, "");
 			this.picture = picture;

@@ -45,7 +45,8 @@ public class GroupResponse {
         this.description = description;
         this.groupParticipants = groupParticipants;
         if(!picture.equals("")){
-            this.picture = ImageUtils.giveMeImage(picture,false);
+            //this.picture = ImageUtils.giveMeImage(picture,false);
+            this.picture = "groupImage?id="+id;
         }else{
             this.picture = picture;
         }

@@ -70,8 +70,7 @@ public class EventsServiceImpl implements EventsService {
 			event.setOwner(oldEvent.getOwner());
 			event.setParticipants(oldEvent.getParticipants());
 			//Old image deletion
-			File file = new File(oldEvent.getPicture());
-			file.delete();
+			ImageUtils.deleteOldPicture(oldEvent.getPicture());
 		}
 		eventsRepository.merge(event);
 	}
