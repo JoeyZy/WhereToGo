@@ -331,7 +331,7 @@ $(document).ready(function () {
 		$buttons.hide();
 		$errors.hide();
 		$pictureParent.hide();
-
+		$('#comments-container').remove();
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true );
 
@@ -1846,11 +1846,7 @@ $(document).ready(function () {
 					});
 				}
 			});
-			removeComments();
 			renderComments();
-			function removeComments(){
-				$('#comments-container').remove();
-			}
 			function renderComments() {
 				$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
 				$(function() {
