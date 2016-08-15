@@ -7,6 +7,7 @@ import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.repositories.GroupIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.GroupsRepository;
 import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -29,13 +30,11 @@ public class GroupsServiceImpl implements GroupsService {
     private GroupsRepository groupsRepository;
     @Autowired
     private GroupIdGeneratorRepository idGenerator;
-    @Autowired
-    private Environment environment;
 
     @Override
     public boolean add(Group group) {
         if (group.getOwner().isActive()) {
-            group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),environment.getProperty("groups.images.path")));
+            group.setPicture(ImageUtils.generatePicturePath(group.getPicture(), PropertiesUtils.getProp("groups.images.path")));
             groupsRepository.add(group);
             return true;
         }
@@ -45,7 +44,7 @@ public class GroupsServiceImpl implements GroupsService {
     public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
         Group oldGroup = initGroupParticipantslist(group.getId());
         User owner;
-        group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),environment.getProperty("groups.images.path")));
+        group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),PropertiesUtils.getProp("groups.images.path")));
         if (oldGroup != null) {
             owner = oldGroup.getOwner();
             if (!owner.getEmail().equals(ownerEmail) &&

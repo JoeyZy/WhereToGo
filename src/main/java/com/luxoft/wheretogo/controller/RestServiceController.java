@@ -8,6 +8,7 @@ import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.services.*;
 
 import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -388,7 +389,8 @@ public class RestServiceController {
 	}
 	@RequestMapping(value = "/eventImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getEventImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
-		long id = Long.parseLong(param);
+		long id = ValidationUtils.validateRequestParam(param);
+		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Event ev = eventsService.findById(id);
 		String picture = ev.getPicture();
 		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
@@ -396,7 +398,8 @@ public class RestServiceController {
 	}
 	@RequestMapping(value = "/groupImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
-		long id = Long.parseLong(param);
+		long id = ValidationUtils.validateRequestParam(param);
+		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Group gp = groupsService.findById(id);
 		String picture = gp.getPicture();
 		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);

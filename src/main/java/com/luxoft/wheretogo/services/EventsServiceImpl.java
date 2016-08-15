@@ -1,13 +1,16 @@
 package com.luxoft.wheretogo.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import com.luxoft.wheretogo.mailer.Mailer;
 import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -43,13 +46,11 @@ public class EventsServiceImpl implements EventsService {
 	private EventIdGeneratorRepository idGenerator;
 	@Autowired
 	private CategoriesService categoriesService;
-	@Autowired
-	private Environment environment;
 
 	@Override
 	public boolean add(Event event) {
 		if (event.getOwner().isActive()) {
-			event.setPicture(ImageUtils.generatePicturePath(event.getPicture(),environment.getProperty("events.images.path")));
+			event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
 			eventsRepository.add(event);
 			return true;
 		}
@@ -60,7 +61,7 @@ public class EventsServiceImpl implements EventsService {
 	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
 		Event oldEvent = initParticipants(event.getId());
 		User owner;
-		event.setPicture(ImageUtils.generatePicturePath(event.getPicture(),environment.getProperty("events.images.path")));
+		event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
 			if (!owner.getEmail().equals(ownerEmail) &&
