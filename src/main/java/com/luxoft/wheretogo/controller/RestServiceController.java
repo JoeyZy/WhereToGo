@@ -7,14 +7,23 @@ import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.models.json.GroupResponse;
 import com.luxoft.wheretogo.services.*;
 
+import com.luxoft.wheretogo.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.security.Principal;
 
 import java.util.Date;
@@ -23,6 +32,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static java.nio.file.Paths.get;
 
 @RestController
 public class RestServiceController {
@@ -376,14 +387,20 @@ public class RestServiceController {
 		return eventsService.getArchivedUsersEventsCounterByCategories(request, (User) httpRequest.getSession().getAttribute("user"));
 	}
 	@RequestMapping(value = "/eventImage", method = RequestMethod.GET)
-	public ResponseEntity<String> getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest){
-		String response = param+" ABBA";
-		User user = (User) httpRequest.getSession().getAttribute("user");
-		if(user!=null){
-			int id = Integer.parseInt(param);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
-		else return new ResponseEntity<>("Authenticate first!", HttpStatus.FORBIDDEN);
+	public ResponseEntity<byte[]>  getEventImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
+		long id = Long.parseLong(param);
+		Event ev = eventsService.findById(id);
+		String picture = ev.getPicture();
+		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
+		return responseEntity;
+	}
+	@RequestMapping(value = "/groupImage", method = RequestMethod.GET)
+	public ResponseEntity<byte[]>  getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
+		long id = Long.parseLong(param);
+		Group gp = groupsService.findById(id);
+		String picture = gp.getPicture();
+		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
+		return responseEntity;
 	}
 
 }

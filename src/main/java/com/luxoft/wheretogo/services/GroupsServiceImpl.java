@@ -55,8 +55,7 @@ public class GroupsServiceImpl implements GroupsService {
             group.setOwner(owner);
             group.setGroupParticipants(oldGroup.getGroupParticipants());
             //Deleting old image from server needed only if group profile is editing
-            File file = new File(oldGroup.getPicture());
-            file.delete();
+            ImageUtils.deleteOldPicture(oldGroup.getPicture());
         }
         groupsRepository.merge(group);
     }
