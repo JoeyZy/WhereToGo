@@ -428,8 +428,6 @@ $(document).ready(function () {
 
 	$('.home').click(function () {
 		hideArchiveElements();
-		loadEvents();
-
 		showSideBar()
 	});
 
@@ -450,8 +448,6 @@ $(document).ready(function () {
 		hideArchiveElements();
 		event.preventDefault();
 		window.location.hash = 'myEvents';
-		loadEvents("myEvents");
-
 		showSideBar();
 	});
 
