@@ -1398,7 +1398,7 @@
             dropdownNavigation.append(newest.clone()).append(oldest.clone());
 
             if(this.options.enableReplying || this.options.enableUpvoting) {
-                navigationWrapper.append(popular);
+                // navigationWrapper.append(popular);
                 dropdownNavigation.append(popular.clone());
             }
             if(this.options.enableAttachments) {
