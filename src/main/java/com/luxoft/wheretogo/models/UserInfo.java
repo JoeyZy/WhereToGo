@@ -18,14 +18,20 @@ public class UserInfo {
     private String firstName;
     private String lastName;
     private String password;
+    private String picture;
     private boolean active;
 
-    public UserInfo(String role, String email, String firstName, String lastName, boolean active) {
+    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture) {
         this.role = role;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.active = active;
+        if(!picture.equals("")){
+            this.picture = "userImage";
+        }else{
+            this.picture = picture;
+        }
     }
 
     public UserInfo() {}

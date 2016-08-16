@@ -76,6 +76,9 @@
                         </div>
                     </li>
                     <li>
+                        <img class="profile-photo navbar-btn-container">
+                    </li>
+                    <li>
                         <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
                     </li>
                     <li>

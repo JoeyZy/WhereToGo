@@ -2159,7 +2159,6 @@ $(document).ready(function () {
 		} else {
 			renderAddUserPage();
 		}
-
 		function renderUserInfoPage(user) {
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
@@ -2169,6 +2168,13 @@ $(document).ready(function () {
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
 				$userPage.find('.UserPage__events').show();
+				//Display picture
+				if (user.picture.length) {
+					$picture.attr('src', user.picture);
+					$pictureParent.show();
+				} else {
+					$pictureParent.hide();
+				}
 				$singlePage.addClass('visible');
 			});
 		}
@@ -2180,6 +2186,7 @@ $(document).ready(function () {
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
+			$pictureParent.show();
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
 				if (!validateEventFields()) {
@@ -2190,7 +2197,8 @@ $(document).ready(function () {
 					"email": $userEmail.val(),
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
-					"lastName": $userLastName.val()
+					"lastName": $userLastName.val(),
+					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};
 				$.ajax({
 					url: "addUser",
@@ -2329,6 +2337,8 @@ $(document).ready(function () {
 		$('.userInfo').text(user.firstName + " " + user.lastName);
 		$('.userInfo').data('user', user.email);
 		$('.userInfo').show();
+		$('.profile-photo').attr('src',user.picture);
+		$('.profile-photo').show();
 		$('.logout').text('Logout');
 		$('.logout').show();
 		$myEventsLink.show();

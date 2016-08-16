@@ -75,4 +75,16 @@ public class User {
 		this.password = password;
 	}
 
+	@Column(name="picture")
+	private String picture;
+
+	public void setPicture(String path){
+		this.picture = path;
+	}
+	public String getPicture(){
+		if(this.picture == null) {
+			return "";
+		}
+		return this.picture;
+	}
 }

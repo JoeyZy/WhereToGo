@@ -10,12 +10,10 @@ import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.io.*;
 import java.util.*;
 
 /**
