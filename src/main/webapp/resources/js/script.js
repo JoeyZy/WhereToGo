@@ -467,13 +467,13 @@ $(document).ready(function () {
 		}
 	});
 
-	$.getJSON("eventsCategories", function (data) {
-		var categoriesListElementTemplate = $('#event-categories-list').html();
-		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
-		var categoriesFilter = $('#event-categories');
-		categoriesFilter.html(categoriesListElement(data));
-		$eventCategories.multiselect();
-	});
+	// $.getJSON("eventsCategories", function (data) { bla
+	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
+	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
+	// 	var categoriesFilter = $('#event-categories');
+	// 	categoriesFilter.html(categoriesListElement(data));
+	// 	$eventCategories.multiselect();
+	// });
 	$.getJSON("currencies", function (data) {
 		var currTemplate = $('#curr-list').html();
 		var currListElement = Handlebars.compile(currTemplate);
@@ -2374,7 +2374,7 @@ $(document).ready(function () {
 		enableArchiveCheckbox();
 	}
 
-	loadEvents();
+	// loadEvents(); bla
 
 	var startDateTextBox = $('#start');
 	var endDateTextBox = $('#end');
