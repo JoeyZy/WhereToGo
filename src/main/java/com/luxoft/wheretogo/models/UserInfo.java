@@ -13,6 +13,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = {"name", "email"})
 @ToString(of = {"name", "email"})
 public class UserInfo {
+    private long id;
     private String role;
     private String email;
     private String firstName;
@@ -21,7 +22,8 @@ public class UserInfo {
     private String picture;
     private boolean active;
 
-    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture) {
+    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id) {
+        this.id=id;
         this.role = role;
         this.email = email;
         this.firstName = firstName;
