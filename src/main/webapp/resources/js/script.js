@@ -699,7 +699,7 @@ $(document).ready(function () {
 					window.location.hash = '#';
 				}
 				oldLocationHash = "#groups";
-					loadGroups("groups");
+				loadGroups("groups");
 
 
 				renderGroupsPage(groups);
@@ -811,7 +811,10 @@ $(document).ready(function () {
 			event.preventDefault();
 			window.location.hash = 'calendar';
 		});
-
+		$('.profile-photo').click(function (e) {
+			e.preventDefault();
+			window.location.hash = 'user/email=' + $(this).data('user');
+		});
 		$('.userInfo').click(function (e) {
 			e.preventDefault();
 			window.location.hash = 'user/email=' + $(this).data('user');
@@ -1006,13 +1009,16 @@ $(document).ready(function () {
 						},
 						success: function () {
 							alert('Users were added');
+							$('button.accordion-section-button').attr("disabled",false);
 						},
 						error: function () {
 							alert('Something wrong');
+							$('button.accordion-section-button').attr("disabled",false);
 						},
 						complete: function () {
 						}
 					});
+					$('button.accordion-section-button').attr("disabled",true);
 				})
 
 				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
@@ -1694,7 +1700,6 @@ $(document).ready(function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-
 		if (typeof data != 'undefined' && data.length) {
 			// Find the wanted event by iterating the data object and searching for the chosen index.
 			renderShowGroupPage(data);
@@ -1716,8 +1721,10 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
+			var x=false;
 			data.forEach(function (item) {
 				if (item.id == index) {
+					x=true;
 					$.getJSON("group", {id: item.id}, function (group) {
 						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
@@ -1734,6 +1741,7 @@ $(document).ready(function () {
 					});
 				}
 			})
+			if(!x) window.location.hash = oldLocationHash;
 		}
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
@@ -2352,9 +2360,10 @@ $(document).ready(function () {
 			grantRightsToUser();
 			return;
 		}
-		$.ajax({
+		return $.ajax({
 			url: "user",
 			type: "GET",
+			async: false,
 			success: function (sessionUser) {
 				if (sessionUser.length == 0) {
 					$myEventsLink.hide();

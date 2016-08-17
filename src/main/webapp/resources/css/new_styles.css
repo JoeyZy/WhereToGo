@@ -784,3 +784,7 @@ div.accordion{
   display: none;
   border-radius: 100%;
 }
+.profile-photo:hover{
+  cursor: pointer;
+
+}

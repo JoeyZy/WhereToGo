@@ -383,8 +383,7 @@ public class RestServiceController {
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Event ev = eventsService.findById(id);
 		String picture = ev.getPicture();
-		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
-		return responseEntity;
+		return ImageUtils.giveMeImage(picture);
 	}
 	@RequestMapping(value = "/groupImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
@@ -392,16 +391,14 @@ public class RestServiceController {
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Group gp = groupsService.findById(id);
 		String picture = gp.getPicture();
-		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
-		return responseEntity;
+		return ImageUtils.giveMeImage(picture);
 	}
 	@RequestMapping(value = "/userImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getUserImage(HttpServletRequest httpRequest) throws IOException {
 		User user = (User) httpRequest.getSession().getAttribute("user");
 		if(user!=null){
 			String picture = user.getPicture();
-			ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
-			return responseEntity;
+			return ImageUtils.giveMeImage(picture);
 		}
 		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
