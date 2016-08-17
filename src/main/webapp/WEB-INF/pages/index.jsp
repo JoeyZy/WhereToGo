@@ -288,12 +288,14 @@
                                placeholder="Last name" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__Interesting">
-                        <label class="SinglePage__inputItem__label"><b>Interesting categories for me:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__Interesting reset"
-                               placeholder="No chosen categories" readonly/>
-                        <div class="add_interesting_categories_block">
-                            <button class="button_add_interesting_categories" aria-label="Chose interesting categories">+</button>
-                        </div>
+                        <label class="SinglePage__inputItem__label"><b>Interesting categories:</b></label>
+
+                        <a href="#" class="activeBackground">
+                            <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground">
+                                No choosen categories
+                            </span>
+                            <div class="interestingCategoriesMultiselect"></div>
+                        </a>
                     </li>
                 </ul>
 

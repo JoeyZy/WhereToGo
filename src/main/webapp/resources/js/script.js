@@ -2180,6 +2180,36 @@ $(document).ready(function () {
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
+			var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
+			$interestingCategories.find('div.interesting_categories_for_new_user').remove();
+			$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
+			var checkCategoriesDownloaded = false;
+			$interestingCategories.find('a').on('click', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				// $interestingCategories.find('a').off();
+				$interestingCategories.find('a').addClass('activeBackground');
+				$interestingCategories.find('a span').addClass('activeBackground');
+				$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
+				if(!checkCategoriesDownloaded){
+					$.getJSON('eventsCategories', function (data) {
+						$.each(data, function(key, value){
+							$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="' + value.category +'">' + value.category +'</label><input type="checkbox" value="' + value.category + '" data-id="' + value.id + '" id="' + value.category +'"/></li>');
+						})
+						$('div.interesting_categories_for_new_user').slideToggle('slow');
+						checkCategoriesDownloaded = true;
+					});
+				} else {
+					$('div.interesting_categories_for_new_user').slideToggle('slow');
+				}
+				
+			});
+			
+			$(document).bind('click', function(e) {
+				var $clicked = $(e.target);
+				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").hide();
+			});
+
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
 				if (!validateEventFields()) {
@@ -2238,9 +2268,12 @@ $(document).ready(function () {
 			});
 			// Show the $singlePage.
 			$singlePage.addClass('visible');
+
 			return false;
+
 		}
 	}
+
 
 	// Find and render the filtered data results. Arguments are:
 	// filters - our global variable - the object with arrays about what we are searching for.
