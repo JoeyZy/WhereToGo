@@ -32,7 +32,9 @@ public class CommentsServiceImpl implements CommentsService {
             comment.setCreated(oldComment.getCreated());
             comment.setAuthor(oldComment.getAuthor());
             comment.setParent(oldComment.getParent());
-            comment.setDeleted(false);
+            if(comment.getDeleted() == null){
+                comment.setDeleted(false);
+            }
         }
         if(comment.getAuthor().getId() != user.getId()){
             return;
