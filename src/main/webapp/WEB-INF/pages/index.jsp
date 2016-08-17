@@ -27,6 +27,9 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script type="text/javascript" src="../../resources/comments-plugin/data/comments-data.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src='resources/google-maps-api/location.js'></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
+                async defer></script>
 <%--comments--%>
 </head>
 <body>
@@ -74,6 +77,9 @@
                                 Event
                             </button>
                         </div>
+                    </li>
+                    <li>
+                        <img class="profile-photo navbar-btn-container">
                     </li>
                     <li>
                         <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
@@ -536,12 +542,9 @@
 <script src="resources/jquery/addon/ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 <script src="resources/js/moment.js"></script>
 <script src="resources/multiselect-plugin/js/bootstrap-multiselect.js" type="text/javascript"></script>
-<script src='resources/google-maps-api/location.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
-        async defer></script>
-<script src="resources/js/script.js"></script>
 <script src='resources/fullcalendar/fullcalendar.min.js'></script>
 <script src="../../resources/comments-plugin/js/jquery-comments.js"></script>
+<script src="resources/js/script.js"></script>
 <script>
     $('.dropdown-toggle').dropdown();
 </script>

@@ -2,6 +2,8 @@ package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.UserInfo;
+import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.LongType;
@@ -29,6 +31,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		u.setFirstName(user.getFirstName());
 		u.setLastName(user.getLastName());
 		u.setActive(true);
+		u.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
 		if (findByEmail(u.getEmail()) == null) {
 			super.add(u);
 		}

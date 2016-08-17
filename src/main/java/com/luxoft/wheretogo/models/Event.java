@@ -62,7 +62,7 @@ public class Event {
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> participants;

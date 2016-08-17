@@ -779,3 +779,12 @@ div.accordion{
 .enabled-input {
   border: 1px solid #dbe3e7;
 }
+.profile-photo{
+  height: 35px;
+  display: none;
+  border-radius: 100%;
+}
+.profile-photo:hover{
+  cursor: pointer;
+
+}

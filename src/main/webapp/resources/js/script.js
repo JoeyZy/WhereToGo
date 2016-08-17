@@ -699,7 +699,7 @@ $(document).ready(function () {
 					window.location.hash = '#';
 				}
 				oldLocationHash = "#groups";
-					loadGroups("groups");
+				loadGroups("groups");
 
 
 				renderGroupsPage(groups);
@@ -811,7 +811,10 @@ $(document).ready(function () {
 			event.preventDefault();
 			window.location.hash = 'calendar';
 		});
-
+		$('.profile-photo').click(function (e) {
+			e.preventDefault();
+			window.location.hash = 'user/email=' + $(this).data('user');
+		});
 		$('.userInfo').click(function (e) {
 			e.preventDefault();
 			window.location.hash = 'user/email=' + $(this).data('user');
@@ -1006,13 +1009,16 @@ $(document).ready(function () {
 						},
 						success: function () {
 							alert('Users were added');
+							$('button.accordion-section-button').attr("disabled",false);
 						},
 						error: function () {
 							alert('Something wrong');
+							$('button.accordion-section-button').attr("disabled",false);
 						},
 						complete: function () {
 						}
 					});
+					$('button.accordion-section-button').attr("disabled",true);
 				})
 
 				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
@@ -1694,7 +1700,6 @@ $(document).ready(function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-
 		if (typeof data != 'undefined' && data.length) {
 			// Find the wanted event by iterating the data object and searching for the chosen index.
 			renderShowGroupPage(data);
@@ -1716,8 +1721,10 @@ $(document).ready(function () {
 
 
 		function renderShowGroupPage(data) {
+			var x=false;
 			data.forEach(function (item) {
 				if (item.id == index) {
+					x=true;
 					$.getJSON("group", {id: item.id}, function (group) {
 						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
 						populateSinglePageGroupPage($singlePage, group);
@@ -1734,6 +1741,7 @@ $(document).ready(function () {
 					});
 				}
 			})
+			if(!x) window.location.hash = oldLocationHash;
 		}
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
@@ -2159,7 +2167,6 @@ $(document).ready(function () {
 		} else {
 			renderAddUserPage();
 		}
-
 		function renderUserInfoPage(user) {
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
@@ -2169,6 +2176,13 @@ $(document).ready(function () {
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
 				$userPage.find('.UserPage__events').show();
+				//Display picture
+				if (user.picture.length) {
+					$picture.attr('src', user.picture);
+					$pictureParent.show();
+				} else {
+					$pictureParent.hide();
+				}
 				$singlePage.addClass('visible');
 			});
 		}
@@ -2180,6 +2194,7 @@ $(document).ready(function () {
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
+			$pictureParent.show();
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
 				if (!validateEventFields()) {
@@ -2190,7 +2205,8 @@ $(document).ready(function () {
 					"email": $userEmail.val(),
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
-					"lastName": $userLastName.val()
+					"lastName": $userLastName.val(),
+					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};
 				$.ajax({
 					url: "addUser",
@@ -2329,6 +2345,8 @@ $(document).ready(function () {
 		$('.userInfo').text(user.firstName + " " + user.lastName);
 		$('.userInfo').data('user', user.email);
 		$('.userInfo').show();
+		$('.profile-photo').attr('src',user.picture);
+		$('.profile-photo').show();
 		$('.logout').text('Logout');
 		$('.logout').show();
 		$myEventsLink.show();
@@ -2342,9 +2360,10 @@ $(document).ready(function () {
 			grantRightsToUser();
 			return;
 		}
-		$.ajax({
+		return $.ajax({
 			url: "user",
 			type: "GET",
+			async: false,
 			success: function (sessionUser) {
 				if (sessionUser.length == 0) {
 					$myEventsLink.hide();

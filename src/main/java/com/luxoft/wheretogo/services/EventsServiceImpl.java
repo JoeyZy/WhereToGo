@@ -1,19 +1,15 @@
 package com.luxoft.wheretogo.services;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import com.luxoft.wheretogo.mailer.Mailer;
 import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +22,6 @@ import com.luxoft.wheretogo.models.json.CategoryResponse;
 import com.luxoft.wheretogo.models.json.EventResponse;
 import com.luxoft.wheretogo.repositories.EventIdGeneratorRepository;
 import com.luxoft.wheretogo.repositories.EventsRepository;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -61,7 +48,9 @@ public class EventsServiceImpl implements EventsService {
 	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
 		Event oldEvent = initParticipants(event.getId());
 		User owner;
-		event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
+		if(!event.getDeleted()){
+			event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
+		}
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
 			if (!owner.getEmail().equals(ownerEmail) &&

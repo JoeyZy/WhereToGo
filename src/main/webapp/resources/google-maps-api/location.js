@@ -15,7 +15,6 @@ function initGoogleMaps(mapID, inputID, checkboxHolderID, mapHolderID) {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
     });
-
     // Create the search box and link it to the UI element.
     var input = document.getElementById(inputID);
     var searchBox = new google.maps.places.SearchBox(input);

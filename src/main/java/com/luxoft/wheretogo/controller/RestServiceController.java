@@ -9,32 +9,21 @@ import com.luxoft.wheretogo.services.*;
 
 import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.ValidationUtils;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.security.Principal;
 
 import java.util.Date;
-import java.text.ParseException;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static java.nio.file.Paths.get;
 
 @RestController
 public class RestServiceController {
@@ -316,7 +305,7 @@ public class RestServiceController {
 
 	// Hack. JavaScript gets its data from this response
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public User user(HttpServletRequest request, Principal principal) {
+	public UserInfo user(HttpServletRequest request, Principal principal) {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user == null && principal != null) {
 			String email = principal.getName();
@@ -326,13 +315,14 @@ public class RestServiceController {
 			user = usersService.findByEmail(email);
 			request.getSession().setAttribute("user", user);
 		}
-		return user;
+
+		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(), user.getId());
 	}
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public UserInfo getUserInfo(Principal principal) {
 		User user = usersService.findByEmail(principal.getName());
-		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive());
+		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(),user.getId());
 	}
 
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)
@@ -393,8 +383,7 @@ public class RestServiceController {
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Event ev = eventsService.findById(id);
 		String picture = ev.getPicture();
-		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
-		return responseEntity;
+		return ImageUtils.giveMeImage(picture);
 	}
 	@RequestMapping(value = "/groupImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
@@ -402,8 +391,16 @@ public class RestServiceController {
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Group gp = groupsService.findById(id);
 		String picture = gp.getPicture();
-		ResponseEntity<byte[]> responseEntity = ImageUtils.giveMeImage(picture);
-		return responseEntity;
+		return ImageUtils.giveMeImage(picture);
+	}
+	@RequestMapping(value = "/userImage", method = RequestMethod.GET)
+	public ResponseEntity<byte[]>  getUserImage(HttpServletRequest httpRequest) throws IOException {
+		User user = (User) httpRequest.getSession().getAttribute("user");
+		if(user!=null){
+			String picture = user.getPicture();
+			return ImageUtils.giveMeImage(picture);
+		}
+		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }
