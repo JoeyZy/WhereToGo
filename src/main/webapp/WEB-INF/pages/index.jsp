@@ -289,13 +289,10 @@
                     </li>
                     <li class="SinglePage__inputItem UserPage__Interesting">
                         <label class="SinglePage__inputItem__label"><b>Interesting categories:</b></label>
-
-                        <a href="#" class="activeBackground">
-                            <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground">
-                                No choosen categories
-                            </span>
-                            <div class="interestingCategoriesMultiselect"></div>
-                        </a>
+                            <div class="interestingCategoriesMultiselect display_inline"></div>
+                            <a href="#" class="activeBackground">
+                            <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
+                            </a>
                     </li>
                 </ul>
 

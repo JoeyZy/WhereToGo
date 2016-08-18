@@ -17,8 +17,18 @@ div.interesting_categories_for_new_user ul>li{
 div.interesting_categories_for_new_user ul>li input{
     float:right;
 }
-.inline-block{
+.token, .token_title, .token_del, .interestingCategoriesMultiselect{
     display: inline-block;
+}
+.token{
+    padding: 5px;
+    margin-right: 4px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.token_del{
+    padding-left: 3px;
+    cursor: pointer;
 }
 .UserPage__Interesting a, .UserPage__Interesting a:visited, .UserPage__Interesting a:hover{
     display: inline-block;
@@ -26,6 +36,15 @@ div.interesting_categories_for_new_user ul>li input{
     text-decoration: none;
     outline: none;
     padding: 1%;
+}
+a.activeBackground{
+    position: relative;
+    left: -1%;
+    border-radius: 5px;
+    display:inline-block;
+}
+div.display_inline{
+    display: inline;
 }
 
 

@@ -2184,10 +2184,15 @@ $(document).ready(function () {
 			$interestingCategories.find('div.interesting_categories_for_new_user').remove();
 			$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
 			var checkCategoriesDownloaded = false;
+			var numberOfChecked = 0;
+			var checkedCategories = [];
+			var checkIfEventOn = false;  //checking $('div.token_del').on (if it is already performing)
+			$('.interestingCategoriesMultiselect').find('div').remove();
+			$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+			$interestingCategories.find('a').off();
 			$interestingCategories.find('a').on('click', function(e){
-				e.preventDefault();
 				e.stopPropagation();
-				// $interestingCategories.find('a').off();
+				e.preventDefault();
 				$interestingCategories.find('a').addClass('activeBackground');
 				$interestingCategories.find('a span').addClass('activeBackground');
 				$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
@@ -2198,13 +2203,60 @@ $(document).ready(function () {
 						})
 						$('div.interesting_categories_for_new_user').slideToggle('slow');
 						checkCategoriesDownloaded = true;
+						checkboxCategoriesOn(numberOfChecked, checkedCategories);
 					});
 				} else {
 					$('div.interesting_categories_for_new_user').slideToggle('slow');
 				}
-				
+
+				function checkboxCategoriesOn(numberofChecked, checkedCategories) {
+					var checkboxCategories = $('.interesting_categories_for_new_user ul li');
+					checkboxCategories.find('input:checkbox').on('click', function(event) {
+						event.stopPropagation();
+						var currentId = $(this).attr('data-id');
+						var currentValue = $(this).attr('value');
+						if($(this).is(':checked')){
+							$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
+							numberofChecked++;
+							checkedCategories.push(currentId);
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
+							} else {
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
+							}
+
+						} else {
+							$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
+							numberofChecked--;
+							if(checkedCategories.indexOf(currentId) !== -1){
+								checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
+							}
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
+							} else {
+								if(numberofChecked === 0){
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+								} else {
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
+								}
+							}
+						}
+
+
+					});
+					console.log(checkedCategories);
+					$('div.token_del').on('click', function(event){
+						checkIfEventOn = true;
+						// event.stopPropagation();
+						var currentId = $(this).parent().attr('data-id');
+						$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
+						// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
+						$(this).parent().remove();
+					});
+				}
+
 			});
-			
+
 			$(document).bind('click', function(e) {
 				var $clicked = $(e.target);
 				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").hide();
@@ -2220,7 +2272,8 @@ $(document).ready(function () {
 					"email": $userEmail.val(),
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
-					"lastName": $userLastName.val()
+					"lastName": $userLastName.val(),
+					"interestingCategories": checkedCategories
 				};
 				$.ajax({
 					url: "addUser",
