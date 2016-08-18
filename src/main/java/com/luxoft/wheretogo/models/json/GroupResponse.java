@@ -34,6 +34,7 @@ public class GroupResponse {
     private Set<User> groupParticipants;
 
     public GroupResponse() {
+        this.id=-1;
     }
 
     public GroupResponse(long id, String name, User owner, String location,

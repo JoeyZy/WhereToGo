@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(window).on("load",function () {
 	// Globals variables
 	// 	An array containing objects with information about the events.
 	var events = [],
@@ -171,7 +171,7 @@ $(document).ready(function () {
 	$buttonCancelEditingGroup.on('click', function (group) {
 		makeGroupPageUneditable();
 		var index = (window.location.hash).split('#group/')[1].trim();
-		renderSingleGroupPage(index,groups);
+		renderSingleGroupPage(false,index,groups);
 		$buttonEditGroup.show();
 		$buttonDeleteGroup.show();
 		if (user && $participants.find("[data-id=" + user.id + "]").length == 0) {
@@ -639,10 +639,10 @@ $(document).ready(function () {
 			url: "getGroupId",
 			type: "GET",
 			success: function (groupId) {
-				renderSingleGroupPage(groupId);
+				renderSingleGroupPage(true,groupId);
 			},
 			error: function () {
-				renderSingleGroupPage();
+				renderSingleGroupPage(true);
 			}
 		});
 	}
@@ -719,7 +719,7 @@ $(document).ready(function () {
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
-				renderSingleGroupPage(index, groups);
+				renderSingleGroupPage(false,index, groups);
 			},
 			// Add event
 			'#addEvent': function () {
@@ -1691,7 +1691,7 @@ $(document).ready(function () {
 	// Opens up a preview for one of the groups.
 	// Its parameters are an index from the hash and the groups object.
 
-	function renderSingleGroupPage(index, data, addGroup) {
+	function renderSingleGroupPage(addGroup, index, data) {
 		resetSinglePage();
 		hideCalendarPage();
 
@@ -1700,14 +1700,14 @@ $(document).ready(function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-		if (typeof data != 'undefined' && data.length) {
-			// Find the wanted event by iterating the data object and searching for the chosen index.
-			renderShowGroupPage(data);
-		} else {
-			if (typeof user === "undefined") {
-				window.location.hash = '';
-				return;
-			}
+		if (typeof user === "undefined") {
+			window.location.hash = '';
+			return;
+		}
+		if(!addGroup){
+			renderShowGroupPage(index);
+		}
+		else{
 			renderAddGroupPage();
 		}
 		// Show the $singlePage.
@@ -1720,28 +1720,21 @@ $(document).ready(function () {
 		}
 
 
-		function renderShowGroupPage(data) {
-			var x=false;
-			data.forEach(function (item) {
-				if (item.id == index) {
-					x=true;
-					$.getJSON("group", {id: item.id}, function (group) {
-						$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
-						populateSinglePageGroupPage($singlePage, group);
-						$buttonSubscribe.off();
-						$buttonUnSubscribe.off();
-						$buttonSubscribe.on('click', function (group) {
-							group.preventDefault();
-							assignUnassignGroup('assignUserToGroup', item.id, refreshGroupParticipantsList);
-						});
-						$buttonUnSubscribe.on('click', function (group) {
-							group.preventDefault();
-							assignUnassignGroup('unassignUserFromGroup', item.id, refreshGroupParticipantsList);
-						});
-					});
-				}
-			})
-			if(!x) window.location.hash = oldLocationHash;
+		function renderShowGroupPage(index) {
+			$.getJSON("group", {id: index}, function (group) {
+				$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
+				populateSinglePageGroupPage($singlePage, group);
+				$buttonSubscribe.off();
+				$buttonUnSubscribe.off();
+				$buttonSubscribe.on('click', function (group) {
+					group.preventDefault();
+					assignUnassignGroup('assignUserToGroup', index, refreshGroupParticipantsList);
+				});
+				$buttonUnSubscribe.on('click', function (group) {
+					group.preventDefault();
+					assignUnassignGroup('unassignUserFromGroup', index, refreshGroupParticipantsList);
+				});
+			});
 		}
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
@@ -1755,6 +1748,10 @@ $(document).ready(function () {
 			$groupMapHolder.hide();
 
 			if (typeof group != 'undefined') {
+				if(group.id===-1){
+					window.location.hash = '#';
+					return;
+				}
 				makeGroupPageUneditable();
 				$singlePageTitle.val(group.name);
 				$groupDescription.html(linkify(group.description));
@@ -1790,7 +1787,6 @@ $(document).ready(function () {
 					singlePage.find('.GroupPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
 			}
-
 		}
 	}
 
@@ -2345,8 +2341,10 @@ $(document).ready(function () {
 		$('.userInfo').text(user.firstName + " " + user.lastName);
 		$('.userInfo').data('user', user.email);
 		$('.userInfo').show();
-		$('.profile-photo').attr('src',user.picture);
-		$('.profile-photo').show();
+		if(user.picture!==""){
+			$('.profile-photo').attr('src',user.picture);
+			$('.profile-photo').show();
+		}
 		$('.logout').text('Logout');
 		$('.logout').show();
 		$myEventsLink.show();

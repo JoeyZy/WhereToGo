@@ -48,9 +48,6 @@ public class EventsServiceImpl implements EventsService {
 	public void update(Event event, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
 		Event oldEvent = initParticipants(event.getId());
 		User owner;
-		if(!event.getDeleted()){
-			event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
-		}
 		if (oldEvent != null) {
 			owner = oldEvent.getOwner();
 			if (!owner.getEmail().equals(ownerEmail) &&
@@ -59,8 +56,18 @@ public class EventsServiceImpl implements EventsService {
 			}
 			event.setOwner(oldEvent.getOwner());
 			event.setParticipants(oldEvent.getParticipants());
-			//Old image deletion
-			ImageUtils.deleteOldPicture(oldEvent.getPicture());
+			if(!event.getPicture().equals("")){
+				//THINK ABOUT THIS THING!
+				//Old image deletion
+				if(!event.getDeleted()&&event.getPicture().substring(0,4).equals("data")){
+					event.setPicture(ImageUtils.generatePicturePath(event.getPicture(), PropertiesUtils.getProp("events.images.path")));
+					ImageUtils.deleteOldPicture(oldEvent.getPicture());
+				}
+				else{
+					event.setPicture(oldEvent.getPicture());
+				}
+			}
+
 		}
 		eventsRepository.merge(event);
 	}

@@ -247,8 +247,8 @@ public class RestServiceController {
 				user.setGroups(usersService.initGroups(user).getGroups());
 
 				user.getGroups().add(groupToUpdate);
-				//groupsService.update(groupToUpdate);
-				//usersService.update(user);
+				groupsService.update(groupToUpdate);
+				usersService.update(user);
 				//send notification
 				SimpleNotification.notifyUser(groupToUpdate,user,SimpleNotification.ADDED_TO_A_GROUP);
 //
@@ -382,16 +382,22 @@ public class RestServiceController {
 		long id = ValidationUtils.validateRequestParam(param);
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Event ev = eventsService.findById(id);
-		String picture = ev.getPicture();
-		return ImageUtils.giveMeImage(picture);
+		if(ev!=null){
+			String picture = ev.getPicture();
+			return ImageUtils.giveMeImage(picture);
+		}
+		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	@RequestMapping(value = "/groupImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getGroupImage(@RequestParam("id") String param , HttpServletRequest httpRequest) throws IOException {
 		long id = ValidationUtils.validateRequestParam(param);
 		if(id<0) return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		Group gp = groupsService.findById(id);
-		String picture = gp.getPicture();
-		return ImageUtils.giveMeImage(picture);
+		if(gp!=null){
+			String picture = gp.getPicture();
+			return ImageUtils.giveMeImage(picture);
+		}
+		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	@RequestMapping(value = "/userImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getUserImage(HttpServletRequest httpRequest) throws IOException {

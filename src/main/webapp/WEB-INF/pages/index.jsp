@@ -27,9 +27,7 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script type="text/javascript" src="../../resources/comments-plugin/data/comments-data.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script src='resources/google-maps-api/location.js'></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
-                async defer></script>
+
 <%--comments--%>
 </head>
 <body>
@@ -534,6 +532,9 @@
     </div>
 
 </div>
+<script src='resources/google-maps-api/location.js'></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtyykOfK3JCWrnV_AQ28U9A9-2WC22ofo&language=en&libraries=places&callback=initGoogleMapsService"
+        async defer></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

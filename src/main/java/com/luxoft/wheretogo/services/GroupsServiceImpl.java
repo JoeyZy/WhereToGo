@@ -42,7 +42,6 @@ public class GroupsServiceImpl implements GroupsService {
     public void update(Group group, String ownerEmail, Collection<? extends GrantedAuthority> authorities) {
         Group oldGroup = initGroupParticipantslist(group.getId());
         User owner;
-        group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),PropertiesUtils.getProp("groups.images.path")));
         if (oldGroup != null) {
             owner = oldGroup.getOwner();
             if (!owner.getEmail().equals(ownerEmail) &&
@@ -51,8 +50,16 @@ public class GroupsServiceImpl implements GroupsService {
             }
             group.setOwner(owner);
             group.setGroupParticipants(oldGroup.getGroupParticipants());
-            //Deleting old image from server needed only if group profile is editing
-            ImageUtils.deleteOldPicture(oldGroup.getPicture());
+            if(!group.getPicture().equals("")){
+                if(!group.getDeleted()&&group.getPicture().substring(0,4).equals("data")){
+                    group.setPicture(ImageUtils.generatePicturePath(group.getPicture(),PropertiesUtils.getProp("groups.images.path")));
+                    //Deleting old image from server needed only if group profile is editing
+                    ImageUtils.deleteOldPicture(oldGroup.getPicture());
+                }
+                else{
+                    group.setPicture(oldGroup.getPicture());
+                }
+            }
         }
         groupsRepository.merge(group);
     }
@@ -108,12 +115,15 @@ public class GroupsServiceImpl implements GroupsService {
         group = groupsRepository.findById(group.getId());
         if (group != null) {
             Hibernate.initialize(group.getGroupParticipants());
+            GroupResponse response = new GroupResponse(group.getId(), group.getName(),
+                    group.getOwner(), group.getLocation(), group.getDescription(), group.getPicture(),
+                    group.getDeleted(), group.getGroupParticipants());
+            return response;
         }
-        GroupResponse response = new GroupResponse(
-                group.getId(), group.getName(),
-                group.getOwner(), group.getLocation(), group.getDescription(), group.getPicture(), group.getDeleted(), group.getGroupParticipants());
-        return response;
-        //return group;
+        else {
+            GroupResponse response = new GroupResponse();
+            return response;
+        }
     }
 
     public Group initGroupParticipantslist(long id) {
