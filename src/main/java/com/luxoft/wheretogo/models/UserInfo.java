@@ -20,9 +20,10 @@ public class UserInfo {
     private String lastName;
     private String password;
     private String picture;
+    private String description;
     private boolean active;
 
-    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id) {
+    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id, String description) {
         this.id=id;
         this.role = role;
         this.email = email;
@@ -34,6 +35,7 @@ public class UserInfo {
         }else{
             this.picture = picture;
         }
+        this.description=description;
     }
 
     public UserInfo() {}

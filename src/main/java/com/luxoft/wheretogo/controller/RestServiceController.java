@@ -316,13 +316,13 @@ public class RestServiceController {
 			request.getSession().setAttribute("user", user);
 		}
 
-		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(), user.getId());
+		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(), user.getId(),user.getDescription());
 	}
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public UserInfo getUserInfo(Principal principal) {
 		User user = usersService.findByEmail(principal.getName());
-		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(),user.getId());
+		return new UserInfo(user.getRole(), user.getEmail(), user.getFirstName(), user.getLastName(), user.isActive(), user.getPicture(),user.getId(), user.getDescription());
 	}
 
 	@RequestMapping(value = "/assignEventToUser", method = RequestMethod.POST)

@@ -293,6 +293,11 @@
                         <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
                                placeholder="Last name" required/>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__about">
+                        <label class="SinglePage__inputItem__label"><b>About me:</b></label>
+                        <input class="SinglePage__inputItem__inputField UserPage__about__input reset editable"
+                               placeholder="Short info about yourself" required/>
+                    </li>
                 </ul>
 
                 <ul class="SinglePage__inputItemsList Calendar">

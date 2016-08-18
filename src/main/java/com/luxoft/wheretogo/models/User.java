@@ -43,6 +43,10 @@ public class User {
 	private String email;
 
 	@JsonIgnore
+	@Column(unique = true)
+	private String description;
+
+	@JsonIgnore
 	@Size(min = 2, max = 60)
 	private String password;
 

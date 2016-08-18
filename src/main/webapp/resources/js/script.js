@@ -2148,6 +2148,7 @@ $(window).on("load",function () {
 	var $userPassword = $userPage.find('.UserPage__password__input');
 	var $userFirstName = $userPage.find('.UserPage__name__first');
 	var $userLastName = $userPage.find('.UserPage__name__last');
+	var $userAboutMe = $userPage.find('.UserPage__about__input');
 
 	function renderSingleUserPage(user) {
 		resetSinglePage();
@@ -2172,6 +2173,8 @@ $(window).on("load",function () {
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
 				$userPage.find('.UserPage__events').show();
+				$userAboutMe.val(user.description);
+				$userAboutMe.attr("readonly",true);
 				//Display picture
 				if (user.picture.length) {
 					$picture.attr('src', user.picture);
@@ -2189,6 +2192,7 @@ $(window).on("load",function () {
 			$userPage.find('.UserPage__events').hide();
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
+			$userAboutMe.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
 			$pictureParent.show();
 			$buttonAddUser.on('click', function (event) {
@@ -2202,6 +2206,7 @@ $(window).on("load",function () {
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
+					"description": $userAboutMe.val(),
 					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};
 				$.ajax({
