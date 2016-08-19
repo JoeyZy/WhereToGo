@@ -2186,7 +2186,6 @@ $(document).ready(function () {
 			var checkCategoriesDownloaded = false;
 			var numberOfChecked = 0;
 			var checkedCategories = [];
-			var checkIfEventOn = false;  //checking $('div.token_del').on (if it is already performing)
 			$('.interestingCategoriesMultiselect').find('div').remove();
 			$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
 			$interestingCategories.find('a').off();
@@ -2225,6 +2224,14 @@ $(document).ready(function () {
 								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
 							}
 
+							$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
+								event.stopPropagation();
+								$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
+								// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
+								$(this).parent().remove();
+								console.log(checkedCategories);
+							});
+
 						} else {
 							$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
 							numberofChecked--;
@@ -2241,21 +2248,12 @@ $(document).ready(function () {
 								}
 							}
 						}
-
-
 					});
-					console.log(checkedCategories);
-					$('div.token_del').on('click', function(event){
-						checkIfEventOn = true;
-						// event.stopPropagation();
-						var currentId = $(this).parent().attr('data-id');
-						$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
-						// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
-						$(this).parent().remove();
-					});
+
 				}
 
 			});
+
 
 			$(document).bind('click', function(e) {
 				var $clicked = $(e.target);

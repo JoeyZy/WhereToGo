@@ -9,15 +9,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -61,6 +53,11 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "groupParticipants")
 	private Set<Group> groups;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_categories", joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private Set<Category> user_categories;
 
 	@NotNull
 	private boolean active;
