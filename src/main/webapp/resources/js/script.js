@@ -2146,8 +2146,10 @@ $(window).on("load",function () {
 
 	var $userEmail = $userPage.find('.UserPage__email__input');
 	var $userPassword = $userPage.find('.UserPage__password__input');
+	var $userPasswordConfirm = $userPage.find('.UserPage__password__confirm__input');
 	var $userFirstName = $userPage.find('.UserPage__name__first');
-	var $userLastName = $userPage.find('.UserPage__name__last');
+	var $userLastName = $userPage.find('.UserPage__name__last')
+	var $userPhone = $userPage.find('.UserPage__phone__input');
 	var $userAboutMe = $userPage.find('.UserPage__about__input');
 
 	function renderSingleUserPage(user) {
@@ -2169,9 +2171,12 @@ $(window).on("load",function () {
 				$userEmail.val(user.email);
 				$userEmail.attr("readonly", true);
 				$userPage.find('.UserPage__password').hide();
+				$userPage.find('.UserPage__password__confirm').hide();
 				$userFirstName.val(user.firstName + ' ' + user.lastName);
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
+				$userPhone.val(user.phoneNumber);
+				$userPhone.attr("readonly", true);
 				$userPage.find('.UserPage__events').show();
 				$userAboutMe.val(user.description);
 				$userAboutMe.attr("readonly",true);
@@ -2188,10 +2193,12 @@ $(window).on("load",function () {
 
 		function renderAddUserPage() {
 			$userPage.find('.UserPage__password').show();
+			$userPage.find('.UserPage__password__confirm').show();
 			$userPage.find('.UserPage__name__last').show();
 			$userPage.find('.UserPage__events').hide();
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
+			$userPhone.attr("readonly", false);
 			$userAboutMe.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
 			$pictureParent.show();
@@ -2207,6 +2214,7 @@ $(window).on("load",function () {
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
 					"description": $userAboutMe.val(),
+					"phoneNumber": $userPhone.val(),
 					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};
 				$.ajax({
@@ -2244,6 +2252,14 @@ $(window).on("load",function () {
 					}
 					if ($userLastName.val().length == 0) {
 						addErrorListItem("Enter Last Name");
+						valid = false;
+					}
+					if ($userPhone.val().length == 0) {
+						addErrorListItem("Phone number must not be empty");
+						valid = false;
+					}
+					if(!($userPassword.val()===$userPasswordConfirm.val())){
+						addErrorListItem("Password and confirmation are not the same");
 						valid = false;
 					}
 					return valid;

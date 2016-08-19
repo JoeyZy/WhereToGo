@@ -286,6 +286,11 @@
                         <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
                                type="password" placeholder="User password" required/>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__password__confirm">
+                        <label class="SinglePage__inputItem__label"><b>Password confirmation:</b></label>
+                        <input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"
+                               type="password" placeholder="User password" required/>
+                    </li>
                     <li class="SinglePage__inputItem UserPage__name">
                         <label class="SinglePage__inputItem__label"><b>Name:</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
@@ -293,10 +298,14 @@
                         <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
                                placeholder="Last name" required/>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__phone">
+                        <label class="SinglePage__inputItem__label"><b>Phone number:</b></label>
+                        <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
+                               placeholder="Phone number" required/>
+                    </li>
                     <li class="SinglePage__inputItem UserPage__about">
                         <label class="SinglePage__inputItem__label"><b>About me:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__about__input reset editable"
-                               placeholder="Short info about yourself" required/>
+                        <textarea placeholder="Short info about yourself" rows="4" cols="50" class="SinglePage__inputItem__inputField UserPage__about__input reset editable"></textarea>
                     </li>
                 </ul>
 

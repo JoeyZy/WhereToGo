@@ -47,6 +47,10 @@ public class User {
 	private String description;
 
 	@JsonIgnore
+	@Column(unique = true)
+	private String phoneNumber;
+
+	@JsonIgnore
 	@Size(min = 2, max = 60)
 	private String password;
 

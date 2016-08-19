@@ -31,6 +31,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		u.setFirstName(user.getFirstName());
 		u.setLastName(user.getLastName());
 		u.setDescription(user.getDescription());
+		u.setPhoneNumber(user.getPhoneNumber());
 		u.setActive(true);
 		u.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
 		if (findByEmail(u.getEmail()) == null) {
