@@ -14,7 +14,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -104,9 +106,9 @@ public class CategoriesServiceImplTest {
         Event ev5 = new Event();
         Event ev6 = new Event();
 
-        List<Category> listCat1 = new ArrayList<>();
-        List<Category> listCat2 = new ArrayList<>();
-        List<Category> listCat3 = new ArrayList<>();
+        Set<Category> listCat1 = new HashSet<>();
+        Set<Category> listCat2 = new HashSet<>();
+        Set<Category> listCat3 = new HashSet<>();
 
         listCat1.add(categories.get(0));
         listCat2.add(categories.get(1));

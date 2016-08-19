@@ -258,8 +258,8 @@ public class RestServiceController {
 				user.setGroups(usersService.initGroups(user).getGroups());
 
 				user.getGroups().add(groupToUpdate);
-				//groupsService.update(groupToUpdate);
-				//usersService.update(user);
+				groupsService.update(groupToUpdate);
+				usersService.update(user);
 				//send notification
 				SimpleNotification.notifyUser(groupToUpdate,user,SimpleNotification.ADDED_TO_A_GROUP);
 //

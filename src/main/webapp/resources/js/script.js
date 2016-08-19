@@ -2174,6 +2174,7 @@ $(document).ready(function () {
 		}
 
 		function renderAddUserPage() {
+			$buttonAddUser.off();
 			$userPage.find('.UserPage__password').show();
 			$userPage.find('.UserPage__name__last').show();
 			$userPage.find('.UserPage__events').hide();

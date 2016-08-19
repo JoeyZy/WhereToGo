@@ -55,8 +55,8 @@ public class EventsServiceImplTest {
     private Date dateStart2 = new Date(new Date().getTime() - ONE_WEEK_IN_MILISECONDS);
     private Date dateFinish2 = new Date(new Date().getTime() - ONE_WEEK_IN_MILISECONDS);
 
-    private List<Category> lc1 = new ArrayList<Category>();
-    private List<Category> lc2 = new ArrayList<Category>();
+    private Set<Category> lc1 = new HashSet<>();
+    private Set<Category> lc2 = new HashSet<>();
 
     private User user1 = new User();
     private User user2 = new User();
@@ -353,8 +353,8 @@ public class EventsServiceImplTest {
         User userTest = new User();
         Set<Event> eventsTestSet = new HashSet<>();
 
-        List<Category> listCat1 = new ArrayList<>();
-        List<Category> listCat2 = new ArrayList<>();
+        Set<Category> listCat1 = new HashSet<>();
+        Set<Category> listCat2 = new HashSet<>();
 
         listCat1.add(categoriesTest.get(0));
         listCat2.add(categoriesTest.get(1));

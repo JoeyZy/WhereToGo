@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Set;
+
 /**
  * Created by sasha on 19.07.16.
  */
@@ -19,6 +21,7 @@ public class UserInfo {
     private String lastName;
     private String password;
     private boolean active;
+    private long[] interestingCategories;
 
     public UserInfo(String role, String email, String firstName, String lastName, boolean active) {
         this.role = role;
