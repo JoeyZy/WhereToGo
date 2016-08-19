@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -26,4 +27,8 @@ public class Category {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
 	private List<Event> events;
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user_categories")
+	private Set<User> users;
 }

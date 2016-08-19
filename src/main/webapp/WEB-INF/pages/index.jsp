@@ -22,13 +22,10 @@
     <link href='../../resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
     <link href="../../resources/css/new_styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <%--comments--%>
+        <link rel="stylesheet" type="text/css" href="../../resources/dropdown-checkboxes-plugin/css/drop_down.css">
         <link rel="stylesheet" type="text/css" href="../../resources/comments-plugin/css/jquery-comments.css">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script type="text/javascript" src="../../resources/comments-plugin/data/comments-data.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-
-<%--comments--%>
 </head>
 <body>
 <header>
@@ -297,6 +294,13 @@
                                placeholder="First name" required/>
                         <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
                                placeholder="Last name" required/>
+                    </li>
+                    <li class="SinglePage__inputItem UserPage__Interesting">
+                        <label class="SinglePage__inputItem__label"><b>Interesting categories:</b></label>
+                            <div class="interestingCategoriesMultiselect display_inline"></div>
+                            <a href="#" class="activeBackground">
+                            <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
+                            </a>
                     </li>
                     <li class="SinglePage__inputItem UserPage__phone">
                         <label class="SinglePage__inputItem__label"><b>Phone number:</b></label>

@@ -50,7 +50,7 @@ public class EventNotificationJob implements Job {
 
     private Map<String, Collection<Event>> getGroupedEvents(Collection<Event> events) {
         Multimap<String, Event> multimap = ArrayListMultimap.create();
-        events.forEach(item -> multimap.put(item.getCategories().get(0).getName(), item));
+        events.forEach(item -> multimap.put(item.getCategories().iterator().next().getName(), item));
         return Multimaps.asMap(multimap);
     }
 

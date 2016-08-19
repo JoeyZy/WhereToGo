@@ -42,7 +42,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 		for (Category category : categories) {
 			Integer counter = 0;
 			for (Event event : events) {
-				if (category.equals(event.getCategories().get(0))) {
+				if (category.equals(event.getCategories().iterator().next())) {
 					counter++;
 				}
 			}

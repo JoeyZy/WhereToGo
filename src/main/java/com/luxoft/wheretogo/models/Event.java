@@ -60,7 +60,7 @@ public class Event {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "events_categories", joinColumns = @JoinColumn(name = "event_id"),
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> categories;
+	private Set<Category> categories;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "events_users", joinColumns = @JoinColumn(name = "event_id"),
