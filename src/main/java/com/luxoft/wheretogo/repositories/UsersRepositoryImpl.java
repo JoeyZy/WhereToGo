@@ -1,9 +1,11 @@
 package com.luxoft.wheretogo.repositories;
 
+import com.luxoft.wheretogo.models.Category;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.PropertiesUtils;
+import com.luxoft.wheretogo.services.CategoriesService;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.LongType;
@@ -11,13 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UsersRepositoryImpl extends AbstractRepository<User> implements UsersRepository {
 
 	@Autowired
 	private PasswordEncoder encoder;
+
+	@Autowired
+	private CategoriesService categoriesService;
 
 	public UsersRepositoryImpl() {
 		super(User.class);
@@ -34,6 +41,14 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		u.setPhoneNumber(user.getPhoneNumber());
 		u.setActive(true);
 		u.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
+		Set<Category> userCategories = new HashSet<Category>();
+		for(long i: user.getInterestingCategories()){
+			userCategories.add(categoriesService.findById(i));
+		}
+		if(user.getInterestingCategories().length < 1){
+			userCategories.addAll(categoriesService.findAll());
+		}
+		u.setUser_categories(userCategories);
 		if (findByEmail(u.getEmail()) == null) {
 			super.add(u);
 		}

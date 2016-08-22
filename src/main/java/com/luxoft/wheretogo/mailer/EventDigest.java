@@ -35,7 +35,7 @@ public class EventDigest {
 		for (Event event : eventsService.findByPeriod(from, to)) {
 			// now each event has only one category, but it may have more than one
 			// this feature is disabled on UI side but back-end still supports multiple categories :)
-			String eventCatId = event.getCategories().get(0).getName();
+			String eventCatId = event.getCategories().iterator().next().getName();
 
 			if (result.containsKey(eventCatId)) {
 				result.get(eventCatId).add(event);

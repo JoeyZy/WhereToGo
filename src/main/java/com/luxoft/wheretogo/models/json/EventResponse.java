@@ -12,17 +12,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 public class EventResponse {
 	private static final String EMPTY_PICTURE = "resources/images/noimg.png";
 	private long id;
 	private String name;
-	private List<Category> categories;
+	private Set<Category> categories;
 	private List<String> category;
 	private User owner;
 	private String targetGroup;
@@ -42,7 +39,7 @@ public class EventResponse {
 	public EventResponse() {
 	}
 
-	public EventResponse(long id, String name, List<Category> category, User owner, String targetGroup,
+	public EventResponse(long id, String name, Set<Category> category, User owner, String targetGroup,
 						 Date startDateTime, Date endDateTime, Boolean deleted, String picture, String location,
 						 boolean attends, String description, Currency currency, int cost,Set<User> participants) {
 		this.id = id;
@@ -73,8 +70,8 @@ public class EventResponse {
 	}
 
 
-	public void setCategories(List<Category> categories) {
-		this.categories = new ArrayList<>();
+	public void setCategories(Set<Category> categories) {
+		this.categories = new HashSet<>();
 		this.category = new ArrayList<>();
 		for (Category category : categories) {
 			this.categories.add(category);

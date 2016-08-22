@@ -467,13 +467,13 @@ $(window).on("load",function () {
 		}
 	});
 
-	$.getJSON("eventsCategories", function (data) {
-		var categoriesListElementTemplate = $('#event-categories-list').html();
-		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
-		var categoriesFilter = $('#event-categories');
-		categoriesFilter.html(categoriesListElement(data));
-		$eventCategories.multiselect();
-	});
+	// $.getJSON("eventsCategories", function (data) { bla
+	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
+	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
+	// 	var categoriesFilter = $('#event-categories');
+	// 	categoriesFilter.html(categoriesListElement(data));
+	// 	$eventCategories.multiselect();
+	// });
 	$.getJSON("currencies", function (data) {
 		var currTemplate = $('#curr-list').html();
 		var currListElement = Handlebars.compile(currTemplate);
@@ -2192,6 +2192,7 @@ $(window).on("load",function () {
 		}
 
 		function renderAddUserPage() {
+			$buttonAddUser.off();
 			$userPage.find('.UserPage__password').show();
 			$userPage.find('.UserPage__password__confirm').show();
 			$userPage.find('.UserPage__name__last').show();
@@ -2202,6 +2203,86 @@ $(window).on("load",function () {
 			$userAboutMe.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
 			$pictureParent.show();
+			var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
+			$interestingCategories.find('div.interesting_categories_for_new_user').remove();
+			$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
+			var checkCategoriesDownloaded = false;
+			var numberOfChecked = 0;
+			var checkedCategories = [];
+			$('.interestingCategoriesMultiselect').find('div').remove();
+			$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+			$interestingCategories.find('a').off();
+			$interestingCategories.find('a').on('click', function(e){
+				e.stopPropagation();
+				e.preventDefault();
+				$interestingCategories.find('a').addClass('activeBackground');
+				$interestingCategories.find('a span').addClass('activeBackground');
+				$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
+				if(!checkCategoriesDownloaded){
+					$.getJSON('eventsCategories', function (data) {
+						$.each(data, function(key, value){
+							$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="' + value.category +'">' + value.category +'</label><input type="checkbox" value="' + value.category + '" data-id="' + value.id + '" id="' + value.category +'"/></li>');
+						})
+						$('div.interesting_categories_for_new_user').slideToggle('slow');
+						checkCategoriesDownloaded = true;
+						checkboxCategoriesOn(numberOfChecked, checkedCategories);
+					});
+				} else {
+					$('div.interesting_categories_for_new_user').slideToggle('slow');
+				}
+
+				function checkboxCategoriesOn(numberofChecked, checkedCategories) {
+					var checkboxCategories = $('.interesting_categories_for_new_user ul li');
+					checkboxCategories.find('input:checkbox').on('click', function(event) {
+						event.stopPropagation();
+						var currentId = $(this).attr('data-id');
+						var currentValue = $(this).attr('value');
+						if($(this).is(':checked')){
+							$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
+							numberofChecked++;
+							checkedCategories.push(currentId);
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
+							} else {
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
+							}
+
+							$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
+								event.stopPropagation();
+								$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
+								// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
+								$(this).parent().remove();
+								console.log(checkedCategories);
+							});
+
+						} else {
+							$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
+							numberofChecked--;
+							if(checkedCategories.indexOf(currentId) !== -1){
+								checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
+							}
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
+							} else {
+								if(numberofChecked === 0){
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+								} else {
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
+								}
+							}
+						}
+					});
+
+				}
+
+			});
+
+
+			$(document).bind('click', function(e) {
+				var $clicked = $(e.target);
+				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").hide();
+			});
+
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
 				if (!validateEventFields()) {
@@ -2213,6 +2294,7 @@ $(window).on("load",function () {
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
+					"interestingCategories": checkedCategories,
 					"description": $userAboutMe.val(),
 					"phoneNumber": $userPhone.val(),
 					"picture": isDefaultPicture() ? "" : $picture.attr('src')
@@ -2412,7 +2494,7 @@ $(window).on("load",function () {
 		enableArchiveCheckbox();
 	}
 
-	loadEvents();
+	// loadEvents(); bla
 
 	var startDateTextBox = $('#start');
 	var endDateTextBox = $('#end');

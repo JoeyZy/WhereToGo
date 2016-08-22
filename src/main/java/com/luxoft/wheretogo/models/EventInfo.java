@@ -13,6 +13,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by maks on 26.07.16.
@@ -29,7 +30,7 @@ public class EventInfo {
 
     private String name;
 
-    private List<Category> categories;
+    private Set<Category> categories;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy HH:mm", timezone="default")
     private Date startTime;
@@ -65,7 +66,7 @@ public class EventInfo {
         return "";
     }
 
-    public EventInfo(long id, String name, List<Category> categories, Date startTime, Date endTime,
+    public EventInfo(long id, String name, Set<Category> categories, Date startTime, Date endTime,
                      String description, long targetGroup, String location, Integer cost,
                      Currency currency, Blob picture) {
         this.id = id;
