@@ -467,6 +467,13 @@ $(window).on("load",function () {
 		}
 	});
 
+	$.getJSON("eventsCategories", function (data) {
+		var categoriesListElementTemplate = $('#event-categories-list').html();
+		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
+		var categoriesFilter = $('#event-categories');
+		categoriesFilter.html(categoriesListElement(data));
+		$eventCategories.multiselect();
+		});
 	// $.getJSON("eventsCategories", function (data) { bla
 	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
 	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);

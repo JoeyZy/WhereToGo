@@ -540,12 +540,12 @@
                     <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
                         <input class="SinglePage__inputItem__inputField reset editable" id="start"
-                               placeholder="When event starts"/>
+                               placeholder="When event starts" readonly/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__end">
                         <label class="SinglePage__inputItem__label"><b>End:</b></label>
                         <input class="SinglePage__inputItem__inputField reset editable" id="end"
-                               placeholder="When event ends"/>
+                               placeholder="When event ends" readonly/>
                     </li>
                     <li class="SinglePage__inputItem EventPage__description">
                         <label class="SinglePage__inputItem__label"><b>Description:</b></label>
