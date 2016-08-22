@@ -788,8 +788,7 @@ div.accordion{
   cursor: pointer;
 
 }
-.UserPage__birthday{
-  width:48px;
-  display: inline;
-  margin-top: 10px;
+.ui-menu{
+  height: 250px;
+  overflow: auto;
 }
