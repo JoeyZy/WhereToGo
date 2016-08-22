@@ -303,6 +303,15 @@
                         <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
                                placeholder="Phone number" required/>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__birthday">
+                        <label class="SinglePage__inputItem__label"><b>Birthday:</b></label>
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__day reset editable"
+                               placeholder="DD" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__month reset editable"
+                               placeholder="MM" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__year reset editable"
+                               placeholder="YYYY" required autocomplete="off" pattern="\d*" step="1" maxlength="4"/>
+                    </li>
                     <li class="SinglePage__inputItem UserPage__about">
                         <label class="SinglePage__inputItem__label"><b>About me:</b></label>
                         <textarea placeholder="Short info about yourself" rows="4" cols="50" class="SinglePage__inputItem__inputField UserPage__about__input reset editable"></textarea>
