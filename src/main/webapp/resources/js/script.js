@@ -2159,6 +2159,11 @@ $(window).on("load",function () {
 	var $userPhone = $userPage.find('.UserPage__phone__input');
 	var $userAboutMe = $userPage.find('.UserPage__about__input');
 
+	var $userMonth = $userPage.find('.UserPage__birthday__month');
+	var $userDay = $userPage.find('.UserPage__birthday__day');
+	var $userYear = $userPage.find('.UserPage__birthday__year');
+	var $userHolder = $userPage.find(".UserPage__birthday__holder");
+
 	function renderSingleUserPage(user) {
 		resetSinglePage();
 		hideCalendarPage();
@@ -2187,6 +2192,22 @@ $(window).on("load",function () {
 				$userPage.find('.UserPage__events').show();
 				$userAboutMe.val(user.description);
 				$userAboutMe.attr("readonly",true);
+
+				/*$userMonth.val(user.birthday);
+				$userMonth.attr("readonly", true);
+
+				$userDay.val(user.birthday);
+				$userDay.attr("readonly", true);
+
+				$userYear.val(user.birthday);
+				$userYear.attr("readonly", true);*/
+				$userMonth.parent().hide();
+				$userDay.parent().hide();
+				$userYear.parent().hide();
+
+				$userHolder.val(user.birthday);
+				$userHolder.show();
+
 				//Display picture
 				if (user.picture.length) {
 					$picture.attr('src', user.picture);
@@ -2204,11 +2225,22 @@ $(window).on("load",function () {
 			$userPage.find('.UserPage__password__confirm').show();
 			$userPage.find('.UserPage__name__last').show();
 			$userPage.find('.UserPage__events').hide();
+
+			$userMonth.parent().show();
+			$userDay.parent().show();
+			$userYear.parent().show();
+			$userHolder.hide();
+
 			$buttonAddUser.show();
 			$userEmail.attr("readonly", false);
 			$userPhone.attr("readonly", false);
 			$userAboutMe.attr("readonly", false);
 			$userFirstName.attr("readonly", false);
+
+			$userMonth.attr("readonly", false);
+			$userDay.attr("readonly", false);
+			$userYear.attr("readonly", false);
+
 			$pictureParent.show();
 			var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
 			$interestingCategories.find('div.interesting_categories_for_new_user').remove();
@@ -2304,6 +2336,7 @@ $(window).on("load",function () {
 					"interestingCategories": checkedCategories,
 					"description": $userAboutMe.val(),
 					"phoneNumber": $userPhone.val(),
+					"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
 					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};
 				$.ajax({

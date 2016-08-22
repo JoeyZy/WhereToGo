@@ -1,10 +1,12 @@
 package com.luxoft.wheretogo.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -27,7 +29,10 @@ public class UserInfo {
     private boolean active;
     private long[] interestingCategories;
 
-    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id, String description, String phone) {
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy", timezone="default")
+    private Date birthday;
+
+    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id, String description, String phone, Date birthday) {
         this.id=id;
         this.role = role;
         this.email = email;
@@ -41,6 +46,7 @@ public class UserInfo {
         }
         this.description=description;
         this.phoneNumber=phone;
+        this.birthday=birthday;
     }
 
     public UserInfo() {}

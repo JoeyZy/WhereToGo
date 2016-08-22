@@ -1,5 +1,6 @@
 package com.luxoft.wheretogo.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -41,6 +43,9 @@ public class User {
 	@JsonIgnore
 	@Column(unique = true)
 	private String phoneNumber;
+
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy", timezone="default")
+	private Date birthday;
 
 	@JsonIgnore
 	@Size(min = 2, max = 60)

@@ -309,9 +309,9 @@
                     </li>
                     <li class="SinglePage__inputItem UserPage__birthday">
                         <label class="SinglePage__inputItem__label"><b>Birthday:</b></label>
-                        <!--<input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__day reset editable"
-                               placeholder="DD" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
-                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__month reset editable"
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"
+                                readonly/>
+                        <!--<input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__month reset editable"
                                placeholder="MM" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
                         <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__year reset editable"
                                placeholder="YYYY" required autocomplete="off" pattern="\d*" step="1" maxlength="4"/>-->
@@ -334,11 +334,14 @@
                         </style>
                         <script>
                             $( function() {
+                                var i = 1;
                                 function generateMonth(){
-                                    var opt = $("<option></option>").val("January")
-                                            .text("January");
-                                    var m = $("#month");
-                                    m.append(opt);
+                                    var i = 1, m = $("#month");
+                                    for(;i<=12;i++){
+                                        var opt = $("<option></option>").val(i)
+                                                .text(i);
+                                        m.append(opt);
+                                    }
                                 }
                                 function generateDay(){
                                     var i = 1,
@@ -364,6 +367,8 @@
                                 generateYear();
                                 $.widget( "custom.combobox", {
                                     _create: function() {
+                                        var local = i;
+                                        i++;
                                         this.wrapper = $( "<span>" )
                                                 .addClass( "custom-combobox" )
                                                 .css("margin-left", "40px")
@@ -371,11 +376,11 @@
                                                 .insertAfter( this.element );
 
                                         this.element.hide();
-                                        this._createAutocomplete();
+                                        this._createAutocomplete(local);
                                         this._createShowAllButton();
                                     },
 
-                                    _createAutocomplete: function() {
+                                    _createAutocomplete: function(local) {
                                         var selected = this.element.children( ":selected" ),
                                                 value = selected.val() ? selected.text() : "";
 
@@ -395,7 +400,9 @@
                                                         "ui-tooltip": "ui-state-highlight"
                                                     }
                                                 });
-
+                                        if(local==1) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
+                                        else if(local==2) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
+                                        else if (local==3) this.input.addClass("UserPage__birthday__year").attr("placeholder", "Year");
                                         this._on( this.input, {
                                             autocompleteselect: function( event, ui ) {
                                                 ui.item.option.selected = true;

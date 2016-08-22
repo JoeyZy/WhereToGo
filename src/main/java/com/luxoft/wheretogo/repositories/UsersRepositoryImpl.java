@@ -39,6 +39,7 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		u.setLastName(user.getLastName());
 		u.setDescription(user.getDescription());
 		u.setPhoneNumber(user.getPhoneNumber());
+        u.setBirthday(user.getBirthday());
 		u.setActive(true);
 		u.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
 		Set<Category> userCategories = new HashSet<Category>();
