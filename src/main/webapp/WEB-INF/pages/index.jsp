@@ -521,7 +521,7 @@
                     </li>
                     <li class="SinglePage__inputItem UserPage__about">
                         <label class="SinglePage__inputItem__label"><b>About me:</b></label>
-                        <textarea placeholder="Short info about yourself" rows="4" cols="50" class=" UserPage__about__input reset editable"></textarea>
+                        <textarea placeholder="Short info about yourself" rows="4" cols="40" class=" UserPage__about__input reset editable"></textarea>
                     </li>
                 </ul>
 

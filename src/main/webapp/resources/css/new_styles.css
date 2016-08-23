@@ -476,6 +476,7 @@ h1, h3 {
 .SinglePage__inputItem__label {
   width: 40%;
   display: inline-block;
+  vertical-align:top;
 }
 .SinglePage__inputItem__inputField {
   height: 20px;
@@ -792,3 +793,8 @@ div.accordion{
   height: 250px;
   overflow: auto;
 }
+.UserPage__about__input{
+  border: none;
+  resize: none;
+}
+
