@@ -400,8 +400,8 @@
                                                         "ui-tooltip": "ui-state-highlight"
                                                     }
                                                 });
-                                        if(local==1) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
-                                        else if(local==2) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
+                                        if(local==1) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
+                                        else if(local==2) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
                                         else if (local==3) this.input.addClass("UserPage__birthday__year").attr("placeholder", "Year");
                                         this._on( this.input, {
                                             autocompleteselect: function( event, ui ) {
@@ -501,17 +501,17 @@
                                         this.element.show();
                                     }
                                 });
-                                $( "#month" ).combobox();
                                 $( "#day" ).combobox();
+                                $( "#month" ).combobox();
                                 $( "#year" ).combobox();
                             } );
                         </script>
 
                         <div class="ui-widget ui-front">
-                            <select id="month">
+                            <select id="day">
                                 <option value="">Select one...</option>
                             </select>
-                            <select id="day">
+                            <select id="month">
                                 <option value="">Select one...</option>
                             </select>
                             <select id="year">
@@ -521,7 +521,7 @@
                     </li>
                     <li class="SinglePage__inputItem UserPage__about">
                         <label class="SinglePage__inputItem__label"><b>About me:</b></label>
-                        <textarea placeholder="Short info about yourself" rows="4" cols="50" class="SinglePage__inputItem__inputField UserPage__about__input reset editable"></textarea>
+                        <textarea placeholder="Short info about yourself" rows="4" cols="50" class=" UserPage__about__input reset editable"></textarea>
                     </li>
                 </ul>
 

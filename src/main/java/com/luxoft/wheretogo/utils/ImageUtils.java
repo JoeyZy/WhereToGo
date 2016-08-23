@@ -29,7 +29,11 @@ public class ImageUtils {
             String path = pathToFolder+fileName+"."+ext;
             //Default path: apache-tomcat -> bin
             File img = new File(path);
+            File dir = new File(pathToFolder);
             path = img.getPath();
+            if(!dir.exists()){
+                boolean success = (new File(pathToFolder)).mkdirs();
+            }
             try {
                 String imageDataBytes = imageDataString.substring(imageDataString.indexOf(",")+1);
                 Base64.Decoder d = Base64.getDecoder();
