@@ -31,6 +31,9 @@ public class RestServiceController {
 	private static final Boolean NOT_DELETED = false;
 
 	@Autowired
+	private CategoriesService categoriesService;
+
+	@Autowired
 	private EventsService eventsService;
 
 	@Autowired
@@ -282,6 +285,11 @@ public class RestServiceController {
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public void addUser(@RequestBody UserInfo user) {
+		Set<Category> userCategory = new HashSet<>();
+		for(long i : user.getInterestingCategoriesMas()){
+			userCategory.add(categoriesService.findById(i));
+		}
+		user.setInterestingCategories(userCategory);
 		usersService.add(user);
 	}
 

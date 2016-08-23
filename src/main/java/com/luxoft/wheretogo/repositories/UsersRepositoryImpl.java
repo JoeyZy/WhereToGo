@@ -42,14 +42,12 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
         u.setBirthday(user.getBirthday());
 		u.setActive(true);
 		u.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
+		u.setUser_categories(user.getInterestingCategories());
 		Set<Category> userCategories = new HashSet<Category>();
-		for(Category i: user.getInterestingCategories()){
-			userCategories.add(categoriesService.findById(i.getId()));
-		}
 		if(user.getInterestingCategories().size() < 1){
 			userCategories.addAll(categoriesService.findAll());
+			u.setUser_categories(userCategories);
 		}
-		u.setUser_categories(userCategories);
 		if (findByEmail(u.getEmail()) == null) {
 			super.add(u);
 		}

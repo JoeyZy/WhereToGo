@@ -1,12 +1,15 @@
 package com.luxoft.wheretogo.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.luxoft.wheretogo.services.CategoriesService;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,6 +20,8 @@ import java.util.Set;
 @EqualsAndHashCode(of = {"name", "email"})
 @ToString(of = {"name", "email"})
 public class UserInfo {
+    @Autowired
+    private CategoriesService categoriesService;
     private long id;
     private String role;
     private String email;
@@ -28,6 +33,8 @@ public class UserInfo {
     private String phoneNumber;
     private boolean active;
     private Set<Category> interestingCategories;
+    private long[] interestingCategoriesMas;
+
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy", timezone="default")
     private Date birthday;
@@ -46,7 +53,9 @@ public class UserInfo {
         }
         this.description=description;
         this.phoneNumber=phone;
+
         this.birthday=birthday;
+
         this.interestingCategories = interestingCategories;
     }
 

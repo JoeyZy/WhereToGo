@@ -2345,7 +2345,7 @@ $(window).on("load",function () {
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
-					"interestingCategories": checkedCategories,
+					"interestingCategoriesMas": checkedCategories,
 					"description": $userAboutMe.val(),
 					"phoneNumber": $userPhone.val(),
 					"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
