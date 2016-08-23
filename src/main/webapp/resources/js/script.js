@@ -474,6 +474,7 @@ $(window).on("load",function () {
 		categoriesFilter.html(categoriesListElement(data));
 		$eventCategories.multiselect();
 		});
+
 	// $.getJSON("eventsCategories", function (data) { bla
 	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
 	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
@@ -2179,6 +2180,9 @@ $(window).on("load",function () {
 			renderAddUserPage();
 		}
 		function renderUserInfoPage(user) {
+			$('a.activeBackground').hide();
+			var $userCategories = $userPage.find(".interestingCategoriesMultiselect.display_inline");
+			$userCategories.empty();
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
 				$userEmail.attr("readonly", true);
@@ -2192,7 +2196,15 @@ $(window).on("load",function () {
 				$userPage.find('.UserPage__events').show();
 				$userAboutMe.val(user.description);
 				$userAboutMe.attr("readonly",true);
-
+				var userCategoriesString = '';
+				for(var i in user.interestingCategories){
+					if (i == 0){
+						userCategoriesString += user.interestingCategories[i].name;
+					} else {
+						userCategoriesString += ", " + user.interestingCategories[i].name;
+					}
+				}
+				$userCategories.append(userCategoriesString);
 				/*$userMonth.val(user.birthday);
 				$userMonth.attr("readonly", true);
 
