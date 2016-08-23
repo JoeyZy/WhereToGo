@@ -474,6 +474,7 @@ $(window).on("load",function () {
 		categoriesFilter.html(categoriesListElement(data));
 		$eventCategories.multiselect();
 		});
+
 	// $.getJSON("eventsCategories", function (data) { bla
 	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
 	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
