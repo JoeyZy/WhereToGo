@@ -307,6 +307,218 @@
                         <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
                                placeholder="Phone number" required/>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__birthday">
+                        <label class="SinglePage__inputItem__label"><b>Birthday:</b></label>
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"
+                                readonly/>
+                        <!--<input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__month reset editable"
+                               placeholder="MM" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
+                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__year reset editable"
+                               placeholder="YYYY" required autocomplete="off" pattern="\d*" step="1" maxlength="4"/>-->
+                        <style>
+                            .custom-combobox {
+                                position: relative;
+                                display: inline-block;
+                            }
+                            .custom-combobox-toggle {
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                margin-left: -1px;
+                                padding: 0;
+                            }
+                            .custom-combobox-input {
+                                margin: 0;
+                                padding: 5px 10px;
+                            }
+                        </style>
+                        <script>
+                            $( function() {
+                                var i = 1;
+                                function generateMonth(){
+                                    var i = 1, m = $("#month");
+                                    for(;i<=12;i++){
+                                        var opt = $("<option></option>").val(i)
+                                                .text(i);
+                                        m.append(opt);
+                                    }
+                                }
+                                function generateDay(){
+                                    var i = 1,
+                                        m = $("#day");
+                                    for(;i<=31;i++){
+                                        var opt = $("<option></option>").val(i)
+                                                .text(i);
+                                        m.append(opt);
+                                    }
+
+                                }
+                                function generateYear(){
+                                    var i = 1940,
+                                        m = $("#year");
+                                    for(;i<=2016;i++){
+                                        var opt = $("<option></option>").val(i)
+                                                .text(i);
+                                        m.append(opt);
+                                    }
+                                }
+                                generateMonth();
+                                generateDay();
+                                generateYear();
+                                $.widget( "custom.combobox", {
+                                    _create: function() {
+                                        var local = i;
+                                        i++;
+                                        this.wrapper = $( "<span>" )
+                                                .addClass( "custom-combobox" )
+                                                .css("margin-left", "40px")
+                                                .css("width", "120px")
+                                                .insertAfter( this.element );
+
+                                        this.element.hide();
+                                        this._createAutocomplete(local);
+                                        this._createShowAllButton();
+                                    },
+
+                                    _createAutocomplete: function(local) {
+                                        var selected = this.element.children( ":selected" ),
+                                                value = selected.val() ? selected.text() : "";
+
+                                        this.input = $( "<input>" )
+                                                .appendTo( this.wrapper )
+                                                .val( value )
+                                                .attr( "title", "" )
+                                                .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                                                .css("width","inherit")
+                                                .autocomplete({
+                                                    delay: 0,
+                                                    minLength: 0,
+                                                    source: $.proxy( this, "_source" )
+                                                })
+                                                .tooltip({
+                                                    classes: {
+                                                        "ui-tooltip": "ui-state-highlight"
+                                                    }
+                                                });
+                                        if(local==1) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
+                                        else if(local==2) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
+                                        else if (local==3) this.input.addClass("UserPage__birthday__year").attr("placeholder", "Year");
+                                        this._on( this.input, {
+                                            autocompleteselect: function( event, ui ) {
+                                                ui.item.option.selected = true;
+                                                this._trigger( "select", event, {
+                                                    item: ui.item.option
+                                                });
+                                            },
+
+                                            autocompletechange: "_removeIfInvalid"
+                                        });
+                                    },
+
+                                    _createShowAllButton: function() {
+                                        var input = this.input,
+                                                wasOpen = false;
+
+                                        $( "<a>" )
+                                                .attr( "tabIndex", -1 )
+                                                .attr( "title", "Show All Items" )
+                                                .tooltip()
+                                                .appendTo( this.wrapper )
+                                                .button({
+                                                    icons: {
+                                                        primary: "ui-icon-triangle-1-s"
+                                                    },
+                                                    text: false
+                                                })
+                                                .removeClass( "ui-corner-all" )
+                                                .addClass( "custom-combobox-toggle ui-corner-right" )
+                                                .on( "mousedown", function() {
+                                                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                                                })
+                                                .on( "click", function() {
+                                                    input.trigger( "focus" );
+
+                                                    // Close if already visible
+                                                    if ( wasOpen ) {
+                                                        return;
+                                                    }
+
+                                                    // Pass empty string as value to search for, displaying all results
+                                                    input.autocomplete( "search", "" );
+                                                });
+                                    },
+
+                                    _source: function( request, response ) {
+                                        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+                                        response( this.element.children( "option" ).map(function() {
+                                            var text = $( this ).text();
+                                            if ( this.value && ( !request.term || matcher.test(text) ) )
+                                                return {
+                                                    label: text,
+                                                    value: text,
+                                                    option: this
+                                                };
+                                        }) );
+                                    },
+
+                                    _removeIfInvalid: function( event, ui ) {
+
+                                        // Selected an item, nothing to do
+                                        if ( ui.item ) {
+                                            return;
+                                        }
+
+                                        // Search for a match (case-insensitive)
+                                        var value = this.input.val(),
+                                                valueLowerCase = value.toLowerCase(),
+                                                valid = false;
+                                        this.element.children( "option" ).each(function() {
+                                            if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                                                this.selected = valid = true;
+                                                return false;
+                                            }
+                                        });
+
+                                        // Found a match, nothing to do
+                                        if ( valid ) {
+                                            return;
+                                        }
+
+                                        // Remove invalid value
+                                        this.input
+                                                .val( "" )
+                                                .attr( "title", value + " didn't match any item" )
+                                                .tooltip( "open" );
+                                        this.element.val( "" );
+                                        this._delay(function() {
+                                            this.input.tooltip( "close" ).attr( "title", "" );
+                                        }, 2500 );
+                                        this.input.autocomplete( "instance" ).term = "";
+                                    },
+
+                                    _destroy: function() {
+                                        this.wrapper.remove();
+                                        this.element.show();
+                                    }
+                                });
+                                $( "#month" ).combobox();
+                                $( "#day" ).combobox();
+                                $( "#year" ).combobox();
+                            } );
+                        </script>
+
+                        <div class="ui-widget ui-front">
+                            <select id="month">
+                                <option value="">Select one...</option>
+                            </select>
+                            <select id="day">
+                                <option value="">Select one...</option>
+                            </select>
+                            <select id="year">
+                                <option value="">Select one...</option>
+                            </select>
+                        </div>
+                    </li>
                     <li class="SinglePage__inputItem UserPage__about">
                         <label class="SinglePage__inputItem__label"><b>About me:</b></label>
                         <textarea placeholder="Short info about yourself" rows="4" cols="50" class="SinglePage__inputItem__inputField UserPage__about__input reset editable"></textarea>
