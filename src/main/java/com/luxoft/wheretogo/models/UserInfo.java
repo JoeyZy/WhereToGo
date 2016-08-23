@@ -27,12 +27,12 @@ public class UserInfo {
     private String description;
     private String phoneNumber;
     private boolean active;
-    private long[] interestingCategories;
+    private Set<Category> interestingCategories;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy", timezone="default")
     private Date birthday;
 
-    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id, String description, String phone, Date birthday) {
+    public UserInfo(String role, String email, String firstName, String lastName, boolean active, String picture, long id, String description, String phone, Date birthday, Set<Category> interestingCategories) {
         this.id=id;
         this.role = role;
         this.email = email;
@@ -47,6 +47,7 @@ public class UserInfo {
         this.description=description;
         this.phoneNumber=phone;
         this.birthday=birthday;
+        this.interestingCategories = interestingCategories;
     }
 
     public UserInfo() {}
