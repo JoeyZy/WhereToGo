@@ -7,6 +7,7 @@ import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -40,7 +41,6 @@ public class UsersServiceImpl implements UsersService {
 		User user = usersRepository.findByEmail(userLogin);
 		return user;
 	}
-
 	@Override
 	public void update(User user) {
 

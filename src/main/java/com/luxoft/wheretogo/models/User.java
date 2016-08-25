@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -99,7 +101,6 @@ public class User {
 	}
 
 	public void setInfo(UserInfo user) {
-		if(user.getPassword()!="") this.password = user.getPassword();
 		this.firstName=user.getFirstName();
 		this.lastName = user.getLastName();
 		this.birthday = user.getBirthday();
