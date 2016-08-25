@@ -678,6 +678,9 @@
                     <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editGroup"
                             onclick="this.blur();">Edit group
                     </button>
+                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editUser"
+                            onclick="this.blur();">Edit user
+                    </button>
                     <button type="submit"
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--delete"
                             onclick="this.blur();">Delete event
@@ -692,12 +695,19 @@
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--applyGroup"
                             onclick="this.blur();">Save changes
                     </button>
+                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--applyUser"
+                            onclick="this.blur();">Save changes
+                    </button>
                     <button type="submit"
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
                             onclick="this.blur();">Cancel
                     </button>
                     <button type="submit"
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingGroup"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingUser"
                             onclick="this.blur();">Cancel
                     </button>
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"

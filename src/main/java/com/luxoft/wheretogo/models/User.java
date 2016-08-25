@@ -97,4 +97,14 @@ public class User {
 		}
 		return this.picture;
 	}
+
+	public void setInfo(UserInfo user) {
+		if(user.getPassword()!="") this.password = user.getPassword();
+		this.firstName=user.getFirstName();
+		this.lastName = user.getLastName();
+		this.birthday = user.getBirthday();
+		this.phoneNumber=user.getPhoneNumber();
+		this.description = user.getDescription();
+		setPicture(user.getPicture());
+	}
 }

@@ -170,6 +170,24 @@ public class RestServiceController {
 		groupsService.update(group, authentication.getName(), authentication.getAuthorities());
 	}
 
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public ResponseEntity<String> updateGroup(@RequestBody UserInfo user, Authentication authentication) {
+		//User user = (User) httpRequest.getSession().getAttribute("user");
+		if(user!=null){
+			Set<Category> userCategory = new HashSet<>();
+			for(long i : user.getInterestingCategoriesMas()){
+				userCategory.add(categoriesService.findById(i));
+			}
+			user.setInterestingCategories(userCategory);
+			User u  = usersService.findByEmail(user.getEmail());
+			u.setInfo(user);
+			usersService.update(u);
+
+		}
+		else return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
 
 
 	@RequestMapping("/group")

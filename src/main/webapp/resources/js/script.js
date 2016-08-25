@@ -44,6 +44,9 @@ $(window).on("load",function () {
 	var $buttonDeleteGroup = $singlePage.find('.SinglePage__button--deleteGroup');
 	var $buttonApplyGroup = $singlePage.find('.SinglePage__button--applyGroup');
 
+	var $buttonEditUser = $singlePage.find('.SinglePage__button--editUser'),
+		$buttonApplyUser = $singlePage.find('.SinglePage__button--applyUser');
+
 	var $buttons = $singlePage.find("button");
 	var $errors = $singlePage.find('.errors');
 	var $buttonEdit = $singlePage.find(".SinglePage__button--edit");
@@ -117,6 +120,7 @@ $(window).on("load",function () {
 	});
 
 	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
+	var $buttonCancelEditingUser = $singlePage.find('.SinglePage__button--cancelEditingUser');
 
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
@@ -141,6 +145,13 @@ $(window).on("load",function () {
 		$buttonUnSubscribe.hide();
 		return false;
 	});
+	$buttonEditUser.on('click', function(user) {
+		makeUserPageEditable();
+		$buttonEditUser.hide();
+		$buttonApplyUser.show();
+		$buttonCancelEditingUser.show();
+		return false;
+	});
 
 	$buttonApply.on('click', function () {
 		updateEvent(true);
@@ -149,6 +160,10 @@ $(window).on("load",function () {
 
 	$buttonApplyGroup.on('click', function () {
 		updateGroup(true);
+		return false;
+	});
+	$buttonApplyUser.on('click', function () {
+		updateUser();
 		return false;
 	});
 
@@ -181,6 +196,15 @@ $(window).on("load",function () {
 		}
 		$buttonApplyGroup.hide();
 		$buttonCancelEditingGroup.hide();
+		return false;
+	});
+
+	$buttonCancelEditingUser.on('click', function (user) {
+		makeUserPageUneditable();
+		$buttonEditUser.show();
+		$buttonApplyUser.hide();
+		$buttonCancelEditingUser.hide();
+		renderUserInfoPage(user);
 		return false;
 	});
 
@@ -305,6 +329,39 @@ $(window).on("load",function () {
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
+	}
+
+	function updateUser() {
+		var checkedCategories = [];
+		var userJson = {
+			"email": $userEmail.val(),
+			"password": $userPassword.val(),
+			"firstName": $userFirstName.val(),
+			"lastName": $userLastName.val(),
+			"interestingCategoriesMas": checkedCategories,
+			"description": $userAboutMe.val(),
+			"phoneNumber": $userPhone.val(),
+			"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
+			"picture": isDefaultPicture() ? "" : $picture.attr('src')
+		};
+		$.ajax({
+			url: "updateUser",
+			data: JSON.stringify(userJson),
+			type: "POST",
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Accept", "application/json");
+				xhr.setRequestHeader("Content-Type", "application/json");
+			},
+			success: function () {
+				loadEvents();
+				createQueryHash(filters);
+			},
+			error: function (error) {
+				alert("ERROR!" + error);
+			},
+			complete: function () {
+			}
+		});
 	}
 
 	function resetSinglePage() {
@@ -1686,6 +1743,62 @@ $(window).on("load",function () {
 		$picture.attr('title', 'Click Me to change!');
 	}
 
+	function makeUserPageUneditable() {
+		$userEmail.attr("readonly", true);
+		$userPage.find('.UserPage__password').hide();
+		$userPage.find('.UserPage__password__confirm').hide();
+		$userFirstName.attr("readonly", true);
+		$userLastName.hide();
+		$userPhone.attr("readonly", true);
+		$userPage.find('.UserPage__events').show();
+		$userAboutMe.attr("readonly",true);
+		$pictureUploadPlaceholder.off('click');
+		$picture.attr('title', '');
+		$userMonth.parent().hide();
+		$userDay.parent().hide();
+		$userYear.parent().hide();
+
+		$userHolder.show()
+
+		if (isDefaultPicture()) {
+			$pictureParent.hide();
+		}
+
+	}
+
+	function makeUserPageEditable() {
+		$userEmail.attr("readonly", false);
+		$userPage.find('.UserPage__password').show();
+		$userPage.find('.UserPage__password__confirm').show();
+		$userFirstName.attr("readonly", false);
+		$userLastName.show();
+		var name = $userFirstName.val();
+		$userLastName.val(name.split(" ")[1]);
+		$userFirstName.val(name.split(" ")[0]);
+		$userPhone.attr("readonly", false);
+		$userPage.find('.UserPage__events').hide();
+		$userAboutMe.attr("readonly",false);
+
+		$userMonth.parent().show();
+		$userDay.parent().show();
+		$userYear.parent().show();
+
+		var br = $userHolder.val();
+		$userMonth.val(br.split("/")[0]);
+		$userDay.val(br.split("/")[1]);
+		$userYear.val(br.split("/")[2]);
+
+		$userHolder.hide()
+
+		$pictureUploadPlaceholder.off('click');
+		$pictureUploadPlaceholder.on('click', function () {
+			$buttonUploadPicture.click();
+			return false;
+		});
+		$pictureParent.show();
+		$picture.attr('title', 'Click Me to change!');
+	}
+
 	function hideCalendarPage() {
 		$calendarPage.hide();
 		$calendarPage.find('#calendar').hide();
@@ -2227,8 +2340,13 @@ $(window).on("load",function () {
 				} else {
 					$pictureParent.hide();
 				}
-				$singlePage.addClass('visible');
 			});
+			$buttonEdit.prop( "disabled", false );
+			if (user) {
+				$buttonEditUser.disabled = false;
+				$buttonEditUser.show();
+			}
+			$singlePage.addClass('visible');
 		}
 
 		function renderAddUserPage() {
