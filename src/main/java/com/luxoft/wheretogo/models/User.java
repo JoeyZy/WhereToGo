@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -96,5 +98,14 @@ public class User {
 			return "";
 		}
 		return this.picture;
+	}
+
+	public void setInfo(UserInfo user) {
+		this.firstName=user.getFirstName();
+		this.lastName = user.getLastName();
+		this.birthday = user.getBirthday();
+		this.phoneNumber=user.getPhoneNumber();
+		this.description = user.getDescription();
+		setPicture(user.getPicture());
 	}
 }

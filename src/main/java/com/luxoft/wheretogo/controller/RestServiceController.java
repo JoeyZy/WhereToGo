@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -168,6 +169,26 @@ public class RestServiceController {
 	public void updateGroup(@RequestBody Group group, Authentication authentication) {
 		group.setDeleted(NOT_DELETED);
 		groupsService.update(group, authentication.getName(), authentication.getAuthorities());
+	}
+
+	@Autowired
+	private PasswordEncoder encoder;
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public ResponseEntity<String> updateGroup(@RequestBody UserInfo user, Authentication authentication) {
+		if(user!=null){
+			Set<Category> userCategory = new HashSet<>();
+			for(long i : user.getInterestingCategoriesMas()){
+				userCategory.add(categoriesService.findById(i));
+			}
+			user.setInterestingCategories(userCategory);
+			User u  = usersService.findByEmail(user.getEmail());
+			u.setInfo(user);
+			if(user.getPassword()!="") u.setPassword(encoder.encode(user.getPassword()));
+			usersService.update(u);
+
+		}
+		else return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 

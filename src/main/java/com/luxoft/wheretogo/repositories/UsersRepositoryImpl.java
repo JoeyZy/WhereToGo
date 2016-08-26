@@ -48,7 +48,10 @@ public class UsersRepositoryImpl extends AbstractRepository<User> implements Use
 		}
 		super.update(u);
 	}
-
+	@Override
+	public void merge(User user) {
+		super.merge(user);
+	}
 	@Override
 	public List<User> findAll() {
 		return super.findAll(null);

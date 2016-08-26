@@ -3,8 +3,11 @@ package com.luxoft.wheretogo.services;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.repositories.UsersRepository;
+import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,9 +41,16 @@ public class UsersServiceImpl implements UsersService {
 		User user = usersRepository.findByEmail(userLogin);
 		return user;
 	}
-
 	@Override
 	public void update(User user) {
+
+		if(!user.getPicture().equals("")){
+			if(user.getPicture().substring(0,4).equals("data")){
+				user.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
+				//Deleting old image from server needed only if group profile is editing
+				ImageUtils.deleteOldPicture(user.getPicture());
+			}
+		}
 		usersRepository.update(user);
 	}
 
