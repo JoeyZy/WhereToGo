@@ -2270,6 +2270,7 @@ $(window).on("load",function () {
 				$interestingCategories.find('a span').addClass('activeBackground');
 				$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
 				if(!checkCategoriesDownloaded){
+					$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="selectAll">Select all categories</label><input type="checkbox" value="selectAll" data-id="-1" id="selectAll"/></li>');
 					$.getJSON('eventsCategories', function (data) {
 						$.each(data, function(key, value){
 							$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="' + value.category +'">' + value.category +'</label><input type="checkbox" value="' + value.category + '" data-id="' + value.id + '" id="' + value.category +'"/></li>');
@@ -2286,42 +2287,69 @@ $(window).on("load",function () {
 					var checkboxCategories = $('.interesting_categories_for_new_user ul li');
 					checkboxCategories.find('input:checkbox').on('click', function(event) {
 						event.stopPropagation();
-						var currentId = $(this).attr('data-id');
-						var currentValue = $(this).attr('value');
-						if($(this).is(':checked')){
-							$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
-							numberofChecked++;
-							checkedCategories.push(currentId);
-							if(numberofChecked === 1){
-								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
+						var numberOfAllCategories = checkboxCategories.find('input').length - 1;
+						if($(this).attr('data-id') == -1){
+							if($(this).is(':checked')){
+								checkboxCategories.find('input').prop('checked', false);
+								$(this).prop('checked', true);
+								numberofChecked = 0;
 							} else {
-								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
+								checkboxCategories.find('input').prop('checked', true);
+								$(this).prop('checked', false);
+								numberofChecked = numberOfAllCategories;
 							}
-
-							$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
-								event.stopPropagation();
-								$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
-								// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
-								$(this).parent().remove();
-								console.log(checkedCategories);
-							});
-
+							$('.token').remove();
+							checkedCategories = [];
+							checkboxCategories.find('input').trigger('click');
 						} else {
-							$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
-							numberofChecked--;
-							if(checkedCategories.indexOf(currentId) !== -1){
-								checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
-							}
-							if(numberofChecked === 1){
-								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
-							} else {
-								if(numberofChecked === 0){
-									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+							var currentId = $(this).attr('data-id');
+							var currentValue = $(this).attr('value');
+							if($(this).is(':checked')){
+								$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
+								numberofChecked++;
+								checkedCategories.push(currentId);
+								if(numberofChecked === 1){
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
 								} else {
-									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
+								}
+
+								$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
+									event.stopPropagation();
+									$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
+									// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
+									$(this).parent().remove();
+								});
+
+							} else {
+								$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
+								numberofChecked--;
+								if(checkedCategories.indexOf(currentId) !== -1){
+									checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
+								}
+								if(numberofChecked === 1){
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
+								} else {
+									if(numberofChecked === 0){
+										$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+									} else {
+										$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
+									}
 								}
 							}
+							var selectAllCheckboxes = checkboxCategories.find('input[data-id=' + (-1) + ']');
+							if(numberofChecked < numberOfAllCategories){
+								if (selectAllCheckboxes.prop('checked') == true){
+									selectAllCheckboxes.prop('checked', false);
+								}
+							} else {
+								if (selectAllCheckboxes.prop('checked') == false){
+									selectAllCheckboxes.prop('checked', true);
+								}
+							}
+							console.log(checkedCategories);
 						}
+
 					});
 
 				}
@@ -2331,7 +2359,9 @@ $(window).on("load",function () {
 
 			$(document).bind('click', function(e) {
 				var $clicked = $(e.target);
-				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").hide();
+				if($('.interesting_categories_for_new_user').css('display') == 'block'){
+					if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
+				}
 			});
 
 			$buttonAddUser.on('click', function (event) {
