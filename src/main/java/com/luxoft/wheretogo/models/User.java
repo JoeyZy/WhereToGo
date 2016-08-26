@@ -106,6 +106,7 @@ public class User {
 		this.birthday = user.getBirthday();
 		this.phoneNumber=user.getPhoneNumber();
 		this.description = user.getDescription();
+		this.user_categories = user.getInterestingCategories();
 		setPicture(user.getPicture());
 	}
 }

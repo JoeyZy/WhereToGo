@@ -333,6 +333,10 @@ $(window).on("load",function () {
 
 	function updateUser() {
 		var checkedCategories = [];
+		$.each($('.token'), function (key, value) {
+			checkedCategories.push($(this).attr('data-id'));
+		})
+		console.log(checkedCategories);
 		var userJson = {
 			"email": $userEmail.val(),
 			"password": $userPassword.val(),
@@ -1788,7 +1792,9 @@ $(window).on("load",function () {
 		$userDay.val(br.split("/")[1]);
 		$userYear.val(br.split("/")[2]);
 
-		$userHolder.hide()
+		$userHolder.hide();
+
+		downloadInterestingCategoriesForUser(true);
 
 		$pictureUploadPlaceholder.off('click');
 		$pictureUploadPlaceholder.on('click', function () {
@@ -2278,6 +2284,145 @@ $(window).on("load",function () {
 	var $userYear = $userPage.find('.UserPage__birthday__year');
 	var $userHolder = $userPage.find(".UserPage__birthday__holder");
 
+	function downloadInterestingCategoriesForUser(isUserPageEditable){
+		var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
+		$interestingCategories.find('div.interesting_categories_for_new_user').remove();
+		$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
+		var checkCategoriesDownloaded = false;
+		var numberOfChecked = 0;
+		var checkedCategories = [];
+		$('.interestingCategoriesMultiselect').find('div').remove();
+		var currentInterestingCategories = [];
+		if(isUserPageEditable == true){
+			currentInterestingCategories = $('.interestingCategoriesMultiselect').html().split(', ');
+			$('.interestingCategoriesMultiselect').html('');
+			console.log(currentInterestingCategories);
+			$.getJSON('eventsCategories', function (data) {
+				$.each(data, function(key, value){
+					if(currentInterestingCategories.indexOf(value.category) != -1 ){
+						numberOfChecked++;
+						checkedCategories.push(value.id);
+						$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + value.id + '"><div class="token_title">' + value.category + '</div><div class="token_del">&#10006;</div></div>')
+					}
+				});
+				$interestingCategories.find('a').css('display', 'inline');
+				if(numberOfChecked === 1){
+					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberOfChecked + ' Categorie')
+				} else if(numberOfChecked > 1){
+					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberOfChecked + ' Categories')
+				} else {
+					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+				}
+			});
+		}
+		$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+		$interestingCategories.find('a').off();
+		$interestingCategories.find('a').on('click', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			$interestingCategories.find('a').addClass('activeBackground');
+			$interestingCategories.find('a span').addClass('activeBackground');
+			$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
+			if(!checkCategoriesDownloaded){
+				$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="selectAll">Select all categories</label><input type="checkbox" value="selectAll" data-id="-1" id="selectAll"/></li>');
+				$.getJSON('eventsCategories', function (data) {
+					$.each(data, function(key, value){
+						$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="' + value.category +'">' + value.category +'</label><input type="checkbox" value="' + value.category + '" data-id="' + value.id + '" id="' + value.category +'"/></li>');
+					 	if(isUserPageEditable == true){
+							if(currentInterestingCategories.indexOf(value.category) != -1 ){
+								$interestingCategories.find('div.interesting_categories_for_new_user ul li input[data-id=' + value.id + ']').prop('checked', 'true');
+							}
+						}
+					});
+					$('div.interesting_categories_for_new_user').slideToggle('slow');
+					checkCategoriesDownloaded = true;
+					checkboxCategoriesOn(numberOfChecked, checkedCategories);
+				});
+			} else {
+				$('div.interesting_categories_for_new_user').slideToggle('slow');
+			}
+
+			function checkboxCategoriesOn(numberofChecked, checkedCategories) {
+				var checkboxCategories = $('.interesting_categories_for_new_user ul li');
+				checkboxCategories.find('input:checkbox').on('click', function(event) {
+					event.stopPropagation();
+					var numberOfAllCategories = checkboxCategories.find('input').length - 1;
+					if($(this).attr('data-id') == -1){
+						if($(this).is(':checked')){
+							checkboxCategories.find('input').prop('checked', false);
+							$(this).prop('checked', true);
+							numberofChecked = 0;
+						} else {
+							checkboxCategories.find('input').prop('checked', true);
+							$(this).prop('checked', false);
+							numberofChecked = numberOfAllCategories;
+						}
+						$('.token').remove();
+						checkedCategories = [];
+						checkboxCategories.find('input').trigger('click');
+					} else {
+						var currentId = $(this).attr('data-id');
+						var currentValue = $(this).attr('value');
+						if($(this).is(':checked')){
+							$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
+							numberofChecked++;
+							checkedCategories.push(currentId);
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
+							} else {
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
+							}
+
+							$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
+								event.stopPropagation();
+								$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
+								// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
+								$(this).parent().remove();
+							});
+
+						} else {
+							$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
+							numberofChecked--;
+							if(checkedCategories.indexOf(currentId) !== -1){
+								checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
+							}
+							if(numberofChecked === 1){
+								$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
+							} else {
+								if(numberofChecked === 0){
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
+								} else {
+									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
+								}
+							}
+						}
+						var selectAllCheckboxes = checkboxCategories.find('input[data-id=' + (-1) + ']');
+						if(numberofChecked < numberOfAllCategories){
+							if (selectAllCheckboxes.prop('checked') == true){
+								selectAllCheckboxes.prop('checked', false);
+							}
+						} else {
+							if (selectAllCheckboxes.prop('checked') == false){
+								selectAllCheckboxes.prop('checked', true);
+							}
+						}
+					}
+
+				});
+
+			}
+
+		});
+
+
+		$(document).bind('click', function(e) {
+			var $clicked = $(e.target);
+			if($('.interesting_categories_for_new_user').css('display') == 'block'){
+				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
+			}
+		});
+	}
+
 	function renderSingleUserPage(user) {
 		resetSinglePage();
 		hideCalendarPage();
@@ -2372,116 +2517,8 @@ $(window).on("load",function () {
 			$userYear.attr("readonly", false);
 
 			$pictureParent.show();
-			var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
-			$interestingCategories.find('div.interesting_categories_for_new_user').remove();
-			$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
-			var checkCategoriesDownloaded = false;
-			var numberOfChecked = 0;
-			var checkedCategories = [];
-			$('.interestingCategoriesMultiselect').find('div').remove();
-			$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
-			$interestingCategories.find('a').off();
-			$interestingCategories.find('a').on('click', function(e){
-				e.stopPropagation();
-				e.preventDefault();
-				$interestingCategories.find('a').addClass('activeBackground');
-				$interestingCategories.find('a span').addClass('activeBackground');
-				$interestingCategories.find('.interesting_categories_for_new_user').addClass('activeBackground');
-				if(!checkCategoriesDownloaded){
-					$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="selectAll">Select all categories</label><input type="checkbox" value="selectAll" data-id="-1" id="selectAll"/></li>');
-					$.getJSON('eventsCategories', function (data) {
-						$.each(data, function(key, value){
-							$interestingCategories.find('div.interesting_categories_for_new_user ul').append('<li><label for="' + value.category +'">' + value.category +'</label><input type="checkbox" value="' + value.category + '" data-id="' + value.id + '" id="' + value.category +'"/></li>');
-						})
-						$('div.interesting_categories_for_new_user').slideToggle('slow');
-						checkCategoriesDownloaded = true;
-						checkboxCategoriesOn(numberOfChecked, checkedCategories);
-					});
-				} else {
-					$('div.interesting_categories_for_new_user').slideToggle('slow');
-				}
-
-				function checkboxCategoriesOn(numberofChecked, checkedCategories) {
-					var checkboxCategories = $('.interesting_categories_for_new_user ul li');
-					checkboxCategories.find('input:checkbox').on('click', function(event) {
-						event.stopPropagation();
-						var numberOfAllCategories = checkboxCategories.find('input').length - 1;
-						if($(this).attr('data-id') == -1){
-							if($(this).is(':checked')){
-								checkboxCategories.find('input').prop('checked', false);
-								$(this).prop('checked', true);
-								numberofChecked = 0;
-							} else {
-								checkboxCategories.find('input').prop('checked', true);
-								$(this).prop('checked', false);
-								numberofChecked = numberOfAllCategories;
-							}
-							$('.token').remove();
-							checkedCategories = [];
-							checkboxCategories.find('input').trigger('click');
-						} else {
-							var currentId = $(this).attr('data-id');
-							var currentValue = $(this).attr('value');
-							if($(this).is(':checked')){
-								$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + currentId + '"><div class="token_title">' + currentValue + '</div><div class="token_del">&#10006;</div></div>')
-								numberofChecked++;
-								checkedCategories.push(currentId);
-								if(numberofChecked === 1){
-									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie')
-								} else {
-									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories')
-								}
-
-								$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
-									event.stopPropagation();
-									$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
-									// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
-									$(this).parent().remove();
-								});
-
-							} else {
-								$('.interestingCategoriesMultiselect').find('div[data-id="' + currentId +'"]').remove();
-								numberofChecked--;
-								if(checkedCategories.indexOf(currentId) !== -1){
-									checkedCategories.splice(checkedCategories.indexOf(currentId), 1);
-								}
-								if(numberofChecked === 1){
-									$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categorie');
-								} else {
-									if(numberofChecked === 0){
-										$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
-									} else {
-										$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberofChecked + ' Categories');
-									}
-								}
-							}
-							var selectAllCheckboxes = checkboxCategories.find('input[data-id=' + (-1) + ']');
-							if(numberofChecked < numberOfAllCategories){
-								if (selectAllCheckboxes.prop('checked') == true){
-									selectAllCheckboxes.prop('checked', false);
-								}
-							} else {
-								if (selectAllCheckboxes.prop('checked') == false){
-									selectAllCheckboxes.prop('checked', true);
-								}
-							}
-							console.log(checkedCategories);
-						}
-
-					});
-
-				}
-
-			});
-
-
-			$(document).bind('click', function(e) {
-				var $clicked = $(e.target);
-				if($('.interesting_categories_for_new_user').css('display') == 'block'){
-					if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
-				}
-			});
-
+			downloadInterestingCategoriesForUser();
+			
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
 				if (!validateEventFields()) {
