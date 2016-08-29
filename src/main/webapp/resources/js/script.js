@@ -2302,6 +2302,11 @@ $(window).on("load",function () {
 						numberOfChecked++;
 						checkedCategories.push(value.id);
 						$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + value.id + '"><div class="token_title">' + value.category + '</div><div class="token_del">&#10006;</div></div>')
+						// $('div.token[data-id="' + value.id + '"] div.token_del').on('click', function(event){
+						// 	event.stopPropagation();
+						// 	$('.interesting_categories_for_new_user').find('input[data-id="' + value.id + '"]').trigger('click');
+						// 	$(this).parent().remove();
+						// });
 					}
 				});
 				$interestingCategories.find('a').css('display', 'inline');
@@ -2312,6 +2317,7 @@ $(window).on("load",function () {
 				} else {
 					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
 				}
+				$interestingCategories.find('a').trigger('click');
 			});
 		}
 		$('.SinglePage__inputItem__inputField.UserPage__Interesting').text('No choosen categories');
@@ -2343,6 +2349,15 @@ $(window).on("load",function () {
 
 			function checkboxCategoriesOn(numberofChecked, checkedCategories) {
 				var checkboxCategories = $('.interesting_categories_for_new_user ul li');
+				if(checkedCategories.length > 0){
+					$.each(checkedCategories, function(index, value){
+						$('div.token[data-id="' + value + '"] div.token_del').on('click', function(event){
+							event.stopPropagation();
+							$('.interesting_categories_for_new_user').find('input[data-id="' + value + '"]').trigger('click');
+							$(this).parent().remove();
+						});
+					});
+				}
 				checkboxCategories.find('input:checkbox').on('click', function(event) {
 					event.stopPropagation();
 					var numberOfAllCategories = checkboxCategories.find('input').length - 1;
@@ -2375,7 +2390,6 @@ $(window).on("load",function () {
 							$('div.token[data-id="' + currentId + '"] div.token_del').on('click', function(event){
 								event.stopPropagation();
 								$('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').trigger('click');
-								// $('.interesting_categories_for_new_user').find('input[data-id="' + currentId + '"]').prop('checked', false);
 								$(this).parent().remove();
 							});
 
