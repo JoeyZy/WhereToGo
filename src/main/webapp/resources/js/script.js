@@ -2602,6 +2602,18 @@ $(window).on("load",function () {
 			addErrorListItem("Phone number must not be empty");
 			valid = false;
 		}
+		if ( $userDay.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
+		if ( $userMonth.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
+		if ( $userYear.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
 		if(!($userPassword.val()===$userPasswordConfirm.val())){
 			addErrorListItem("Password and confirmation are not the same");
 			valid = false;
