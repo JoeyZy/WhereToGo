@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <user id="1" active="1" email="123@gmail.com" first_name="sally" last_name="green" password="123" role="user" />
-    <user id="2" active="1" email="1234@gmail.com" first_name="sam" last_name="harris" password="1234" role="user" />
-</dataset>

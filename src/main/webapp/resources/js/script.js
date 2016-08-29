@@ -26,6 +26,8 @@ $(window).on("load",function () {
 	var $eventDescription = $singlePage.find("#description");
 	var $eventLocation = $singlePage.find("#event-location");
 	var $eventMapHolder = $singlePage.find('#event-location-map-holder');
+	var $userLocation = $singlePage.find("#user-location");
+	var $userMapHolder = $singlePage.find('#user-location-map-holder');
 	var $eventTargetGroup = $singlePage.find("#target-group");
 	var $eventCost = $singlePage.find("#cost");
 	var $eventCostCurrency = $singlePage.find("#currencies");
@@ -59,7 +61,9 @@ $(window).on("load",function () {
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $checkboxShowEventMap = $singlePage.find('#show-event-location-map');
 	var $checkboxShowGroupMap = $singlePage.find('#show-group-location-map');
-	
+	var $checkboxShowUserMap = $singlePage.find('#show-user-location-map');
+
+
 	$buttonAddEvent.on('click', function () {
 
 		if (typeof user !== "undefined") {
@@ -344,6 +348,7 @@ $(window).on("load",function () {
 			"interestingCategoriesMas": checkedCategories,
 			"description": $userAboutMe.val(),
 			"phoneNumber": $userPhone.val(),
+			"location": $userLocation.val(),
 			"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
@@ -527,6 +532,13 @@ $(window).on("load",function () {
 		}
 	});
 
+	$checkboxShowUserMap.on("click", function() {
+		if($checkboxShowUserMap.find("input").prop("checked")) {
+			$userMapHolder.show();
+		} else {
+			$userMapHolder.hide();
+		}
+	});
 	$.getJSON("eventsCategories", function (data) {
 		var categoriesListElementTemplate = $('#event-categories-list').html();
 		var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
@@ -1754,7 +1766,10 @@ $(window).on("load",function () {
 		$userMonth.parent().hide();
 		$userDay.parent().hide();
 		$userYear.parent().hide();
-
+		$userLocation.attr('readonly', true);
+		$userLocation.attr('disabled', true);
+		$userLocation.removeClass("enabled-input");
+		$userLocation.addClass("disabled-input");
 		$userHolder.show()
 
 		if (isDefaultPicture()) {
@@ -1779,7 +1794,10 @@ $(window).on("load",function () {
 		$userMonth.parent().show();
 		$userDay.parent().show();
 		$userYear.parent().show();
-
+		$userLocation.attr('readonly', false);
+		$userLocation.attr('disabled', false);
+		$userLocation.removeClass("disabled-input");
+		$userLocation.addClass("enabled-input");
 		var br = $userHolder.val();
 		$userMonth.val(br.split("/")[0]);
 		$userDay.val(br.split("/")[1]);
@@ -2106,7 +2124,7 @@ $(window).on("load",function () {
 		function populateSinglePageEventPage(singlePage, event) {
 
 			$eventMapHolder.show();
-			map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
+			var map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
 			$eventMapHolder.hide();
 
 			if (typeof event != 'undefined') {
@@ -2435,6 +2453,10 @@ $(window).on("load",function () {
 	function renderSingleUserPage(user) {
 		resetSinglePage();
 		hideCalendarPage();
+		$userMapHolder.show();
+		var usermap = initGoogleMaps('user-location-map', 'user-location', '#show-user-location-map', '#user-location-map-holder');
+		$userMapHolder.hide();
+		$checkboxShowUserMap.find("input").prop("checked", false);
 		$groupPage.hide();
 		$singlePage.find('.EventPage').hide();
 		$singlePage.find('.UserPage').show();
@@ -2450,6 +2472,11 @@ $(window).on("load",function () {
 			$('a.activeBackground').hide();
 			var $userCategories = $userPage.find(".interestingCategoriesMultiselect.display_inline");
 			$userCategories.empty();
+			$userLocation.val("");
+			$userLocation.removeClass("enabled-input");
+			$userLocation.addClass("disabled-input");
+			$userLocation.attr('readonly', true);
+			$userLocation.attr('disabled', true);
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
 				$userEmail.attr("readonly", true);
@@ -2458,6 +2485,8 @@ $(window).on("load",function () {
 				$userFirstName.val(user.firstName + ' ' + user.lastName);
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
+				setLocationByAddress(usermap, user.location, '#show-user-location-map');
+				$userLocation.val(user.location);
 				$userPhone.val(user.phoneNumber);
 				$userPhone.attr("readonly", true);
 				$userPage.find('.UserPage__events').show();
@@ -2505,6 +2534,8 @@ $(window).on("load",function () {
 
 		function renderAddUserPage() {
 			$buttonAddUser.off();
+			$userLocation.attr('readonly', false);
+			$userLocation.attr('disabled', false);
 			$userPage.find('.UserPage__password').show();
 			$userPage.find('.UserPage__password__confirm').show();
 			$userPage.find('.UserPage__name__last').show();
@@ -2527,6 +2558,9 @@ $(window).on("load",function () {
 
 			$pictureParent.show();
 			var checkedCategories = [];
+
+
+
 			downloadInterestingCategoriesForUser(false, checkedCategories);
 			
 			$buttonAddUser.on('click', function (event) {
@@ -2543,6 +2577,7 @@ $(window).on("load",function () {
 					"interestingCategoriesMas": checkedCategories,
 					"description": $userAboutMe.val(),
 					"phoneNumber": $userPhone.val(),
+					"location": $userLocation.val(),
 					"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
 					"picture": isDefaultPicture() ? "" : $picture.attr('src')
 				};

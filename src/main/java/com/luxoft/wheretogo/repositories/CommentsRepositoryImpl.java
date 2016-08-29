@@ -1,7 +1,7 @@
 package com.luxoft.wheretogo.repositories;
 
 import com.luxoft.wheretogo.models.Comment;
-import com.sun.istack.internal.logging.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -91,6 +91,10 @@ public class User {
 	@Column(name="picture")
 	private String picture;
 
+	@Size(min = 7, max = 100)
+	@Column(name = "location")
+	private String location;
+
 	public void setPicture(String path){
 		this.picture = path;
 	}
@@ -108,6 +112,7 @@ public class User {
 		this.phoneNumber=user.getPhoneNumber();
 		this.description = user.getDescription();
 		this.user_categories = user.getInterestingCategories();
+		this.location = user.getLocation();
 		if(this.picture!=""){
 			ImageUtils.deleteOldPicture(this.picture);
 		}

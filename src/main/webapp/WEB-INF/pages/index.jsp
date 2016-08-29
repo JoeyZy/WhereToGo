@@ -302,6 +302,18 @@
                             <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
                             </a>
                     </li>
+                    <li class="SinglePage__inputItem UserPage__Location">
+                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
+                        <input contentEditable="false" id="user-location" title="Location:" type="text"
+                               placeholder="">
+                        <div class = "show-location-map" id="show-user-location-map">
+                            <input type = "checkbox" checked="checked" title = "Show on map"/>
+                            Show on map
+                        </div>
+                        <div id = "user-location-map-holder">
+                            <div class = "location-map" id="user-location-map"></div>
+                        </div>
+                    </li>
                     <li class="SinglePage__inputItem UserPage__phone">
                         <label class="SinglePage__inputItem__label"><b>Phone number:</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
