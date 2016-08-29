@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.luxoft.wheretogo.utils.ImageUtils;
+import com.luxoft.wheretogo.utils.PropertiesUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -113,9 +114,12 @@ public class User {
 		this.description = user.getDescription();
 		this.user_categories = user.getInterestingCategories();
 		this.location = user.getLocation();
-		if(this.picture!=""){
-			ImageUtils.deleteOldPicture(this.picture);
+		String old = this.picture;
+		if(!user.getPicture().equals("")){
+			if(user.getPicture().substring(0,4).equals("data")){
+				this.picture = ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path"));
+				ImageUtils.deleteOldPicture(old);
+			}
 		}
-		setPicture(user.getPicture());
 	}
 }

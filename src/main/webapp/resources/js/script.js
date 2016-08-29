@@ -166,7 +166,12 @@ $(window).on("load",function () {
 		updateGroup(true);
 		return false;
 	});
-	$buttonApplyUser.on('click', function () {
+	$buttonApplyUser.on('click', function (e) {
+		e.preventDefault();
+		if (!validateUserFields(0)) {
+			$errors.show();
+			return;
+		}
 		updateUser();
 		return false;
 	});
@@ -1779,7 +1784,6 @@ $(window).on("load",function () {
 	}
 
 	function makeUserPageEditable() {
-		$userEmail.attr("readonly", false);
 		$userPage.find('.UserPage__password').show();
 		$userPage.find('.UserPage__password__confirm').show();
 		$userFirstName.attr("readonly", false);
@@ -2559,7 +2563,7 @@ $(window).on("load",function () {
 			
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
-				if (!validateEventFields()) {
+				if (!validateUserFields(1)) {
 					$errors.show();
 					return;
 				}
@@ -2593,36 +2597,6 @@ $(window).on("load",function () {
 					complete: function () {
 					}
 				});
-				function validateEventFields() {
-					var valid = true;
-					$errors.empty();
-					if ($userEmail.val().length == 0) {
-						addErrorListItem("Email mustn't be empty");
-						valid = false;
-					}
-					if ($userPassword.val().length == 0) {
-						addErrorListItem("Enter password");
-						valid = false;
-					}
-					if ($userFirstName.val().length == 0) {
-						addErrorListItem("Enter First Name");
-						valid = false;
-					}
-					if ($userLastName.val().length == 0) {
-						addErrorListItem("Enter Last Name");
-						valid = false;
-					}
-					if ($userPhone.val().length == 0) {
-						addErrorListItem("Phone number must not be empty");
-						valid = false;
-					}
-					if(!($userPassword.val()===$userPasswordConfirm.val())){
-						addErrorListItem("Password and confirmation are not the same");
-						valid = false;
-					}
-					return valid;
-				}
-
 				function addErrorListItem(message) {
 					$errors.append('<li>' + message + '</li>');
 				}
@@ -2631,6 +2605,52 @@ $(window).on("load",function () {
 			$singlePage.addClass('visible');
 			return false;
 		}
+	}
+	function validateUserFields(flag) {
+		var valid = true;
+		$errors.empty();
+		if ($userEmail.val().length == 0) {
+			addErrorListItem("Email mustn't be empty");
+			valid = false;
+		}
+		if(flag===1){
+			if ($userPassword.val().length == 0) {
+				addErrorListItem("Enter password");
+				valid = false;
+			}
+		}
+		if ($userFirstName.val().length == 0) {
+			addErrorListItem("Enter First Name");
+			valid = false;
+		}
+		if ($userLastName.val().length == 0) {
+			addErrorListItem("Enter Last Name");
+			valid = false;
+		}
+		if ($userPhone.val().length == 0) {
+			addErrorListItem("Phone number must not be empty");
+			valid = false;
+		}
+		if ( $userDay.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
+		if ( $userMonth.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
+		if ( $userYear.val().length == 0) {
+			addErrorListItem("Day field must not be empty");
+			valid = false;
+		}
+		if(!($userPassword.val()===$userPasswordConfirm.val())){
+			addErrorListItem("Password and confirmation are not the same");
+			valid = false;
+		}
+		function addErrorListItem(message) {
+			$errors.append('<li>' + message + '</li>');
+		}
+		return valid;
 	}
 
 	// Find and render the filtered data results. Arguments are:
