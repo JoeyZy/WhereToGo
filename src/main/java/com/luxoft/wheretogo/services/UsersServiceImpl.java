@@ -47,8 +47,6 @@ public class UsersServiceImpl implements UsersService {
 		if(!user.getPicture().equals("")){
 			if(user.getPicture().substring(0,4).equals("data")){
 				user.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
-				//Deleting old image from server needed only if group profile is editing
-				ImageUtils.deleteOldPicture(user.getPicture());
 			}
 		}
 		usersRepository.update(user);

@@ -431,6 +431,7 @@ public class RestServiceController {
 	@RequestMapping(value = "/userImage", method = RequestMethod.GET)
 	public ResponseEntity<byte[]>  getUserImage(HttpServletRequest httpRequest) throws IOException {
 		User user = (User) httpRequest.getSession().getAttribute("user");
+		user = usersService.findByEmail(user.getEmail());
 		if(user!=null){
 			String picture = user.getPicture();
 			return ImageUtils.giveMeImage(picture);
