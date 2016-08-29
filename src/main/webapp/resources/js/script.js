@@ -336,7 +336,6 @@ $(window).on("load",function () {
 		$.each($('.token'), function (key, value) {
 			checkedCategories.push($(this).attr('data-id'));
 		})
-		console.log(checkedCategories);
 		var userJson = {
 			"email": $userEmail.val(),
 			"password": $userPassword.val(),
@@ -536,13 +535,7 @@ $(window).on("load",function () {
 		$eventCategories.multiselect();
 		});
 
-	// $.getJSON("eventsCategories", function (data) { bla
-	// 	var categoriesListElementTemplate = $('#event-categories-list').html();
-	// 	var categoriesListElement = Handlebars.compile(categoriesListElementTemplate);
-	// 	var categoriesFilter = $('#event-categories');
-	// 	categoriesFilter.html(categoriesListElement(data));
-	// 	$eventCategories.multiselect();
-	// });
+
 	$.getJSON("currencies", function (data) {
 		var currTemplate = $('#curr-list').html();
 		var currListElement = Handlebars.compile(currTemplate);
@@ -2284,19 +2277,21 @@ $(window).on("load",function () {
 	var $userYear = $userPage.find('.UserPage__birthday__year');
 	var $userHolder = $userPage.find(".UserPage__birthday__holder");
 
-	function downloadInterestingCategoriesForUser(isUserPageEditable){
+	function downloadInterestingCategoriesForUser(isUserPageEditable, checkedCategories){
+
+		if(!checkedCategories){
+			var checkedCategories = [];
+		}
 		var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
 		$interestingCategories.find('div.interesting_categories_for_new_user').remove();
 		$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
 		var checkCategoriesDownloaded = false;
 		var numberOfChecked = 0;
-		var checkedCategories = [];
 		$('.interestingCategoriesMultiselect').find('div').remove();
 		var currentInterestingCategories = [];
 		if(isUserPageEditable == true){
 			currentInterestingCategories = $('.interestingCategoriesMultiselect').html().split(', ');
 			$('.interestingCategoriesMultiselect').html('');
-			console.log(currentInterestingCategories);
 			$.getJSON('eventsCategories', function (data) {
 				$.each(data, function(key, value){
 					if(currentInterestingCategories.indexOf(value.category) != -1 ){
@@ -2517,7 +2512,8 @@ $(window).on("load",function () {
 			$userYear.attr("readonly", false);
 
 			$pictureParent.show();
-			downloadInterestingCategoriesForUser();
+			var checkedCategories = [];
+			downloadInterestingCategoriesForUser(false, checkedCategories);
 			
 			$buttonAddUser.on('click', function (event) {
 				event.preventDefault();
@@ -2731,7 +2727,6 @@ $(window).on("load",function () {
 		enableArchiveCheckbox();
 	}
 
-	// loadEvents(); bla
 
 	var startDateTextBox = $('#start');
 	var endDateTextBox = $('#end');
