@@ -3,6 +3,7 @@ package com.luxoft.wheretogo.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.luxoft.wheretogo.utils.ImageUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -107,6 +108,9 @@ public class User {
 		this.phoneNumber=user.getPhoneNumber();
 		this.description = user.getDescription();
 		this.user_categories = user.getInterestingCategories();
+		if(this.picture!=""){
+			ImageUtils.deleteOldPicture(this.picture);
+		}
 		setPicture(user.getPicture());
 	}
 }
