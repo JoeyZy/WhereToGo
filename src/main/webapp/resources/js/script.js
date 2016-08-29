@@ -2296,7 +2296,6 @@ $(window).on("load",function () {
 	var $userHolder = $userPage.find(".UserPage__birthday__holder");
 
 	function downloadInterestingCategoriesForUser(isUserPageEditable, checkedCategories){
-
 		if(!checkedCategories){
 			var checkedCategories = [];
 		}
@@ -2316,11 +2315,6 @@ $(window).on("load",function () {
 						numberOfChecked++;
 						checkedCategories.push(value.id);
 						$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + value.id + '"><div class="token_title">' + value.category + '</div><div class="token_del">&#10006;</div></div>')
-						// $('div.token[data-id="' + value.id + '"] div.token_del').on('click', function(event){
-						// 	event.stopPropagation();
-						// 	$('.interesting_categories_for_new_user').find('input[data-id="' + value.id + '"]').trigger('click');
-						// 	$(this).parent().remove();
-						// });
 					}
 				});
 				$interestingCategories.find('a').css('display', 'inline');
@@ -2441,14 +2435,14 @@ $(window).on("load",function () {
 
 		});
 
-
-		$(document).bind('click', function(e) {
-			var $clicked = $(e.target);
-			if($('.interesting_categories_for_new_user').css('display') == 'block'){
-				if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
-			}
-		});
 	}
+	
+	$(document).bind('click', function(e) {
+		var $clicked = $(e.target);
+		if($('.interesting_categories_for_new_user').css('display') == 'block'){
+			if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
+		}
+	});
 
 	function renderSingleUserPage(user) {
 		resetSinglePage();
