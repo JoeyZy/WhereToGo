@@ -43,12 +43,6 @@ public class UsersServiceImpl implements UsersService {
 	}
 	@Override
 	public void update(User user) {
-
-		if(!user.getPicture().equals("")){
-			if(user.getPicture().substring(0,4).equals("data")){
-				user.setPicture(ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path")));
-			}
-		}
 		usersRepository.update(user);
 	}
 
