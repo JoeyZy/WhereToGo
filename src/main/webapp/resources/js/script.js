@@ -610,6 +610,8 @@ $(window).on("load",function () {
 				$errors.hide();
 				$pictureParent.hide();
 				window.location.hash = oldLocationHash;
+				$(".Overlay").show();
+				$singlePage.find('.SinglePage').css("width","60%");
 			}
 		}
 	});
@@ -1853,6 +1855,8 @@ $(window).on("load",function () {
 			renderAddGroupPage();
 		}
 		// Show the $singlePage.
+		$(".Overlay").hide();
+		$singlePage.find('.SinglePage').css("width","100%");
 		$singlePage.addClass('visible');
 		//$groupDescription.attr('contentEditable', 'true');
 
