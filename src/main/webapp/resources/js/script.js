@@ -610,8 +610,6 @@ $(window).on("load",function () {
 				$errors.hide();
 				$pictureParent.hide();
 				window.location.hash = oldLocationHash;
-				$(".Overlay").show();
-				$singlePage.find('.SinglePage').css("width","60%");
 			}
 		}
 	});
@@ -736,6 +734,8 @@ $(window).on("load",function () {
 		// Hide whatever $singlePage is currently shown.
 		checkSession();
 		$('.visible').removeClass('visible');
+		$(".Overlay").show();
+		$singlePage.find('.SinglePage').css("width","60%");
 		var singlePage = $('.SinglePage');
 
 		moveSinglePageToCenter();
