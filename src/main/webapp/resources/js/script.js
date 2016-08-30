@@ -2294,7 +2294,7 @@ $(window).on("load",function () {
 	var $userPassword = $userPage.find('.UserPage__password__input');
 	var $userPasswordConfirm = $userPage.find('.UserPage__password__confirm__input');
 	var $userFirstName = $userPage.find('.UserPage__name__first');
-	var $userLastName = $userPage.find('.UserPage__name__last')
+	var $userLastName = $userPage.find('.UserPage__name__last');
 	var $userPhone = $userPage.find('.UserPage__phone__input');
 	var $userAboutMe = $userPage.find('.UserPage__about__input');
 
@@ -2611,6 +2611,9 @@ $(window).on("load",function () {
 		}
 	}
 	function validateUserFields(flag) {
+		const LOCATION_LENGTH_MIN = 7;
+		const LOCATION_LENGTH_MAX = 100;
+
 		var valid = true;
 		$errors.empty();
 		if ($userEmail.val().length == 0) {
@@ -2629,6 +2632,12 @@ $(window).on("load",function () {
 		}
 		if ($userLastName.val().length == 0) {
 			addErrorListItem("Enter Last Name");
+			valid = false;
+		}
+		var location = $userPage.find('#user-location').val().trim();
+		if (!location || location.length < LOCATION_LENGTH_MIN || location.length > LOCATION_LENGTH_MAX) {
+			addErrorListItem("Location should be greater than " + LOCATION_LENGTH_MIN +
+				" and less than " + LOCATION_LENGTH_MAX + " symbols");
 			valid = false;
 		}
 		if ($userPhone.val().length == 0) {
