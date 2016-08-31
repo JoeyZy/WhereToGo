@@ -18,7 +18,12 @@ public class CommentsRepositoryImpl extends AbstractRepository<Comment> implemen
 
     @Override
     public List<Comment> findByEventId(long eventId) {
-        return super.findListByProperty("event", eventId);
+        return super.findListByProperty("eventId", eventId);
+    }
+
+    @Override
+    public List<Comment> findByGroupId(long groupId) {
+        return super.findListByProperty("groupId", groupId);
     }
 
     @Override

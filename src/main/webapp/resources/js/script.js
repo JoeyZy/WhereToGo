@@ -1881,6 +1881,8 @@ $(window).on("load",function () {
 					assignUnassignGroup('unassignUserFromGroup', index, refreshGroupParticipantsList);
 				});
 			});
+
+			renderComments(index, 'Group');
 		}
 		function refreshGroupParticipantsList(group) {
 			$groupParticipants.html($groupParticipantsTemplate(group.groupParticipants));
@@ -1992,132 +1994,8 @@ $(window).on("load",function () {
 					});
 				}
 			});
-			renderComments();
-			function renderComments() {
-				$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
-				$(function() {
-					$('#comments-container').comments({
-						profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
-						roundProfilePictures: true,
-						textareaRows: 1,
-						enableEditing: true,
-						enableAttachments: false,
-						enableUpvoting: false,
-						fieldMappings: {
-							fullname: 'author',
-						},
-						maxRepliesVisible: 2,
-						readOnly: user === undefined ? true : false,
+			renderComments(index, 'Event');
 
-						getComments: function(success, error) {
-							$.ajax({
-								type: 'get',
-								url: '/getComments',
-								data: {
-									id : index
-								},
-								success: function(commentsArray) {
-									for(var i in commentsArray){
-										if(user !== undefined){
-											if(user.id == commentsArray[i].author.id){
-												commentsArray[i]["created_by_current_user"] = true;
-											} else {
-												commentsArray[i]["created_by_current_user"] = false;
-											}
-										}
-										commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'created');
-										if(commentsArray[i].modified !== null){
-											commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'modified');
-										}
-										delete commentsArray[i]['deleted'];
-									}
-
-									success(commentsArray);
-								},
-								error: error
-							});
-						},
-						postComment: function(commentJSON, success, error) {
-							commentJSON.event = index;
-							delete commentJSON.author;
-							delete commentJSON.created_by_current_user;
-							delete commentJSON.id;
-							delete commentJSON.modified;
-							delete commentJSON.profile_picture_url;
-							delete commentJSON.upvote_count;
-							delete commentJSON.user_has_upvoted;
-							commentJSON.created = null;
-								$.ajax({
-									type: 'post',
-									url: '/postComment',
-									data: JSON.stringify(commentJSON),
-									beforeSend: function (xhr) {
-										xhr.setRequestHeader("Accept", "application/json");
-										xhr.setRequestHeader("Content-Type", "application/json");
-									},
-									success: function (comment) {
-										comment = changeTimeFormatOfComment(comment, 'created');
-										comment["created_by_current_user"] = true;
-										success(comment)
-									},
-									error: error
-								});
-						},
-						putComment: function(commentJSON, success, error) {
-							delete commentJSON.author;
-							delete commentJSON.created_by_current_user;
-							commentJSON.event = index;
-							delete commentJSON.created;
-							delete commentJSON.modified;
-							$.ajax({
-								type: 'post',
-								url: '/updateComment',
-								data: JSON.stringify(commentJSON),
-								beforeSend: function (xhr) {
-									xhr.setRequestHeader("Accept", "application/json");
-									xhr.setRequestHeader("Content-Type", "application/json");
-								},
-								success: function(comment) {
-									comment = changeTimeFormatOfComment(comment, 'created');
-									comment = changeTimeFormatOfComment(comment, 'modified');
-									success(comment)
-								},
-								error: error
-							});
-						},
-						deleteComment: function(data, success, error) {
-							delete data.author;
-							delete data.created_by_current_user;
-							data.event = index;
-							delete data.created;
-							delete data.modified;
-							
-							$.ajax({
-								type: 'post',
-								url: '/deleteComment',
-								data: JSON.stringify(data),
-								beforeSend: function (xhr) {
-									xhr.setRequestHeader("Accept", "application/json");
-									xhr.setRequestHeader("Content-Type", "application/json");
-								},
-								success: success,
-								error: error
-							});
-						},
-					});
-				});
-			}
-
-			function changeTimeFormatOfComment(comment, parametr){
-				comment[parametr] = "20" + comment[parametr];
-				var t = comment[parametr].split(/[/ :]/);
-				comment[parametr] = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
-				var milliseconds = comment[parametr].getTime();
-				var timeZoneMinutes = -(new Date().getTimezoneOffset());
-				milliseconds = milliseconds + timeZoneMinutes*60*1000;
-				comment[parametr] = new Date(milliseconds);
-				return comment;
-			}
 		}
 
 
@@ -2199,6 +2077,131 @@ $(window).on("load",function () {
 				}
 				return res.split(',');
 			}
+		}
+	}
+	function renderComments(index, type) {
+		$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
+		$(function() {
+			$('#comments-container').comments({
+				profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
+				roundProfilePictures: true,
+				textareaRows: 1,
+				enableEditing: true,
+				enableAttachments: false,
+				enableUpvoting: false,
+				fieldMappings: {
+					fullname: 'author',
+				},
+				maxRepliesVisible: 2,
+				readOnly: user === undefined ? true : false,
+
+				getComments: function(success, error) {
+					$.ajax({
+						type: 'get',
+						url: '/get' + type +'Comments',
+						data: {
+							id : index
+						},
+						success: function(commentsArray) {
+							for(var i in commentsArray){
+								if(user !== undefined){
+									if(user.id == commentsArray[i].author.id){
+										commentsArray[i]["created_by_current_user"] = true;
+									} else {
+										commentsArray[i]["created_by_current_user"] = false;
+									}
+								}
+								commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'created');
+								if(commentsArray[i].modified !== null){
+									commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'modified');
+								}
+								delete commentsArray[i]['deleted'];
+							}
+
+							success(commentsArray);
+						},
+						error: error
+					});
+				},
+				postComment: function(commentJSON, success, error) {
+					commentJSON[type.toLowerCase() + 'Id'] = index;
+					delete commentJSON.author;
+					delete commentJSON.created_by_current_user;
+					delete commentJSON.id;
+					delete commentJSON.modified;
+					delete commentJSON.profile_picture_url;
+					delete commentJSON.upvote_count;
+					delete commentJSON.user_has_upvoted;
+					commentJSON.created = null;
+					$.ajax({
+						type: 'post',
+						url: '/post' + type + 'Comment',
+						data: JSON.stringify(commentJSON),
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
+						success: function (comment) {
+							comment = changeTimeFormatOfComment(comment, 'created');
+							comment["created_by_current_user"] = true;
+							success(comment)
+						},
+						error: error
+					});
+				},
+				putComment: function(commentJSON, success, error) {
+					delete commentJSON.author;
+					delete commentJSON.created_by_current_user;
+					commentJSON[type.toLowerCase() + 'Id'] = index;
+					delete commentJSON.created;
+					delete commentJSON.modified;
+					$.ajax({
+						type: 'post',
+						url: '/update' + type +'Comment',
+						data: JSON.stringify(commentJSON),
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
+						success: function(comment) {
+							comment = changeTimeFormatOfComment(comment, 'created');
+							comment = changeTimeFormatOfComment(comment, 'modified');
+							success(comment)
+						},
+						error: error
+					});
+				},
+				deleteComment: function(data, success, error) {
+					delete data.author;
+					delete data.created_by_current_user;
+					data[type.toLowerCase() + 'Id'] = index;
+					delete data.created;
+					delete data.modified;
+
+					$.ajax({
+						type: 'post',
+						url: '/delete' + type + 'Comment',
+						data: JSON.stringify(data),
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("Accept", "application/json");
+							xhr.setRequestHeader("Content-Type", "application/json");
+						},
+						success: success,
+						error: error
+					});
+				},
+			});
+		});
+
+		function changeTimeFormatOfComment(comment, parametr){
+			comment[parametr] = "20" + comment[parametr];
+			var t = comment[parametr].split(/[/ :]/);
+			comment[parametr] = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+			var milliseconds = comment[parametr].getTime();
+			var timeZoneMinutes = -(new Date().getTimezoneOffset());
+			milliseconds = milliseconds + timeZoneMinutes*60*1000;
+			comment[parametr] = new Date(milliseconds);
+			return comment;
 		}
 	}
 

@@ -71,12 +71,12 @@ public class RestServiceController {
 		return eventsService.getUserRelevantEventResponses(user);
 	}
 
-	@RequestMapping(value = "/getComments", method = RequestMethod.GET)
+	@RequestMapping(value = "/getEventComments", method = RequestMethod.GET)
 	public List<Comment> getComments(long id) {
 		return commentsService.findByEventId(id);
 	}
 
-	@RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteEventComment", method = RequestMethod.POST)
 	public void deleteComments(@RequestBody Comment comment,  HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user == null){
@@ -86,7 +86,7 @@ public class RestServiceController {
 		commentsService.update(comment, user);
 	}
 
-	@RequestMapping(value = "/postComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/postEventComment", method = RequestMethod.POST)
 	public Comment postComment(@RequestBody Comment comment, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user == null){
@@ -99,8 +99,46 @@ public class RestServiceController {
 		return comment;
 	}
 
-	@RequestMapping(value = "/updateComment", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateEventComment", method = RequestMethod.POST)
 	public Comment updateComment(@RequestBody Comment comment, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		commentsService.update(comment, user);
+		return comment;
+	}
+
+	@RequestMapping(value = "/getGroupComments", method = RequestMethod.GET)
+	public List<Comment> getGroupComments(long id) {
+		return commentsService.findByGroupId(id);
+	}
+
+	@RequestMapping(value = "/deleteGroupComment", method = RequestMethod.POST)
+	public void deleteGroupComments(@RequestBody Comment comment,  HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return;
+		}
+		comment.setDeleted(true);
+		commentsService.update(comment, user);
+	}
+
+	@RequestMapping(value = "/postGroupComment", method = RequestMethod.POST)
+	public Comment postGroupComment(@RequestBody Comment comment, HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("user");
+		if (user == null){
+			return null;
+		}
+		comment.setAuthor(user);
+		comment.setCreated(new Date());
+		comment.setDeleted(false);
+		commentsService.add(comment);
+		return comment;
+	}
+
+	@RequestMapping(value = "/updateGroupComment", method = RequestMethod.POST)
+	public Comment updateGroupComment(@RequestBody Comment comment, HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		if (user == null){
 			return null;
