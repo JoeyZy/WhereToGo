@@ -240,7 +240,7 @@ h1, h3 {
   transition: 1s;
   pointer-events: auto;
 }
-.events-list > li {
+.events-list > li, .event-link {
   box-sizing: border-box;
   display: inline-block;
   cursor: pointer;
@@ -284,7 +284,7 @@ h1, h3 {
   box-sizing: border-box;
 }
 /* event description */
-.events-list .small_event, .groups-list {
+.events-list .small_event, .groups-list, .event-link {
   margin-top: 20px;
 
   color: #111111;
@@ -500,7 +500,7 @@ h1, h3 {
 .SinglePage #description.editable, .SinglePage #descriptionGroup.editable, .SinglePage #target-group.editable, .SinglePage #GroupDescription.editable {
   border: 1px solid #dbe3e7;
 }
-.SinglePage img {
+.SinglePage image {
   width: 100%;
   height: 280px;
   border-bottom: 3px solid #efefef;
@@ -797,4 +797,15 @@ div.accordion{
   border: none;
   resize: none;
 }
+.event-link{
+  width: 30%;
+  min-width: 100px;
+}
+.GroupPage__groups__events__list{
+  opacity:1;
+  margin-left: 0px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
 
+}

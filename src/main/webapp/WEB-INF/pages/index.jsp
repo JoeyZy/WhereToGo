@@ -659,11 +659,58 @@
                     </li>
                     <li class="SinglePage__inputItem GroupPage__events">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
-                        <ul class="GroupPage__groups__events__list">
+                        <ul class="GroupPage__groups__events__list ">
                         </ul>
                         <script id="groupEvents" type="x-handlebars-template">
                             {{#each this}}
-                            <li data-id="{{id}}"><a class = "event-link" href="#event/{{id}}">{{name}}</a></li>
+                            <!--<li data-id="{{id}}"><a class = "event-link" href="#event/{{id}}">{{name}}</a></li>-->
+
+                            <li data-index="{{id}}" class="event-link small_event ">
+                                <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
+                                <span class="content">
+                                    <div class="event-box-img">
+                                        <div class="event-img {{category}}" style="background-image:url({{picture}})">
+                                            <div class="event-box-content">
+                                                <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
+
+                                                <div class = "event-target-group" title="{{targetGroup}}">{{targetGroup}}</div>
+                                                <div class="event-box-location-and-by">
+                                                    <div class="location" title="{{location}}"><img class="icons"
+                                                                                                    src="resources/images/location.png"> {{location}}</div>
+                                                    <div class="created-by" title="{{owner}}"><img class="icons"
+                                                                                                   src="resources/images/black.png"><span> Created by </span>{{owner.firstName}} {{owner.lastName}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category_color {{category}}"></div>
+
+                                    <div class="start">
+                                        <span>START <br></span>
+                                        <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> {{actualStartDate}}</div>
+                                        <div class="start_time"><img class="icons" src="../../resources/images/time.png"> {{actualStartTime}}</div>
+                                    </div>
+
+                                    <div class="end">
+                                        <span>END <br></span>
+                                        <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  {{actualEndDate}}</div>
+                                        <div class="end_time"><img class="icons" src="../../resources/images/time.png">  {{actualEndTime}}</div>
+
+                                    </div>
+                                </span>
+                                        <!--<div class="highlight"></div> - with hover buttons became unclickable -->
+                                <span class="button_group" visit={{attends}}>
+                                    <button type="button" class="btn assign-action-btn btn-success">
+                                        <span class="glyphicon glyphicon-ok assign-action-img"/>
+                                            Visit
+                                    </button>
+                                    <button type="button" class="btn assign-action-btn btn-default">
+                                        <span class="glyphicon glyphicon-remove assign-action-img"/>
+                                            Cancel visit
+                                    </button>
+                                </span>
+                            </li>
+
                             {{/each}}
                         </script>
                     </li>
@@ -674,7 +721,7 @@
                     <li class='event_pic'>
                         <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
-                                 class="event_pic uploadPlaceholderEvent"/>
+                                 class="event_pic uploadPlaceholderEvent image"/>
                             <input style='display:none;' type='file' class="SinglePage__button--upload"
                                    accept="image/jpeg,image/png"/>
                         </div>

@@ -1923,9 +1923,24 @@ $(window).on("load",function () {
 				allowSubscribeGroup();
 
 				$.getJSON("groupEvents", {id: group.id, name: group.name}, function (data) {
-					$groupEvents.html($groupEventsTemplate(data));
-				});
+					data.forEach(function (item) {
+						item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+						item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
+						item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+						item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
 
+						if(!item.targetGroup) item.targetGroup = " ";
+					});
+					$groupEvents.html($groupEventsTemplate(data));
+					var list  = $(".GroupPage__groups__events__list");
+					$.each(list.find('li'), function (index, item) {
+						$(item).find('span.content').on('click', function (e) {
+							e.preventDefault();
+							var eventIndex = $(item).data('index');
+							window.location.hash = 'event/' + eventIndex;
+						});
+					});
+				});
 			}
 			else {
 				makeGroupPageEditable();
