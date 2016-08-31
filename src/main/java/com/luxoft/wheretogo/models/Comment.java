@@ -45,9 +45,11 @@ public class Comment {
         @Column(name = "parent")
         private String parent;
 
-        @NotNull
-        @Column(name = "event")
-        private long event;
+        @Column(name = "eventId")
+        private long eventId;
+
+        @Column(name = "groupId")
+        private long groupId;
 
         @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yy/MM/dd HH:mm:ss", timezone="default")
         private Date created;
@@ -58,7 +60,6 @@ public class Comment {
         @Column(name = "deleted", nullable = false)
         @Type(type = "yes_no")
         private Boolean deleted;
-
 
 
 }

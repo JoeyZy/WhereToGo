@@ -43,7 +43,7 @@ public class CommentsServiceImpl implements CommentsService {
         commentsRepository.merge(comment);
         comment.setModified(findById(comment.getId()).getModified());
     }
-
+    @Override
     public List<Comment> findByEventId(long eventId) {
         List<Comment> commentList = commentsRepository.findByEventId(eventId);
         Iterator<Comment> i = commentList.iterator();
@@ -54,6 +54,18 @@ public class CommentsServiceImpl implements CommentsService {
         }
         return commentList;
     }
+    @Override
+    public List<Comment> findByGroupId(long groupId) {
+        List<Comment> commentList = commentsRepository.findByGroupId(groupId);
+        Iterator<Comment> i = commentList.iterator();
+        while(i.hasNext()){
+            if(i.next().getDeleted() == true){
+                i.remove();
+            }
+        }
+        return commentList;
+    }
+
     @Override
     public Comment findById(long commentId) {
         return commentsRepository.findById(commentId);

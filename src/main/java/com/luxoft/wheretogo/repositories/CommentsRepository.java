@@ -12,6 +12,7 @@ public interface CommentsRepository {
 
     List<Comment> findByEventId(long eventId);
 
+    List<Comment> findByGroupId(long groupId);
     void merge(Comment comment);
 
     Comment findById(long commentId);

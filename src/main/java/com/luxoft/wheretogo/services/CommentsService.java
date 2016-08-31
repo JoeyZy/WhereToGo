@@ -16,4 +16,6 @@ public interface CommentsService {
     Comment findById(long commentId);
 
     List<Comment> findByEventId(long eventId);
+
+    List<Comment> findByGroupId(long groupId);
 }
