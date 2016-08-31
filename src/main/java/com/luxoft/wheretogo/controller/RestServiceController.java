@@ -477,4 +477,14 @@ public class RestServiceController {
 		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@RequestMapping(value = "/userImageById", method = RequestMethod.GET)
+	public ResponseEntity<byte[]>  getUserIdImage(long id, HttpServletRequest httpRequest) throws IOException {
+		User user = usersService.findById(id);
+		if(user!=null){
+			String picture = user.getPicture();
+			return ImageUtils.giveMeImage(picture);
+		}
+		else return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 }

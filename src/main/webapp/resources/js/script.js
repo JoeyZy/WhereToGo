@@ -2084,7 +2084,7 @@ $(window).on("load",function () {
 		$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
 		$(function() {
 			$('#comments-container').comments({
-				profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/user_profiles/user-icon.png',
+				profilePictureURL: 'userImage',
 				roundProfilePictures: true,
 				textareaRows: 1,
 				enableEditing: true,
@@ -2117,8 +2117,8 @@ $(window).on("load",function () {
 									commentsArray[i] = changeTimeFormatOfComment(commentsArray[i], 'modified');
 								}
 								delete commentsArray[i]['deleted'];
+								commentsArray[i].profile_picture_url = 'userImageById?id=' + commentsArray[i].author.id;
 							}
-
 							success(commentsArray);
 						},
 						error: error
