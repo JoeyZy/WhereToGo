@@ -800,6 +800,7 @@ $(window).on("load",function () {
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
+				oldLocationHash = "#group/"+index;
 				renderSingleGroupPage(false,index, groups);
 			},
 			// Add event

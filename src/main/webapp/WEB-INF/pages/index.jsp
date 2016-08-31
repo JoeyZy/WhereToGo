@@ -664,6 +664,7 @@
                         <script id="groupEvents" type="x-handlebars-template">
                             {{#each this}}
                             <li data-id="{{id}}"><a class = "event-link" href="#event/{{id}}">{{name}}</a></li>
+
                             {{/each}}
                         </script>
                     </li>
