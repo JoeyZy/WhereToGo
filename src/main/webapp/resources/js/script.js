@@ -2124,7 +2124,7 @@ $(window).on("load",function () {
 					});
 				},
 				postComment: function(commentJSON, success, error) {
-					commentJSON[type.toLowerCase() + 'Id'] = index;
+					commentJSON[type.toLowerCase()] = index;
 					delete commentJSON.author;
 					delete commentJSON.created_by_current_user;
 					delete commentJSON.id;
@@ -2152,7 +2152,7 @@ $(window).on("load",function () {
 				putComment: function(commentJSON, success, error) {
 					delete commentJSON.author;
 					delete commentJSON.created_by_current_user;
-					commentJSON[type.toLowerCase() + 'Id'] = index;
+					commentJSON[type.toLowerCase()] = index;
 					delete commentJSON.created;
 					delete commentJSON.modified;
 					$.ajax({
@@ -2174,7 +2174,7 @@ $(window).on("load",function () {
 				deleteComment: function(data, success, error) {
 					delete data.author;
 					delete data.created_by_current_user;
-					data[type.toLowerCase() + 'Id'] = index;
+					data[type.toLowerCase()] = index;
 					delete data.created;
 					delete data.modified;
 
