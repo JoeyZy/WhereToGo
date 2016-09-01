@@ -787,7 +787,6 @@ $(window).on("load",function () {
 				oldLocationHash = "#groups";
 				loadGroups("groups");
 
-
 				renderGroupsPage(groups);
 			},
 			'#user': function () {
@@ -808,6 +807,11 @@ $(window).on("load",function () {
 				oldLocationHash = "#group/"+index;
 				var page = $('.all-groups')
 				page.addClass('visible');
+				var exist = $(".groups-list > li");
+				console.log(exist);
+				if(exist.length==0){
+					loadGroups("groups");
+				}
 				renderSingleGroupPage(false,index, groups);
 			},
 			// Add event
@@ -1338,6 +1342,31 @@ $(window).on("load",function () {
 			},
 			success: function (group) {
 				callback(group)
+				if(action==="assignUserToGroup"){
+					$.getJSON("groupEvents", {id: group.id, name: group.name}, function (data) {
+						data.forEach(function (item) {
+							item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD.MM.YYYY");
+							item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
+							item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD.MM.YYYY");
+							item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
+
+							if(!item.targetGroup) item.targetGroup = " ";
+						});
+						$groupEvents.html($groupEventsTemplate(data));
+						var list  = $(".GroupPage__groups__events__list");
+						$.each(list.find('li'), function (index, item) {
+							$(item).find('span.content').on('click', function (e) {
+								e.preventDefault();
+								var eventIndex = $(item).data('index');
+								window.location.hash = 'event/' + eventIndex;
+							});
+						});
+					});
+				}
+				else{
+					var list  = $(".GroupPage__groups__events__list").find('li');
+					list.hide();
+				}
 			},
 			error: function () {
 			},
