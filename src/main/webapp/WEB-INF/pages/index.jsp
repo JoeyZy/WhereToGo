@@ -274,22 +274,22 @@
                 <input class="SinglePage__title reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="SinglePage__inputItem UserPage__email">
-                        <label class="SinglePage__inputItem__label"><b>Email:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>Email:*</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"
                                type="email" placeholder="User email" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__password">
-                        <label class="SinglePage__inputItem__label"><b>Password:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>Password:*</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
                                type="password" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__password__confirm">
-                        <label class="SinglePage__inputItem__label"><b>Password confirmation:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>Password confirmation:*</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"
                                type="password" placeholder="User password" required/>
                     </li>
                     <li class="SinglePage__inputItem UserPage__name">
-                        <label class="SinglePage__inputItem__label"><b>Name:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>Name:*</b></label>
                         <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
                                placeholder="First name" required/>
                         <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"

@@ -92,7 +92,7 @@ public class User {
 	@Column(name="picture")
 	private String picture;
 
-	@Size(min = 7, max = 100)
+	@Size(min = 0, max = 100)
 	@Column(name = "location")
 	private String location;
 
