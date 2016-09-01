@@ -1847,6 +1847,8 @@ $(window).on("load",function () {
 		resetSinglePage();
 		hideCalendarPage();
 
+		$(".nav-left").hide();
+
 		$checkboxShowGroupMap.find("input").prop("checked", false);
 		$singlePageTitle.attr('placeholder', 'Group title');
 		$singlePage.find('.GroupPage').attr("data-id", index);
