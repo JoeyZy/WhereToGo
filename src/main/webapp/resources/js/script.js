@@ -1865,7 +1865,7 @@ $(window).on("load",function () {
 		}
 		// Show the $singlePage.
 		$(".Overlay").hide();
-		//$singlePage.find('.SinglePage').css("width","100%");
+		$singlePage.find('.SinglePage').css("width","70%");
 
 		$singlePage.addClass('visible');
 		//$groupDescription.attr('contentEditable', 'true');
