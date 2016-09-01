@@ -220,9 +220,12 @@ public class RestServiceController {
 			}
 			user.setInterestingCategories(userCategory);
 			User u  = usersService.findByEmail(user.getEmail());
-			u.setInfo(user);
-			if(user.getPassword()!="") u.setPassword(encoder.encode(user.getPassword()));
-			usersService.update(u);
+			if(u!=null){
+				u.setInfo(user);
+				if(user.getPassword()!="") u.setPassword(encoder.encode(user.getPassword()));
+				usersService.update(u);
+			}
+			else return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 		else return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);

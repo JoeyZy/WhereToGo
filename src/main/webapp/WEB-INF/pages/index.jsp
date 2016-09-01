@@ -671,10 +671,10 @@
                                     <div class="event-box-img">
                                         <div class="event-img {{category}}" style="background-image:url({{picture}})">
                                             <div class="event-box-content">
-                                                <h2 class="event-box-title" title="{{name}}"><span> {{name}} </span></h2>
+                                                <h2 class="event-box-title prev-title" title="{{name}}"><span> {{name}} </span></h2>
 
-                                                <div class = "event-target-group" title="{{targetGroup}}">{{targetGroup}}</div>
-                                                <div class="event-box-location-and-by">
+                                                <div class = "event-target-group prev-info" title="{{targetGroup}}">{{targetGroup}}</div>
+                                                <div class="event-box-location-and-by prev-info">
                                                     <div class="location" title="{{location}}"><img class="icons"
                                                                                                     src="resources/images/location.png"> {{location}}</div>
                                                     <div class="created-by" title="{{owner}}"><img class="icons"
@@ -685,13 +685,13 @@
                                     </div>
                                     <div class="category_color {{category}}"></div>
 
-                                    <div class="start">
+                                    <div class="start prev-info">
                                         <span>START <br></span>
                                         <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> {{actualStartDate}}</div>
                                         <div class="start_time"><img class="icons" src="../../resources/images/time.png"> {{actualStartTime}}</div>
                                     </div>
 
-                                    <div class="end">
+                                    <div class="end prev-info">
                                         <span>END <br></span>
                                         <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  {{actualEndDate}}</div>
                                         <div class="end_time"><img class="icons" src="../../resources/images/time.png">  {{actualEndTime}}</div>

@@ -738,12 +738,15 @@ $(window).on("load",function () {
 		$('.visible').removeClass('visible');
 		$(".Overlay").show();
 		$singlePage.find('.SinglePage').css("width","60%");
+		$singlePage.find('.SinglePage').removeClass("movePage");
 		var singlePage = $('.SinglePage');
+		if(url.indexOf('group') == -1){
+			moveSinglePageToCenter();
+			// $(window).scroll(moveSinglePageToCenter);
+			//$(window).scroll(moveSinglePageToCenter);
+			$(window).resize(moveSinglePageToCenter);
+		}
 
-		moveSinglePageToCenter();
-		// $(window).scroll(moveSinglePageToCenter);
-		//$(window).scroll(moveSinglePageToCenter);
-		$(window).resize(moveSinglePageToCenter);
 
 		var map = {
 			// The "Homepage".
@@ -803,6 +806,8 @@ $(window).on("load",function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
 				oldLocationHash = "#group/"+index;
+				var page = $('.all-groups')
+				page.addClass('visible');
 				renderSingleGroupPage(false,index, groups);
 			},
 			// Add event
@@ -1847,6 +1852,7 @@ $(window).on("load",function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
+		$singlePage.find('.SinglePage').addClass("movePage");
 		if (typeof user === "undefined") {
 			window.location.hash = '';
 			return;
@@ -1859,7 +1865,8 @@ $(window).on("load",function () {
 		}
 		// Show the $singlePage.
 		$(".Overlay").hide();
-		$singlePage.find('.SinglePage').css("width","100%");
+		//$singlePage.find('.SinglePage').css("width","100%");
+
 		$singlePage.addClass('visible');
 		//$groupDescription.attr('contentEditable', 'true');
 
@@ -1926,9 +1933,9 @@ $(window).on("load",function () {
 
 				$.getJSON("groupEvents", {id: group.id, name: group.name}, function (data) {
 					data.forEach(function (item) {
-						item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+						item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD.MM.YYYY");
 						item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
-						item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+						item.actualEndDate = moment(item.endTime, "DD/MM/YY HH:mm").format("DD.MM.YYYY");
 						item.actualEndTime = moment(item.endTime, "DD/MM/YY HH:mm").format("HH:mm");
 
 						if(!item.targetGroup) item.targetGroup = " ";
@@ -2142,7 +2149,7 @@ $(window).on("load",function () {
 					});
 				},
 				postComment: function(commentJSON, success, error) {
-					commentJSON[type.toLowerCase()] = index;
+					commentJSON[type.toLowerCase() + 'Id'] = index;
 					delete commentJSON.author;
 					delete commentJSON.created_by_current_user;
 					delete commentJSON.id;
@@ -2162,6 +2169,7 @@ $(window).on("load",function () {
 						success: function (comment) {
 							comment = changeTimeFormatOfComment(comment, 'created');
 							comment["created_by_current_user"] = true;
+							comment.profile_picture_url = 'userImageById?id=' + comment.author.id;
 							success(comment)
 						},
 						error: error
@@ -2170,7 +2178,7 @@ $(window).on("load",function () {
 				putComment: function(commentJSON, success, error) {
 					delete commentJSON.author;
 					delete commentJSON.created_by_current_user;
-					commentJSON[type.toLowerCase()] = index;
+					commentJSON[type.toLowerCase() + 'Id'] = index;
 					delete commentJSON.created;
 					delete commentJSON.modified;
 					$.ajax({
@@ -2192,7 +2200,7 @@ $(window).on("load",function () {
 				deleteComment: function(data, success, error) {
 					delete data.author;
 					delete data.created_by_current_user;
-					data[type.toLowerCase()] = index;
+					data[type.toLowerCase() + 'Id'] = index;
 					delete data.created;
 					delete data.modified;
 

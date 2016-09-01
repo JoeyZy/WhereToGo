@@ -223,7 +223,7 @@ h1, h3 {
   font-size: 0;
 }
 .my-groups-list {
-  margin-left:10%;
+  margin-left:4%;
   margin-right:0;
   float:left;
 }
@@ -798,8 +798,7 @@ div.accordion{
   resize: none;
 }
 .event-link{
-  width: 30%;
-  min-width: 100px;
+  min-width: 240px;
 }
 .GroupPage__groups__events__list{
   opacity:1;
@@ -807,5 +806,16 @@ div.accordion{
   padding: 0;
   list-style: none;
   text-align: left;
-
+}
+.prev-title{
+  font-size: 20px;
+  margin-top: 0px;
+}
+.prev-info{
+  font-size: 15px;
+  padding: 4px 5% 10px;
+}
+.movePage{
+  display: inline-block;
+  position: relative;
 }
