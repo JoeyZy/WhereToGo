@@ -117,8 +117,10 @@ public class User {
 		String old = this.picture;
 		if(!user.getPicture().equals("")){
 			if(user.getPicture().substring(0,4).equals("data")){
+				if(this.picture!=null){
+					ImageUtils.deleteOldPicture(old);
+				}
 				this.picture = ImageUtils.generatePicturePath(user.getPicture(), PropertiesUtils.getProp("users.images.path"));
-				ImageUtils.deleteOldPicture(old);
 			}
 		}
 	}

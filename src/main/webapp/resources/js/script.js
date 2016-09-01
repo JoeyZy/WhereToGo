@@ -762,6 +762,7 @@ $(window).on("load",function () {
 				else {
 					loadEvents();
 				}
+				$(".nav-left").show();
 				renderEventsPage(events);
 			},
 			"#myEvents": function () {
