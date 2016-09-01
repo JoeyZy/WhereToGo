@@ -649,11 +649,11 @@
                     </li>
                     <li class="SinglePage__inputItem GroupPage__participants">
                         <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
-                        <ul class="GroupPage__groups__list">
-                        </ul>
+                        <div class="GroupPage__groups__list">
+                        </div>
                         <script id="groupParticipants" type="x-handlebars-template">
                             {{#each this}}
-                            <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
+                            <div data-id="{{id}}" style="display:inline-block;width:70px; height:70px"><img class="profile-photo moveImgToCenter" style="display:inline-block;width: 60px; height: 60px" src="userImageById?id={{id}}"><figcaption class="nowrapTextForGroupParticipants">{{firstName}} {{lastName}}</figcaption></div>
                             {{/each}}
                         </script>
                     </li>
