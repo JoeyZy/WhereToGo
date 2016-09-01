@@ -739,12 +739,19 @@ $(window).on("load",function () {
 		$(".Overlay").show();
 		$singlePage.find('.SinglePage').css("width","60%");
 		$singlePage.find('.SinglePage').removeClass("movePage");
+		$(".SinglePage > .close").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
 			moveSinglePageToCenter();
 			// $(window).scroll(moveSinglePageToCenter);
 			//$(window).scroll(moveSinglePageToCenter);
 			$(window).resize(moveSinglePageToCenter);
+		}
+		else{
+			$(window).scrollTop();
+			singlePage.css({
+				top: "25px"
+			});
 		}
 
 
@@ -809,7 +816,7 @@ $(window).on("load",function () {
 				var page = $('.all-groups')
 				page.addClass('visible');
 				var exist = $(".groups-list > li");
-				console.log(exist);
+				$(".SinglePage > .close").hide();
 				if(exist.length==0){
 					loadGroups("groups");
 				}
