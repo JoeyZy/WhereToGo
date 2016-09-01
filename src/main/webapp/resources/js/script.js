@@ -2220,6 +2220,7 @@ $(window).on("load",function () {
 					commentJSON[type.toLowerCase() + 'Id'] = index;
 					delete commentJSON.created;
 					delete commentJSON.modified;
+					delete commentJSON.profile_picture_url;
 					$.ajax({
 						type: 'post',
 						url: '/update' + type +'Comment',
@@ -2679,7 +2680,7 @@ $(window).on("load",function () {
 		}
 	}
 	function validateUserFields(flag) {
-		const LOCATION_LENGTH_MIN = 7;
+		const LOCATION_LENGTH_MIN = 0;
 		const LOCATION_LENGTH_MAX = 100;
 
 		var valid = true;
@@ -2688,6 +2689,12 @@ $(window).on("load",function () {
 			addErrorListItem("Email mustn't be empty");
 			valid = false;
 		}
+
+		if ($userEmail.val().indexOf('@') == -1) {
+			addErrorListItem("Email must contain @");
+			valid = false;
+		}
+
 		if(flag===1){
 			if ($userPassword.val().length == 0) {
 				addErrorListItem("Enter password");
@@ -2703,27 +2710,26 @@ $(window).on("load",function () {
 			valid = false;
 		}
 		var location = $userPage.find('#user-location').val().trim();
-		if (!location || location.length < LOCATION_LENGTH_MIN || location.length > LOCATION_LENGTH_MAX) {
-			addErrorListItem("Location should be greater than " + LOCATION_LENGTH_MIN +
-				" and less than " + LOCATION_LENGTH_MAX + " symbols");
+		if (location.length > LOCATION_LENGTH_MAX) {
+			addErrorListItem("Location should be less than " + LOCATION_LENGTH_MAX + " symbols");
 			valid = false;
 		}
-		if ($userPhone.val().length == 0) {
-			addErrorListItem("Phone number must not be empty");
-			valid = false;
-		}
-		if ( $userDay.val().length == 0) {
-			addErrorListItem("Day field must not be empty");
-			valid = false;
-		}
-		if ( $userMonth.val().length == 0) {
-			addErrorListItem("Day field must not be empty");
-			valid = false;
-		}
-		if ( $userYear.val().length == 0) {
-			addErrorListItem("Day field must not be empty");
-			valid = false;
-		}
+		// if ($userPhone.val().length == 0) {
+		// 	addErrorListItem("Phone number must not be empty");
+		// 	valid = false;
+		// }
+		// if ( $userDay.val().length == 0) {
+		// 	addErrorListItem("Day field must not be empty");
+		// 	valid = false;
+		// }
+		// if ( $userMonth.val().length == 0) {
+		// 	addErrorListItem("Day field must not be empty");
+		// 	valid = false;
+		// }
+		// if ( $userYear.val().length == 0) {
+		// 	addErrorListItem("Day field must not be empty");
+		// 	valid = false;
+		// }
 		if(!($userPassword.val()===$userPasswordConfirm.val())){
 			addErrorListItem("Password and confirmation are not the same");
 			valid = false;
