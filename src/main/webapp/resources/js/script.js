@@ -1847,6 +1847,8 @@ $(window).on("load",function () {
 		resetSinglePage();
 		hideCalendarPage();
 
+		$(".nav-left").hide();
+
 		$checkboxShowGroupMap.find("input").prop("checked", false);
 		$singlePageTitle.attr('placeholder', 'Group title');
 		$singlePage.find('.GroupPage').attr("data-id", index);
@@ -1865,7 +1867,7 @@ $(window).on("load",function () {
 		}
 		// Show the $singlePage.
 		$(".Overlay").hide();
-		//$singlePage.find('.SinglePage').css("width","100%");
+		$singlePage.find('.SinglePage').css("width","70%");
 
 		$singlePage.addClass('visible');
 		//$groupDescription.attr('contentEditable', 'true');
