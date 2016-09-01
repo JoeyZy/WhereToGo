@@ -819,3 +819,12 @@ div.accordion{
   font-size: 15px;
   padding: 4px 5% 10px;
 }
+.nowrapTextForGroupParticipants{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.moveImgToCenter{
+  padding-left: 5px;
+  text-align: center;
+}
