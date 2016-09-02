@@ -739,6 +739,7 @@ $(window).on("load",function () {
 		$(".Overlay").show();
 		$singlePage.find('.SinglePage').css("width","60%");
 		$singlePage.find('.SinglePage').removeClass("movePage");
+		$singlePage.find('.SinglePage__title').removeClass("group-title");
 		$(".SinglePage > .close").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
@@ -1892,6 +1893,7 @@ $(window).on("load",function () {
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
 		$singlePage.find('.SinglePage').addClass("movePage");
+		$singlePage.find('.SinglePage__title').addClass("group-title");
 		if (typeof user === "undefined") {
 			window.location.hash = '';
 			return;
@@ -2818,7 +2820,7 @@ $(window).on("load",function () {
 		}
 		else {
 			// If it's empty change the hash to '#' (the homepage).
-			window.location.hash = '#';
+			window.location.hash = oldLocationHash;
 		}
 	}
 
