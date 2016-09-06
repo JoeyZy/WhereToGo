@@ -1959,6 +1959,7 @@ $(window).on("load",function () {
 				setLocationByAddress(groupMap, group.location, '#show-group-location-map');
 				if (group.picture.length) {
 					$picture.attr('src', group.picture);
+					$picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
 					$pictureParent.show();
 				} else {
 					$pictureParent.hide();
@@ -2091,6 +2092,7 @@ $(window).on("load",function () {
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
+					$picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
 					$pictureParent.show();
 				} else {
 					$pictureParent.hide();
@@ -2592,6 +2594,7 @@ $(window).on("load",function () {
 				//Display picture
 				if (user.picture.length) {
 					$picture.attr('src', user.picture);
+					$picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
 					$pictureParent.show();
 				} else {
 					$pictureParent.hide();
