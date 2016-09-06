@@ -613,6 +613,7 @@ $(window).on("load",function () {
 				$(window).scrollTop(top);
 				$errors.hide();
 				$pictureParent.hide();
+				$eventCategories.val('');
 				var old = oldLocationHash.split('/')[0];
 				if(old=="#group"&&window.location.hash.split('/')[0]=="#group") oldLocationHash="#groups"
 				window.location.hash = oldLocationHash;
