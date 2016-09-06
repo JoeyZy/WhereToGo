@@ -89,7 +89,7 @@ public class ImageUtils {
                 break;
         }
         headers.setContentType(type);
-        headers.setCacheControl("public");
+//        headers.setCacheControl("public");
         response = Files.readAllBytes(get(picture));
         responseEntity = new ResponseEntity<byte[]>(response,headers, HttpStatus.OK);
         return responseEntity;
