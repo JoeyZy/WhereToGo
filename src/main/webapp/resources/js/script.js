@@ -1407,6 +1407,7 @@ $(window).on("load",function () {
 			$(badgeSelector).each(function (index, value) {
 				var fullClass = $(value).attr('class');
 				var filterName = fullClass.slice(badgeSelector.length).toLowerCase();
+				filterName=filterName.trim();
 				filterColors[filterName] = $(value).css('background-color');
 			})
 		}
@@ -2360,11 +2361,12 @@ $(window).on("load",function () {
 			titleRangeSeparator: "\u2013",
 			timeFormat: 'HH:mm' // don't show start time near events' names
 		});
-		$('#calendar').fullCalendar('today'); // show current day when calendar is opened
+		//$('#calendar').fullCalendar('today'); // show current day when calendar is opened
 
 		function getEventColor(event) {
 			var eventCategory = event.categories[0].name;
-			return filterColors[eventCategory.toLowerCase()];
+			var color = filterColors[eventCategory.toLowerCase()];
+			return color;
 		}
 	}
 
