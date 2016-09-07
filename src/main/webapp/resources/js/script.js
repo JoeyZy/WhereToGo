@@ -2358,7 +2358,7 @@ $(window).on("load",function () {
 			events: fcEventList,
 			firstDay: 1, // first day of the week Monday=1
 			titleRangeSeparator: "\u2013",
-			timeFormat: ' ' // don't show start time near events' names
+			timeFormat: 'HH:mm' // don't show start time near events' names
 		});
 		$('#calendar').fullCalendar('today'); // show current day when calendar is opened
 
