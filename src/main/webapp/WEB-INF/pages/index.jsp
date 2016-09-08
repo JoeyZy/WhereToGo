@@ -179,8 +179,10 @@
         </div>
 
         <ul class="events-list">
-            <div class="total-counter"></div>
-            <script id="events-template" type="x-handlebars-template">
+            <div>
+                <div class="total-counter"></div>
+            </div>
+                <script id="events-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
