@@ -614,6 +614,9 @@ $(window).on("load",function () {
 				$errors.hide();
 				$pictureParent.hide();
 				$eventCategories.val('');
+				$('#calendar').fullCalendar( 'destroy' );
+				$('#calendar').css("display","");
+				$('.Calendar').css("display","");
 				var old = oldLocationHash.split('/')[0];
 				if(old=="#group"&&window.location.hash.split('/')[0]=="#group") oldLocationHash="#groups"
 				window.location.hash = oldLocationHash;
@@ -2361,7 +2364,8 @@ $(window).on("load",function () {
 			titleRangeSeparator: "\u2013",
 			timeFormat: 'HH:mm' // don't show start time near events' names
 		});
-		//$('#calendar').fullCalendar('today'); // show current day when calendar is opened
+		// $('#calendar').fullCalendar('today'); // show current day when calendar is opened
+		// $('#calendar')..fullCalendar( 'destroy' );
 
 		function getEventColor(event) {
 			var eventCategory = event.categories[0].name;
