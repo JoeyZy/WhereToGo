@@ -213,11 +213,11 @@ $(window).on("load",function () {
 	});
 
 	$buttonCancelEditingUser.on('click', function (user) {
-		makeUserPageUneditable();
+		// makeUserPageUneditable();
 		$buttonEditUser.show();
 		$buttonApplyUser.hide();
 		$buttonCancelEditingUser.hide();
-		renderUserInfoPage(user);
+		renderSingleUserPage(user);
 		return false;
 	});
 
@@ -2555,6 +2555,7 @@ $(window).on("load",function () {
 			renderAddUserPage();
 		}
 		function renderUserInfoPage(user) {
+			makeUserPageUneditable();
 			$('a.activeBackground').hide();
 			var $userCategories = $userPage.find(".interestingCategoriesMultiselect.display_inline");
 			$userCategories.empty();
