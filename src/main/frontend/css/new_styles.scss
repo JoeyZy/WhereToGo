@@ -38,7 +38,7 @@ h1, h3 {
 ------------------*/
 .main-content {
   box-sizing: border-box;
-  margin: 30px 40px 60px;
+  margin: 36px 40px 60px;
   /*padding: 0 40px;*/
   position: relative;
 }
@@ -66,7 +66,13 @@ h1, h3 {
 .navbar-btn-container {
   margin: 8px 0;
   padding: 0 15px;
+  float: right;
 }
+
+.events-list:first-child{
+  margin-top:20px;
+}
+
 .btn-add-event {
   position: relative;
   width: 100%;
@@ -206,9 +212,8 @@ h1, h3 {
 /*	events List	*/
 .events-list {
   list-style: none;
-  margin-left: 225px;
+  margin-left: 320px;
   max-width: 1500px;
-  text-align: center;
   padding: 0;
   opacity: 0;
   font-size: 0;
@@ -668,6 +673,20 @@ img.event_pic {
 .total-counter-my-groups-list {
   font-size: 16px;
   color:#90A4AE;
+  float: left;
+  margin-top: 14px;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.btn{
+  vertical-align: baseline;
+  padding: 6px 13.4px;
+  border:none;
+  border-radius: 1px;
+  border-color: #edebeb;
 }
 .categories-common.Archive {
   width: 100%;

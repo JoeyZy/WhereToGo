@@ -48,32 +48,6 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <div class="navbar-btn-container">
-                            <button class="btn btn-info btn-calendar" title="Open calendar">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                                Calendar
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="navbar-btn-container add-group-div not-displayed">
-                            <button class="btn btn-block btn-add-group"
-                                    title="Please login with active profile to create a group">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Group
-                            </button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="navbar-btn-container add-event-div not-displayed">
-                            <button class="btn btn-block btn-add-event"
-                                    title="Please login with active profile to create an event">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Event
-                            </button>
-                        </div>
-                    </li>
-                    <li>
                         <img class="profile-photo navbar-btn-container">
                     </li>
                     <li>
@@ -179,8 +153,34 @@
         </div>
 
         <ul class="events-list">
-            <div class="total-counter"></div>
-            <script id="events-template" type="x-handlebars-template">
+            <div class="clearfix">
+                <div class="total-counter"></div>
+                        <div class="navbar-btn-container add-group-div">
+                            <button class="btn btn-block btn-add-group"
+                                    title="Please login with active profile to create a group">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Group
+                            </button>
+                        </div>
+                <div class="navbar-btn-container calendar">
+                    <button class="btn btn-info btn-calendar" title="Open calendar">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </button>
+                </div>
+                <div class="navbar-btn-container show-all">
+                    <button class="btn btn-show-all" title="Show all events">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                    </button>
+                </div>
+                        <div class="navbar-btn-container add-event-div">
+                            <button class="btn btn-block btn-add-event"
+                                    title="Please login with active profile to create an event">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Event
+                            </button>
+                        </div>
+            </div>
+                <script id="events-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
