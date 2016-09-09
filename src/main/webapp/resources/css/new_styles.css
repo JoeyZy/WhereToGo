@@ -38,7 +38,7 @@ h1, h3 {
 ------------------*/
 .main-content {
   box-sizing: border-box;
-  margin: 30px 40px 60px;
+  margin: 36px 40px 60px;
   /*padding: 0 40px;*/
   position: relative;
 }
@@ -65,7 +65,17 @@ h1, h3 {
 }
 .navbar-btn-container {
   margin: 8px 0;
-  padding: 0 15px;
+  float: right;
+}
+.btn{
+  vertical-align: baseline;
+  padding: 6px 13.4px;
+  border:none;
+  border-radius: 1px;
+  background-color: #edebeb;
+}
+.events-list:first-child{
+  margin-top:20px;
 }
 .btn-add-event {
   position: relative;
@@ -669,8 +679,31 @@ img.event_pic {
 .total-counter-my-groups-list {
   font-size: 16px;
   color:#90A4AE;
-  padding-top: 20px;
+  float: left;
+  margin-top: 14px;
 }
+/*bla*/
+.calendar{
+  margin-right: 15.5%;
+  border-left: 2px solid #d4d6d8;
+}
+.btn-calendar{
+  border-color: #edebeb;
+}
+.calendar, .show-all{
+  width: 40px;
+  height: 34px;
+}
+.add-event-div{
+  margin-right: 26px;
+}
+.btn-add-event{
+  border-radius: 2px;
+}
+.btn-show-all{
+  border-color: #FFFFFF;
+}
+/*bla*/
 .categories-common.Archive {
   width: 100%;
 }
@@ -776,6 +809,14 @@ div.accordion{
 .disabled-input {
   border: none;
   background-color: inherit;
+}
+.display_inline_block{
+  display: inline-block;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .enabled-input {
   border: 1px solid #dbe3e7;
