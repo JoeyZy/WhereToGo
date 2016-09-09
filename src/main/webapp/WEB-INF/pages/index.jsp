@@ -231,6 +231,7 @@
                 {{/each}}
             </script>
         </ul>
+        <ul class="pagination-page"></ul>
     </div>
 
     <div class="all-groups page">

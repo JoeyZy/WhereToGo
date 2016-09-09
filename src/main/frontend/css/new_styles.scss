@@ -63,6 +63,32 @@ h1, h3 {
   width: 190px;
   position: absolute;
 }
+.pagination-page{
+  list-style: none;
+  margin-left: 225px;
+  text-align: center;
+  max-width: 1500px;
+  opacity: 0;
+}
+li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
+  font-size: 14px;
+}
+.pagination-page li{
+  display: inline-block;
+  margin: 7.5px;
+}
+.badge {
+  height: 18px;
+}
+.pagination-page li>a{
+  font-size: 12px;
+  vertical-align: middle;
+  color: #78909c;
+}
+.pagination-page li>a.badge{
+  color: #ffffff;
+  background-color: #78909c;
+}
 .navbar-btn-container {
   margin: 8px 0;
   padding: 0 15px;
@@ -233,6 +259,7 @@ h1, h3 {
   float:left;
 }
 .all-events.visible .events-list,
+.all-events.visible .pagination-page,
 .all-events.visible .filters,
 .all-groups.visible .groups-list,
 .all-groups.visible .filters {

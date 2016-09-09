@@ -862,6 +862,106 @@ $(window).on("load",function () {
 		}
 	}
 
+	function pagination(data, list, activePage){
+		list.find("li").hide();
+		if(!activePage){
+			var activePage = 1;
+		}
+		var numberOfPages = (data.length - data.length % 6) / 6 + 1;
+		if(data.length % 6 === 0){
+			numberOfPages--;
+		}
+		var dots = '<li data-index="-5">...</li>';
+		$('ul.pagination-page li').remove();
+		$('ul.pagination-page').append('<li data-index="-2"><a href="#" class="glyphicon glyphicon-chevron-left disabled"></a> </li>')
+		for(var i=1; i <= numberOfPages; i++){
+			$('ul.pagination-page').append('<li data-index="' + i + '"> <a href="#" class="pagination-number">' + i + ' </a></li>');
+		}
+		$('ul.pagination-page li[data-index=' + 1 + '] a').addClass("badge");
+		function showCurrentPage(currentPage){
+			for(var i = (currentPage - 1) * 6 + 3; i < currentPage * 6 + 3; i++){
+				list.find(":nth-child(" + i + ")").show();
+			}
+		}
+
+		showCurrentPage(1);
+
+		$('ul.pagination-page').append('<li data-index="-1"><a href="#" class="glyphicon glyphicon-chevron-right"></a></li>')
+
+		addDots(activePage, numberOfPages);
+
+		function addDots(active, fullNumber){
+			for(var i = 2; i <= fullNumber - 1; i++){
+				$('ul.pagination-page').find('li[data-index="' + i + '"]').hide();
+			}
+			$('ul.pagination-page').find('li[data-index="-5"]').remove();
+			if(active > 3 && active < fullNumber - 2){
+				$('ul.pagination-page').find('li[data-index="1"]').after(dots);
+				whereAddDots(active);
+				$('ul.pagination-page').find('li[data-index="' + (active+1) + '"]').after(dots);
+			} else if(active <= 3 && active < fullNumber - 2){
+				whereAddDots(active);
+				$('ul.pagination-page').find('li[data-index="' + (active+1) + '"]').after(dots);
+			} else if(active > 3 && active >= fullNumber - 2){
+				$('ul.pagination-page').find('li[data-index="1"]').after(dots);
+				whereAddDots(active);
+			} else if (active <= 3 && active >= fullNumber - 2){
+				whereAddDots(active);
+			}
+			function  whereAddDots(active){
+				$('ul.pagination-page').find('li[data-index="' + (active-1) + '"]').show();
+				$('ul.pagination-page').find('li[data-index="' + active + '"]').show();
+				$('ul.pagination-page').find('li[data-index="' + (active+1) + '"]').show();
+			}
+		}
+
+		function isArrowsActive(active, fullNumber){
+			if(active === 1){
+				$('ul.pagination-page').find('li a.glyphicon-chevron-left').addClass('disabled');
+			} else {
+				$('ul.pagination-page').find('li a.glyphicon-chevron-left').removeClass('disabled');
+			}
+			if(active === fullNumber){
+				$('ul.pagination-page').find('li a.glyphicon-chevron-right').addClass('disabled');
+			} else {
+				$('ul.pagination-page').find('li a.glyphicon-chevron-right').removeClass('disabled');
+
+			}
+		}
+
+		$('ul.pagination-page').find('li a.pagination-number').on('click', function(event){
+			$('ul.pagination-page').find('li a').removeClass('badge');
+			event.preventDefault();
+			$(this).addClass('badge');
+			list.find('li').hide();
+			activePage = parseInt($(this).parent().attr('data-index'));
+			isArrowsActive(activePage, numberOfPages);
+			showCurrentPage(activePage);
+			addDots(activePage, numberOfPages);
+		});
+
+		$('ul.pagination-page').find('li a.glyphicon-chevron-left').on('click', function(event){
+			$('ul.pagination-page').find('li a').removeClass('badge');
+			event.preventDefault();
+			activePage = activePage - 1;
+			$(this).parent().parent().find('li[data-index="' + activePage + '"] a').addClass('badge');
+			list.find('li').hide();
+			showCurrentPage(activePage);
+			isArrowsActive(activePage, numberOfPages);
+			addDots(activePage, numberOfPages);
+		})
+		$('ul.pagination-page').find('li a.glyphicon-chevron-right').on('click', function(event){
+			$('ul.pagination-page').find('li a').removeClass('badge');
+			event.preventDefault();
+			activePage = activePage + 1;
+			$(this).parent().parent().find('li[data-index="' + activePage + '"] a').addClass('badge');
+			list.find('li').hide();
+			showCurrentPage(activePage);
+			isArrowsActive(activePage, numberOfPages);
+			addDots(activePage, numberOfPages);
+		})
+
+	}
 
 	// This function is called only once - on $singlePage load.
 	// It fills up the events list via a handlebars template.
@@ -882,6 +982,7 @@ $(window).on("load",function () {
 		else {
 			list.find(".event-img").removeClass("Outdated");
 		}
+		pagination(data, list);
 		// Each events has a data-index attribute.
 		// On click change the url hash to open up a preview for this event only.
 		// Remember: every hashchange triggers the render function.
