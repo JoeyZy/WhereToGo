@@ -2249,10 +2249,10 @@ $(window).on("load",function () {
 				deleteComment: function(data, success, error) {
 					delete data.author;
 					delete data.created_by_current_user;
-					data[type.toLowerCase() + 'Id'] = index;
+					data[type.toLowerCase() + 'Id'] = parseInt(index);
 					delete data.created;
 					delete data.modified;
-
+					delete data.profile_picture_url;
 					$.ajax({
 						type: 'post',
 						url: '/delete' + type + 'Comment',
