@@ -614,9 +614,6 @@ $(window).on("load",function () {
 				$errors.hide();
 				$pictureParent.hide();
 				$eventCategories.val('');
-				$('#calendar').fullCalendar( 'destroy' );
-				$('#calendar').css("display","");
-				$('.Calendar').css("display","");
 				var old = oldLocationHash.split('/')[0];
 				if(old=="#group"&&window.location.hash.split('/')[0]=="#group") oldLocationHash="#groups"
 				window.location.hash = oldLocationHash;
@@ -924,6 +921,9 @@ $(window).on("load",function () {
 
 		$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
+			$('#calendar').fullCalendar( 'destroy' );
+			$('#calendar').css("display","");
+			$('.Calendar').css("display","");
 			window.location.hash = 'calendar';
 		});
 		$('.profile-photo').click(function (e) {
