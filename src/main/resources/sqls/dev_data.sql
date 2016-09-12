@@ -3,6 +3,7 @@ INSERT INTO `users` (email, first_name, last_name, password, role, active) VALUE
   ('root@gmail.com', 'Root', 'Root', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'admin', 1),
   ('test@gmail.com', 'Test', 'Test', '$2a$10$xBVIkkIXVTc.K.frxLyOM.cQSZ2GABMphVbFEfCFZTh.reKWutt6u', 'user', 1),
   ('serg.tanchenko@gmail.com', 'Maria ', 'Anders', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1),
+  ('fisika80@gmail.com', 'Borys ', 'Komarov', '$2a$10$VmCbEkcT/pBx.s3MYw15GepM7zkucxAmgS7JepsQ4uBF6H6BnXAwO', 'user', 1),
   ('xvxsergxvx@gmail.com', 'Ana ', 'Trujillo', '$2a$10$HbZiH.4zZp4CLY7krwzt9udnO36T23LnqgqE.WXhpArZ4nvys7T0a', 'user', 1);
 
 INSERT INTO `groups` (id, name, description, location, picture, owner, deleted) VALUES
