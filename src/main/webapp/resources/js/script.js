@@ -1908,21 +1908,21 @@ $(window).on("load",function () {
 		$singlePage.find('.GroupPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.GroupPage').show();
-		$singlePage.find('.SinglePage').addClass("movePage");
-		$singlePage.find('.SinglePage__title').addClass("group-title");
 		if (typeof user === "undefined") {
 			window.location.hash = '';
 			return;
 		}
 		if(!addGroup){
 			renderShowGroupPage(index);
+			$(".Overlay").hide();
+			$singlePage.find('.SinglePage').css("width","70%");
+			$singlePage.find('.SinglePage').addClass("movePage");
+			$singlePage.find('.SinglePage__title').addClass("group-title");
 		}
 		else{
 			renderAddGroupPage();
 		}
 		// Show the $singlePage.
-		$(".Overlay").hide();
-		$singlePage.find('.SinglePage').css("width","70%");
 
 		$singlePage.addClass('visible');
 		//$groupDescription.attr('contentEditable', 'true');
