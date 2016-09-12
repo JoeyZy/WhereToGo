@@ -924,7 +924,12 @@ $(window).on("load",function () {
 			$('#calendar').fullCalendar( 'destroy' );
 			$('#calendar').css("display","");
 			$('.Calendar').css("display","");
-			window.location.hash = 'calendar';
+			if(window.location.hash === '#calendar'){
+				renderCalendarPage();
+			}
+			else{
+				window.location.hash = 'calendar';
+			}
 		});
 		$('.profile-photo').click(function (e) {
 			e.preventDefault();
@@ -2057,7 +2062,8 @@ $(window).on("load",function () {
 				}
 			});
 		}
-		if(participate){
+		var old = oldLocationHash.split('/')[0];
+		if(participate&&old!="#group"){
 			$(".Overlay").hide();
 			$singlePage.find('.SinglePage').css("width","70%");
 			// $singlePage.find('.SinglePage').addClass("movePage");

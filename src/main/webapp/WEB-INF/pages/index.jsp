@@ -155,13 +155,7 @@
         <ul class="events-list">
             <div class="clearfix">
                 <div class="total-counter"></div>
-                        <div class="navbar-btn-container add-group-div">
-                            <button class="btn btn-block btn-add-group"
-                                    title="Please login with active profile to create a group">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                Group
-                            </button>
-                        </div>
+
                 <div class="navbar-btn-container calendar">
                     <button class="btn btn-info btn-calendar" title="Open calendar">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -179,6 +173,13 @@
                                 Event
                             </button>
                         </div>
+                <div class="navbar-btn-container add-group-div">
+                    <button class="btn btn-block btn-add-group"
+                            title="Please login with active profile to create a group">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Group
+                    </button>
+                </div>
             </div>
                 <script id="events-template" type="x-handlebars-template">
                 {{#each this }}
