@@ -673,12 +673,18 @@ img.event_pic {
   display: block;
   border: 1px solid;
 }
-.total-counter, .total-counter-groups,
-.total-counter-all-groups-list,
-.total-counter-my-groups-list {
+.total-counter, .total-counter-groups
+ {
   font-size: 16px;
   color:#90A4AE;
   float: left;
+  margin-top: 14px;
+}
+.total-counter-all-groups-list,
+.total-counter-my-groups-list
+{
+  font-size: 16px;
+  color:#90A4AE;
   margin-top: 14px;
 }
 /*bla*/
