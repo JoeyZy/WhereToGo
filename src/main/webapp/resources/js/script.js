@@ -748,7 +748,9 @@ $(window).on("load",function () {
 		$singlePage.find('.SinglePage').css("width","60%");
 		$singlePage.find('.SinglePage').removeClass("movePage");
 		$singlePage.find('.SinglePage__title').removeClass("group-title");
-		$(".SinglePage > .close").show();
+		$(".SinglePage > .close").hide();
+		$(".total-counter").hide();
+		$(".clearfix").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
 			moveSinglePageToCenter();
@@ -770,6 +772,7 @@ $(window).on("load",function () {
 				// Clear the filters object, uncheck all checkboxes, show all the events
 				filters = {};
 				oldLocationHash = "";
+				$(".total-counter").show();
 				$('.filters input[type=checkbox]').prop('checked', false);
 
 				if($showArchiveCheckbox.find("input").prop("checked")) {
@@ -785,6 +788,7 @@ $(window).on("load",function () {
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
+				$(".total-counter").show();
 				filters = {};
 				oldLocationHash = "#myEvents";
 				if($showArchiveCheckbox.find("input").prop("checked")) {
@@ -822,6 +826,7 @@ $(window).on("load",function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
 				oldLocationHash = "#group/"+index;
+				$(".clearfix").hide();
 				var page = $('.all-groups')
 				page.addClass('visible');
 				var exist = $(".groups-list > li");
@@ -994,9 +999,6 @@ $(window).on("load",function () {
 					$('.accordion .accordion-section-title').removeClass('active');
 					$('.accordion .accordion-section-content').slideUp(300).removeClass('open');
 				}
-
-
-
 				var checkboxGroup = $('.accordion-section-title input[type="checkbox"]');
 				checkboxGroup.click(function(event) {
 					event.stopPropagation();
@@ -2021,6 +2023,7 @@ $(window).on("load",function () {
 		$singlePage.find('.EventPage').attr("data-id", index);
 		$singlePage.find('.UserPage').hide();
 		$singlePage.find('.EventPage').show();
+
 		if (typeof data != 'undefined' && data.length) {
 			// Find the wanted event by iterating the data object and searching for the chosen index.
 			renderShowEventPage(data);
@@ -2032,6 +2035,46 @@ $(window).on("load",function () {
 			renderAddEventPage();
 		}
 		// Show the $singlePage.
+		//Not fully implemented way
+		/*var nodeLI = $(".events-list").find('.small_event').attr("data-index", index);
+		if (!nodeLI.find('.button_group').attr('visit') == 'true') {
+			$(".Overlay").hide();
+			$singlePage.find('.SinglePage').css("width","70%");
+		}
+		else{
+			$(".SinglePage > .close").show();
+		}*/
+		//-------------------------------------------------------------------------------
+		var participate = false;
+		if(user!=undefined&&data!=undefined) {
+			data.forEach(function (item) {
+				if (item.id == index) {
+					item.participants.forEach(function (i) {
+						if (i.id === user.id) {
+							participate = true;
+						}
+					});
+				}
+			});
+		}
+		if(participate){
+			$(".Overlay").hide();
+			$singlePage.find('.SinglePage').css("width","70%");
+			// $singlePage.find('.SinglePage').addClass("movePage");
+			$singlePage.find('.SinglePage__title').addClass("group-title");
+			$(window).scrollTop();
+			$singlePage.find('.SinglePage').css({
+				top: "60px"
+			});
+			$(".events-list > li").each(function (item) {
+				$( this ).hide();
+			});
+		}
+		else{
+			$(".SinglePage > .close").show();
+			$(".total-counter").show();
+		}
+
 		$singlePage.addClass('visible');
 
 		function renderAddEventPage() {
@@ -2045,7 +2088,7 @@ $(window).on("load",function () {
 		}
 
 		function renderShowEventPage(data) {
-
+			var result = false;
 			data.forEach(function (item) {
 				if (item.id == index) {
 					$.getJSON("event", {id: item.id}, function (event) {
@@ -2053,7 +2096,6 @@ $(window).on("load",function () {
 						if(!event.targetGroup) {
 							event.targetGroup = { "id": -1, "name": DEFAULT_PUBLIC_EVENT_TEXT };
 						}
-
 						populateSinglePageEventPage($singlePage, event);
 						$buttonAttend.off();
 						$buttonAttend.on('click', function (event) {
@@ -2071,7 +2113,7 @@ $(window).on("load",function () {
 				}
 			});
 			renderComments(index, 'Event');
-
+			return result;
 		}
 
 
@@ -2330,6 +2372,17 @@ $(window).on("load",function () {
 		renderFullCalendar(events);
 
 		showCalendarPage();
+
+
+		$(".Overlay").hide();
+		$singlePage.find('.SinglePage').css("width","70%");
+		$(window).scrollTop();
+		$singlePage.find('.SinglePage').css({
+			top: "60px"
+		});
+		$(".events-list > li").each(function (item) {
+			$( this ).hide();
+		});
 		$singlePage.addClass('visible');
 	}
 

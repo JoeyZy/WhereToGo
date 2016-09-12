@@ -6,6 +6,7 @@ body {
   font: normal 16px Arial, Helvetica, sans-serif;
   /*   background-image: url('/resources/images/background.jpg');*/
   background-size: cover;
+  background-color: #F8F8F8;
 }
 h1, h3 {
   font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
@@ -207,7 +208,7 @@ h1, h3 {
   text-align: center;
 }
 .small_event, .small_group {
-  background-color: #fff;
+  background-color: #F8F8F8;
 }
 /*	events List	*/
 .events-list {
@@ -215,7 +216,7 @@ h1, h3 {
   margin-left: 320px;
   max-width: 1500px;
   padding: 0;
-  opacity: 0;
+  opacity: 1;
   font-size: 0;
 }
 .groups-list {
