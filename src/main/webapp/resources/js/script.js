@@ -10,6 +10,7 @@ $(window).on("load",function () {
 		user = undefined;
 	var adminRole = 'admin';
 	var oldLocationHash = "#";
+	var secondLocationHash = "#";
 	$('.userInfo').hide();
 	$('.logout').hide();
 	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all users)";
@@ -159,7 +160,7 @@ $(window).on("load",function () {
 
 	$buttonApply.on('click', function () {
 		updateEvent(true);
-		// $picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
+		$picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
 		// $picture.attr("src","");
 		return false;
 	});
@@ -615,8 +616,14 @@ $(window).on("load",function () {
 				$pictureParent.hide();
 				$eventCategories.val('');
 				var old = oldLocationHash.split('/')[0];
-				if(old=="#group"&&window.location.hash.split('/')[0]=="#group") oldLocationHash="#groups"
-				window.location.hash = oldLocationHash;
+				if (old == "#group" && window.location.hash.split('/')[0] == "#group") oldLocationHash = "#groups"
+				if (secondLocationHash === "")
+					window.location.hash = oldLocationHash;
+				else {
+					var tmp = secondLocationHash;
+					secondLocationHash = "";
+					window.location.hash = tmp;
+				}
 			}
 		}
 	});
@@ -761,6 +768,8 @@ $(window).on("load",function () {
 				top: "25px"
 			});
 		}
+		if(window.location.hash.split("/")[0]!="#event"&&window.location.hash.split("/")[0]!="#addEvent")
+			secondLocationHash="";
 
 
 		var map = {
@@ -2078,6 +2087,7 @@ $(window).on("load",function () {
 			$(".events-list > li").each(function (item) {
 				$( this ).hide();
 			});
+			secondLocationHash = "#event/"+index;
 		}
 		else{
 			$(".SinglePage > .close").show();
