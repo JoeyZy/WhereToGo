@@ -543,20 +543,82 @@
                 </ul>
 
                 <ul class="SinglePage__inputItemsList EventPage" data-id="">
-                    <li class="SinglePage__inputItem EventPage__owner">
-                        <label class="SinglePage__inputItem__label"><b>User Name:</b></label>
-                        <input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>
+                    <li class='event_header'>
+                        <div contentEditable="false" id="picture" class='event_pic'>
+                            <img style='' class="event_pic uploadPlaceholderEvent image"/>
+                            <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                   accept="image/jpeg,image/png"/>
+                        </div>
+                        <div class="event_header_left">
+                            <div class="location" title="">
+                                <img class="icons" src="resources/images/location.png"> kiev bla bla
+                            </div>
+                            <div class="start">
+                                <span>START <br></span>
+                                <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> 13 September 2016</div>
+                                <div class="start_time"><img class="icons" src="../../resources/images/time.png"> 23:38</div>
+                            </div>
+                        </div>
+                        <div class="event_header_center">
+                            <div class="created-by" title="">
+                                <img class="icons" src="resources/images/black.png">
+                                <span> Created by </span>Root Root
+                            </div>
+                            <div class="end">
+                                <span>END <br></span>
+                                <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  13 September 2016</div>
+                                <div class="end_time"><img class="icons" src="../../resources/images/time.png">  23:38</div>
+
+                            </div>
+                        </div>
+                        <div class="event_header_right">
+                            <div class="button_event_edit">
+                                <button type="submit" class="btn SinglePage__button SinglePage__button--edit"
+                                        onclick="this.blur();">Edit event
+                                </button>
+                            </div>
+                            <div class="event_shared_in" title="">
+                                <span class="icons fa fa-university"></span>
+                                <span> Public(Open) </span>
+                            </div>
+                            <div class="event_cost">
+                                <span>COST <br></span>
+                                <div class="event_cost_inner"><span class="fa fa-dollar"> 555 UAH per person</span></div>
+                            </div>
+                        </div>
                     </li>
-                    <li class="SinglePage__inputItem EventPage__category">
-                        <label class="SinglePage__inputItem__label"><b>Category:</b></label>
-                        <select id="event-categories">
-                            <script id="event-categories-list" type="x-handlebars-template">
-                                {{#each this}}
-                                <option data-id="{{id}}">{{category}}</option>
-                                {{/each}}
-                            </script>
-                        </select>
+                    <li class="event_description">
+                        <span class="event_description_inner">DESCRIPTION <br><br></span>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
                     </li>
+                    <li class="event_participants">
+                        <span class="event_participants_inner">PARTICIPANTS <br><br></span>
+                        <ul class="EventPage__events__list">
+                        </ul>
+                        <script id="participants" type="x-handlebars-template">
+                            {{#each this}}
+                            <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
+                            {{/each}}
+                        </script>
+                    </li>
+
+                <%--<li class="SinglePage__inputItem EventPage__owner">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>User Name:</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem EventPage__category">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Category:</b></label>--%>
+                        <%--<select id="event-categories">--%>
+                            <%--<script id="event-categories-list" type="x-handlebars-template">--%>
+                                <%--{{#each this}}--%>
+                                <%--<option data-id="{{id}}">{{category}}</option>--%>
+                                <%--{{/each}}--%>
+                            <%--</script>--%>
+                        <%--</select>--%>
+                    <%--</li>--%>
                     <li class="SinglePage__inputItem EventPage__start">
                         <label class="SinglePage__inputItem__label"><b>Start:</b></label>
                         <input class="SinglePage__inputItem__inputField reset editable" id="start"
@@ -567,55 +629,45 @@
                         <input class="SinglePage__inputItem__inputField reset editable" id="end"
                                placeholder="When event ends" readonly/>
                     </li>
-                    <li class="SinglePage__inputItem EventPage__description">
-                        <label class="SinglePage__inputItem__label"><b>Description:</b></label>
-                        <div contentEditable="false" id="description" title="Description:"></div>
-                    </li>
-                    <li class="SinglePage__inputItem">
-                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <input contentEditable="false" id="event-location" title="Location:" type="text"
-                            placeholder="">
-                        <div class = "show-location-map" id="show-event-location-map">
-                            <input type = "checkbox" checked="checked" title = "Show on map"/>
-                            Show on map
-                        </div>
-                        <div id = "event-location-map-holder">
-                            <div class = "location-map" id="event-location-map"></div>
-                        </div>
-                    </li>
-                    <li class="SinglePage__inputItem EventPage__cost">
-                        <label class="SinglePage__inputItem__label"><b>Cost:</b></label>
-                        <input id="cost" class="form-control" type="number" min="0" max="100000"
-                               placeholder="Estimated cost"
-                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
-                        <select id="currencies" class="form-control">
-                            <script id="curr-list" type="x-handlebars-template">
-                                {{#each this}}
-                                <option data-id="{{id}}">{{name}}</option>
-                                {{/each}}
-                            </script>
-                        </select>
-                    </li>
-                    <li class="SinglePage__inputItem">
-                        <label class="SinglePage__inputItem__label"><b>Shared in:</b></label>
-                        <select contentEditable="false" id="target-group" class = "form-control" title="Shared in:">
-                            <script id="group-list-script" type="x-handlebars-template">
-                                {{#each this}}
-                                <option data-id="{{id}}">{{name}}</option>
-                                {{/each}}
-                            </script>
-                        </select>
-                    </li>
-                    <li class="SinglePage__inputItem EventPage__participants">
-                        <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
-                        <ul class="EventPage__events__list">
-                        </ul>
-                        <script id="participants" type="x-handlebars-template">
-                            {{#each this}}
-                            <li data-id="{{id}}">{{firstName}} {{lastName}}</li>
-                            {{/each}}
-                        </script>
-                    </li>
+                    <%--<li class="SinglePage__inputItem EventPage__description">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Description:</b></label>--%>
+                        <%--<div contentEditable="false" id="description" title="Description:"></div>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Location:</b></label>--%>
+                        <%--<input contentEditable="false" id="event-location" title="Location:" type="text"--%>
+                            <%--placeholder="">--%>
+                        <%--<div class = "show-location-map" id="show-event-location-map">--%>
+                            <%--<input type = "checkbox" checked="checked" title = "Show on map"/>--%>
+                            <%--Show on map--%>
+                        <%--</div>--%>
+                        <%--<div id = "event-location-map-holder">--%>
+                            <%--<div class = "location-map" id="event-location-map"></div>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem EventPage__cost">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Cost:</b></label>--%>
+                        <%--<input id="cost" class="form-control" type="number" min="0" max="100000"--%>
+                               <%--placeholder="Estimated cost"--%>
+                               <%--onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>--%>
+                        <%--<select id="currencies" class="form-control">--%>
+                            <%--<script id="curr-list" type="x-handlebars-template">--%>
+                                <%--{{#each this}}--%>
+                                <%--<option data-id="{{id}}">{{name}}</option>--%>
+                                <%--{{/each}}--%>
+                            <%--</script>--%>
+                        <%--</select>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Shared in:</b></label>--%>
+                        <%--<select contentEditable="false" id="target-group" class = "form-control" title="Shared in:">--%>
+                            <%--<script id="group-list-script" type="x-handlebars-template">--%>
+                                <%--{{#each this}}--%>
+                                <%--<option data-id="{{id}}">{{name}}</option>--%>
+                                <%--{{/each}}--%>
+                            <%--</script>--%>
+                        <%--</select>--%>
+                    <%--</li>--%>
                     <!--<li class='event_pic'>
                         <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
@@ -717,18 +769,18 @@
                     </li>
                     <!--Group image here-->
 
-                </ul>
-                <ul class="SinglePage__inputItemsList ">
-                    <li class='event_pic'>
-                        <div contentEditable="false" id="picture" class='event_pic'>
-                            <img style=''
-                                 class="event_pic uploadPlaceholderEvent image"/>
-                            <input style='display:none;' type='file' class="SinglePage__button--upload"
-                                   accept="image/jpeg,image/png"/>
-                        </div>
-                    </li>
+                <%--</ul>--%>
+                <%--<ul class="SinglePage__inputItemsList ">--%>
+                    <%--<li class='event_pic'>--%>
+                        <%--<div contentEditable="false" id="picture" class='event_pic'>--%>
+                            <%--<img style=''--%>
+                                 <%--class="event_pic uploadPlaceholderEvent image"/>--%>
+                            <%--<input style='display:none;' type='file' class="SinglePage__button--upload"--%>
+                                   <%--accept="image/jpeg,image/png"/>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
 
-                </ul>
+                <%--</ul>--%>
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">

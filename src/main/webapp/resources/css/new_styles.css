@@ -75,6 +75,12 @@ h1, h3 {
   border-radius: 1px;
   background-color: #edebeb;
 }
+div.event_header_right > div > button.SinglePage__button--edit{
+  /*bla*/
+  background-color: #FFFFFF;
+  color: #666666;
+  text-decoration: underline;
+}
 .events-list:first-child{
   margin-top:20px;
 }
@@ -422,9 +428,10 @@ h1, h3 {
 	Single event Page
 ----------------------------*/
 .SinglePage {
+  /*bla*/
   z-index: 100;
   min-width: 550px;
-  border-radius: 5px;
+  border-radius: 2px;
   min-width: 550px;
 }
 .Overlay {
@@ -466,9 +473,10 @@ h1, h3 {
   width: 100%;
 }
 .SinglePage__inputForm {
+  /*bla*/
   padding: 0 0 0 0;
-  width: 70%;
-  margin: 0 auto;
+  /*width: 60%;*/
+  margin: 0 7%;
 }
 .SinglePage__inputItemsList {
   margin-top: 10px;
@@ -647,15 +655,71 @@ div.ui-datepicker {
 .EventPage__cost input.form-control {
   width: 40%;
 }
-li.event_pic {
-  position: absolute;
-  top: 97px;
-  right: 20px;
-}
+/*bla*/
+/*li.event_pic {*/
+  /*position: absolute;*/
+  /*top: 97px;*/
+  /*right: 20px;*/
+/*}*/
 div.event_pic {
+  /*bla*/
   width: 200px;
-  height: 200px;
-  overflow: hidden;
+  height: 115px;
+  position: relative;
+  display: inline-block;
+  /*overflow: hidden;*/
+
+}
+.event_header{
+  /*bla*/
+  /*text-align: center;*/
+}
+.event_description, .event_participants{
+  margin-top: 22px;
+}
+/*.event_description_inner, .event_participants_inner{*/
+  /*display:inline-block;*/
+  /*margin-bottom: 15px;*/
+/*}*/
+.button_event_edit{
+  position: absolute;
+  top:-7px;
+  right: -57px;
+}
+.event_shared_in{
+  margin-left: 8px;
+}
+.event_header_left, .event_header_center, .event_header_right{
+  /*bla*/
+  position: relative;
+  top: -2px;
+  display: inline-block;
+  width: 200px;
+  /*text-align: left;*/
+}
+.event_header_right{
+  vertical-align: top;
+  top: 9px;
+}
+div.event_header_left > div.start, div.event_header_center > div.end, div.event_header_right > div.event_cost{
+  /*bla*/
+  display:block;
+  width: 90%;
+  margin-left: 5%;
+  padding-top: 0px;
+  margin-top: 20px;
+  padding: 0px;
+}
+div.event_header_left > div.location, div.event_header_center > div.created-by{
+  /*bla*/
+  text-align: left;
+  margin-left: 4%;
+}
+div.event_header_left div.start_date, div.event_header_left div.start_time,
+div.event_header_center div.end_date, div.event_header_center div.end_time,
+div.event_header_right div.event_cost_inner{
+  /*bla*/
+  margin-top: 8px;
 }
 li.event_pic_min {
   position: absolute;
