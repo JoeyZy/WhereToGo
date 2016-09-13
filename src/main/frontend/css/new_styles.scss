@@ -21,9 +21,10 @@ h1, h3 {
 }
 .navbar-inverse {
   /*background-image: linear-gradient(to bottom, #37474F 0, #3a3a3a 100%);*/
+  border-radius: 0px;
   background-image: none;
   background-color: #37474F;
-  box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.4);
   border-color: #37474F;
 }
 .navbar-default .navbar-brand:hover {
