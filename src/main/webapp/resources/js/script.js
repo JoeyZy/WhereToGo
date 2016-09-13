@@ -879,8 +879,25 @@ $(window).on("load",function () {
 			});
 		}
 	}
-
-
+	$(".btn-show-all").on('click', function (event) {
+		event.preventDefault();
+		if(oldLocationHash==="#myEvents"){
+			window.location.hash = 'myEvents';
+		}
+		else window.location.hash = '';
+	});
+	$('.btn-calendar').on('click', function (event) {
+		event.preventDefault();
+		$('#calendar').fullCalendar( 'destroy' );
+		$('#calendar').css("display","");
+		$('.Calendar').css("display","");
+		if(window.location.hash === '#calendar'){
+			renderCalendarPage();
+		}
+		else{
+			window.location.hash = 'calendar';
+		}
+	});
 	// This function is called only once - on $singlePage load.
 	// It fills up the events list via a handlebars template.
 	// It recieves one parameter - the data we took from events.json.
@@ -916,20 +933,6 @@ $(window).on("load",function () {
 		$('.btn-add-event').on('click', function () {
 			window.location.hash = 'addEvent';
 			return false;
-		});
-
-
-		$('.btn-calendar').on('click', function (event) {
-			event.preventDefault();
-			$('#calendar').fullCalendar( 'destroy' );
-			$('#calendar').css("display","");
-			$('.Calendar').css("display","");
-			if(window.location.hash === '#calendar'){
-				renderCalendarPage();
-			}
-			else{
-				window.location.hash = 'calendar';
-			}
 		});
 		$('.profile-photo').click(function (e) {
 			e.preventDefault();
@@ -1247,10 +1250,10 @@ $(window).on("load",function () {
 			return false;
 		});
 
-		$('.btn-calendar').on('click', function (event) {
+		/*$('.btn-calendar').on('click', function (event) {
 			event.preventDefault();
 			window.location.hash = 'calendar';
-		});
+		});*/
 
 		$('.userInfo').click(function (e) {
 			e.preventDefault();
