@@ -47,28 +47,35 @@
                 <ul class="nav navbar-nav navbar-left">
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <img class="profile-photo navbar-btn-container">
-                    </li>
-                    <li>
-                        <a class="userInfo" href="${pageContext.request.contextPath}/user"></a>
-                    </li>
-                    <li>
-                        <c:url value="/j_spring_security_logout" var="logoutUrl" />
-                        <!-- csrt for log out-->
-                        <form action="${logoutUrl}" method="post" id="logoutForm">
-                            <input type="hidden"
-                                   name="${_csrf.parameterName}"
-                                   value="${_csrf.token}" />
-                        </form>
-                        <script>
-                            function formSubmit() {
-                                document.getElementById("logoutForm").submit();
-                            }
-                        </script>
-                        <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <a href="javascript:formSubmit()">Logout</a>
-                        </c:if>
+                    <li class="user-dropdown">
+                        <ul class="profile-menu dropdown-toggle" style="display: none;" data-toggle="dropdown" data-user="" >
+                            <li>
+                                <img class="profile-photo">
+                                <a class="userInfo"></a><span class="caret"></span>
+                            </li>
+                        </ul>
+                        <ul class="dropdown-menu" id = "prof-menu">
+                            <li>
+                                <a class="profile" >Profile</a>
+                            </li>
+                            <li>
+                                <c:url value="/j_spring_security_logout" var="logoutUrl" />
+                                <!-- csrt for log out-->
+                                <form action="${logoutUrl}" method="post" id="logoutForm">
+                                    <input type="hidden"
+                                           name="${_csrf.parameterName}"
+                                           value="${_csrf.token}" />
+                                </form>
+                                <script>
+                                    function formSubmit() {
+                                        document.getElementById("logoutForm").submit();
+                                    }
+                                </script>
+                                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                                    <a href="javascript:formSubmit()">Logout</a>
+                                </c:if>
+                            </li>
+                        </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-user=""><b>Login</b> <span
@@ -155,6 +162,8 @@
         <ul class="events-list">
             <div class="clearfix">
                 <div class="total-counter"></div>
+                <a href="" class="button-back prev" style="display: none;">Back</a>
+
 
                 <div class="navbar-btn-container calendar">
                     <button class="btn btn-info btn-calendar" title="Open calendar">
@@ -185,7 +194,6 @@
                 {{#each this }}
                 <li data-index="{{id}}" class="small_event">
                     <%--<a href="#" class="event-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>--%>
-
                         <span class="content">
 			                <div class="event-box-img">
                                 <div class="event-img {{category}}" style="background-image:url({{picture}})">

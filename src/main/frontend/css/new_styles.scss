@@ -863,3 +863,64 @@ div.accordion{
 .group-title{
   margin: 0px auto 0;
 }
+/* General Button */
+/* -------------- */
+.button-back {
+  position: relative;
+  margin-top: 10px;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 2.8px;
+  padding-bottom: 2.8px;
+  background: #90A4AE;
+  color: white;
+  font-size: 14px;
+  float: left;
+}
+.button-back::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+/* Arrow Buttons */
+/* ------------- */
+.next::after,
+.prev::after {
+  border-style: solid;
+}
+/* Prev Button */
+/* ----------- */
+.prev::after {
+  left: -22px;
+  border-color: transparent #90A4AE transparent transparent;
+  border-width: 11px;
+}
+.profile-menu{
+  list-style-type: none;
+  display: inline-block;
+  color: white;
+  padding: 10px 5px 10px 18px;
+  border-left: 2px solid black;
+}
+.profile-menu li a{
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  margin-right: 4px;
+}
+.profile-menu li a:hover{
+  text-decoration: none;
+  color: white;
+}
+#prof-menu{
+  min-width: 205px;
+  padding: 10px 10px;
+  overflow: hidden;
+  margin-top: 5px;
+  background-color: rgba(255, 255, 255, .8)
+}
+.profile{
+  cursor: pointer;
+}

@@ -513,7 +513,10 @@ $(window).on("load",function () {
 
 		hideSideBar();
 	});
-
+	$(".button-back").on("click",function (e) {
+		e.preventDefault();
+		window.location.hash=oldLocationHash;
+	})
 	function hideArchiveElements() {
 		$showArchiveCheckbox.find("input").prop("checked", false);
 		archiveDateFilters.addClass('hidden');
@@ -565,6 +568,7 @@ $(window).on("load",function () {
 	});
 	var checkboxes = $('.filters input[type=checkbox]');
 	var $loginDropDown = $('.dropdown');
+	var $userDropDown = $('.user-dropdown');
 	var register = $('.btn-add-user');
 	register.on('click', function () {
 		window.location.hash = 'addUser';
@@ -754,6 +758,7 @@ $(window).on("load",function () {
 		$singlePage.find('.SinglePage__title').removeClass("group-title");
 		$(".SinglePage > .close").hide();
 		$(".total-counter").hide();
+		$(".button-back").hide();
 		$(".clearfix").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
@@ -851,6 +856,7 @@ $(window).on("load",function () {
 			},
 			// Calendar
 			'#calendar': function () {
+				$(".button-back").show();
 				renderCalendarPage();
 			},
 			// Page with filtered events
@@ -943,11 +949,11 @@ $(window).on("load",function () {
 			window.location.hash = 'addEvent';
 			return false;
 		});
-		$('.profile-photo').click(function (e) {
+		/*$('.profile-photo').click(function (e) {
 			e.preventDefault();
 			window.location.hash = 'user/email=' + $(this).data('user');
-		});
-		$('.userInfo').click(function (e) {
+		});*/
+		$('.profile').click(function (e) {
 			e.preventDefault();
 			window.location.hash = 'user/email=' + $(this).data('user');
 		});
@@ -959,8 +965,10 @@ $(window).on("load",function () {
 				success: function (sessionUser) {
 					user = undefined;
 					$('.userInfo').hide();
+					$(".profile-menu").hide();
 					$('.logout').hide();
 					$loginDropDown.show();
+					$userDropDown.hide();
 					$(window).trigger('hashchange');
 					showInlineAssignments();
 				},
@@ -1264,7 +1272,7 @@ $(window).on("load",function () {
 			window.location.hash = 'calendar';
 		});*/
 
-		$('.userInfo').click(function (e) {
+		$('.profile').click(function (e) {
 			e.preventDefault();
 			window.location.hash = 'user/email=' + $(this).groupsData('user');
 		});
@@ -1276,8 +1284,10 @@ $(window).on("load",function () {
 				success: function (sessionUser) {
 					user = undefined;
 					$('.userInfo').hide();
+					$(".profile-menu").hide();
 					$('.logout').hide();
 					$loginDropDown.show();
+					$userDropDown.hide();
 					$(window).trigger('hashchange');
 					showInlineAssignments();
 				},
@@ -1926,6 +1936,7 @@ $(window).on("load",function () {
 		}
 		if(!addGroup){
 			renderShowGroupPage(index);
+			$(".button-back").show();
 			$(".Overlay").hide();
 			$singlePage.find('.SinglePage').css("width","70%");
 			$singlePage.find('.SinglePage').addClass("movePage");
@@ -2076,6 +2087,7 @@ $(window).on("load",function () {
 		}
 		var old = oldLocationHash.split('/')[0];
 		if(participate&&old!="#group"){
+			$(".button-back").show();
 			$(".Overlay").hide();
 			$singlePage.find('.SinglePage').css("width","70%");
 			// $singlePage.find('.SinglePage').addClass("movePage");
@@ -2920,11 +2932,13 @@ $(window).on("load",function () {
 			$('.profile-photo').attr('src',user.picture);
 			$('.profile-photo').show();
 		}
+		$(".profile-menu").show();
 		$('.logout').text('Logout');
 		$('.logout').show();
 		$myEventsLink.show();
 		$allGroupsLink.show();
 		$loginDropDown.toggle();
+		$userDropDown.toggle();
 		grantRightsToUser();
 	}
 
@@ -2945,6 +2959,7 @@ $(window).on("load",function () {
 				}
 				setUser(sessionUser);
 				$loginDropDown.hide();
+				$userDropDown.show();
 				$showArchiveCheckbox.find("input").prop('disabled', false);
 			},
 			error: function () {
