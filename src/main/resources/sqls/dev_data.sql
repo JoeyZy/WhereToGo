@@ -37,6 +37,7 @@ INSERT INTO `events` (`id`, `cost`, `deleted`, `description`, `endDateTime`, `lo
   (7, 700, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Trip.......', '2016-04-24 13:38:00', 1, 1),
   (8, 800, 'N' , 'Description of the event', '2016-04-24 23:38:00', 'Lepse Street, 6z, Kiev', 'Other......', '2016-04-24 22:00:00', 2, 1);
 
+
 INSERT INTO `events_categories` (category_id, event_id) VALUES
   (1, 1),
   (2, 2),

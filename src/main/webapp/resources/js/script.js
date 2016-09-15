@@ -2433,7 +2433,7 @@ $(window).on("load",function () {
 					data[type.toLowerCase() + 'Id'] = index;
 					delete data.created;
 					delete data.modified;
-
+					delete data.profile_picture_url;
 					$.ajax({
 						type: 'post',
 						url: '/delete' + type + 'Comment',
