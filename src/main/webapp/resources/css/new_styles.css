@@ -730,7 +730,7 @@ img.event_pic {
   width: 40px;
   height: 34px;
 }
-.add-event-div{
+.add-event-div, .add-group-div{
   margin-right: 26px;
 }
 .btn-add-event{
@@ -773,8 +773,10 @@ input.show-archive-input {
   color:#CBCBCC;
 }*/
 .not-displayed {
-  display:none;
+  /*bla*/
+  display:none !important;
 }
+
 .groups-header {
   text-align: left;
 }
