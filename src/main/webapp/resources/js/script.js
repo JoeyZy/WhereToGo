@@ -1035,6 +1035,7 @@ $(window).on("load",function () {
 		else {
 			list.find(".event-img").removeClass("Outdated");
 		}
+		pagination(data, list);
 		// Each events has a data-index attribute.
 		// On click change the url hash to open up a preview for this event only.
 		// Remember: every hashchange triggers the render function.
