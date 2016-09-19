@@ -2135,7 +2135,7 @@ $(window).on("load",function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-
+console.log(event);
 			$eventMapHolder.show();
 			var map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
 			$eventMapHolder.hide();
@@ -2143,7 +2143,9 @@ $(window).on("load",function () {
 			if (typeof event != 'undefined') {
 				makeEventPageUneditable();
 				$singlePageTitle.val(event.name);
-				$eventCategories.val(getEventCategoriesAsList(event.categories));
+				$('.view_event_category_inner').empty();
+				$('.view_event_category_inner').append('Categorie: ' + event.category[0]);
+				// $eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
 				$eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);

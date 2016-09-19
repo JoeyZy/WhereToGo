@@ -551,7 +551,13 @@
                         </div>
                         <div class="event_header_left">
                             <div class="location" title="">
-                                <img class="icons" src="resources/images/location.png"> kiev bla bla
+                                <img class="icons" src="resources/images/location.png">
+                                <input contentEditable="false" id="event-location" title="Location:" type="text"
+                                       placeholder="" maxlength="30">
+                                <div class = "show-location-map" id="show-event-location-map">
+                                    <input type = "checkbox" checked="checked" title = "Show on map"/>
+                                    Show
+                                </div>
                             </div>
                             <div class="start">
                                 <span>START <br></span>
@@ -559,10 +565,17 @@
                                 <div class="start_time"><img class="icons" src="../../resources/images/time.png"> 23:38</div>
                             </div>
                         </div>
+                        <div id = "event-location-map-holder">
+                            <div class = "location-map" id="event-location-map"></div>
+                        </div>
                         <div class="event_header_center">
                             <div class="created-by" title="">
                                 <img class="icons" src="resources/images/black.png">
                                 <span> Created by </span>Root Root
+                            </div>
+                            <div class="view_event_category">
+                                <span class="icons fa fa-street-view"></span>
+                                <span class="view_event_category_inner"></span>
                             </div>
                             <div class="end">
                                 <span>END <br></span>
@@ -642,7 +655,7 @@
                             <%--Show on map--%>
                         <%--</div>--%>
                         <%--<div id = "event-location-map-holder">--%>
-                            <%--<div class = "location-map" id="event-location-map"></div>--%>
+                            <%--<div class = "location-map" id="event-location-map" style="width: 550px;"></div>--%>
                         <%--</div>--%>
                     <%--</li>--%>
                     <%--<li class="SinglePage__inputItem EventPage__cost">--%>

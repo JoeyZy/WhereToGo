@@ -667,6 +667,8 @@ div.event_pic {
   height: 115px;
   position: relative;
   display: inline-block;
+  top: 20px;
+  vertical-align: top;
   /*overflow: hidden;*/
 
 }
@@ -689,13 +691,25 @@ div.event_pic {
 .event_shared_in{
   margin-left: 8px;
 }
+#event-location-map-holder{
+  display: inline-block;
+}
 .event_header_left, .event_header_center, .event_header_right{
   /*bla*/
   position: relative;
-  top: -2px;
+  top: 9px;
   display: inline-block;
   width: 200px;
   /*text-align: left;*/
+}
+.view_event_category{
+  margin-top:10px;
+  margin-left: 5%;
+}
+.event_header_left{
+  vertical-align: top;
+  top: 5px;
+  width: 250px;
 }
 .event_header_right{
   vertical-align: top;
@@ -709,6 +723,12 @@ div.event_header_left > div.start, div.event_header_center > div.end, div.event_
   padding-top: 0px;
   margin-top: 20px;
   padding: 0px;
+}
+div.event_header_center > div.end{
+  margin-top: 22px;
+}
+div.event_header_right > div.event_cost{
+  margin-top: 50px;
 }
 div.event_header_left > div.location, div.event_header_center > div.created-by{
   /*bla*/
@@ -868,12 +888,15 @@ div.accordion{
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 .location-map {
+  /*bla*/
   margin-top: 20px;
-  height: 200px;
+  width: 450px;
+  height: 150px;
 }
 .show-location-map {
+  /*bla*/
   font-size: 15px;
-  margin-top: 5px;
+  /*margin-top: 5px;*/
 }
 .disabled-input {
   border: none;
