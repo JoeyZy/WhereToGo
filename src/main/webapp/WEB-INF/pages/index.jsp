@@ -731,7 +731,7 @@
                     <li class='event_pic'>
                         <div contentEditable="false" id="picture" class='event_pic'>
                             <img style=''
-                                 class="event_pic uploadPlaceholderEvent image"/>
+                                 class="event_pic uploadPlaceholderEvent image" data-toggle="tooltip"/>
                             <input style='display:none;' type='file' class="SinglePage__button--upload"
                                    accept="image/jpeg,image/png"/>
                         </div>

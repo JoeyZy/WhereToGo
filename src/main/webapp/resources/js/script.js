@@ -15,6 +15,11 @@ $(window).on("load",function () {
 	$('.logout').hide();
 	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all users)";
 
+	$('[data-toggle="tooltip"]').tooltip();
+	$("#event_pic").on("mouseover",function(){
+		$('#event_pic').tooltip();
+	});
+
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
 	var $singlePage = $('.Page');
@@ -1886,7 +1891,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Click Me to change!');
+		$picture.attr('title', 'Best size-ratio - 2:1 ');
 	}
 
 	function makeEventPageUneditable() {
@@ -1949,7 +1954,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Click Me to change!');
+		$picture.attr('title', 'Best size-ratio - 2:1 ');
 	}
 
 	function makeUserPageUneditable() {
@@ -2012,7 +2017,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Click Me to change!');
+		$picture.attr('title', 'Best size-ratio - 1:1 ');
 	}
 
 	function hideCalendarPage() {

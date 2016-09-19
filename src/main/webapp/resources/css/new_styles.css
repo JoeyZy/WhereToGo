@@ -248,6 +248,8 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   padding: 0;
   opacity: 1;
   font-size: 0;
+}
+.visible > .events-list{
   min-height: 866px;
 }
 .groups-list {

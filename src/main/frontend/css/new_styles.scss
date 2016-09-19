@@ -249,6 +249,9 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   font-size: 0;
 
 }
+.visible > .events-list{
+  min-height: 866px;
+}
 .groups-list {
   list-style: none;
   max-width: 30%;
