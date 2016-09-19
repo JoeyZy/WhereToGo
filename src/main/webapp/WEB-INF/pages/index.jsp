@@ -219,7 +219,7 @@
                         </span>
                     <!--<div class="highlight"></div> - with hover buttons became unclickable -->
                         <span class="button_group" visit={{attends}}>
-                            <button type="button" class="btn assign-action-btn btn-success">
+                            <button type="button" class="btn assign-action-btn btn-success btn-visit">
                                 <span class="glyphicon glyphicon-ok assign-action-img"/>
                                     Visit
                             </button>
@@ -553,7 +553,7 @@
                             <div class="location" title="">
                                 <img class="icons" src="resources/images/location.png">
                                 <input contentEditable="false" id="event-location" title="Location:" type="text"
-                                       placeholder="" maxlength="30">
+                                       placeholder="">
                                 <div class = "show-location-map" id="show-event-location-map">
                                     <input type = "checkbox" checked="checked" title = "Show on map"/>
                                     Show
@@ -561,8 +561,8 @@
                             </div>
                             <div class="start">
                                 <span>START <br></span>
-                                <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"> 13 September 2016</div>
-                                <div class="start_time"><img class="icons" src="../../resources/images/time.png"> 23:38</div>
+                                <div class="start_date"><img class="icons" src="../../resources/images/calendar.png"><span></span></div>
+                                <div class="start_time"><img class="icons" src="../../resources/images/time.png"><span></span></div>
                             </div>
                         </div>
                         <div id = "event-location-map-holder">
@@ -571,7 +571,7 @@
                         <div class="event_header_center">
                             <div class="created-by" title="">
                                 <img class="icons" src="resources/images/black.png">
-                                <span> Created by </span>Root Root
+                                <input class="SinglePage__inputItem__inputField EventPage__owner__name" readonly/>
                             </div>
                             <div class="view_event_category">
                                 <span class="icons fa fa-street-view"></span>
@@ -579,8 +579,8 @@
                             </div>
                             <div class="end">
                                 <span>END <br></span>
-                                <div class="end_date"><img class="icons" src="../../resources/images/calendar.png">  13 September 2016</div>
-                                <div class="end_time"><img class="icons" src="../../resources/images/time.png">  23:38</div>
+                                <div class="end_date"><img class="icons" src="../../resources/images/calendar.png"><span></span></div>
+                                <div class="end_time"><img class="icons" src="../../resources/images/time.png"><span></span></div>
 
                             </div>
                         </div>
@@ -592,17 +592,17 @@
                             </div>
                             <div class="event_shared_in" title="">
                                 <span class="icons fa fa-university"></span>
-                                <span> Public(Open) </span>
+                                <span class="event_shared_in_inner"></span>
                             </div>
                             <div class="event_cost">
                                 <span>COST <br></span>
-                                <div class="event_cost_inner"><span class="fa fa-dollar"> 555 UAH per person</span></div>
+                                <div class="event_cost_inner"><span class="fa fa-dollar"></span></div>
                             </div>
                         </div>
                     </li>
                     <li class="event_description">
-                        <span class="event_description_inner">DESCRIPTION <br><br></span>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        <span>DESCRIPTION <br><br></span>
+                        <span class="event_description_inner">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
@@ -632,16 +632,16 @@
                             <%--</script>--%>
                         <%--</select>--%>
                     <%--</li>--%>
-                    <li class="SinglePage__inputItem EventPage__start">
-                        <label class="SinglePage__inputItem__label"><b>Start:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset editable" id="start"
-                               placeholder="When event starts" readonly/>
-                    </li>
-                    <li class="SinglePage__inputItem EventPage__end">
-                        <label class="SinglePage__inputItem__label"><b>End:</b></label>
-                        <input class="SinglePage__inputItem__inputField reset editable" id="end"
-                               placeholder="When event ends" readonly/>
-                    </li>
+                    <%--<li class="SinglePage__inputItem EventPage__start">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Start:</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField reset editable" id="start"--%>
+                               <%--placeholder="When event starts" readonly/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem EventPage__end">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>End:</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField reset editable" id="end"--%>
+                               <%--placeholder="When event ends" readonly/>--%>
+                    <%--</li>--%>
                     <%--<li class="SinglePage__inputItem EventPage__description">--%>
                         <%--<label class="SinglePage__inputItem__label"><b>Description:</b></label>--%>
                         <%--<div contentEditable="false" id="description" title="Description:"></div>--%>
@@ -782,7 +782,7 @@
                     </li>
                     <!--Group image here-->
 
-                <%--</ul>--%>
+                </ul>
                 <%--<ul class="SinglePage__inputItemsList ">--%>
                     <%--<li class='event_pic'>--%>
                         <%--<div contentEditable="false" id="picture" class='event_pic'>--%>
@@ -797,9 +797,9 @@
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
-                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"
-                            onclick="this.blur();">Edit event
-                    </button>
+                    <%--<button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"--%>
+                            <%--onclick="this.blur();">Edit event--%>
+                    <%--</button>--%>
                     <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editGroup"
                             onclick="this.blur();">Edit group
                     </button>
@@ -835,8 +835,8 @@
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingUser"
                             onclick="this.blur();">Cancel
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--attend"
-                            onclick="this.blur();">Visit
+                    <button type="submit" class="btn btn-action btn-visit SinglePage__button SinglePage__button--attend"
+                            onclick="this.blur();">Visit this event
                     </button>
                     <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--subscribe"
                             onclick="this.blur();">Subscribe

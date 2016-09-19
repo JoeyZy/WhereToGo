@@ -12,7 +12,7 @@ $(window).on("load",function () {
 	var oldLocationHash = "#";
 	$('.userInfo').hide();
 	$('.logout').hide();
-	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all users)";
+	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all)";
 
 	// Find all event fields
 	var $myEventsLink = $('.my-events');
@@ -1472,7 +1472,7 @@ $(window).on("load",function () {
 		}
 		var $addEventBtn = $('.btn-add-event');
 		$addEventBtn.prop('disabled', false);
-		$addEventBtn.addClass('btn-success');
+		$addEventBtn.addClass('btn-success btn-visit');
 		$addEventBtn.removeAttr('title');
 	}
 	function enableAddGroupsBtn() {
@@ -2135,7 +2135,6 @@ $(window).on("load",function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-console.log(event);
 			$eventMapHolder.show();
 			var map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
 			$eventMapHolder.hide();
@@ -2147,10 +2146,13 @@ console.log(event);
 				$('.view_event_category_inner').append('Categorie: ' + event.category[0]);
 				// $eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
-				$eventDescription.text(linkify(event.description));
+				$('.event_description_inner').text(linkify(event.description));
+				// $eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);
 				setLocationByAddress(map, event.location, '#show-event-location-map');
-				$eventTargetGroup.val(event.targetGroup.name);
+				$('.event_shared_in_inner').empty();
+				$('.event_shared_in_inner').append(event.targetGroup.name);
+				// $eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
@@ -2159,13 +2161,33 @@ console.log(event);
 				} else {
 					$pictureParent.hide();
 				}
-				singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
-				var startDate = event.startDateTime;
-				$eventStart.val(startDate);
-				var endDate = event.endDateTime;
-				$eventEnd.val(endDate);
-				$eventCost.val(event.cost);
-				$eventCostCurrency.val(event.currency.name);
+				singlePage.find('.EventPage__owner__name').val('Created by ' + event.owner.firstName + " " + event.owner.lastName);
+
+				var actualStartDate = moment(event.startDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				var actualStartTime = moment(event.startDateTime, "DD/MM/YY HH:mm").format("HH:mm");
+				var actualEndDate = moment(event.endDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				var actualEndTime = moment(event.endDateTime, "DD/MM/YY HH:mm").format("HH:mm");
+
+				$('.start .start_date span').empty();
+				$('.start .start_date span').append('&#160;' + actualStartDate);
+
+				$('.start .start_time span').empty();
+				$('.start .start_time span').append('&#160;' + actualStartTime);
+
+				$('.end .end_date span').empty();
+				$('.end .end_date span').append('&#160;' + actualEndDate);
+
+				$('.end .end_time span').empty();
+				$('.end .end_time span').append('&#160;' + actualEndTime);
+
+				// var startDate = event.startDateTime;
+				// $eventStart.val(startDate);
+				// var endDate = event.endDateTime;
+				// $eventEnd.val(endDate);
+				$('.event_cost_inner span').empty();
+				$('.event_cost_inner span').append(' ' + event.cost + ' ' + event.currency.name + ' per person');
+				// $eventCost.val(event.cost);
+				// $eventCostCurrency.val(event.currency.name);
 				if (user && (user.id === event.owner.id || user.role === adminRole)) {
 					$buttonEdit.show();
 					$buttonEdit.disabled = false;
@@ -2173,7 +2195,7 @@ console.log(event);
 					$buttonDelete.disabled = false;
 				}
 				allowAttendEvent();
-				$eventCategories.multiselect('refresh');
+				// $eventCategories.multiselect('refresh');
 			} else {
 
 				makeEventPageEditable();
@@ -2184,21 +2206,23 @@ console.log(event);
 				if (typeof user !== 'undefined') {
 					singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
+
+				$.getJSON("myGroups", function (data) {
+					var targetGroupTemplate = $('#group-list-script').html();
+					if(targetGroupTemplate != undefined) {
+						var groupListElement = Handlebars.compile(targetGroupTemplate);
+					}
+					groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
+					for(i = 0; i < data.length; i++) {
+						groupList.push(data[i]);
+					}
+					if(groupListElement!=undefined) {
+						$eventTargetGroup.html(groupListElement(groupList));
+					}
+				});
 			}
 
-			$.getJSON("myGroups", function (data) {
-				var targetGroupTemplate = $('#group-list-script').html();
-				if(targetGroupTemplate != undefined) {
-					var groupListElement = Handlebars.compile(targetGroupTemplate);
-				}
-				groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
-				for(i = 0; i < data.length; i++) {
-					groupList.push(data[i]);
-				}
-				if(groupListElement!=undefined) {
-					$eventTargetGroup.html(groupListElement(groupList));
-				}
-			});
+
 
 			function getEventCategoriesAsList(categories) {
 				var res = categories[0].name;
@@ -2210,7 +2234,7 @@ console.log(event);
 		}
 	}
 	function renderComments(index, type) {
-		$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
+		$('.SinglePage__all_buttons').before('<div id="comments-container"></div>');
 		$(function() {
 			$('#comments-container').comments({
 				profilePictureURL: 'userImage',
@@ -2959,19 +2983,19 @@ console.log(event);
 	}
 
 
-	var startDateTextBox = $('#start');
-	var endDateTextBox = $('#end');
-
-	$.timepicker.datetimeRange(
-		startDateTextBox,
-		endDateTextBox,
-		{
-			minDate: 0,
-			dateFormat: 'dd/mm/yy',
-			timeFormat: 'HH:mm',
-			start: {}, // start picker options
-			end: {} // end picker options
-		}
-	);
+	// var startDateTextBox = $('#start');
+	// var endDateTextBox = $('#end');
+    //
+	// $.timepicker.datetimeRange(
+	// 	startDateTextBox,
+	// 	endDateTextBox,
+	// 	{
+	// 		minDate: 0,
+	// 		dateFormat: 'dd/mm/yy',
+	// 		timeFormat: 'HH:mm',
+	// 		start: {}, // start picker options
+	// 		end: {} // end picker options
+	// 	}
+	// );
 	$(window).trigger('hashchange');
 });

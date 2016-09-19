@@ -398,7 +398,8 @@ div.event_header_right > div > button.SinglePage__button--edit{
   z-index: 50;
 }
 .assign-action-btn.btn-default {
-  background: #505050;
+  /*bla*/
+  background: #37474f;
   color: #F0F0F0;
   font-size: 13px;
 }
@@ -786,11 +787,24 @@ img.event_pic {
 .add-event-div{
   margin-right: 26px;
 }
+.SinglePage__all_buttons{
+  /*bla*/
+  text-align: right;
+}
 .btn-add-event{
   border-radius: 2px;
 }
 .btn-show-all{
   border-color: #FFFFFF;
+}
+button.btn-visit{
+  /*bla*/
+  background-color: #9ccc65;
+  background-image: none;
+}
+button.SinglePage__button--delete{
+  background-color: #37474f;
+  background-image: none;
 }
 /*bla*/
 .categories-common.Archive {
