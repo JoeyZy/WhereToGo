@@ -248,6 +248,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   padding: 0;
   opacity: 1;
   font-size: 0;
+  min-height: 866px;
 }
 .groups-list {
   list-style: none;
@@ -718,7 +719,6 @@ img.event_pic {
   color:#90A4AE;
   margin-top: 14px;
 }
-/*bla*/
 .calendar{
   margin-right: 15.5%;
   border-left: 2px solid #d4d6d8;
@@ -739,7 +739,6 @@ img.event_pic {
 .btn-show-all{
   border-color: #FFFFFF;
 }
-/*bla*/
 .categories-common.Archive {
   width: 100%;
 }
@@ -773,7 +772,6 @@ input.show-archive-input {
   color:#CBCBCC;
 }*/
 .not-displayed {
-  /*bla*/
   display:none !important;
 }
 
