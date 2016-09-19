@@ -776,7 +776,6 @@ $(window).on("load",function () {
 		if(window.location.hash.split("/")[0]!="#event"&&window.location.hash.split("/")[0]!="#addEvent")
 			secondLocationHash="";
 
-
 		var map = {
 			// The "Homepage".
 			'': function () {
@@ -2170,6 +2169,7 @@ $(window).on("load",function () {
 				window.location.hash = '';
 				return;
 			}
+			$eventCategories.val('');
 			renderAddEventPage();
 		}
 		// Show the $singlePage.
