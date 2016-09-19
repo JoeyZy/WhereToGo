@@ -782,6 +782,8 @@ $(window).on("load",function () {
 			'': function () {
 				// Clear the filters object, uncheck all checkboxes, show all the events
 				filters = {};
+				$(".btn-calendar").show();
+				$(".btn-show-all").show();
 				oldLocationHash = "";
 				$(".total-counter").show();
 				$('.filters input[type=checkbox]').prop('checked', false);
@@ -796,6 +798,8 @@ $(window).on("load",function () {
 				renderEventsPage(events);
 			},
 			"#myEvents": function () {
+				$(".btn-calendar").show();
+				$(".btn-show-all").show();
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
@@ -813,6 +817,8 @@ $(window).on("load",function () {
 				renderEventsPage(events);
 			},
 			"#groups": function () {
+				$(".btn-calendar").show();
+				$(".btn-show-all").hide();
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
@@ -2204,6 +2210,8 @@ $(window).on("load",function () {
 				$( this ).hide();
 			});
 			secondLocationHash = "#event/"+index;
+			$(".btn-show-all").hide();
+			$(".btn-calendar").hide();
 		}
 		else{
 			$(".SinglePage > .close").show();
@@ -3034,8 +3042,8 @@ $(window).on("load",function () {
 		$('.userInfo').show();
 		if(user.picture!==""){
 			$('.profile-photo').attr('src',user.picture);
-			$('.profile-photo').show();
 		}
+		$('.profile-photo').show();
 		$(".profile-menu").show();
 		$('.logout').text('Logout');
 		$('.logout').show();
