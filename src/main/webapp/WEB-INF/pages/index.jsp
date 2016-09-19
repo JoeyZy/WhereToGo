@@ -248,12 +248,21 @@
         <ul class="groups-list all-groups-list">
             <div id="all-groups-header" class="groups-header"><h4>All Groups</h4></div>
             <div class="total-counter-all-groups-list" id="groups-hide"></div>
-            <script type="x-handlebars-template">
+            <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
-                        <span class="content group-content">
-                            <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
-                        </span>
+                    <div class="single_group">
+                        <div class="single_group_header">
+                                <span class="content group-content">
+                                    <h2 class="group-box-title" title="{{name}}"><span> {{name}} </span></h2>
+                                </span>
+                        </div>
+                        <div class="single_group_body">
+                            <p class="single_group_info">Participants: {{groupParticipants.length}}</p>
+                            <img class="single_group_picture" src="{{picture}}">
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 {{/each}}
             </script>
@@ -262,7 +271,7 @@
         <ul class="groups-list my-groups-list">
             <div id="my-groups-header" class="groups-header"><h4>My Groups</h4></div>
             <div class="total-counter-my-groups-list" id="groups-hide1"></div>
-            <script id="groups-template" type="x-handlebars-template">
+            <!--<script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
                     <div>
@@ -273,7 +282,7 @@
                     </div>
                 </li>
                 {{/each}}
-            </script>
+            </script>-->
         </ul>
     </div>
 

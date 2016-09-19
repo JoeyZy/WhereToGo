@@ -1112,7 +1112,7 @@ $(window).on("load",function () {
 		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
 		$.each(GroupsList.find('li'), function (index, item) {
-			$(item).find('h2 span.clickGroupName').on('click', function (e) {
+			$(item).find('.single_group').on('click', function (e) {
 				e.preventDefault();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
@@ -1891,7 +1891,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Best size-ratio - 2:1 ');
+		$picture.attr('title', 'Best aspect ratio - 2:1 ');
 	}
 
 	function makeEventPageUneditable() {
@@ -1954,7 +1954,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Best size-ratio - 2:1 ');
+		$picture.attr('title', 'Best aspect ratio - 2:1 ');
 	}
 
 	function makeUserPageUneditable() {
@@ -2017,7 +2017,7 @@ $(window).on("load",function () {
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Best size-ratio - 1:1 ');
+		$picture.attr('title', 'Best aspect ratio - 1:1 ');
 	}
 
 	function hideCalendarPage() {

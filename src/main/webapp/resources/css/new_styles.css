@@ -219,6 +219,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   font-style: normal;
   z-index: 5;
   position: relative;
+  margin: 0px;
 }
 .event-target-group, .event-box-location-and-by, .group-box-location-and-by {
   text-align: center;
@@ -971,4 +972,25 @@ div.accordion{
 }
 .profile{
   cursor: pointer;
+}
+.single_group{
+  border-radius: 10px;
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+}
+.single_group_header{
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+}
+.single_group_body{
+}
+.single_group_picture{
+  max-height: 40px;
+}
+.single_group_info{
+  display: inline-block;
+  margin-right: 5px;
 }
