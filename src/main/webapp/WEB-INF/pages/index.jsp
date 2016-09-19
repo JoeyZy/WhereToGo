@@ -313,7 +313,7 @@
                             </a>
                     </li>
                     <li class="SinglePage__inputItem UserPage__Location">
-                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
+                        <label class="SinglePage__inputItem__label"><b>City:</b></label>
                         <input contentEditable="false" id="user-location" title="Location:" type="text"
                                placeholder="">
                         <div class = "show-location-map" id="show-user-location-map">
