@@ -247,6 +247,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   padding: 0;
   opacity: 1;
   font-size: 0;
+
 }
 .groups-list {
   list-style: none;
@@ -712,6 +713,26 @@ img.event_pic {
   color:#90A4AE;
   margin-top: 14px;
 }
+.calendar{
+  margin-right: 15.5%;
+  border-left: 2px solid #d4d6d8;
+}
+.btn-calendar{
+  border-color: #edebeb;
+}
+.calendar, .show-all{
+  width: 40px;
+  height: 34px;
+}
+.add-event-div, .add-group-div{
+  margin-right: 26px;
+}
+.btn-add-event{
+  border-radius: 2px;
+}
+.btn-show-all{
+  border-color: #FFFFFF;
+}
 .clearfix::after {
   content: "";
   display: table;
@@ -757,7 +778,7 @@ input.show-archive-input {
   color:#CBCBCC;
 }*/
 .not-displayed {
-  display:none;
+  display:none !important;
 }
 .groups-header {
   text-align: left;
