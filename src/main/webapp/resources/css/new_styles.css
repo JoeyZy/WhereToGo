@@ -673,6 +673,93 @@ div.event_pic {
   /*overflow: hidden;*/
 
 }
+.edit_event_header_left, .edit_event_header_right, .edit_event_left_bottom,
+.edit-show-location-map, .edit_event_right_bottom, .edit_event_location,
+.edit_event_cost {
+  /*bla*/
+  display: inline-block;
+}
+.edit_event_right_bottom{
+  /*bla*/
+  width: 36.5%;
+  vertical-align: top;
+  margin-left: 3.8%;
+}
+#edit-event-location-map-holder  > .location-map {
+  /*bla*/
+  width: 100%;
+  margin-top: 53px;
+}
+.multiselect-container.dropdown-menu{
+  width: 100%;
+}
+.edit_event_location > span{
+  /*bla*/
+  display: inline-block;
+}
+.edit_event_cost{
+  /*bla*/
+  margin-left: 3%;
+  width: 49%;
+}
+.edit_event_cost > span {
+  /*bla*/
+  display: inline-block;
+}
+.edit_event_cost > span:nth-child(1){
+  /*bla*/
+  width: 50%;
+}
+.edit_event_cost > span:nth-child(2){
+  /*bla*/
+  margin-left: 10%;
+  width: 38%;
+}
+.edit_event_header_left{
+  /*bla*/
+  position: relative;
+  width: 35%;
+  left: 6.5%;
+  top: 20px;
+}
+
+.edit_event_category{
+  /*bla*/
+  position: relative;
+  top: 30px;
+}
+.edit_event_header_right{
+  /*bla*/
+  vertical-align: top;
+  position: relative;
+  top: 20px;
+  left: 40px;
+}
+.edit_event_left_bottom{
+  /*bla*/
+  width: 58%;
+}
+.edit_event_left_bottom > div:nth-child(2){
+  /*bla*/
+  margin-top: 30px;
+}
+.edit_event_header_right > div {
+  /*bla*/
+  margin-bottom: 26%;
+}
+.edit_event_header_left div.btn-group {
+  /*bla*/
+  width: 80%;
+
+}
+.edit_event_header_left div.btn-group > button {
+  /*bla*/
+  width: 100%;
+}
+.edit_event_name{
+ /*bla*/
+  width: 80%;
+}
 .event_header{
   /*bla*/
   /*text-align: center;*/

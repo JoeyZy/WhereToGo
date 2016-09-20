@@ -692,6 +692,100 @@
                 </ul>
                 <%--bla--%>
 
+                <ul class="SinglePage__inputItemsList EditEventPage" data-id="">
+                    <li class='event_header'>
+                        <div contentEditable="false" id="editEventPicture" class='event_pic'>
+                            <img style='' class="event_pic uploadPlaceholderEvent image"/>
+                            <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                   accept="image/jpeg,image/png"/>
+                        </div>
+                        <div class="edit_event_header_left">
+                            <div>
+                                <span>EVENT NAME<br>
+                                    <input class = "edit_event_name form-control"/>
+                                </span>
+                            </div>
+                            <div class="edit_event_category">
+                                <span>CATEGORY <br>
+                                    <select id="event-categories">
+                                        <script id="event-categories-list" type="x-handlebars-template">
+                                           {{#each this}}
+                                           <option data-id="{{id}}">{{category}}</option>
+                                           {{/each}}
+                                        </script>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="edit_event_header_right">
+                            <div>
+                                <span class="SinglePage__inputItem__label">START<br>
+                                    <input class="SinglePage__inputItem__inputField reset editable" id="start"
+                                      placeholder="When event starts" readonly/>
+                                </span>
+                            </div>
+                            <div>
+                                 <span class="SinglePage__inputItem__label">END<br>
+                                    <input class="SinglePage__inputItem__inputField reset editable" id="end"
+                                      placeholder="When event ends" readonly/>
+                                 </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="event_description">
+                        <div class="edit_event_left_bottom">
+                            <div>
+                                <div class="edit_event_location">
+                                     <span>LOCATION <br>
+                                           <input contentEditable="true" class="form-control"  id="edit-event-location" type="text"
+                                                   placeholder="">
+                                     </span>
+                                     <div class = "edit-show-location-map" id="edit-show-event-location-map">
+                                        <input type = "checkbox" checked="checked" title = "Show on map"/>
+                                             Show
+                                     </div>
+                                     <br>
+                                </div>
+                                <div class="edit_event_cost">
+                                    <span>COST
+                                          <input id="cost" class="form-control" type="number" min="0" max="100000"
+                                                 placeholder=""
+                                                 onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                                    </span>
+                                    <span>CURRENCY
+                                       <select id="currencies" class="form-control">
+                                          <script id="curr-list" type="x-handlebars-template">
+                                                   {{#each this}}
+                                             <option data-id="{{id}}">{{name}}</option>
+                                                   {{/each}}
+                                          </script>
+                                       </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <span>DESCRIPTION<br>
+                                    <textarea  rows="8" cols="60" id="description"></textarea>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="edit_event_right_bottom">
+                            <span>SHARED IN <br>
+                                <select contentEditable="false" id="target-group" class = "form-control" title="Shared in:">
+                                    <script id="group-list-script" type="x-handlebars-template">
+                                        {{#each this}}
+                                        <option data-id="{{id}}">{{name}}</option>
+                                        {{/each}}
+                                    </script>
+                                </select>
+                            </span>
+                            <div id = "edit-event-location-map-holder">
+                                <div class = "location-map" id="edit-event-location-map"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
                 <ul class="SinglePage__inputItemsList GroupPage" data-id="">
                     <li class="SinglePage__inputItem GroupPage__owner">
                         <label class="SinglePage__inputItem__label"><b>Owner</b></label>

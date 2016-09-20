@@ -25,6 +25,10 @@ $(window).on("load",function () {
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
 	var $eventLocation = $singlePage.find("#event-location");
+
+	var $editEventLocation = $singlePage.find("#edit-event-location");
+	var $editEventMapHolder = $singlePage.find('#edit-event-location-map-holder');
+
 	var $eventMapHolder = $singlePage.find('#event-location-map-holder');
 	var $userLocation = $singlePage.find("#user-location");
 	var $userMapHolder = $singlePage.find('#user-location-map-holder');
@@ -60,6 +64,7 @@ $(window).on("load",function () {
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $checkboxShowEventMap = $singlePage.find('#show-event-location-map');
+	var $checkboxEditEventMap = $singlePage.find('#edit-show-event-location-map');
 	var $checkboxShowGroupMap = $singlePage.find('#show-group-location-map');
 	var $checkboxShowUserMap = $singlePage.find('#show-user-location-map');
 
@@ -391,6 +396,7 @@ $(window).on("load",function () {
 		$groupPage.hide();
 
         $checkboxShowEventMap.find("input").prop("checked", false);
+		$checkboxEditEventMap.find("input").prop("checked", false);
 		$eventDescription.empty();
 		$groupDescription.empty();
 		$groupLocation.val("");
@@ -410,6 +416,9 @@ $(window).on("load",function () {
 		$buttonDelete.prop( "disabled", true );
 
 		$picture.attr('src', "resources/images/camera.png");
+		$('.SinglePage__title.reset').show();
+		$('.EditEventPage').hide();
+
 	}
 
 	resetSinglePage();
@@ -530,6 +539,13 @@ $(window).on("load",function () {
 			$eventMapHolder.show();
 		} else {
 			$eventMapHolder.hide();
+		}
+	});
+	$checkboxEditEventMap.on("click", function() {
+		if($checkboxEditEventMap.find("input").prop("checked")) {
+			$editEventMapHolder.show();
+		} else {
+			$editEventMapHolder.hide();
 		}
 	});
 
@@ -1742,10 +1758,10 @@ $(window).on("load",function () {
 		$eventStart.datepicker('enable');
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
-		$eventLocation.attr('readonly', false);
-		$eventLocation.attr('disabled', false);
-		$eventLocation.removeClass("disabled-input");
-		$eventLocation.addClass("enabled-input");
+		$editEventLocation.attr('readonly', false);
+		$editEventLocation.attr('disabled', false);
+		$editEventLocation.removeClass("disabled-input");
+		$editEventLocation.addClass("enabled-input");
 		$eventTargetGroup.addClass('editable');
 		$eventCost.prop('disabled', false);
 		$eventCostCurrency.prop('disabled', false);
@@ -1759,6 +1775,10 @@ $(window).on("load",function () {
 		});
 		$pictureParent.show();
 		$picture.attr('title', 'Click Me to change!');
+		// bla
+		$('.EventPage').hide();
+		$('.EditEventPage').show();
+		$('.SinglePage__title.reset').hide();
 	}
 
 	function makeEventPageUneditable() {
@@ -1786,6 +1806,9 @@ $(window).on("load",function () {
 		if (isDefaultPicture()) {
 			$pictureParent.hide();
 		}
+
+		$('.EventPage').show();
+		$('.EditEventPage').hide();
 
 	}
 
@@ -2135,11 +2158,11 @@ $(window).on("load",function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-			$eventMapHolder.show();
-			var map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
-			$eventMapHolder.hide();
-
+			var map;
 			if (typeof event != 'undefined') {
+				$eventMapHolder.show();
+				map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
+				$eventMapHolder.hide();
 				makeEventPageUneditable();
 				$singlePageTitle.val(event.name);
 				$('.view_event_category_inner').empty();
@@ -2197,9 +2220,12 @@ $(window).on("load",function () {
 				allowAttendEvent();
 				// $eventCategories.multiselect('refresh');
 			} else {
+				$editEventMapHolder.show();
+				map = initGoogleMaps('edit-event-location-map', 'edit-event-location', '#edit-show-event-location-map', '#edit-event-location-map-holder');
+				$editEventMapHolder.hide();
 
 				makeEventPageEditable();
-				$checkboxShowEventMap.find('input').prop('disabled', true);
+				// $checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
@@ -2983,19 +3009,19 @@ $(window).on("load",function () {
 	}
 
 
-	// var startDateTextBox = $('#start');
-	// var endDateTextBox = $('#end');
-    //
-	// $.timepicker.datetimeRange(
-	// 	startDateTextBox,
-	// 	endDateTextBox,
-	// 	{
-	// 		minDate: 0,
-	// 		dateFormat: 'dd/mm/yy',
-	// 		timeFormat: 'HH:mm',
-	// 		start: {}, // start picker options
-	// 		end: {} // end picker options
-	// 	}
-	// );
+	var startDateTextBox = $('#start');
+	var endDateTextBox = $('#end');
+
+	$.timepicker.datetimeRange(
+		startDateTextBox,
+		endDateTextBox,
+		{
+			minDate: 0,
+			dateFormat: 'dd/mm/yy',
+			timeFormat: 'HH:mm',
+			start: {}, // start picker options
+			end: {} // end picker options
+		}
+	);
 	$(window).trigger('hashchange');
 });
