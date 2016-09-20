@@ -213,7 +213,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .group-box-title {
   color: #000;
-  font-size: 16px;
+  font-size: 2em;
   font-weight: 400;
   font-style: normal;
   z-index: 5;
@@ -255,7 +255,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .groups-list {
   list-style: none;
-  max-width: 30%;
+  width: 30%;
   margin-left:8%;
   margin-right:8%;
   padding: 0;
@@ -477,7 +477,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .SinglePage {
   box-sizing: border-box;
   margin: 0 auto;
-  width: 60%;
+  width: 90%;
   position: absolute;
   left: 0;
   top: 0;
@@ -992,8 +992,21 @@ div.accordion{
 }
 .single_group_picture{
   max-height: 40px;
+  vertical-align: text-bottom;
+  display: block;
+  margin: auto;
+}
+.single_group_img_block{
+  display: inline-block;
+  width: 49%;
+
 }
 .single_group_info{
   display: inline-block;
   margin-right: 5px;
+  width: 100%;
+}
+.single_group_info_block{
+  display: inline-block;
+  max-width: 50%;
 }

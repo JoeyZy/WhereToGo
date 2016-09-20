@@ -214,7 +214,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .group-box-title {
   color: #000;
-  font-size: 16px;
+  font-size: 2em;
   font-weight: 400;
   font-style: normal;
   z-index: 5;
@@ -255,21 +255,18 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .groups-list {
   list-style: none;
-  max-width: 30%;
-  margin-left:8%;
-  margin-right:8%;
+  width: 30%;
+  margin-right: 4%;
   padding: 0;
   opacity: 0;
   font-size: 0;
 }
 .my-groups-list {
-  margin-left:4%;
-  margin-right:0;
   float:left;
 }
 .all-groups-list {
   margin-left:5%;
-  margin-right:0;
+  margin-right: 4%;
   float:left;
 }
 .all-events.visible .events-list,
@@ -478,7 +475,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .SinglePage {
   box-sizing: border-box;
   margin: 0 auto 7% auto;
-  width: 60%;
+  width: 90%;
   position: absolute;
   left: 0;
   top: 0;
@@ -975,22 +972,48 @@ div.accordion{
 }
 .single_group{
   border-radius: 10px;
-  padding: 6px;
   margin-bottom: 10px;
-  border: 1px solid black;
+  border: 1px solid #EEC2A2;
+
+  background: #fd746c; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #fd746c , #ff9068); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #fd746c , #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
 }
 .single_group_header{
   text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 5px;
+  padding: 6px;
+
+  border-bottom: 3px solid #EF77A0;
 }
 .single_group_body{
+  padding: 6px;
+  font-size: 1.2em;
+
+  background: #f46b45; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #f46b45 , #eea849); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #f46b45 , #eea849); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .single_group_picture{
   max-height: 40px;
+  vertical-align: text-bottom;
+  display: block;
+  margin: auto;
+}
+.single_group_img_block{
+  display: inline-block;
+  width: 49%;
+
 }
 .single_group_info{
   display: inline-block;
   margin-right: 5px;
+  width: 100%;
+}
+.single_group_info_block{
+  display: inline-block;
+  max-width: 50%;
 }

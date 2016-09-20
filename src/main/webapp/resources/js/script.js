@@ -765,6 +765,7 @@ $(window).on("load",function () {
 		$(".total-counter").hide();
 		$(".button-back").hide();
 		$(".clearfix").show();
+		$(".pagination-page").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
 			moveSinglePageToCenter();
@@ -823,6 +824,7 @@ $(window).on("load",function () {
 			"#groups": function () {
 				$(".btn-calendar").show();
 				$(".btn-show-all").hide();
+				$(".pagination-page").hide();
 				if (typeof user == "undefined") {
 					window.location.hash = '#';
 				}
@@ -846,6 +848,7 @@ $(window).on("load",function () {
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
+				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
 				$(".clearfix").hide();
 				var page = $('.all-groups')
@@ -1112,8 +1115,9 @@ $(window).on("load",function () {
 		// On click change the url hash to open up a preview for this group only.
 		// Remember: every hashchange triggers the render function.
 		$.each(GroupsList.find('li'), function (index, item) {
-			$(item).find('.single_group').on('click', function (e) {
+			$(item).on('click', function (e) {
 				e.preventDefault();
+				e.stopPropagation();
 				var groupIndex = $(item).data('index');
 				window.location.hash = 'group/' + groupIndex;
 			});
@@ -1243,9 +1247,10 @@ $(window).on("load",function () {
 
 
 					e.preventDefault();
+					e.stopPropagation();
 				});
 
-				$('button.accordion-section-button').on('click', function(){
+				$('button.accordion-section-button').on('click', function(e){
 					var jsonGroup = {
 						"groupId" : activeGroupId,
 						"usersToAdd" : usersId
@@ -1270,6 +1275,7 @@ $(window).on("load",function () {
 						}
 					});
 					$('button.accordion-section-button').attr("disabled",true);
+					e.stopPropagation();
 				})
 
 				$('.accordion').on('click', '.accordion-section-content ul li input[type=checkbox]', function(event) {
@@ -1333,7 +1339,7 @@ $(window).on("load",function () {
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
 					var needElement = $(item).find('div'),
-						groupName =  $(item).find('.clickGroupName');
+						groupName =  $(item).find('.group-box-title');
 					var width = groupName.width()+30;
 					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");
 					$(".accordion").css("left", width);
@@ -2052,7 +2058,7 @@ $(window).on("load",function () {
 			renderShowGroupPage(index);
 			$(".button-back").show();
 			$(".Overlay").hide();
-			$singlePage.find('.SinglePage').css("width","70%");
+			$singlePage.find('.SinglePage').css("width","50%");
 			$singlePage.find('.SinglePage').addClass("movePage");
 			$singlePage.find('.SinglePage__title').addClass("group-title");
 		}
@@ -2182,7 +2188,7 @@ $(window).on("load",function () {
 		/*var nodeLI = $(".events-list").find('.small_event').attr("data-index", index);
 		if (!nodeLI.find('.button_group').attr('visit') == 'true') {
 			$(".Overlay").hide();
-			$singlePage.find('.SinglePage').css("width","70%");
+			$singlePage.find('.SinglePage').css("width","50%");
 		}
 		else{
 			$(".SinglePage > .close").show();
@@ -2204,7 +2210,7 @@ $(window).on("load",function () {
 		if(participate&&old!="#group"){
 			$(".button-back").show();
 			$(".Overlay").hide();
-			$singlePage.find('.SinglePage').css("width","70%");
+			$singlePage.find('.SinglePage').css("width","50%");
 			// $singlePage.find('.SinglePage').addClass("movePage");
 			$singlePage.find('.SinglePage__title').addClass("group-title");
 			$(window).scrollTop();
@@ -2523,7 +2529,7 @@ $(window).on("load",function () {
 
 
 		$(".Overlay").hide();
-		$singlePage.find('.SinglePage').css("width","70%");
+		$singlePage.find('.SinglePage').css("width","50%");
 		$(window).scrollTop();
 		$singlePage.find('.SinglePage').css({
 			top: "60px"

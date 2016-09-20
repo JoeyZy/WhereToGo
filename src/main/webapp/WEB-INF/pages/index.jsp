@@ -251,6 +251,8 @@
             <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
+                    <div>
+                    </div>
                     <div class="single_group">
                         <div class="single_group_header">
                                 <span class="content group-content">
@@ -258,8 +260,17 @@
                                 </span>
                         </div>
                         <div class="single_group_body">
-                            <p class="single_group_info">Participants: {{groupParticipants.length}}</p>
-                            <img class="single_group_picture" src="{{picture}}">
+                            <div class="single_group_info">
+                                <div class="single_group_info_block">
+                                    <p><b>Participants:</b> {{groupParticipants.length}}</p>
+                                    <p class = "single_group_owner"><b>Owner:</b> {{owner.firstName}}</p>
+                                </div>
+                                <div class="single_group_img_block">
+                                    <img class="single_group_picture" src="{{picture}}">
+                                </div>
+                            </div>
+                            <div class = "single_group_extra_info">
+                                <span class = "single_group_location"><b>Location:</b> {{location}}</span>
                             </div>
                         </div>
                     </div>
