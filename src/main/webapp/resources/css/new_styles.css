@@ -78,6 +78,11 @@ h1, h3 {
   border-radius: 1px;
   background-color: #edebeb;
 }
+li.event_header > div > button.SinglePage__button--edit{
+  background-color: #FFFFFF;
+  color: #666666;
+  text-decoration: underline;
+}
 .events-list:first-child{
   margin-top:20px;
 }
@@ -420,7 +425,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   z-index: 50;
 }
 .assign-action-btn.btn-default {
-  background: #505050;
+  background: #37474f;
   color: #F0F0F0;
   font-size: 13px;
 }
@@ -451,8 +456,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 ----------------------------*/
 .SinglePage {
   z-index: 100;
-  min-width: 550px;
-  border-radius: 5px;
+  border-radius: 2px;
   min-width: 550px;
 }
 .Overlay {
@@ -495,8 +499,8 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .SinglePage__inputForm {
   padding: 0 0 0 0;
-  width: 70%;
-  margin: 0 auto;
+  /*width: 60%;*/
+  margin: 0 7%;
 }
 .SinglePage__inputItemsList {
   margin-top: 10px;
@@ -679,15 +683,163 @@ div.ui-datepicker {
 .EventPage__cost input.form-control {
   width: 40%;
 }
-li.event_pic {
-  position: absolute;
-  top: 97px;
-  right: 20px;
+/*li.event_pic {*/
+  /*position: absolute;*/
+  /*top: 97px;*/
+  /*right: 20px;*/
+/*}*/
+div.edit_event_pic {
+  width: 200px;
+  height: 115px;
+  position: relative;
+  display: inline-block;
+  top: 30px;
+  vertical-align: top;
+  /*overflow: hidden;*/
+
 }
 div.event_pic {
+  width: 230px;
+  height: 132px;
+  position: relative;
+  display: inline-block;
+  top: 13px;
+  vertical-align: top;
+  /*overflow: hidden;*/
+
+}
+.edit_event_header_left, .edit_event_header_right, .edit_event_left_bottom,
+.edit-show-location-map, .edit_event_right_bottom, .edit_event_location,
+.edit_event_cost {
+  display: inline-block;
+}
+.edit_event_right_bottom{
+  width: 36.5%;
+  vertical-align: top;
+  margin-left: 3.8%;
+}
+#edit-event-location-map-holder  > .location-map {
+  width: 100%;
+  margin-top: 53px;
+}
+.multiselect-container.dropdown-menu{
+  width: 100%;
+}
+.edit_event_location > span{
+  display: inline-block;
+}
+.edit_event_cost{
+  margin-left: 3%;
+  width: 49%;
+}
+.edit_event_cost > span {
+  display: inline-block;
+}
+.edit_event_cost > span:nth-child(1){
+  width: 50%;
+}
+.edit_event_cost > span:nth-child(2){
+  margin-left: 10%;
+  width: 38%;
+}
+.edit_event_header_left{
+  position: relative;
+  width: 35%;
+  left: 6.5%;
+  top: 20px;
+}
+
+.edit_event_category{
+  position: relative;
+  top: 30px;
+}
+.edit_event_header_right{
+  vertical-align: top;
+  position: relative;
+  top: 20px;
+  left: 40px;
+}
+.edit_event_left_bottom{
+  width: 58%;
+}
+.edit_event_left_bottom > div:nth-child(2){
+  margin-top: 30px;
+}
+.edit_event_header_right > div {
+  margin-bottom: 26%;
+}
+.edit_event_header_left div.btn-group {
+  width: 80%;
+}
+.edit_event_header_left div.btn-group > button {
+  width: 100%;
+}
+.edit_event_name{
+  width: 80%;
+}
+.event_header{
+  /*text-align: center;*/
+}
+.event_description, .event_participants{
+  margin-top: 22px;
+}
+/*.event_description_inner, .event_participants_inner{*/
+  /*display:inline-block;*/
+  /*margin-bottom: 15px;*/
+/*}*/
+.button_event_edit{
+  position: absolute;
+  top: 2.1%;
+  right: 10.5%;
+}
+.event_shared_in{
+  margin-left: 8px;
+}
+#event-location-map-holder{
+  display: inline-block;
+}
+.event_header_left, .event_header_center, .event_header_right{
+  position: relative;
+  top: 9px;
+  display: inline-block;
   width: 200px;
-  height: 200px;
-  overflow: hidden;
+  /*text-align: left;*/
+}
+.view_event_category{
+  margin-top:10px;
+  margin-left: 5%;
+}
+.event_header_left{
+  vertical-align: top;
+  top: 5px;
+  width: 250px;
+}
+.event_header_right{
+  vertical-align: top;
+  top: 9px;
+}
+div.event_header_left > div.start, div.event_header_center > div.end, div.event_header_right > div.event_cost{
+  display:block;
+  width: 90%;
+  margin-left: 5%;
+  padding-top: 0px;
+  margin-top: 20px;
+  padding: 0px;
+}
+div.event_header_center > div.end{
+  margin-top: 22px;
+}
+div.event_header_right > div.event_cost{
+  margin-top: 50px;
+}
+div.event_header_left > div.location, div.event_header_center > div.created-by{
+  text-align: left;
+  margin-left: 4%;
+}
+div.event_header_left div.start_date, div.event_header_left div.start_time,
+div.event_header_center div.end_date, div.event_header_center div.end_time,
+div.event_header_right div.event_cost_inner{
+  margin-top: 8px;
 }
 li.event_pic_min {
   position: absolute;
@@ -703,7 +855,6 @@ img.event_pic {
   width: 100%;
   height: 100%;
   display: block;
-  border: 1px solid;
 }
 .total-counter, .total-counter-groups
  {
@@ -734,11 +885,22 @@ img.event_pic {
 .add-event-div, .add-group-div{
   margin-right: 26px;
 }
+.SinglePage__all_buttons{
+  text-align: right;
+}
 .btn-add-event{
   border-radius: 2px;
 }
 .btn-show-all{
   border-color: #FFFFFF;
+}
+button.btn-visit{
+  background-color: #9ccc65;
+  background-image: none;
+}
+button.SinglePage__button--delete{
+  background-color: #37474f;
+  background-image: none;
 }
 .categories-common.Archive {
   width: 100%;
@@ -837,11 +999,11 @@ div.accordion{
 }
 .location-map {
   margin-top: 20px;
-  height: 200px;
+  width: 450px;
+  height: 150px;
 }
 .show-location-map {
   font-size: 15px;
-  margin-top: 5px;
 }
 .disabled-input {
   border: none;

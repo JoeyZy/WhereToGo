@@ -13,7 +13,7 @@ $(window).on("load",function () {
 	var secondLocationHash = "#";
 	$('.userInfo').hide();
 	$('.logout').hide();
-	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all users)";
+	const DEFAULT_PUBLIC_EVENT_TEXT = "Public (open for all)";
 
 	$('[data-toggle="tooltip"]').tooltip();
 	$("#event_pic").on("mouseover",function(){
@@ -31,6 +31,10 @@ $(window).on("load",function () {
 	var $eventEnd = $singlePage.find('#end');
 	var $eventDescription = $singlePage.find("#description");
 	var $eventLocation = $singlePage.find("#event-location");
+
+	var $editEventLocation = $singlePage.find("#edit-event-location");
+	var $editEventMapHolder = $singlePage.find('#edit-event-location-map-holder');
+
 	var $eventMapHolder = $singlePage.find('#event-location-map-holder');
 	var $userLocation = $singlePage.find("#user-location");
 	var $userMapHolder = $singlePage.find('#user-location-map-holder');
@@ -66,6 +70,7 @@ $(window).on("load",function () {
 	var $buttonCancelAttend = $singlePage.find('.SinglePage__button--cancelAttend');
 	var $buttonAddEvent = $singlePage.find('.SinglePage__button--addEvent');
     var $checkboxShowEventMap = $singlePage.find('#show-event-location-map');
+	var $checkboxEditEventMap = $singlePage.find('#edit-show-event-location-map');
 	var $checkboxShowGroupMap = $singlePage.find('#show-group-location-map');
 	var $checkboxShowUserMap = $singlePage.find('#show-user-location-map');
 
@@ -79,13 +84,13 @@ $(window).on("load",function () {
 			});
 			var eventJson = {
 				"id": $singlePage.find('.EventPage').attr('data-id'),
-				"name": $singlePageTitle.val(),
+				"name": $singlePage.find('.edit_event_name').val(),
 				"categories": categoriesList,
 				"startTime": $eventStart.val(),
 				"endTime": $eventEnd.val(),
-				"description": $eventDescription.text(),
+				"description": $eventDescription.val(),
 				"targetGroup": getTargetGroupID(),
-				"location": $eventLocation.val(),
+				"location": $singlePage.find('#edit-event-location').val(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 				"picture": isDefaultPicture() ? "" : $picture.attr('src')
@@ -318,21 +323,26 @@ $(window).on("load",function () {
 
 	function updateEvent(deleted) {
 		var categoriesList = [];
-		$eventCategories.find(":selected").each(function (i, selected) {
-			categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-		});
+		if(!deleted){
+			categoriesList.push({"id": "2", "name": $singlePage.find('.view_event_category_inner').text().slice(11)})
+		} else {
+			$eventCategories.find(":selected").each(function (i, selected) {
+				categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+			});
+		}
 		var eventJson = {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
 			"name": $singlePageTitle.val(),
 			"categories": categoriesList,
-			"startTime": $eventStart.val(),
-			"endTime": $eventEnd.val(),
-			"description": $eventDescription.text(),
+			"startTime": "28/09/2016 15:55", //here we can use this kind of info, because back-end part use only id
+			"endTime": "28/09/2016 15:55",
+			"description": $singlePage.find('.event_description_inner').text(),
 			"location": $eventLocation.val(),
 			"targetGroup": getTargetGroupID(),
-			"cost": $eventCost.val(),
+			"cost": $singlePage.find('.event_cost_inner span').text().slice(1,-15),
 			"currency": {
-				"id": getCurrencyId(), "name": $eventCostCurrency.val()
+				"id": "2",
+				"name": $singlePage.find('.event_cost_inner span').text().slice(1,-11).slice(0,4)
 			},
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
@@ -397,6 +407,7 @@ $(window).on("load",function () {
 		$groupPage.hide();
 
         $checkboxShowEventMap.find("input").prop("checked", false);
+		$checkboxEditEventMap.find("input").prop("checked", false);
 		$eventDescription.empty();
 		$groupDescription.empty();
 		$groupLocation.val("");
@@ -416,6 +427,9 @@ $(window).on("load",function () {
 		$buttonDelete.prop( "disabled", true );
 
 		$picture.attr('src', "resources/images/camera.png");
+		$('.SinglePage__title.reset').show();
+		$('.EditEventPage').hide();
+
 	}
 
 	resetSinglePage();
@@ -539,6 +553,13 @@ $(window).on("load",function () {
 			$eventMapHolder.show();
 		} else {
 			$eventMapHolder.hide();
+		}
+	});
+	$checkboxEditEventMap.on("click", function() {
+		if($checkboxEditEventMap.find("input").prop("checked")) {
+			$editEventMapHolder.show();
+		} else {
+			$editEventMapHolder.hide();
 		}
 	});
 
@@ -1611,7 +1632,7 @@ $(window).on("load",function () {
 		}
 		var $addEventBtn = $('.btn-add-event');
 		$addEventBtn.prop('disabled', false);
-		$addEventBtn.addClass('btn-success');
+		$addEventBtn.addClass('btn-success btn-visit');
 		$addEventBtn.removeAttr('title');
 	}
 	function enableAddGroupsBtn() {
@@ -1725,7 +1746,7 @@ $(window).on("load",function () {
 	var $groupEvents = $('.GroupPage__groups__events__list');
 
 	function saveEvent(eventJson, newEvent) {
-		if (!validateEventFields(eventJson)) {
+		if (!validateEventFields(eventJson) && newEvent !== 'deleteEvent') {
 			$errors.show();
 			$buttonAddEvent.removeAttr('disabled');
 			return;
@@ -1881,10 +1902,10 @@ $(window).on("load",function () {
 		$eventStart.datepicker('enable');
 		$eventEnd.datepicker('enable');
 		$eventDescription.addClass('editable');
-		$eventLocation.attr('readonly', false);
-		$eventLocation.attr('disabled', false);
-		$eventLocation.removeClass("disabled-input");
-		$eventLocation.addClass("enabled-input");
+		$editEventLocation.attr('readonly', false);
+		$editEventLocation.attr('disabled', false);
+		$editEventLocation.removeClass("disabled-input");
+		$editEventLocation.addClass("enabled-input");
 		$eventTargetGroup.addClass('editable');
 		$eventCost.prop('disabled', false);
 		$eventCostCurrency.prop('disabled', false);
@@ -1898,6 +1919,11 @@ $(window).on("load",function () {
 		});
 		$pictureParent.show();
 		$picture.attr('title', 'Best aspect ratio - 2:1 ');
+		$('.EventPage').hide();
+		$('.EditEventPage').show();
+		$('.SinglePage__title.reset').hide();
+		$('#comments-container').hide();
+		
 	}
 
 	function makeEventPageUneditable() {
@@ -1925,6 +1951,9 @@ $(window).on("load",function () {
 		if (isDefaultPicture()) {
 			$pictureParent.hide();
 		}
+
+		$('.EventPage').show();
+		$('.EditEventPage').hide();
 
 	}
 
@@ -2280,20 +2309,24 @@ $(window).on("load",function () {
 //--------------------------END ASSIGNMENT FUNCTIONALITY------------------------------------//
 
 		function populateSinglePageEventPage(singlePage, event) {
-
-			$eventMapHolder.show();
-			var map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
-			$eventMapHolder.hide();
-
+			var map;
 			if (typeof event != 'undefined') {
+				$eventMapHolder.show();
+				map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
+				$eventMapHolder.hide();
 				makeEventPageUneditable();
 				$singlePageTitle.val(event.name);
-				$eventCategories.val(getEventCategoriesAsList(event.categories));
+				$('.view_event_category_inner').empty();
+				$('.view_event_category_inner').append('Categorie: ' + event.category[0]);
+				// $eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
-				$eventDescription.text(linkify(event.description));
+				$('.event_description_inner').text(linkify(event.description));
+				// $eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);
 				setLocationByAddress(map, event.location, '#show-event-location-map');
-				$eventTargetGroup.val(event.targetGroup.name);
+				$('.event_shared_in_inner').empty();
+				$('.event_shared_in_inner').append(event.targetGroup.name);
+				// $eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
@@ -2302,13 +2335,33 @@ $(window).on("load",function () {
 				} else {
 					$pictureParent.hide();
 				}
-				singlePage.find('.EventPage__owner__name').val(event.owner.firstName + " " + event.owner.lastName);
-				var startDate = event.startDateTime;
-				$eventStart.val(startDate);
-				var endDate = event.endDateTime;
-				$eventEnd.val(endDate);
-				$eventCost.val(event.cost);
-				$eventCostCurrency.val(event.currency.name);
+				singlePage.find('.EventPage__owner__name').val('Created by ' + event.owner.firstName + " " + event.owner.lastName);
+
+				var actualStartDate = moment(event.startDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				var actualStartTime = moment(event.startDateTime, "DD/MM/YY HH:mm").format("HH:mm");
+				var actualEndDate = moment(event.endDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
+				var actualEndTime = moment(event.endDateTime, "DD/MM/YY HH:mm").format("HH:mm");
+
+				$('.start .start_date span').empty();
+				$('.start .start_date span').append('&#160;' + actualStartDate);
+
+				$('.start .start_time span').empty();
+				$('.start .start_time span').append('&#160;' + actualStartTime);
+
+				$('.end .end_date span').empty();
+				$('.end .end_date span').append('&#160;' + actualEndDate);
+
+				$('.end .end_time span').empty();
+				$('.end .end_time span').append('&#160;' + actualEndTime);
+
+				// var startDate = event.startDateTime;
+				// $eventStart.val(startDate);
+				// var endDate = event.endDateTime;
+				// $eventEnd.val(endDate);
+				$('.event_cost_inner span').empty();
+				$('.event_cost_inner span').append(' ' + event.cost + ' ' + event.currency.name + ' per person');
+				// $eventCost.val(event.cost);
+				// $eventCostCurrency.val(event.currency.name);
 				if (user && (user.id === event.owner.id || user.role === adminRole)) {
 					$buttonEdit.show();
 					$buttonEdit.disabled = false;
@@ -2316,32 +2369,37 @@ $(window).on("load",function () {
 					$buttonDelete.disabled = false;
 				}
 				allowAttendEvent();
-				$eventCategories.multiselect('refresh');
+				// $eventCategories.multiselect('refresh');
 			} else {
+				$editEventMapHolder.show();
+				map = initGoogleMaps('edit-event-location-map', 'edit-event-location', '#edit-show-event-location-map', '#edit-event-location-map-holder');
+				$editEventMapHolder.hide();
 
 				makeEventPageEditable();
-				$checkboxShowEventMap.find('input').prop('disabled', true);
+				$checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
 				if (typeof user !== 'undefined') {
 					singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
+
+				$.getJSON("myGroups", function (data) {
+					var targetGroupTemplate = $('#group-list-script').html();
+					if(targetGroupTemplate != undefined) {
+						var groupListElement = Handlebars.compile(targetGroupTemplate);
+					}
+					groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
+					for(i = 0; i < data.length; i++) {
+						groupList.push(data[i]);
+					}
+					if(groupListElement!=undefined) {
+						$eventTargetGroup.html(groupListElement(groupList));
+					}
+				});
 			}
 
-			$.getJSON("myGroups", function (data) {
-				var targetGroupTemplate = $('#group-list-script').html();
-				if(targetGroupTemplate != undefined) {
-					var groupListElement = Handlebars.compile(targetGroupTemplate);
-				}
-				groupList = [ {id: -1, name: DEFAULT_PUBLIC_EVENT_TEXT} ];
-				for(i = 0; i < data.length; i++) {
-					groupList.push(data[i]);
-				}
-				if(groupListElement!=undefined) {
-					$eventTargetGroup.html(groupListElement(groupList));
-				}
-			});
+
 
 			function getEventCategoriesAsList(categories) {
 				var res = categories[0].name;
@@ -2353,7 +2411,7 @@ $(window).on("load",function () {
 		}
 	}
 	function renderComments(index, type) {
-		$('.SinglePage__all_buttons').after('<div id="comments-container"></div>');
+		$('.SinglePage__all_buttons').before('<div id="comments-container"></div>');
 		$(function() {
 			$('#comments-container').comments({
 				profilePictureURL: 'userImage',
