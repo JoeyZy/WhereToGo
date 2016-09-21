@@ -78,13 +78,13 @@ $(window).on("load",function () {
 			});
 			var eventJson = {
 				"id": $singlePage.find('.EventPage').attr('data-id'),
-				"name": $singlePageTitle.val(),
+				"name": $singlePage.find('.edit_event_name').val(),
 				"categories": categoriesList,
 				"startTime": $eventStart.val(),
 				"endTime": $eventEnd.val(),
-				"description": $eventDescription.text(),
+				"description": $eventDescription.val(),
 				"targetGroup": getTargetGroupID(),
-				"location": $eventLocation.val(),
+				"location": $singlePage.find('#edit-event-location').val(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 				"picture": isDefaultPicture() ? "" : $picture.attr('src')
@@ -317,21 +317,26 @@ $(window).on("load",function () {
 
 	function updateEvent(deleted) {
 		var categoriesList = [];
-		$eventCategories.find(":selected").each(function (i, selected) {
-			categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
-		});
+		if(!deleted){
+			categoriesList.push({"id": "2", "name": $singlePage.find('.view_event_category_inner').text().slice(11)})
+		} else {
+			$eventCategories.find(":selected").each(function (i, selected) {
+				categoriesList[i] = {"id": $(selected).attr("data-id"), "name": $(selected).text()};
+			});
+		}
 		var eventJson = {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
 			"name": $singlePageTitle.val(),
 			"categories": categoriesList,
-			"startTime": $eventStart.val(),
-			"endTime": $eventEnd.val(),
-			"description": $eventDescription.text(),
+			"startTime": "28/09/2016 15:55", //here we can use this kind of info, because back-end part use only id
+			"endTime": "28/09/2016 15:55",
+			"description": $singlePage.find('.event_description_inner').text(),
 			"location": $eventLocation.val(),
 			"targetGroup": getTargetGroupID(),
-			"cost": $eventCost.val(),
+			"cost": $singlePage.find('.event_cost_inner span').text().slice(1,-15),
 			"currency": {
-				"id": getCurrencyId(), "name": $eventCostCurrency.val()
+				"id": "2",
+				"name": $singlePage.find('.event_cost_inner span').text().slice(1,-11).slice(0,4)
 			},
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
@@ -1602,7 +1607,7 @@ $(window).on("load",function () {
 	var $groupEvents = $('.GroupPage__groups__events__list');
 
 	function saveEvent(eventJson, newEvent) {
-		if (!validateEventFields(eventJson)) {
+		if (!validateEventFields(eventJson) && newEvent !== 'deleteEvent') {
 			$errors.show();
 			$buttonAddEvent.removeAttr('disabled');
 			return;
@@ -1779,6 +1784,7 @@ $(window).on("load",function () {
 		$('.EventPage').hide();
 		$('.EditEventPage').show();
 		$('.SinglePage__title.reset').hide();
+		$('#comments-container').hide();
 	}
 
 	function makeEventPageUneditable() {
@@ -2225,7 +2231,7 @@ $(window).on("load",function () {
 				$editEventMapHolder.hide();
 
 				makeEventPageEditable();
-				// $checkboxEditEventMap.find('input').prop('disabled', true);
+				$checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();

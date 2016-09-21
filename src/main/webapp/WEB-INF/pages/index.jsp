@@ -544,6 +544,11 @@
 
                 <ul class="SinglePage__inputItemsList EventPage" data-id="">
                     <li class='event_header'>
+                        <div class="button_event_edit">
+                            <button type="submit" class="btn SinglePage__button SinglePage__button--edit"
+                                    onclick="this.blur();">Edit event
+                            </button>
+                        </div>
                         <div contentEditable="false" id="picture" class='event_pic'>
                             <img style='' class="event_pic uploadPlaceholderEvent image"/>
                             <input style='display:none;' type='file' class="SinglePage__button--upload"
@@ -585,11 +590,6 @@
                             </div>
                         </div>
                         <div class="event_header_right">
-                            <div class="button_event_edit">
-                                <button type="submit" class="btn SinglePage__button SinglePage__button--edit"
-                                        onclick="this.blur();">Edit event
-                                </button>
-                            </div>
                             <div class="event_shared_in" title="">
                                 <span class="icons fa fa-university"></span>
                                 <span class="event_shared_in_inner"></span>
@@ -694,7 +694,7 @@
 
                 <ul class="SinglePage__inputItemsList EditEventPage" data-id="">
                     <li class='event_header'>
-                        <div contentEditable="false" id="editEventPicture" class='event_pic'>
+                        <div contentEditable="false" id="editEventPicture" class='edit_event_pic'>
                             <img style='' class="event_pic uploadPlaceholderEvent image"/>
                             <input style='display:none;' type='file' class="SinglePage__button--upload"
                                    accept="image/jpeg,image/png"/>

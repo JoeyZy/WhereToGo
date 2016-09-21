@@ -75,7 +75,7 @@ h1, h3 {
   border-radius: 1px;
   background-color: #edebeb;
 }
-div.event_header_right > div > button.SinglePage__button--edit{
+li.event_header > div > button.SinglePage__button--edit{
   /*bla*/
   background-color: #FFFFFF;
   color: #666666;
@@ -662,13 +662,24 @@ div.ui-datepicker {
   /*top: 97px;*/
   /*right: 20px;*/
 /*}*/
-div.event_pic {
+div.edit_event_pic {
   /*bla*/
   width: 200px;
   height: 115px;
   position: relative;
   display: inline-block;
-  top: 20px;
+  top: 30px;
+  vertical-align: top;
+  /*overflow: hidden;*/
+
+}
+div.event_pic {
+  /*bla*/
+  width: 230px;
+  height: 132px;
+  position: relative;
+  display: inline-block;
+  top: 13px;
   vertical-align: top;
   /*overflow: hidden;*/
 
@@ -773,8 +784,8 @@ div.event_pic {
 /*}*/
 .button_event_edit{
   position: absolute;
-  top:-7px;
-  right: -57px;
+  top: 2.1%;
+  right: 10.5%;
 }
 .event_shared_in{
   margin-left: 8px;
@@ -843,7 +854,8 @@ img.event_pic {
   width: 100%;
   height: 100%;
   display: block;
-  border: 1px solid;
+  /*bla*/
+  /*border: 1px solid;*/
 }
 .total-counter, .total-counter-groups
  {
