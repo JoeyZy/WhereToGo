@@ -76,7 +76,6 @@ h1, h3 {
   background-color: #edebeb;
 }
 li.event_header > div > button.SinglePage__button--edit{
-  /*bla*/
   background-color: #FFFFFF;
   color: #666666;
   text-decoration: underline;
@@ -398,7 +397,6 @@ li.event_header > div > button.SinglePage__button--edit{
   z-index: 50;
 }
 .assign-action-btn.btn-default {
-  /*bla*/
   background: #37474f;
   color: #F0F0F0;
   font-size: 13px;
@@ -429,9 +427,7 @@ li.event_header > div > button.SinglePage__button--edit{
 	Single event Page
 ----------------------------*/
 .SinglePage {
-  /*bla*/
   z-index: 100;
-  min-width: 550px;
   border-radius: 2px;
   min-width: 550px;
 }
@@ -474,7 +470,6 @@ li.event_header > div > button.SinglePage__button--edit{
   width: 100%;
 }
 .SinglePage__inputForm {
-  /*bla*/
   padding: 0 0 0 0;
   /*width: 60%;*/
   margin: 0 7%;
@@ -656,14 +651,12 @@ div.ui-datepicker {
 .EventPage__cost input.form-control {
   width: 40%;
 }
-/*bla*/
 /*li.event_pic {*/
   /*position: absolute;*/
   /*top: 97px;*/
   /*right: 20px;*/
 /*}*/
 div.edit_event_pic {
-  /*bla*/
   width: 200px;
   height: 115px;
   position: relative;
@@ -674,7 +667,6 @@ div.edit_event_pic {
 
 }
 div.event_pic {
-  /*bla*/
   width: 230px;
   height: 132px;
   position: relative;
@@ -687,17 +679,14 @@ div.event_pic {
 .edit_event_header_left, .edit_event_header_right, .edit_event_left_bottom,
 .edit-show-location-map, .edit_event_right_bottom, .edit_event_location,
 .edit_event_cost {
-  /*bla*/
   display: inline-block;
 }
 .edit_event_right_bottom{
-  /*bla*/
   width: 36.5%;
   vertical-align: top;
   margin-left: 3.8%;
 }
 #edit-event-location-map-holder  > .location-map {
-  /*bla*/
   width: 100%;
   margin-top: 53px;
 }
@@ -705,29 +694,23 @@ div.event_pic {
   width: 100%;
 }
 .edit_event_location > span{
-  /*bla*/
   display: inline-block;
 }
 .edit_event_cost{
-  /*bla*/
   margin-left: 3%;
   width: 49%;
 }
 .edit_event_cost > span {
-  /*bla*/
   display: inline-block;
 }
 .edit_event_cost > span:nth-child(1){
-  /*bla*/
   width: 50%;
 }
 .edit_event_cost > span:nth-child(2){
-  /*bla*/
   margin-left: 10%;
   width: 38%;
 }
 .edit_event_header_left{
-  /*bla*/
   position: relative;
   width: 35%;
   left: 6.5%;
@@ -735,44 +718,34 @@ div.event_pic {
 }
 
 .edit_event_category{
-  /*bla*/
   position: relative;
   top: 30px;
 }
 .edit_event_header_right{
-  /*bla*/
   vertical-align: top;
   position: relative;
   top: 20px;
   left: 40px;
 }
 .edit_event_left_bottom{
-  /*bla*/
   width: 58%;
 }
 .edit_event_left_bottom > div:nth-child(2){
-  /*bla*/
   margin-top: 30px;
 }
 .edit_event_header_right > div {
-  /*bla*/
   margin-bottom: 26%;
 }
 .edit_event_header_left div.btn-group {
-  /*bla*/
   width: 80%;
-
 }
 .edit_event_header_left div.btn-group > button {
-  /*bla*/
   width: 100%;
 }
 .edit_event_name{
- /*bla*/
   width: 80%;
 }
 .event_header{
-  /*bla*/
   /*text-align: center;*/
 }
 .event_description, .event_participants{
@@ -794,7 +767,6 @@ div.event_pic {
   display: inline-block;
 }
 .event_header_left, .event_header_center, .event_header_right{
-  /*bla*/
   position: relative;
   top: 9px;
   display: inline-block;
@@ -815,7 +787,6 @@ div.event_pic {
   top: 9px;
 }
 div.event_header_left > div.start, div.event_header_center > div.end, div.event_header_right > div.event_cost{
-  /*bla*/
   display:block;
   width: 90%;
   margin-left: 5%;
@@ -830,14 +801,12 @@ div.event_header_right > div.event_cost{
   margin-top: 50px;
 }
 div.event_header_left > div.location, div.event_header_center > div.created-by{
-  /*bla*/
   text-align: left;
   margin-left: 4%;
 }
 div.event_header_left div.start_date, div.event_header_left div.start_time,
 div.event_header_center div.end_date, div.event_header_center div.end_time,
 div.event_header_right div.event_cost_inner{
-  /*bla*/
   margin-top: 8px;
 }
 li.event_pic_min {
@@ -854,8 +823,6 @@ img.event_pic {
   width: 100%;
   height: 100%;
   display: block;
-  /*bla*/
-  /*border: 1px solid;*/
 }
 .total-counter, .total-counter-groups
  {
@@ -871,7 +838,6 @@ img.event_pic {
   color:#90A4AE;
   margin-top: 14px;
 }
-/*bla*/
 .calendar{
   margin-right: 15.5%;
   border-left: 2px solid #d4d6d8;
@@ -887,7 +853,6 @@ img.event_pic {
   margin-right: 26px;
 }
 .SinglePage__all_buttons{
-  /*bla*/
   text-align: right;
 }
 .btn-add-event{
@@ -897,7 +862,6 @@ img.event_pic {
   border-color: #FFFFFF;
 }
 button.btn-visit{
-  /*bla*/
   background-color: #9ccc65;
   background-image: none;
 }
@@ -905,7 +869,6 @@ button.SinglePage__button--delete{
   background-color: #37474f;
   background-image: none;
 }
-/*bla*/
 .categories-common.Archive {
   width: 100%;
 }
@@ -1001,15 +964,12 @@ div.accordion{
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 .location-map {
-  /*bla*/
   margin-top: 20px;
   width: 450px;
   height: 150px;
 }
 .show-location-map {
-  /*bla*/
   font-size: 15px;
-  /*margin-top: 5px;*/
 }
 .disabled-input {
   border: none;
