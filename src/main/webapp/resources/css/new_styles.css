@@ -1167,7 +1167,7 @@ div.accordion{
 }
 .single_group_img_block{
   display: inline-block;
-  width: 49%;
+  width: 55%;
 
 }
 .single_group_info{
@@ -1177,5 +1177,5 @@ div.accordion{
 }
 .single_group_info_block{
   display: inline-block;
-  max-width: 50%;
+  max-width: 40%;
 }

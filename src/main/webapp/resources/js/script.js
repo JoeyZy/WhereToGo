@@ -74,6 +74,10 @@ $(window).on("load",function () {
 	var $checkboxShowGroupMap = $singlePage.find('#show-group-location-map');
 	var $checkboxShowUserMap = $singlePage.find('#show-user-location-map');
 
+	//EXTRA
+	var $editEventName = $singlePage.find('.edit_event_name');
+	var $editLocation = $singlePage.find('#edit-event-location');
+
 
 	$buttonAddEvent.on('click', function () {
 
@@ -84,13 +88,13 @@ $(window).on("load",function () {
 			});
 			var eventJson = {
 				"id": $singlePage.find('.EventPage').attr('data-id'),
-				"name": $singlePage.find('.edit_event_name').val(),
+				"name": $editEventName.val(),
 				"categories": categoriesList,
 				"startTime": $eventStart.val(),
 				"endTime": $eventEnd.val(),
 				"description": $eventDescription.val(),
 				"targetGroup": getTargetGroupID(),
-				"location": $singlePage.find('#edit-event-location').val(),
+				"location": $editLocation.val(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
 				"picture": isDefaultPicture() ? "" : $picture.attr('src')
@@ -242,12 +246,6 @@ $(window).on("load",function () {
 		return false;
 	});
 
-	$pictureUploadPlaceholder.on('click', function () {
-		$buttonUploadPicture.click();
-		return false;
-	});
-
-
 	$buttonUploadPicture.on('change', function () {
 		var input = ($buttonUploadPicture)[0];
 		if (input.files && input.files[0]) {
@@ -332,12 +330,12 @@ $(window).on("load",function () {
 		}
 		var eventJson = {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
-			"name": $singlePageTitle.val(),
+			"name": $editEventName.val(),
 			"categories": categoriesList,
-			"startTime": "28/09/2016 15:55", //here we can use this kind of info, because back-end part use only id
-			"endTime": "28/09/2016 15:55",
-			"description": $singlePage.find('.event_description_inner').text(),
-			"location": $eventLocation.val(),
+			"startTime": $eventStart.val(), //here we can use this kind of info, because back-end part use only id
+			"endTime": $eventEnd.val(),
+			"description": $eventDescription.val(),
+			"location": $editLocation.val(),
 			"targetGroup": getTargetGroupID(),
 			"cost": $singlePage.find('.event_cost_inner span').text().slice(1,-15),
 			"currency": {
@@ -419,6 +417,8 @@ $(window).on("load",function () {
 		$eventTargetGroup.val("");
 		$eventCost.val("");
 		$eventCostCurrency.val("");
+		$editLocation.val("");
+		$editEventName.val("");
 		$buttons.hide();
 		$errors.hide();
 		$pictureParent.hide();
@@ -1914,7 +1914,7 @@ $(window).on("load",function () {
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true);
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture.click();
+			$buttonUploadPicture[1].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -1985,7 +1985,7 @@ $(window).on("load",function () {
 		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture.click();
+			$buttonUploadPicture[1].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -2048,7 +2048,7 @@ $(window).on("load",function () {
 
 		$pictureUploadPlaceholder.off('click');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture.click();
+			$buttonUploadPicture[1].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -2217,7 +2217,7 @@ $(window).on("load",function () {
 		/*var nodeLI = $(".events-list").find('.small_event').attr("data-index", index);
 		if (!nodeLI.find('.button_group').attr('visit') == 'true') {
 			$(".Overlay").hide();
-			$singlePage.find('.SinglePage').css("width","50%");
+			$singlePage.find('.SinglePage').css("width","60%");
 		}
 		else{
 			$(".SinglePage > .close").show();
@@ -2239,7 +2239,7 @@ $(window).on("load",function () {
 		if(participate&&old!="#group"){
 			$(".button-back").show();
 			$(".Overlay").hide();
-			$singlePage.find('.SinglePage').css("width","50%");
+			$singlePage.find('.SinglePage').css("width","60%");
 			// $singlePage.find('.SinglePage').addClass("movePage");
 			$singlePage.find('.SinglePage__title').addClass("group-title");
 			$(window).scrollTop();
@@ -2315,18 +2315,26 @@ $(window).on("load",function () {
 				map = initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
 				$eventMapHolder.hide();
 				makeEventPageUneditable();
+
 				$singlePageTitle.val(event.name);
+				$editEventName.val(event.name);
+
 				$('.view_event_category_inner').empty();
-				$('.view_event_category_inner').append('Categorie: ' + event.category[0]);
-				// $eventCategories.val(getEventCategoriesAsList(event.categories));
+				$('.view_event_category_inner').append('Category: ' + event.category[0]);
+				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
+
 				$('.event_description_inner').text(linkify(event.description));
+				$eventDescription.val(linkify(event.description));
+
 				// $eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);
+				$editLocation.val(event.location);
+
 				setLocationByAddress(map, event.location, '#show-event-location-map');
 				$('.event_shared_in_inner').empty();
 				$('.event_shared_in_inner').append(event.targetGroup.name);
-				// $eventTargetGroup.val(event.targetGroup.name);
+				$eventTargetGroup.val(event.targetGroup.name);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
@@ -2354,14 +2362,19 @@ $(window).on("load",function () {
 				$('.end .end_time span').empty();
 				$('.end .end_time span').append('&#160;' + actualEndTime);
 
+				$eventStart.val(event.startDateTime);
+				$eventEnd.val(event.endDateTime);
+
 				// var startDate = event.startDateTime;
 				// $eventStart.val(startDate);
 				// var endDate = event.endDateTime;
 				// $eventEnd.val(endDate);
 				$('.event_cost_inner span').empty();
 				$('.event_cost_inner span').append(' ' + event.cost + ' ' + event.currency.name + ' per person');
-				// $eventCost.val(event.cost);
-				// $eventCostCurrency.val(event.currency.name);
+
+				$eventCost.val(event.cost);
+				$eventCostCurrency.val(event.currency.name);
+
 				if (user && (user.id === event.owner.id || user.role === adminRole)) {
 					$buttonEdit.show();
 					$buttonEdit.disabled = false;
@@ -2587,7 +2600,7 @@ $(window).on("load",function () {
 
 
 		$(".Overlay").hide();
-		$singlePage.find('.SinglePage').css("width","50%");
+		$singlePage.find('.SinglePage').css("width","70%");
 		$(window).scrollTop();
 		$singlePage.find('.SinglePage').css({
 			top: "60px"
