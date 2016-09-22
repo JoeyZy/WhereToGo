@@ -816,29 +816,31 @@
                 </ul>
 
                 <ul class="SinglePage__inputItemsList GroupPage" data-id="">
-                    <li class="SinglePage__inputItem GroupPage__owner">
-                        <label class="SinglePage__inputItem__label"><b>Owner</b></label>
-                        <input class="SinglePage__inputItem__inputField GroupPage__owner__name" readonly/>
-                    </li>
-                    <li class="SinglePage__inputItem GroupPage__description">
-                        <label class="SinglePage__inputItem__label"><b>Description:</b></label>
-                        <div contentEditable="false" id="GroupDescription" title="Description:"></div>
-                    </li>
-                    <li class="SinglePage__inputItem">
-                        <label class="SinglePage__inputItem__label"><b>Location:</b></label>
-                        <input contentEditable="false" id="group-location" title="Location:" type="text"
-                               placeholder="">
-                        <div class = "show-location-map" id="show-group-location-map">
-                                <input type = "checkbox" checked="checked" title = "Show on map"/>
-                                Show on map
+                    <li class="group_left">
+                        <div>
+                            <div class="group_left_header_left">
+                                <span><b>OWNER</b></span> <br>
+                                <input class="SinglePage__inputItem__inputField GroupPage__owner__name" readonly/>
+                            </div>
+                            <div class="group_left_header_right">
+                                <span><b>LOCATION</b></span>
+                                <input contentEditable="false" id="group-location" title="Location:" type="text"
+                                       placeholder="">
+                                <div class = "show-location-map" id="show-group-location-map">
+                                    <input type = "checkbox" checked="checked" title = "Show on map"/>
+                                    Show on map
+                                </div>
+                            </div>
                         </div>
-                        <div id = "group-location-map-holder">
-                            <div class = "location-map" id="group-location-map"></div>
+
+                        <div>
+                            <span><b>DESCRIPTION</b></span><br>
+                            <div contentEditable="false" id="GroupDescription" title="Description:"></div>
                         </div>
-                    </li>
-                    <li class="SinglePage__inputItem GroupPage__participants">
-                        <label class="SinglePage__inputItem__label"><b>Participants:</b></label>
-                        <div class="GroupPage__groups__list">
+
+                        <br>
+                        <span><b>PARTICIPANTS</b></span>
+                        <div class="GroupPage__groups__list group_participants">
                         </div>
                         <script id="groupParticipants" type="x-handlebars-template">
                             {{#each this}}
@@ -846,7 +848,22 @@
                             {{/each}}
                         </script>
                     </li>
-                    <li class="SinglePage__inputItem GroupPage__events">
+                    <li class="group_right">
+                        <div class="event_pic">
+                            <div contentEditable="false" id="groupPicture" class=''  data-toggle="tooltip">
+                                <img style=''
+                                     class="event_pic uploadPlaceholderEvent image"/>
+                                <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                       accept="image/jpeg,image/png"/>
+                            </div>
+                        </div>
+
+                        <div id = "group-location-map-holder">
+                            <div class = "location-map" id="group-location-map"></div>
+                        </div>
+                    </li>
+
+                    <li class="GroupPage__events">
                         <label class="SinglePage__inputItem__label"><b>Events:</b></label>
                         <ul class="GroupPage__groups__events__list ">
                         </ul>
@@ -906,17 +923,17 @@
                     <!--Group image here-->
 
                 </ul>
-                <ul class="SinglePage__inputItemsList ">
-                    <li class='event_pic'>
-                        <div contentEditable="false" id="groupPicture" class=''  data-toggle="tooltip">
-                            <img style=''
-                                 class="event_pic uploadPlaceholderEvent image"/>
-                            <input style='display:none;' type='file' class="SinglePage__button--upload"
-                                   accept="image/jpeg,image/png"/>
-                        </div>
-                    </li>
+                <%--<ul class="SinglePage__inputItemsList ">--%>
+                    <%--<li class='event_pic'>--%>
+                        <%--<div contentEditable="false" id="groupPicture" class=''  data-toggle="tooltip">--%>
+                            <%--<img style=''--%>
+                                 <%--class="event_pic uploadPlaceholderEvent image"/>--%>
+                            <%--<input style='display:none;' type='file' class="SinglePage__button--upload"--%>
+                                   <%--accept="image/jpeg,image/png"/>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
 
-                </ul>
+                <%--</ul>--%>
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
