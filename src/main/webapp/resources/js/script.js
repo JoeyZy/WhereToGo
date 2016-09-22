@@ -128,6 +128,7 @@ $(window).on("load",function () {
 	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
+	
 
 	// Spring security. Attach csrf token to all request
 	$(function () {
@@ -859,6 +860,7 @@ $(window).on("load",function () {
 				renderGroupsPage(groups);
 			},
 			'#user': function () {
+				$($picture[2]).show();
 				renderSingleUserPage(user);
 			},
 			'#addUser': function () {
@@ -868,11 +870,13 @@ $(window).on("load",function () {
 			'#event': function () {
 				// Get the index of which event we want to show and call the appropriate function.
 				var index = url.split('#event/')[1].trim();
+				$($picture[2]).hide();
 				renderSingleEventPage(index, events);
 			},
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
+				$($picture[2]).show();
 				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
 				$(".clearfix").hide();
@@ -1918,7 +1922,7 @@ $(window).on("load",function () {
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true);
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -1989,7 +1993,7 @@ $(window).on("load",function () {
 		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -2052,7 +2056,7 @@ $(window).on("load",function () {
 
 		$pictureUploadPlaceholder.off('click');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();

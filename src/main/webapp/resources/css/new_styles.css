@@ -683,11 +683,11 @@ div.ui-datepicker {
 .EventPage__cost input.form-control {
   width: 40%;
 }
-/*li.event_pic {*/
-  /*position: absolute;*/
-  /*top: 97px;*/
-  /*right: 20px;*/
-/*}*/
+li.event_pic {
+  position: absolute;
+  top: 97px;
+  right: 20px;
+}
 div.edit_event_pic {
   width: 200px;
   height: 115px;

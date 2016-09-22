@@ -906,17 +906,17 @@
                     <!--Group image here-->
 
                 </ul>
-                <%--<ul class="SinglePage__inputItemsList ">--%>
-                    <%--<li class='event_pic'>--%>
-                        <%--<div contentEditable="false" id="picture" class='event_pic'  data-toggle="tooltip"/>--%>
-                            <%--<img style=''--%>
-                                 <%--class="event_pic uploadPlaceholderEvent image"/>--%>
-                            <%--<input style='display:none;' type='file' class="SinglePage__button--upload"--%>
-                                   <%--accept="image/jpeg,image/png"/>--%>
-                        <%--</div>--%>
-                    <%--</li>--%>
+                <ul class="SinglePage__inputItemsList ">
+                    <li class='event_pic'>
+                        <div contentEditable="false" id="groupPicture" class='event_pic'  data-toggle="tooltip">
+                            <img style=''
+                                 class="event_pic uploadPlaceholderEvent image"/>
+                            <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                   accept="image/jpeg,image/png"/>
+                        </div>
+                    </li>
 
-                <%--</ul>--%>
+                </ul>
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
