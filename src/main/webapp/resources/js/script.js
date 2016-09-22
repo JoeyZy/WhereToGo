@@ -2158,6 +2158,7 @@ $(window).on("load",function () {
 				$singlePageTitle.val(group.name);
 				$groupDescription.html(linkify(group.description));
 				$groupLocation.val(group.location);
+				$groupLocation.attr('title',"Location: "+group.location);
 				$groupPageParticipants.show();
 				setLocationByAddress(groupMap, group.location, '#show-group-location-map');
 				if (group.picture.length) {

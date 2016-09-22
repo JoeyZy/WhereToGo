@@ -872,7 +872,63 @@ img.event_pic {
   color:#90A4AE;
   margin-top: 14px;
 }
-
+.group_left{
+  display: inline-block;
+  width: 50%;
+}
+#group-location{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.group_right{
+  display: inline-block;
+  vertical-align: top;
+}
+.group_left .show-location-map{
+  margin-bottom: 5%;
+}
+.GroupPage__owner__name{
+  /*margin-bottom: 5%;*/
+  padding: 5px;
+  min-height: 30px;
+}
+#GroupDescription{
+  margin-bottom: 5%;
+}
+.group_right > .event_pic{
+  margin-left: 10%;
+  width: 340px;
+  height: 170px;
+  top: 0;
+}
+li.group_left>div:nth-child(1){
+  margin-bottom: 5%;
+}
+.group_right > .event_pic > .group_pic{
+  width: 340px;
+  height: 170px;
+}
+.group_right .location-map {
+  width: 340px;
+  height: 170px;
+  margin-top: 10%;
+  margin-left: 10%;
+}
+.GroupPage__groups__list.group_participants{
+  padding: 5px;
+}
+.GroupPage__events{
+  margin-top: 1%;
+}
+.event-link.small_event{
+  margin-top: 10px;
+}
+.group_left_header_left, .group_left_header_right{
+  display: inline-block;
+  width: 45%;
+  vertical-align: top;
+}
 
 .calendar{
   margin-right: 15.5%;
