@@ -841,6 +841,9 @@ div.event_header_center div.end_date, div.event_header_center div.end_time,
 div.event_header_right div.event_cost_inner{
   margin-top: 8px;
 }
+.event_description_inner{
+  word-break: break-word;
+}
 
 li.event_pic_min {
   position: absolute;
@@ -898,6 +901,8 @@ img.event_pic {
 }
 #GroupDescription{
   margin-bottom: 5%;
+  word-break: break-word;
+  white-space: normal;
 }
 .group_right > .event_pic{
   margin-left: 10%;
