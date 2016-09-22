@@ -526,12 +526,15 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .SinglePage form #description, .SinglePage form #event-location, .SinglePage form #descriptionGroup, .SinglePage form #target-group, .SinglePage form #GroupDescription, .SinglePage form #group-location, #map, .SinglePage form #user-location {
   padding: 5px;
   clear: both;
-  width: 100%;
+  width: 95%;
   resize: none;
   height: 100%;
   outline: none;
   min-height: 30px;
   border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .SinglePage form > ul.list-form > li > button {
   background-color: #87bae1;
@@ -1156,6 +1159,7 @@ div.accordion{
 .single_group_body{
   padding: 6px;
   font-size: 1.2em;
+  border-radius: 10px;
 
   background: #f46b45; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #f46b45 , #eea849); /* Chrome 10-25, Safari 5.1-6 */
@@ -1193,4 +1197,7 @@ div.accordion{
   height: 150px;
 
   border-radius: 2px;
+}
+.btn-plus-user-to-group{
+  margin-left: 10px;
 }

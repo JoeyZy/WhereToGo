@@ -2101,7 +2101,6 @@ $(window).on("load",function () {
 		}
 		if(!addGroup){
 			renderShowGroupPage(index);
-			$(".button-back").show();
 			$(".Overlay").hide();
 			$singlePage.find('.SinglePage').css("width","50%");
 			$singlePage.find('.SinglePage').addClass("movePage");
@@ -2360,6 +2359,7 @@ $(window).on("load",function () {
 
 				// $eventDescription.text(linkify(event.description));
 				$eventLocation.val(event.location);
+				$eventLocation.attr('title',"Location: "+event.location);
 				$editLocation.val(event.location);
 
 				setLocationByAddress(map, event.location, '#show-event-location-map');
@@ -2371,7 +2371,7 @@ $(window).on("load",function () {
 					$('.event_shared_in_inner').append(event.targetGroup.name);
 					$eventTargetGroup.val(event.targetGroup.name);
 				}
-				console.log(event.targetGroup);
+				console.log($eventTargetGroup);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
