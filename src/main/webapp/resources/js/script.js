@@ -2193,6 +2193,7 @@ $(window).on("load",function () {
 				if(typeof user !== 'undefined'){
 					singlePage.find('.GroupPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
+				$('ul.GroupPage__groups__events__list li').remove();
 			}
 		}
 	}
