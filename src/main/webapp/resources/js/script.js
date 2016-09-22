@@ -1914,7 +1914,7 @@ $(window).on("load",function () {
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true);
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -1985,7 +1985,7 @@ $(window).on("load",function () {
 		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();
@@ -2048,7 +2048,7 @@ $(window).on("load",function () {
 
 		$pictureUploadPlaceholder.off('click');
 		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[1].click();
+			$buttonUploadPicture[0].click();
 			return false;
 		});
 		$pictureParent.show();
