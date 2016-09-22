@@ -183,7 +183,7 @@
                             </button>
                         </div>
                 <div class="navbar-btn-container add-group-div not-displayed">
-                    <button class="btn btn-block btn-add-group"
+                    <button class="btn btn-block btn-add-group btn-visit"
                             title="Please login with active profile to create a group">
                         <span class="glyphicon glyphicon-plus"></span>
                         Group

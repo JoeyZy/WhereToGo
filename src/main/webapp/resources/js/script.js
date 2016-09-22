@@ -2198,6 +2198,7 @@ $(window).on("load",function () {
 				});
 			}
 			else {
+				$('div.GroupPage__groups__list.group_participants div').remove();
 				makeGroupPageEditable();
 				$buttonAddGroup.show();
 				$groupPageParticipants.hide();

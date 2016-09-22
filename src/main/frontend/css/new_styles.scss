@@ -876,6 +876,9 @@ img.event_pic {
   display: inline-block;
   width: 50%;
 }
+.event-link.small_event .event-img {
+  padding-top: 20px;
+}
 #group-location{
   white-space: nowrap;
   overflow: hidden;
@@ -957,7 +960,7 @@ button.btn-visit{
   background-color: #9ccc65;
   background-image: none;
 }
-button.SinglePage__button--delete{
+button.SinglePage__button--delete, .SinglePage__button--deleteGroup{
   background-color: #37474f;
   background-image: none;
 }
