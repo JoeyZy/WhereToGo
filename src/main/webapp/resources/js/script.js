@@ -128,6 +128,7 @@ $(window).on("load",function () {
 	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
 	var $picture = $singlePage.find('img.event_pic');
+	
 
 	// Spring security. Attach csrf token to all request
 	$(function () {
@@ -855,6 +856,7 @@ $(window).on("load",function () {
 				renderGroupsPage(groups);
 			},
 			'#user': function () {
+				$($picture[2]).show();
 				renderSingleUserPage(user);
 			},
 			'#addUser': function () {
@@ -864,11 +866,13 @@ $(window).on("load",function () {
 			'#event': function () {
 				// Get the index of which event we want to show and call the appropriate function.
 				var index = url.split('#event/')[1].trim();
+				$($picture[2]).hide();
 				renderSingleEventPage(index, events);
 			},
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
+				$($picture[2]).show();
 				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
 				$(".clearfix").hide();
