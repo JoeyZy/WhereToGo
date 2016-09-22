@@ -860,7 +860,11 @@ $(window).on("load",function () {
 				renderGroupsPage(groups);
 			},
 			'#user': function () {
+
+				$("#groupPicture").removeClass('group_pic');
+				$("#groupPicture").addClass('user_pic');
 				$($picture[2]).show();
+
 				renderSingleUserPage(user);
 			},
 			'#addUser': function () {
@@ -876,10 +880,14 @@ $(window).on("load",function () {
 			'#group': function () {
 				// Get the index of which group we want to show and call the appropriate function.
 				var index = url.split('#group/')[1].trim();
+
+				$("#groupPicture").removeClass('user_pic');
+				$("#groupPicture").addClass('group_pic');
 				$($picture[2]).show();
+
 				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
-				$(".clearfix").hide();
+				// $(".clearfix").hide();
 				var page = $('.all-groups')
 				page.addClass('visible');
 				var exist = $(".groups-list > li");

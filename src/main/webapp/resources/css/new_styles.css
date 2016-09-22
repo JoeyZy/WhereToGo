@@ -1182,3 +1182,15 @@ div.accordion{
   display: inline-block;
   max-width: 40%;
 }
+.group_pic{
+  width: 230px;
+  height: 132px;
+
+  border-radius: 2px;
+}
+.user_pic{
+  width: 150px;
+  height: 150px;
+
+  border-radius: 2px;
+}
