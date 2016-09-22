@@ -912,7 +912,7 @@ li.group_left div>div#GroupDescription{
   white-space: normal;
 }
 .group_right > .event_pic{
-  margin-left: 10%;
+  margin-left: 5%;
   width: 340px;
   height: 170px;
   top: 0;
@@ -928,7 +928,7 @@ li.group_left>div:nth-child(1){
   width: 340px;
   height: 170px;
   margin-top: 10%;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 .GroupPage__groups__list.group_participants{
   padding: 5px;
