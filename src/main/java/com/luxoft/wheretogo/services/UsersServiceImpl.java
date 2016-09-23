@@ -65,9 +65,9 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public User initEvents(User user) {
-		if (Hibernate.isInitialized(user.getEvents())) {
+		/*if (Hibernate.isInitialized(user.getEvents())) {
 			return user;
-		}
+		}*/
 		user = usersRepository.findById(user.getId());
 		if (user != null) {
 			Hibernate.initialize(user.getEvents());
