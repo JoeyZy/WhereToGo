@@ -337,7 +337,7 @@ $(window).on("load",function () {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
 			"name": $editEventName.val(),
 			"categories": categoriesList,
-			"startTime": $eventStart.val(), //here we can use this kind of info, because back-end part use only id
+			"startTime": $eventStart.val(),
 			"endTime": $eventEnd.val(),
 			"description": $eventDescription.val(),
 			"location": $editLocation.val(),
@@ -1797,7 +1797,7 @@ $(window).on("load",function () {
 
 			var valid = true;
 			$errors.empty();
-			if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
+			if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val().slice(11) !== user.firstName + " " + user.lastName) {
 				addErrorListItem("Owner field is wrong");
 				valid = false;
 			}
