@@ -1265,8 +1265,16 @@ div.accordion{
   border-radius: 2px;
 }
 .btn-plus-user-to-group{
+  font-size: 18px;
+  color: #FFFFFF;
+}
+.accordion_plus{
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 10px;
-  font-size: 24px;
+  width: 28px;
+  height: 28px;
+  padding: 1px 1px 2px 2px;
+  border-radius: 100%;
+  background-color: black;
 }
