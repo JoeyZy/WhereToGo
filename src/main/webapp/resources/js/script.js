@@ -179,7 +179,7 @@ $(window).on("load",function () {
 
 	$buttonApply.on('click', function () {
 		updateEvent(true);
-		$picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
+		// $picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
 		// $picture.attr("src","");
 		return false;
 	});
@@ -342,10 +342,10 @@ $(window).on("load",function () {
 			"description": $eventDescription.val(),
 			"location": $editLocation.val(),
 			"targetGroup": getTargetGroupID(),
-			"cost": $singlePage.find('.event_cost_inner span').text().slice(1,-15),
+			"cost": $('#cost').val(),
 			"currency": {
-				"id": "2",
-				"name": $singlePage.find('.event_cost_inner span').text().slice(1,-11).slice(0,4)
+				"id": $("#currencies option:selected").attr("data-id"),
+				"name": $("#currencies option:selected").text()
 			},
 			"picture": isDefaultPicture() ? "" : $picture.attr('src')
 		};
@@ -861,10 +861,8 @@ $(window).on("load",function () {
 			},
 			'#user': function () {
 
-				$("#groupPicture").removeClass('group_pic');
-				$("#groupPicture").addClass('user_pic');
-				$($picture[2]).show();
-
+				$($picture[3]).show();
+				console.log($picture);
 				renderSingleUserPage(user);
 			},
 			'#addUser': function () {
@@ -875,6 +873,7 @@ $(window).on("load",function () {
 				// Get the index of which event we want to show and call the appropriate function.
 				var index = url.split('#event/')[1].trim();
 				$($picture[2]).hide();
+				$($picture[3]).hide();
 				renderSingleEventPage(index, events);
 			},
 			'#group': function () {
@@ -884,7 +883,7 @@ $(window).on("load",function () {
 				$("#groupPicture").removeClass('user_pic');
 				$("#groupPicture").addClass('group_pic');
 				$($picture[2]).show();
-
+				$($picture[3]).hide();
 				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
 				// $(".clearfix").hide();
