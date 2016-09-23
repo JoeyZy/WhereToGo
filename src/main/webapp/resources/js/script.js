@@ -145,6 +145,10 @@ $(window).on("load",function () {
 	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
 	$buttonEdit.on('click', function (event) {
+
+		if(window.location.hash==="#user/email=undefined")
+			return;
+
 		makeEventPageEditable();
 		$editEventMapHolder.show();
 		var map = initGoogleMaps('edit-event-location-map', 'edit-event-location', '#edit-show-event-location-map', '#edit-event-location-map-holder');
@@ -2851,6 +2855,7 @@ $(window).on("load",function () {
 		$userMapHolder.hide();
 		$checkboxShowUserMap.find("input").prop("checked", false);
 		$groupPage.hide();
+		$('ul.EditEventPage').hide();
 		$singlePage.find('.EventPage').hide();
 		$singlePage.find('.UserPage').show();
 		$singlePageTitle.val('User Information');
