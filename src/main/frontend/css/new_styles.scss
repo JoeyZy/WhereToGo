@@ -534,6 +534,15 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.SinglePage form #event-location {
+  width: 90%;
+}
+.SinglePage__inputItem__inputField.EventPage__owner__name{
+  width: 89%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .SinglePage form > ul.list-form > li > button {
   background-color: #87bae1;
   margin: 12px;

@@ -2383,8 +2383,10 @@ $(window).on("load",function () {
 				} else {
 					$pictureParent.hide();
 				}
-				singlePage.find('.EventPage__owner__name').val('Created by ' + event.owner.firstName + " " + event.owner.lastName);
-
+				var owner = 'Created by ' + event.owner.firstName + " " + event.owner.lastName;
+				singlePage.find('.EventPage__owner__name').val(owner);
+				singlePage.find('.EventPage__owner__name').attr('title', owner);
+				singlePage.find('.EventPage__owner__name').attr('disabled', "true");
 				var actualStartDate = moment(event.startDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
 				var actualStartTime = moment(event.startDateTime, "DD/MM/YY HH:mm").format("HH:mm");
 				var actualEndDate = moment(event.endDateTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
