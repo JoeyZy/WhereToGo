@@ -1270,5 +1270,7 @@ div.accordion{
   border-radius: 2px;
 }
 .btn-plus-user-to-group{
-  margin-left: 10px;
+  position: absolute;
+  top: 0px;
+  right: 10px;
 }

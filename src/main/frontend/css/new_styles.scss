@@ -1258,3 +1258,14 @@ div.accordion{
 .group_pic{
   box-shadow: none;
 }
+.user_pic{
+  width: 150px;
+  height: 150px;
+
+  border-radius: 2px;
+}
+.btn-plus-user-to-group{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
