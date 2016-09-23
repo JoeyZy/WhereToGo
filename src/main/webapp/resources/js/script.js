@@ -1797,7 +1797,7 @@ $(window).on("load",function () {
 
 			var valid = true;
 			$errors.empty();
-			if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val() !== user.firstName + " " + user.lastName) {
+			if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val().slice(11) !== user.firstName + " " + user.lastName) {
 				addErrorListItem("Owner field is wrong");
 				valid = false;
 			}
