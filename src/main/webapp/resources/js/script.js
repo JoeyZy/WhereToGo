@@ -2429,6 +2429,7 @@ $(window).on("load",function () {
 				makeEventPageEditable();
 				$checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
+				$eventDescription.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
 				if (typeof user !== 'undefined') {
