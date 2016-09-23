@@ -779,7 +779,7 @@
                                     <span>COST
                                           <input id="cost" class="form-control" type="number" min="0" max="100000"
                                                  placeholder=""
-                                                 onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                                                 onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.keyCode == 8'/>
                                     </span>
                                     <span>CURRENCY
                                        <select id="currencies" class="form-control">
