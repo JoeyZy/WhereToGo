@@ -337,7 +337,7 @@ $(window).on("load",function () {
 			"id": $singlePage.find('.EventPage').attr('data-id'),
 			"name": $editEventName.val(),
 			"categories": categoriesList,
-			"startTime": $eventStart.val(), //here we can use this kind of info, because back-end part use only id
+			"startTime": $eventStart.val(),
 			"endTime": $eventEnd.val(),
 			"description": $eventDescription.val(),
 			"location": $editLocation.val(),
