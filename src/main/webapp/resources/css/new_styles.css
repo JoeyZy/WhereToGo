@@ -955,6 +955,10 @@ li.group_left>div:nth-child(1){
   width: 40px;
   height: 34px;
 }
+.SinglePage form span #description {
+  word-wrap: break-word;
+  white-space: normal;
+}
 .add-event-div, .add-group-div{
   margin-right: 26px;
 }
