@@ -730,7 +730,7 @@ $(window).on("load",function () {
 							if($(item).find('h2 span.btn-plus-user-to-group').length){
 								return true;
 							}
-							$(item).find('h2').append('<span class="btn-plus-user-to-group">+</span>');
+							$(item).find('h2').append('<div class="accordion_plus"><span class="btn-plus-user-to-group glyphicon glyphicon-plus"></span></div>');
 						}
 					});
 				});
@@ -899,9 +899,12 @@ $(window).on("load",function () {
 			// Add event
 			'#addEvent': function () {
 				getEventId();
+				$($picture[3]).hide();
+				$($picture[2]).hide();
 			},
 			'#addGroup': function () {
 				getGroupId();
+				$($picture[3]).hide();
 			},
 			// Calendar
 			'#calendar': function () {
@@ -1362,7 +1365,7 @@ $(window).on("load",function () {
 		}
 		var activeGroupId;
 		$.each($('.my-groups-list').find('li'), function (event, item) {
-			$(item).on('click', 'h2>span.btn-plus-user-to-group',function (e) {
+			$(item).on('click', 'h2>div.accordion_plus',function (e) {
 				e.preventDefault(); //creating accordion list of groups where current user is owner
 				activeGroupId = $(item).data('index');
 				var groupIndex = activeGroupId;
@@ -1374,7 +1377,7 @@ $(window).on("load",function () {
 				});
 				if($('div.accordion').length) return false;
 				$(document).ready(function() {
-					var needElement = $(item).find('div'),
+					var needElement = $(item).find('div.place_for_acc'),
 						groupName =  $(item).find('.group-box-title');
 					var width = groupName.width()+30;
 					needElement.append("<div class='accordion'><div class='accordion-section'></div></div>");

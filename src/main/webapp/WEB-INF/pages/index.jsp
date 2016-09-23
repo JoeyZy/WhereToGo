@@ -251,7 +251,7 @@
             <script id="groups-template" type="x-handlebars-template">
                 {{#each this }}
                 <li data-index="{{id}}" class="small_group">
-                    <div>
+                    <div class="place_for_acc">
                     </div>
                     <div class="single_group">
                         <div class="single_group_header">
