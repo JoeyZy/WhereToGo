@@ -730,7 +730,7 @@ $(window).on("load",function () {
 							if($(item).find('h2 span.btn-plus-user-to-group').length){
 								return true;
 							}
-							$(item).find('h2').append('<span class="btn-plus-user-to-group">+</span>');
+							$(item).find('h2').append('<span class="btn-plus-user-to-group glyphicon glyphicon-plus"></span>');
 						}
 					});
 				});
@@ -899,9 +899,12 @@ $(window).on("load",function () {
 			// Add event
 			'#addEvent': function () {
 				getEventId();
+				$($picture[3]).hide();
+				$($picture[2]).hide();
 			},
 			'#addGroup': function () {
 				getGroupId();
+				$($picture[3]).hide();
 			},
 			// Calendar
 			'#calendar': function () {
