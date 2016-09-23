@@ -727,6 +727,14 @@ div.event_pic {
 .edit_event_cost {
   display: inline-block;
 }
+.edit_event_location{
+  width: 40%;
+}
+.edit-show-location-map{
+  vertical-align: top;
+  position: relative;
+  top: 20px;
+}
 .edit_event_right_bottom{
   width: 36.5%;
   vertical-align: top;
@@ -741,13 +749,18 @@ div.event_pic {
 }
 .edit_event_location > span{
   display: inline-block;
+  width: 65%;
 }
 .edit_event_cost{
   margin-left: 3%;
   width: 49%;
+  vertical-align: top;
 }
+
 .edit_event_cost > span {
   display: inline-block;
+  vertical-align: top;
+
 }
 .edit_event_cost > span:nth-child(1){
   width: 50%;
