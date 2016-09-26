@@ -1169,7 +1169,7 @@ div.accordion{
 }
 div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   /*bla*/
-  margin-left: 0px !important;
+  margin-left: 2% !important;
 }
 .user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password
 .user_top_left_middle_password_confirm, .user_top_left_bottom_phone {
@@ -1177,10 +1177,50 @@ div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   width: 49%;
   vertical-align: top;
 }
-.
-
-
-
+div.user_bottom_about textarea{
+  /*bla*/
+  resize: none;
+}
+.user_top_left_top_name input, .user_top_left_top_email input,
+.user_top_left_middle_password input, .user_top_left_middle_password_confirm input,
+.user_top_left_bottom_phone input{
+  /*bla*/
+  margin-left: 4%;
+  margin-top: 2%;
+  width: 70%;
+}
+div.user_middle_left_city input#user-location {
+  /*bla*/
+  margin-left: 2%;
+  margin-top: 1%;
+  width: 50%;
+}
+.user_bottom_about textarea {
+  /*bla*/
+  margin-left: 1.4%;
+  margin-top: 0.8%;
+  width: 50%;
+}
+div.ui-widget.ui-front {
+  /*bla*/
+  margin-top:1%;
+}
+.user_middle__left_interesting_categories div.interestingCategoriesMultiselect, .user_middle__left_interesting_categories a{
+  /*bla*/
+  margin-top: 1%;
+  margin-left: 1.5%;
+}
+.user_blocks{
+  /*bla*/
+  margin-top: 2%;
+}
+.user_middle_left_city #show-user-location-map {
+  /*bla*/
+  margin-left: 2%;
+}
+.user_bottom_about.user_blocks{
+  margin-top: 1.4%;
+}
 
 .event-link{
   min-width: 240px;

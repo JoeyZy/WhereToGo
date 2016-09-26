@@ -2854,7 +2854,7 @@ $(window).on("load",function () {
 	$(document).bind('click', function(e) {
 		var $clicked = $(e.target);
 		if($('.interesting_categories_for_new_user').css('display') == 'block'){
-			if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
+			if (!$clicked.parents().hasClass("user_middle__left_interesting_categories") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
 		}
 	});
 

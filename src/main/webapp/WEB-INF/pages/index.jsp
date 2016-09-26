@@ -308,38 +308,38 @@
                             <div class="user_top_left_top">
                                 <div class="user_top_left_top_name">
                                     <span><b>Name*</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
+                                    <input class="UserPage__name__first reset editable form-control"
                                            placeholder="First name" required/>
-                                    <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
+                                    <input class="UserPage__name__last reset editable form-control"
                                            placeholder="Last name" required/>
                                 </div>
                                 <div class="user_top_left_top_email">
                                     <span><b>Email*</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"
+                                    <input class="UserPage__email__input reset editable form-control"
                                            type="email" placeholder="User email" required/>
                                 </div>
                             </div>
-                            <div class="user_top_left_middle">
+                            <div class="user_top_left_middle user_blocks">
                                 <div class="user_top_left_middle_password">
                                     <span><b>Password*</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
+                                    <input class="UserPage__password__input reset editable form-control"
                                            type="password" placeholder="User password" required/>
                                 </div>
                                 <div class="user_top_left_middle_password_confirm">
                                     <span><b>Password confirmation*</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"
+                                    <input class="UserPage__password__confirm__input reset editable form-control"
                                            type="password" placeholder="User password" required/>
                                 </div>
                             </div>
                             <div class="user_top_left_bottom">
-                                <div class="user_top_left_bottom_phone">
+                                <div class="user_top_left_bottom_phone user_blocks">
                                     <span><b>Phone number</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
+                                    <input class="UserPage__phone__input reset editable form-control"
                                            placeholder="Phone number" required/>
                                 </div>
-                                <div class="user_top_left_bottom_birthday">
+                                <div class="user_top_left_bottom_birthday user_blocks">
                                     <span><b>Birthday</b></span><br>
-                                    <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"
+                                    <input class="UserPage__birthday UserPage__birthday__holder reset editable"
                                            readonly/>
                                     <style>
                                         .custom-combobox {
@@ -559,16 +559,16 @@
 
                     <li class="user_middle">
                         <div class="user_middle_left">
-                            <div class="user_middle_left_city">
+                            <div class="user_middle_left_city user_blocks">
                                  <span><b>City</b></span><br>
-                                <input contentEditable="false" id="user-location" title="Location:" type="text"
+                                <input class="form-control" contentEditable="false" id="user-location" title="Location:" type="text"
                                        placeholder="">
                                 <div class = "show-location-map" id="show-user-location-map">
                                     <input type = "checkbox" checked="checked" title = "Show on map"/>
                                    Show on map
                                 </div>
                             </div>
-                            <div class="user_middle__left_interesting_categories">
+                            <div class="user_middle__left_interesting_categories user_blocks">
                                 <span><b>Interesting categories</b></span><br>
                                 <div class="interestingCategoriesMultiselect display_inline"></div>
                                 <a href="#" class="activeBackground">
@@ -585,9 +585,9 @@
                     </li>
 
                     <li class="user_bottom">
-                        <div class="user_bottom_about">
+                        <div class="user_bottom_about user_blocks">
                             <span><b>About me</b></span><br>
-                            <textarea placeholder="Short info about yourself" rows="4" cols="40" class=" UserPage__about__input reset editable"></textarea>
+                            <textarea placeholder="Short info about yourself" rows="4" cols="40" class="reset editable form-control"></textarea>
                         </div>
                     </li>
                     <%--<li class="SinglePage__inputItem UserPage__email">--%>
