@@ -238,6 +238,7 @@ $(window).on("load",function () {
 
 	$buttonCancelEditingUser.on('click', function (user) {
 		// makeUserPageUneditable();
+		$('.interesting_categories_for_new_user.activeBackground').remove();
 		$buttonEditUser.show();
 		$buttonApplyUser.hide();
 		$buttonCancelEditingUser.hide();
@@ -2380,7 +2381,6 @@ $(window).on("load",function () {
 					$('.event_shared_in_inner').append(event.targetGroup.name);
 					$eventTargetGroup.val(event.targetGroup.name);
 				}
-				console.log($eventTargetGroup);
 
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
@@ -2432,8 +2432,11 @@ $(window).on("load",function () {
 			} else {
 				$editEventMapHolder.show();
 				map = initGoogleMaps('edit-event-location-map', 'edit-event-location', '#edit-show-event-location-map', '#edit-event-location-map-holder');
+					$(window).resize(function() {
+						google.maps.event.trigger(map, 'resize');
+					});
+					google.maps.event.trigger(map, 'resize');
 				$editEventMapHolder.hide();
-
 				makeEventPageEditable();
 				$checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');

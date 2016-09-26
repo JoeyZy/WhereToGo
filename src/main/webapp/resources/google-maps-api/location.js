@@ -74,6 +74,7 @@ function initGoogleMaps(mapID, inputID, checkboxHolderID, mapHolderID) {
 function initGoogleMapsService() {
     initGoogleMaps('event-location-map', 'event-location', '#show-event-location-map', '#event-location-map-holder');
     initGoogleMaps('group-location-map', 'group-location', '#show-group-location-map', '#group-location-map-holder');
+    initGoogleMaps('edit-event-location-map', 'edit-event-location', '#edit-show-event-location-map', '#edit-event-location-map-holder');
 }
 
 function setLocationByAddress(map, address, checkboxID) {
