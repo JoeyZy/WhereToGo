@@ -11,7 +11,7 @@ div.interesting_categories_for_new_user ul>li{
     list-style-type: none;
     padding: 5px;
 }
-.UserPage__Interesting .activeBackground{
+.user_middle__left_interesting_categories .activeBackground{
     background:#ECECEC;
 }
 div.interesting_categories_for_new_user ul>li input{
