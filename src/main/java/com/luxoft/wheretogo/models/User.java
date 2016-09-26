@@ -40,12 +40,12 @@ public class User {
 	@Column(unique = true)
 	private String email;
 
-	@JsonIgnore
-	@Column(unique = true)
+//	@JsonIgnore
+	@Column()
 	private String description;
 
-	@JsonIgnore
-	@Column(unique = true)
+//	@JsonIgnore
+	@Column()
 	private String phoneNumber;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yy", timezone="default")
