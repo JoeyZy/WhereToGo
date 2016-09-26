@@ -1810,10 +1810,10 @@ $(window).on("load",function () {
 
 			var valid = true;
 			$errors.empty();
-			if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val().slice(11) !== user.firstName + " " + user.lastName) {
-				addErrorListItem("Owner field is wrong");
-				valid = false;
-			}
+			// if (user.role !== adminRole && $singlePage.find('.EventPage__owner__name').val().slice(11) !== user.firstName + " " + user.lastName) {
+			// 	addErrorListItem("Owner field is wrong");
+			// 	valid = false;
+			// } Доделать!
 
 			var eventName = event.name.trim();
 			if (!eventName || eventName.length < EVENT_NAME_LENGTH_MIN || eventName.length > EVENT_NAME_LENGTH_MAX) {
