@@ -30,7 +30,7 @@ div.interesting_categories_for_new_user ul>li input{
     padding-left: 3px;
     cursor: pointer;
 }
-.UserPage__Interesting a, .UserPage__Interesting a:visited, .UserPage__Interesting a:hover{
+.user_middle__left_interesting_categories a, .user_middle__left_interesting_categories a:visited, .user_middle__left_interesting_categories a:hover{
     display: inline-block;
     cursor: pointer;
     text-decoration: none;

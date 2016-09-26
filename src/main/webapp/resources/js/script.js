@@ -2713,7 +2713,7 @@ $(window).on("load",function () {
 		if(!checkedCategories){
 			var checkedCategories = [];
 		}
-		var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
+		var $interestingCategories = $('.user_middle__left_interesting_categories');
 		$interestingCategories.find('div.interesting_categories_for_new_user').remove();
 		$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
 		var checkCategoriesDownloaded = false;
