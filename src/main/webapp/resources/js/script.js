@@ -2946,6 +2946,10 @@ $(window).on("load",function () {
 		}
 
 		function renderAddUserPage() {
+			$pictureUploadPlaceholder.on('click', function () {
+				$buttonUploadPicture[0].click();
+				return false;
+			});
 			$buttonAddUser.off();
 			$userLocation.attr('readonly', false);
 			$userLocation.attr('disabled', false);

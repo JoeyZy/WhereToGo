@@ -67,6 +67,32 @@ h1, h3 {
   width: 190px;
   position: absolute;
 }
+.pagination-page{
+  list-style: none;
+  margin-left: 225px;
+  text-align: center;
+  max-width: 1500px;
+  opacity: 0;
+}
+li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
+  font-size: 14px;
+}
+.pagination-page li{
+  display: inline-block;
+  margin: 7.5px;
+}
+.badge {
+  height: 18px;
+}
+.pagination-page li>a{
+  font-size: 12px;
+  vertical-align: middle;
+  color: #78909c;
+}
+.pagination-page li>a.badge{
+  color: #ffffff;
+  background-color: #78909c;
+}
 .navbar-btn-container {
   margin: 8px 0;
   float: right;
@@ -92,20 +118,6 @@ li.event_header > div > button.SinglePage__button--edit{
   opacity: 1;
   transition: 0.5s;
   pointer-events: auto;
-}
-.pagination-page{
-  list-style: none;
-  margin-left: 225px;
-  text-align: center;
-  max-width: 1500px;
-  opacity: 0;
-}
-li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
-  font-size: 14px;
-}
-.pagination-page li{
-  display: inline-block;
-  margin: 7.5px;
 }
 .filters {
   box-sizing: border-box;
@@ -172,16 +184,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   background-color: #C0C0C0;
 }
 .badge {
-  height: 18px;
-}
-.pagination-page li>a{
-  font-size: 12px;
-  vertical-align: middle;
-  color: #78909c;
-}
-.pagination-page li>a.badge{
-  color: #ffffff;
-  background-color: #78909c;
+  height: 17px;
 }
 .category_color {
   height: 5px;
@@ -254,6 +257,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   padding: 0;
   opacity: 1;
   font-size: 0;
+
 }
 .visible > .events-list{
   min-height: 866px;
@@ -456,7 +460,6 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 ----------------------------*/
 .SinglePage {
   z-index: 100;
-  border-radius: 2px;
   min-width: 550px;
 }
 .Overlay {
@@ -516,7 +519,6 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .SinglePage__inputItem__label {
   width: 40%;
   display: inline-block;
-  vertical-align:top;
 }
 .SinglePage__inputItem__inputField {
   height: 20px;
@@ -646,10 +648,6 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .confirmDeleteButtons {
   padding: 15px;
 }
-a.disabled{
-  pointer-events: none;
-  cursor: default;
-}
 ul.errors {
   padding: 12px;
   list-style-position: inside;
@@ -756,11 +754,9 @@ div.event_pic {
   width: 49%;
   vertical-align: top;
 }
-
 .edit_event_cost > span {
   display: inline-block;
   vertical-align: top;
-
 }
 .edit_event_cost > span:nth-child(1){
   width: 50%;
@@ -775,7 +771,6 @@ div.event_pic {
   left: 6.5%;
   top: 20px;
 }
-
 .edit_event_category{
   position: relative;
   top: 30px;
@@ -797,6 +792,7 @@ div.event_pic {
 }
 .edit_event_header_left div.btn-group {
   width: 80%;
+
 }
 .edit_event_header_left div.btn-group > button {
   width: 100%;
@@ -810,10 +806,6 @@ div.event_pic {
 .event_description, .event_participants{
   margin-top: 22px;
 }
-/*.event_description_inner, .event_participants_inner{*/
-  /*display:inline-block;*/
-  /*margin-bottom: 15px;*/
-/*}*/
 .button_event_edit{
   position: absolute;
   top: 2.1%;
@@ -868,12 +860,9 @@ div.event_header_center div.end_date, div.event_header_center div.end_time,
 div.event_header_right div.event_cost_inner{
   margin-top: 8px;
 }
-
 .event_description_inner{
-  word-break: break-word;
   word-wrap: break-word;
 }
-
 li.event_pic_min {
   position: absolute;
   top: 23px;
@@ -891,7 +880,7 @@ img.event_pic {
   border-radius: 2px;
 }
 .total-counter, .total-counter-groups
- {
+{
   font-size: 16px;
   color:#90A4AE;
   float: left;
@@ -911,7 +900,6 @@ img.event_pic {
 .event-link.small_event .event-img {
   padding-top: 20px;
 }
-
 #group-location{
   white-space: nowrap;
   overflow: hidden;
@@ -929,9 +917,9 @@ img.event_pic {
   padding: 5px;
   min-height: 30px;
 }
-li.group_left div>div#GroupDescription{
+.GroupPage li.group_left div#GroupDescription{
   margin-bottom: 5%;
-  word-break: break-word;
+  word-wrap: break-word;
   white-space: normal;
 }
 .group_right > .event_pic{
@@ -969,10 +957,10 @@ li.group_left>div:nth-child(1){
 }
 .calendar{
   margin-right: 15.5%;
+  border-left: 2px solid #d4d6d8;
 }
 .btn-calendar{
   border-color: #edebeb;
-  border-left: 2px solid #d4d6d8;
 }
 .calendar, .show-all{
   width: 40px;
@@ -998,9 +986,26 @@ button.btn-visit{
   background-color: #9ccc65;
   background-image: none;
 }
-button.SinglePage__button--delete, .SinglePage__button--deleteGroup{
+button.SinglePage__button--delete, button.SinglePage__button--deleteGroup{
   background-color: #37474f;
   background-image: none;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.btn{
+  vertical-align: baseline;
+  padding: 6px 13.4px;
+  border:none;
+  border-radius: 1px;
+  background-color: #edebeb;
+}
+li.event_header > div > button.SinglePage__button--edit{
+  background-color: #FFFFFF;
+  color: #666666;
+  text-decoration: underline;
 }
 .categories-common.Archive {
   width: 100%;
@@ -1037,7 +1042,6 @@ input.show-archive-input {
 .not-displayed {
   display:none !important;
 }
-
 .groups-header {
   text-align: left;
 }
@@ -1109,14 +1113,6 @@ div.accordion{
   border: none;
   background-color: inherit;
 }
-.display_inline_block{
-  display: inline-block;
-}
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
 .enabled-input {
   border: 1px solid #dbe3e7;
 }
@@ -1138,7 +1134,8 @@ div.accordion{
   resize: none;
 }
 .event-link{
-  min-width: 240px;
+  width: 30%;
+  min-width: 100px;
 }
 .GroupPage__groups__events__list{
   opacity:1;
@@ -1236,29 +1233,22 @@ div.accordion{
   border-radius: 10px;
   margin-bottom: 10px;
   border: 1px solid #EEC2A2;
-
   background: #fd746c; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #fd746c , #ff9068); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to left, #fd746c , #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
-
 }
 .single_group_header{
   text-align: center;
   padding: 6px;
-
   border-bottom: 3px solid #EF77A0;
 }
 .single_group_body{
   padding: 6px;
   font-size: 1.2em;
   border-radius: 10px;
-
   background: #f46b45; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #f46b45 , #eea849); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to left, #f46b45 , #eea849); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 .single_group_picture{
   max-height: 40px;
@@ -1283,7 +1273,6 @@ div.accordion{
 .group_pic{
   width: 230px;
   height: 132px;
-
   border-radius: 2px;
 }
 .user_pic{

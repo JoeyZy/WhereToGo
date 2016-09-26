@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Random;
 
@@ -32,7 +30,7 @@ public class ImageUtils {
             File dir = new File(pathToFolder);
             path = img.getPath();
             if(!dir.exists()){
-                boolean success = (new File(pathToFolder)).mkdirs();
+                (new File(pathToFolder)).mkdirs();
             }
             try {
                 String imageDataBytes = imageDataString.substring(imageDataString.indexOf(",")+1);
@@ -48,31 +46,15 @@ public class ImageUtils {
         //End of generation
     }
     public static String giveMeImage(String picture, boolean fromEvent){
-        String imageData = "", pathToImage="", absolutePath="../webapps/ROOT/"; //move to config
-        /*if(fromEvent) pathToImage = "resources/images/"; //move to config
-        else pathToImage = "resources/images/"; //move to config
-        String[] tmp = picture.split("/");
-        pathToImage+=tmp[tmp.length-1];
-        absolutePath+=pathToImage;*/
-        //File image = new File(picture);
-        //if(image.exists()){
-            //if(!Files.isSymbolicLink(get(absolutePath))){
+        String imageData = "";
                 try {
-                    //Files.createSymbolicLink(get(absolutePath),get(picture));
-                    Path p = Paths.get(picture);
-                    byte[] arr = Files.readAllBytes(p);
-                    imageData = new String(arr);
-                    //imageData=pathToImage;
+                    imageData = new String(Files.readAllBytes(get(picture)));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            //}
-            //else imageData=pathToImage;
             return imageData;
-        //}
-        //else return "";
     }
     public static ResponseEntity<byte[]> giveMeImage(String picture) throws IOException {
         HttpHeaders headers = new HttpHeaders();

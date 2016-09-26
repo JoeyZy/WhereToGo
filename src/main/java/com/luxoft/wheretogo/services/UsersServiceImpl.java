@@ -3,11 +3,8 @@ package com.luxoft.wheretogo.services;
 import com.luxoft.wheretogo.models.User;
 import com.luxoft.wheretogo.models.UserInfo;
 import com.luxoft.wheretogo.repositories.UsersRepository;
-import com.luxoft.wheretogo.utils.ImageUtils;
-import com.luxoft.wheretogo.utils.PropertiesUtils;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

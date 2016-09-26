@@ -17,6 +17,7 @@ public class PropertiesUtils {
             appProp.load(Mailer.class.getClassLoader().getResourceAsStream(APP_PROPS_FILE_NAME));
         }
         catch (IOException | NullPointerException e) {
+            e.printStackTrace();
         }
     }
     public static String getProp(String prop){

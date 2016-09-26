@@ -95,14 +95,23 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .navbar-btn-container {
   margin: 8px 0;
-  padding: 0 15px;
   float: right;
 }
-
+.btn{
+  vertical-align: baseline;
+  padding: 6px 13.4px;
+  border:none;
+  border-radius: 1px;
+  background-color: #edebeb;
+}
+li.event_header > div > button.SinglePage__button--edit{
+  background-color: #FFFFFF;
+  color: #666666;
+  text-decoration: underline;
+}
 .events-list:first-child{
   margin-top:20px;
 }
-
 .btn-add-event {
   position: relative;
   width: 100%;
@@ -256,20 +265,17 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .groups-list {
   list-style: none;
   width: 30%;
-  margin-left:8%;
-  margin-right:8%;
+  margin-right: 4%;
   padding: 0;
   opacity: 0;
   font-size: 0;
 }
 .my-groups-list {
-  margin-left:4%;
-  margin-right:0;
   float:left;
 }
 .all-groups-list {
   margin-left:5%;
-  margin-right:0;
+  margin-right: 4%;
   float:left;
 }
 .all-events.visible .events-list,
@@ -455,7 +461,6 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 .SinglePage {
   z-index: 100;
   min-width: 550px;
-  border-radius: 5px;
 }
 .Overlay {
   height: 10%;
@@ -476,7 +481,7 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
 }
 .SinglePage {
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto 7% auto;
   width: 90%;
   position: absolute;
   left: 0;
@@ -484,7 +489,6 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   right: 0;
   pointer-events: none;
   background-color: #ffffff;
-
   z-index: 102;
   opacity: 0;
   transition: 0.4s;
@@ -689,11 +693,11 @@ div.ui-datepicker {
 .EventPage__cost input.form-control {
   width: 40%;
 }
-//li.event_pic {
-//  position: absolute;
-//  top: 97px;
-//  right: 20px;
-//}
+li.event_pic {
+  position: absolute;
+  top: 97px;
+  right: 20px;
+}
 div.edit_event_pic {
   width: 200px;
   height: 115px;
@@ -863,7 +867,6 @@ div.event_header_right div.event_cost_inner{
   margin-top: 8px;
 }
 .event_description_inner{
-  word-break: break-word;
   word-wrap: break-word;
 }
 
@@ -921,9 +924,9 @@ img.event_pic {
   padding: 5px;
   min-height: 30px;
 }
-#GroupDescription{
+.GroupPage li.group_left div#GroupDescription{
   margin-bottom: 5%;
-  word-break: break-word;
+  word-wrap: break-word;
   white-space: normal;
 }
 .group_right > .event_pic{
@@ -993,7 +996,7 @@ button.btn-visit{
   background-color: #9ccc65;
   background-image: none;
 }
-button.SinglePage__button--delete, .SinglePage__button--deleteGroup{
+button.SinglePage__button--delete, button.SinglePage__button--deleteGroup{
   background-color: #37474f;
   background-image: none;
 }
@@ -1134,11 +1137,7 @@ div.accordion{
   cursor: pointer;
 
 }
-.UserPage__birthday{
-  width:48px;
-  display: inline;
-  margin-top: 10px;
-}
+
 .ui-menu{
   height: 250px;
   overflow: auto;
@@ -1180,7 +1179,7 @@ div.accordion{
   text-align: center;
 }
 .group-title{
-  margin: 0px auto 0;
+  margin: 20px auto 0;
 }
 /* General Button */
 /* -------------- */
@@ -1245,17 +1244,24 @@ div.accordion{
 }
 .single_group{
   border-radius: 10px;
-  padding: 6px;
   margin-bottom: 10px;
-  border: 1px solid black;
+  border: 1px solid #EEC2A2;
+  background: #fd746c; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #fd746c , #ff9068); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #fd746c , #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .single_group_header{
   text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 5px;
+  padding: 6px;
+  border-bottom: 3px solid #EF77A0;
 }
 .single_group_body{
+  padding: 6px;
+  font-size: 1.2em;
+  border-radius: 10px;
+  background: #f46b45; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #f46b45 , #eea849); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #f46b45 , #eea849); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .single_group_picture{
   max-height: 40px;
@@ -1265,7 +1271,7 @@ div.accordion{
 }
 .single_group_img_block{
   display: inline-block;
-  width: 49%;
+  width: 55%;
 
 }
 .single_group_info{
@@ -1275,10 +1281,12 @@ div.accordion{
 }
 .single_group_info_block{
   display: inline-block;
-  max-width: 50%;
+  max-width: 40%;
 }
 .group_pic{
-  box-shadow: none;
+  width: 230px;
+  height: 132px;
+  border-radius: 2px;
 }
 .user_pic{
   width: 150px;

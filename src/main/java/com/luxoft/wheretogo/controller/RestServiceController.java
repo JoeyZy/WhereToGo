@@ -9,7 +9,6 @@ import com.luxoft.wheretogo.services.*;
 
 import com.luxoft.wheretogo.utils.ImageUtils;
 import com.luxoft.wheretogo.utils.ValidationUtils;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
