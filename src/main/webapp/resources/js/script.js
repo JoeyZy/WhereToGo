@@ -799,10 +799,18 @@ $(window).on("load",function () {
 		$(".pagination-page").show();
 		var singlePage = $('.SinglePage');
 		if(url.indexOf('group') == -1){
-			moveSinglePageToCenter();
-			// $(window).scroll(moveSinglePageToCenter);
-			//$(window).scroll(moveSinglePageToCenter);
-			$(window).resize(moveSinglePageToCenter);
+			if(url.indexOf('calendar') == -1) {
+				moveSinglePageToCenter();
+				// $(window).scroll(moveSinglePageToCenter);
+				//$(window).scroll(moveSinglePageToCenter);
+				$(window).resize(moveSinglePageToCenter);
+			}
+			else{
+				$(window).scrollTop();
+				singlePage.css({
+					top: "25px"
+				});
+			}
 		}
 		else{
 			$(window).scrollTop();
