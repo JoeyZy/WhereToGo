@@ -303,268 +303,353 @@
             <form class="SinglePage__inputForm" novalidate>
                 <input class="SinglePage__title reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList UserPage">
-                    <li class="SinglePage__inputItem UserPage__email">
-                        <label class="SinglePage__inputItem__label"><b>Email:*</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"
-                               type="email" placeholder="User email" required/>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__password">
-                        <label class="SinglePage__inputItem__label"><b>Password:*</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
-                               type="password" placeholder="User password" required/>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__password__confirm">
-                        <label class="SinglePage__inputItem__label"><b>Password confirmation:*</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"
-                               type="password" placeholder="User password" required/>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__name">
-                        <label class="SinglePage__inputItem__label"><b>Name:*</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
-                               placeholder="First name" required/>
-                        <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
-                               placeholder="Last name" required/>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__Interesting">
-                        <label class="SinglePage__inputItem__label"><b>Interesting categories:</b></label>
-                            <div class="interestingCategoriesMultiselect display_inline"></div>
-                            <a href="#" class="activeBackground">
-                            <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
-                            </a>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__Location">
-                        <label class="SinglePage__inputItem__label"><b>City:</b></label>
-                        <input contentEditable="false" id="user-location" title="Location:" type="text"
-                               placeholder="">
-                        <div class = "show-location-map" id="show-user-location-map">
-                            <input type = "checkbox" checked="checked" title = "Show on map"/>
-                            Show on map
+                    <li class="user_top">
+                        <div class="user_top_left">
+                            <div class="user_top_left_top">
+                                <div class="user_top_left_top_name">
+                                    <span><b>Name*</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"
+                                           placeholder="First name" required/>
+                                    <input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"
+                                           placeholder="Last name" required/>
+                                </div>
+                                <div class="user_top_left_top_email">
+                                    <span><b>Email*</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"
+                                           type="email" placeholder="User email" required/>
+                                </div>
+                            </div>
+                            <div class="user_top_left_middle">
+                                <div class="user_top_left_middle_password">
+                                    <span><b>Password*</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"
+                                           type="password" placeholder="User password" required/>
+                                </div>
+                                <div class="user_top_left_middle_password_confirm">
+                                    <span><b>Password confirmation*</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"
+                                           type="password" placeholder="User password" required/>
+                                </div>
+                            </div>
+                            <div class="user_top_left_bottom">
+                                <div class="user_top_left_bottom_phone">
+                                    <span><b>Phone number</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
+                                           placeholder="Phone number" required/>
+                                </div>
+                                <div class="user_top_left_bottom_birthday">
+                                    <span><b>Birthday</b></span><br>
+                                    <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"
+                                           readonly/>
+                                    <style>
+                                        .custom-combobox {
+                                            position: relative;
+                                            display: inline-block;
+                                        }
+                                        .custom-combobox-toggle {
+                                            position: absolute;
+                                            top: 0;
+                                            bottom: 0;
+                                            margin-left: -1px;
+                                            padding: 0;
+                                        }
+                                        .custom-combobox-input {
+                                            margin: 0;
+                                            padding: 5px 10px;
+                                        }
+                                    </style>
+                                    <script>
+                                        $( function() {
+                                            var i = 1;
+                                            function generateMonth(){
+                                                var i = 1, m = $("#month");
+                                                for(;i<=12;i++){
+                                                    var opt = $("<option></option>").val(i)
+                                                            .text(i);
+                                                    m.append(opt);
+                                                }
+                                            }
+                                            function generateDay(){
+                                                var i = 1,
+                                                        m = $("#day");
+                                                for(;i<=31;i++){
+                                                    var opt = $("<option></option>").val(i)
+                                                            .text(i);
+                                                    m.append(opt);
+                                                }
+
+                                            }
+                                            function generateYear(){
+                                                var i = 1940,
+                                                        m = $("#year");
+                                                for(;i<=2016;i++){
+                                                    var opt = $("<option></option>").val(i)
+                                                            .text(i);
+                                                    m.append(opt);
+                                                }
+                                            }
+                                            generateMonth();
+                                            generateDay();
+                                            generateYear();
+                                            $.widget( "custom.combobox", {
+                                                _create: function() {
+                                                    var local = i;
+                                                    i++;
+                                                    this.wrapper = $( "<span>" )
+                                                            .addClass( "custom-combobox" )
+                                                            .css("margin-left", "40px")
+                                                            .css("width", "120px")
+                                                            .insertAfter( this.element );
+
+                                                    this.element.hide();
+                                                    this._createAutocomplete(local);
+                                                    this._createShowAllButton();
+                                                },
+
+                                                _createAutocomplete: function(local) {
+                                                    var selected = this.element.children( ":selected" ),
+                                                            value = selected.val() ? selected.text() : "";
+
+                                                    this.input = $( "<input>" )
+                                                            .appendTo( this.wrapper )
+                                                            .val( value )
+                                                            .attr( "title", "" )
+                                                            .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                                                            .css("width","inherit")
+                                                            .autocomplete({
+                                                                delay: 0,
+                                                                minLength: 0,
+                                                                source: $.proxy( this, "_source" )
+                                                            })
+                                                            .tooltip({
+                                                                classes: {
+                                                                    "ui-tooltip": "ui-state-highlight"
+                                                                }
+                                                            });
+                                                    if(local==1) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
+                                                    else if(local==2) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
+                                                    else if (local==3) this.input.addClass("UserPage__birthday__year").attr("placeholder", "Year");
+                                                    this._on( this.input, {
+                                                        autocompleteselect: function( event, ui ) {
+                                                            ui.item.option.selected = true;
+                                                            this._trigger( "select", event, {
+                                                                item: ui.item.option
+                                                            });
+                                                        },
+
+                                                        autocompletechange: "_removeIfInvalid"
+                                                    });
+                                                },
+
+                                                _createShowAllButton: function() {
+                                                    var input = this.input,
+                                                            wasOpen = false;
+
+                                                    $( "<a>" )
+                                                            .attr( "tabIndex", -1 )
+                                                            .attr( "title", "Show All Items" )
+                                                            .tooltip()
+                                                            .appendTo( this.wrapper )
+                                                            .button({
+                                                                icons: {
+                                                                    primary: "ui-icon-triangle-1-s"
+                                                                },
+                                                                text: false
+                                                            })
+                                                            .removeClass( "ui-corner-all" )
+                                                            .addClass( "custom-combobox-toggle ui-corner-right" )
+                                                            .on( "mousedown", function() {
+                                                                wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                                                            })
+                                                            .on( "click", function() {
+                                                                input.trigger( "focus" );
+
+                                                                // Close if already visible
+                                                                if ( wasOpen ) {
+                                                                    return;
+                                                                }
+
+                                                                // Pass empty string as value to search for, displaying all results
+                                                                input.autocomplete( "search", "" );
+                                                            });
+                                                },
+
+                                                _source: function( request, response ) {
+                                                    var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+                                                    response( this.element.children( "option" ).map(function() {
+                                                        var text = $( this ).text();
+                                                        if ( this.value && ( !request.term || matcher.test(text) ) )
+                                                            return {
+                                                                label: text,
+                                                                value: text,
+                                                                option: this
+                                                            };
+                                                    }) );
+                                                },
+
+                                                _removeIfInvalid: function( event, ui ) {
+
+                                                    // Selected an item, nothing to do
+                                                    if ( ui.item ) {
+                                                        return;
+                                                    }
+
+                                                    // Search for a match (case-insensitive)
+                                                    var value = this.input.val(),
+                                                            valueLowerCase = value.toLowerCase(),
+                                                            valid = false;
+                                                    this.element.children( "option" ).each(function() {
+                                                        if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                                                            this.selected = valid = true;
+                                                            return false;
+                                                        }
+                                                    });
+
+                                                    // Found a match, nothing to do
+                                                    if ( valid ) {
+                                                        return;
+                                                    }
+
+                                                    // Remove invalid value
+                                                    this.input
+                                                            .val( "" )
+                                                            .attr( "title", value + " didn't match any item" )
+                                                            .tooltip( "open" );
+                                                    this.element.val( "" );
+                                                    this._delay(function() {
+                                                        this.input.tooltip( "close" ).attr( "title", "" );
+                                                    }, 2500 );
+                                                    this.input.autocomplete( "instance" ).term = "";
+                                                },
+
+                                                _destroy: function() {
+                                                    this.wrapper.remove();
+                                                    this.element.show();
+                                                }
+                                            });
+                                            $( "#day" ).combobox();
+                                            $( "#month" ).combobox();
+                                            $( "#year" ).combobox();
+                                        } );
+                                    </script>
+
+                                    <div class="ui-widget ui-front">
+                                        <select id="day">
+                                            <option value="">Select one...</option>
+                                        </select>
+                                        <select id="month">
+                                            <option value="">Select one...</option>
+                                        </select>
+                                        <select id="year">
+                                            <option value="">Select one...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id = "user-location-map-holder">
-                            <div class = "location-map" id="user-location-map"></div>
+                        <div class="user_top_right">
+                            <div contentEditable="false" id="userPicture" class='user_pic'  data-toggle="tooltip">
+                                <img style=''
+                                     class="event_pic uploadPlaceholderEvent image"/>
+                                <input style='display:none;' type='file' class="SinglePage__button--upload"
+                                       accept="image/jpeg,image/png"/>
+                            </div>
                         </div>
                     </li>
-                    <li class="SinglePage__inputItem UserPage__phone">
-                        <label class="SinglePage__inputItem__label"><b>Phone number:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"
-                               placeholder="Phone number" required/>
+
+                    <li class="user_middle">
+                        <div class="user_middle_left">
+                            <div class="user_middle_left_city">
+                                 <span><b>City</b></span><br>
+                                <input contentEditable="false" id="user-location" title="Location:" type="text"
+                                       placeholder="">
+                                <div class = "show-location-map" id="show-user-location-map">
+                                    <input type = "checkbox" checked="checked" title = "Show on map"/>
+                                   Show on map
+                                </div>
+                            </div>
+                            <div class="user_middle__left_interesting_categories">
+                                <span><b>Interesting categories</b></span><br>
+                                <div class="interestingCategoriesMultiselect display_inline"></div>
+                                <a href="#" class="activeBackground">
+                                    <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user_middle_right">
+                            <div id = "user-location-map-holder">
+                                <div class = "location-map" id="user-location-map"></div>
+                            </div>
+                        </div>
+
                     </li>
-                    <li class="SinglePage__inputItem UserPage__birthday">
-                        <label class="SinglePage__inputItem__label"><b>Birthday:</b></label>
-                        <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"
-                                readonly/>
+
+                    <li class="user_bottom">
+                        <div class="user_bottom_about">
+                            <span><b>About me</b></span><br>
+                            <textarea placeholder="Short info about yourself" rows="4" cols="40" class=" UserPage__about__input reset editable"></textarea>
+                        </div>
+                    </li>
+                    <%--<li class="SinglePage__inputItem UserPage__email">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Email:*</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__email__input reset editable"--%>
+                               <%--type="email" placeholder="User email" required/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__password">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Password:*</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__password__input reset editable"--%>
+                               <%--type="password" placeholder="User password" required/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__password__confirm">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Password confirmation:*</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__password__confirm__input reset editable"--%>
+                               <%--type="password" placeholder="User password" required/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__name">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Name:*</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__name__first reset editable"--%>
+                               <%--placeholder="First name" required/>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__name__last reset editable"--%>
+                               <%--placeholder="Last name" required/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__Interesting">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Interesting categories:</b></label>--%>
+                            <%--<div class="interestingCategoriesMultiselect display_inline"></div>--%>
+                            <%--<a href="#" class="activeBackground">--%>
+                            <%--<span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>--%>
+                            <%--</a>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__Location">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>City:</b></label>--%>
+                        <%--<input contentEditable="false" id="user-location" title="Location:" type="text"--%>
+                               <%--placeholder="">--%>
+                        <%--<div class = "show-location-map" id="show-user-location-map">--%>
+                            <%--<input type = "checkbox" checked="checked" title = "Show on map"/>--%>
+                            <%--Show on map--%>
+                        <%--</div>--%>
+                        <%--<div id = "user-location-map-holder">--%>
+                            <%--<div class = "location-map" id="user-location-map"></div>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__phone">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Phone number:</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__phone__input reset editable"--%>
+                               <%--placeholder="Phone number" required/>--%>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__birthday">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>Birthday:</b></label>--%>
+                        <%--<input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__holder reset editable"--%>
+                                <%--readonly/>--%>
                         <!--<input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__month reset editable"
                                placeholder="MM" required autocomplete="off" pattern="\d*" step="1" maxlength="2"/>
                         <input class="SinglePage__inputItem__inputField UserPage__birthday UserPage__birthday__year reset editable"
                                placeholder="YYYY" required autocomplete="off" pattern="\d*" step="1" maxlength="4"/>-->
-                        <style>
-                            .custom-combobox {
-                                position: relative;
-                                display: inline-block;
-                            }
-                            .custom-combobox-toggle {
-                                position: absolute;
-                                top: 0;
-                                bottom: 0;
-                                margin-left: -1px;
-                                padding: 0;
-                            }
-                            .custom-combobox-input {
-                                margin: 0;
-                                padding: 5px 10px;
-                            }
-                        </style>
-                        <script>
-                            $( function() {
-                                var i = 1;
-                                function generateMonth(){
-                                    var i = 1, m = $("#month");
-                                    for(;i<=12;i++){
-                                        var opt = $("<option></option>").val(i)
-                                                .text(i);
-                                        m.append(opt);
-                                    }
-                                }
-                                function generateDay(){
-                                    var i = 1,
-                                        m = $("#day");
-                                    for(;i<=31;i++){
-                                        var opt = $("<option></option>").val(i)
-                                                .text(i);
-                                        m.append(opt);
-                                    }
 
-                                }
-                                function generateYear(){
-                                    var i = 1940,
-                                        m = $("#year");
-                                    for(;i<=2016;i++){
-                                        var opt = $("<option></option>").val(i)
-                                                .text(i);
-                                        m.append(opt);
-                                    }
-                                }
-                                generateMonth();
-                                generateDay();
-                                generateYear();
-                                $.widget( "custom.combobox", {
-                                    _create: function() {
-                                        var local = i;
-                                        i++;
-                                        this.wrapper = $( "<span>" )
-                                                .addClass( "custom-combobox" )
-                                                .css("margin-left", "40px")
-                                                .css("width", "120px")
-                                                .insertAfter( this.element );
-
-                                        this.element.hide();
-                                        this._createAutocomplete(local);
-                                        this._createShowAllButton();
-                                    },
-
-                                    _createAutocomplete: function(local) {
-                                        var selected = this.element.children( ":selected" ),
-                                                value = selected.val() ? selected.text() : "";
-
-                                        this.input = $( "<input>" )
-                                                .appendTo( this.wrapper )
-                                                .val( value )
-                                                .attr( "title", "" )
-                                                .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
-                                                .css("width","inherit")
-                                                .autocomplete({
-                                                    delay: 0,
-                                                    minLength: 0,
-                                                    source: $.proxy( this, "_source" )
-                                                })
-                                                .tooltip({
-                                                    classes: {
-                                                        "ui-tooltip": "ui-state-highlight"
-                                                    }
-                                                });
-                                        if(local==1) this.input.addClass("UserPage__birthday__day").attr("placeholder", "Day");
-                                        else if(local==2) this.input.addClass("UserPage__birthday__month").attr("placeholder", "Month");
-                                        else if (local==3) this.input.addClass("UserPage__birthday__year").attr("placeholder", "Year");
-                                        this._on( this.input, {
-                                            autocompleteselect: function( event, ui ) {
-                                                ui.item.option.selected = true;
-                                                this._trigger( "select", event, {
-                                                    item: ui.item.option
-                                                });
-                                            },
-
-                                            autocompletechange: "_removeIfInvalid"
-                                        });
-                                    },
-
-                                    _createShowAllButton: function() {
-                                        var input = this.input,
-                                                wasOpen = false;
-
-                                        $( "<a>" )
-                                                .attr( "tabIndex", -1 )
-                                                .attr( "title", "Show All Items" )
-                                                .tooltip()
-                                                .appendTo( this.wrapper )
-                                                .button({
-                                                    icons: {
-                                                        primary: "ui-icon-triangle-1-s"
-                                                    },
-                                                    text: false
-                                                })
-                                                .removeClass( "ui-corner-all" )
-                                                .addClass( "custom-combobox-toggle ui-corner-right" )
-                                                .on( "mousedown", function() {
-                                                    wasOpen = input.autocomplete( "widget" ).is( ":visible" );
-                                                })
-                                                .on( "click", function() {
-                                                    input.trigger( "focus" );
-
-                                                    // Close if already visible
-                                                    if ( wasOpen ) {
-                                                        return;
-                                                    }
-
-                                                    // Pass empty string as value to search for, displaying all results
-                                                    input.autocomplete( "search", "" );
-                                                });
-                                    },
-
-                                    _source: function( request, response ) {
-                                        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
-                                        response( this.element.children( "option" ).map(function() {
-                                            var text = $( this ).text();
-                                            if ( this.value && ( !request.term || matcher.test(text) ) )
-                                                return {
-                                                    label: text,
-                                                    value: text,
-                                                    option: this
-                                                };
-                                        }) );
-                                    },
-
-                                    _removeIfInvalid: function( event, ui ) {
-
-                                        // Selected an item, nothing to do
-                                        if ( ui.item ) {
-                                            return;
-                                        }
-
-                                        // Search for a match (case-insensitive)
-                                        var value = this.input.val(),
-                                                valueLowerCase = value.toLowerCase(),
-                                                valid = false;
-                                        this.element.children( "option" ).each(function() {
-                                            if ( $( this ).text().toLowerCase() === valueLowerCase ) {
-                                                this.selected = valid = true;
-                                                return false;
-                                            }
-                                        });
-
-                                        // Found a match, nothing to do
-                                        if ( valid ) {
-                                            return;
-                                        }
-
-                                        // Remove invalid value
-                                        this.input
-                                                .val( "" )
-                                                .attr( "title", value + " didn't match any item" )
-                                                .tooltip( "open" );
-                                        this.element.val( "" );
-                                        this._delay(function() {
-                                            this.input.tooltip( "close" ).attr( "title", "" );
-                                        }, 2500 );
-                                        this.input.autocomplete( "instance" ).term = "";
-                                    },
-
-                                    _destroy: function() {
-                                        this.wrapper.remove();
-                                        this.element.show();
-                                    }
-                                });
-                                $( "#day" ).combobox();
-                                $( "#month" ).combobox();
-                                $( "#year" ).combobox();
-                            } );
-                        </script>
-
-                        <div class="ui-widget ui-front">
-                            <select id="day">
-                                <option value="">Select one...</option>
-                            </select>
-                            <select id="month">
-                                <option value="">Select one...</option>
-                            </select>
-                            <select id="year">
-                                <option value="">Select one...</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li class="SinglePage__inputItem UserPage__about">
-                        <label class="SinglePage__inputItem__label"><b>About me:</b></label>
-                        <textarea placeholder="Short info about yourself" rows="4" cols="40" class=" UserPage__about__input reset editable"></textarea>
-                    </li>
+                    <%--</li>--%>
+                    <%--<li class="SinglePage__inputItem UserPage__about">--%>
+                        <%--<label class="SinglePage__inputItem__label"><b>About me:</b></label>--%>
+                        <%--<textarea placeholder="Short info about yourself" rows="4" cols="40" class=" UserPage__about__input reset editable"></textarea>--%>
+                    <%--</li>--%>
                 </ul>
 
                 <ul class="SinglePage__inputItemsList Calendar">
@@ -923,17 +1008,17 @@
                     <!--Group image here-->
 
                 </ul>
-                <ul class="SinglePage__inputItemsList ">
-                    <li class='event_pic'>
-                        <div contentEditable="false" id="userPicture" class='user_pic'  data-toggle="tooltip">
-                            <img style=''
-                                 class="event_pic uploadPlaceholderEvent image"/>
-                            <input style='display:none;' type='file' class="SinglePage__button--upload"
-                                   accept="image/jpeg,image/png"/>
-                        </div>
-                    </li>
+                <%--<ul class="SinglePage__inputItemsList ">--%>
+                    <%--<li class='event_pic'>--%>
+                        <%--<div contentEditable="false" id="userPicture" class='user_pic'  data-toggle="tooltip">--%>
+                            <%--<img style=''--%>
+                                 <%--class="event_pic uploadPlaceholderEvent image"/>--%>
+                            <%--<input style='display:none;' type='file' class="SinglePage__button--upload"--%>
+                                   <%--accept="image/jpeg,image/png"/>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
 
-                </ul>
+                <%--</ul>--%>
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">

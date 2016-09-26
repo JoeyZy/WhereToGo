@@ -1137,6 +1137,51 @@ div.accordion{
   border: none;
   resize: none;
 }
+.user_top_left, .user_middle_left{
+  /*bla*/
+  display: inline-block;
+  width: 70%;
+}
+.user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password, .user_top_left_middle_password_confirm,
+.user_top_left_bottom_phone {
+  /*bla*/
+  display: inline-block;
+  width: 49%;
+}
+.user_top_right{
+  /*bla*/
+  margin-left: 4%;
+  display: inline-block;
+  width: 25%;
+  vertical-align: top;
+}
+.user_middle_right{
+  /*bla*/
+  display: inline-block;
+  width: 29%;
+  /*margin-left: 4%;*/
+  vertical-align: top;
+}
+#user-location-map-holder > .location-map {
+  /*bla*/
+  width: 220px;
+  height: 150px;
+}
+div.ui-widget.ui-front span.custom-combobox:nth-child(2){
+  /*bla*/
+  margin-left: 0px !important;
+}
+.user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password
+.user_top_left_middle_password_confirm, .user_top_left_bottom_phone {
+  /*bla*/
+  width: 49%;
+  vertical-align: top;
+}
+.
+
+
+
+
 .event-link{
   min-width: 240px;
 }
@@ -1287,9 +1332,10 @@ div.accordion{
   border-radius: 2px;
 }
 .user_pic{
-  width: 150px;
-  height: 150px;
-
+  /*bla*/
+  width: 130%;
+  height: 180px;
+  max-width: 200px;
   border-radius: 2px;
 }
 .btn-plus-user-to-group{
