@@ -1178,6 +1178,7 @@ div.accordion{
   /*bla*/
   border: none;
   background: none;
+  box-shadow: none;
 }
 div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   /*bla*/
