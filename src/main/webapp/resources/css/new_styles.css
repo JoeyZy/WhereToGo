@@ -1164,8 +1164,9 @@ div.accordion{
 }
 #user-location-map-holder > .location-map {
   /*bla*/
-  width: 220px;
+  width: 88%;
   height: 150px;
+
 }
 div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   /*bla*/

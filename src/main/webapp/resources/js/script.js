@@ -2969,6 +2969,7 @@ $(window).on("load",function () {
 
 			$pictureParent.show();
 			var checkedCategories = [];
+			$picture.attr('title', 'Best aspect ration - 1:1')
 
 			$pictureUploadPlaceholder.off('click');
 			$pictureUploadPlaceholder.on('click', function () {
