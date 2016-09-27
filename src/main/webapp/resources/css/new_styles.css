@@ -1168,6 +1168,17 @@ div.accordion{
   height: 150px;
 
 }
+.user_top_phone_number, .user_top_view_birthday{
+  /*bla*/
+  display: inline-block;
+  width: 49%;
+}
+
+.UserPage.viewUserPage input, .UserPage.viewUserPage textarea {
+  /*bla*/
+  border: none;
+  background: none;
+}
 div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   /*bla*/
   margin-left: 2% !important;
@@ -1213,6 +1224,7 @@ div.ui-widget.ui-front {
 }
 .user_blocks{
   /*bla*/
+  width: 100%;
   margin-top: 2%;
 }
 .user_middle_left_city #show-user-location-map {

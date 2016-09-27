@@ -333,14 +333,21 @@
                             </div>
                             <div class="user_top_left_bottom">
                                 <div class="user_top_left_bottom_phone user_blocks">
-                                    <span><b>Phone number</b></span><br>
-                                    <input class="UserPage__phone__input reset editable form-control"
-                                           placeholder="Phone number" required/>
+                                    <div class="user_top_phone_number">
+                                        <span><b>Phone number</b></span><br>
+                                        <input class="UserPage__phone__input reset editable form-control"
+                                               placeholder="Phone number" required/>
+                                    </div>
+                                    <div class="user_top_view_birthday">
+                                        <span><b>Birthday</b></span><br>
+                                        <input class="UserPage__birthday UserPage__birthday__holder reset editable form-control"
+                                               readonly/>
+                                    </div>
                                 </div>
                                 <div class="user_top_left_bottom_birthday user_blocks">
                                     <span><b>Birthday</b></span><br>
-                                    <input class="UserPage__birthday UserPage__birthday__holder reset editable"
-                                           readonly/>
+                                    <%--<input class="UserPage__birthday UserPage__birthday__holder reset editable form-control"--%>
+                                           <%--readonly/>--%>
                                     <style>
                                         .custom-combobox {
                                             position: relative;

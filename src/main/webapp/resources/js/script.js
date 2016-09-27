@@ -2109,8 +2109,11 @@ $(window).on("load",function () {
 	}
 
 	function makeUserPageEditable() {
-		$userPage.find('.UserPage__password').show();
-		$userPage.find('.UserPage__password__confirm').show();
+		$('.UserPage').removeClass('viewUserPage');
+		$('.user_top_left_middle.user_blocks').show(); //showing a password field
+		$singlePage.find('.user_bottom_about.user_blocks > textarea').removeAttr('disabled');
+		$singlePage.find('.user_top_view_birthday').hide();
+		$singlePage.find('.user_top_left_bottom_birthday').show();
 		$userFirstName.attr("readonly", false);
 		$userLastName.show();
 		var name = $userFirstName.val();
@@ -2755,7 +2758,7 @@ $(window).on("load",function () {
 	var $userFirstName = $userPage.find('.UserPage__name__first');
 	var $userLastName = $userPage.find('.UserPage__name__last');
 	var $userPhone = $userPage.find('.UserPage__phone__input');
-	var $userAboutMe = $userPage.find('.UserPage__about__input');
+	var $userAboutMe = $userPage.find('.user_bottom_about.user_blocks textarea');
 
 	var $userMonth = $userPage.find('.UserPage__birthday__month');
 	var $userDay = $userPage.find('.UserPage__birthday__day');
@@ -2934,6 +2937,10 @@ $(window).on("load",function () {
 		function renderUserInfoPage(user) {
 			makeUserPageUneditable();
 			$('a.activeBackground').hide();
+			$('.user_top_left_middle.user_blocks').hide(); //hiding a password field
+			$singlePage.find('.user_bottom_about.user_blocks > textarea').attr('disabled', 'true');
+			$singlePage.find('.user_top_view_birthday').show();
+			$singlePage.find('.user_top_left_bottom_birthday').hide();
 			var $userCategories = $userPage.find(".interestingCategoriesMultiselect.display_inline");
 			$userCategories.empty();
 			$userLocation.val("");
@@ -2941,6 +2948,7 @@ $(window).on("load",function () {
 			$userLocation.addClass("disabled-input");
 			$userLocation.attr('readonly', true);
 			$userLocation.attr('disabled', true);
+			$('.UserPage').addClass('viewUserPage');
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
 				$userEmail.attr("readonly", true);
@@ -2995,6 +3003,11 @@ $(window).on("load",function () {
 		}
 
 		function renderAddUserPage() {
+			$('.UserPage').removeClass('viewUserPage');
+			$('.user_top_left_middle.user_blocks').show(); //showing a password field
+			$singlePage.find('.user_bottom_about.user_blocks > textarea').removeAttr('disabled');
+			$singlePage.find('.user_top_view_birthday').hide();
+			$singlePage.find('.user_top_left_bottom_birthday').show();
 			$buttonAddUser.off();
 			$userLocation.attr('readonly', false);
 			$userLocation.attr('disabled', false);
