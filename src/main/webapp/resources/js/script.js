@@ -2970,7 +2970,11 @@ $(window).on("load",function () {
 			$pictureParent.show();
 			var checkedCategories = [];
 
-
+			$pictureUploadPlaceholder.off('click');
+			$pictureUploadPlaceholder.on('click', function () {
+				$buttonUploadPicture[0].click();
+				return false;
+			});
 
 			downloadInterestingCategoriesForUser(false, checkedCategories);
 			
