@@ -489,6 +489,8 @@ li.glyphicon.glyphicon-chevron-left, li.glyphicon.glyphicon-chevron-right{
   z-index: 102;
   opacity: 0;
   transition: 0.4s;
+  /*bla*/
+  min-width: 1060px;
 }
 .SinglePage__title {
   font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
