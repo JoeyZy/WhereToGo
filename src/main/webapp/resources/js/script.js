@@ -424,11 +424,11 @@ $(window).on("load",function () {
 			"password": $userPassword.val(),
 			"firstName": $userFirstName.val(),
 			"lastName": $userLastName.val(),
-			"interestingCategoriesMas": checkedCategories,
-			"description": $userAboutMe.val(),
-			"phoneNumber": $userPhone.val(),
-			"location": $userLocation.val(),
-			"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
+			"interestingCategoriesMas": checkedCategories || null,
+			"description": $userAboutMe.val() || null,
+			"phoneNumber": $userPhone.val() || null,
+			"location": $userLocation.val() || null,
+			"birthday": ($userDay.val().length) ? $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(): null,
 			"picture": isDefaultPicture($userPicture) ? "" : $userPicture.attr('src')
 		};
 		$.ajax({
@@ -3056,11 +3056,11 @@ $(window).on("load",function () {
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
-					"interestingCategoriesMas": checkedCategories,
-					"description": $userAboutMe.val(),
-					"phoneNumber": $userPhone.val(),
-					"location": $userLocation.val(),
-					"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
+					"interestingCategoriesMas": checkedCategories || null,
+					"description": $userAboutMe.val() || null,
+					"phoneNumber": $userPhone.val() || null,
+					"location": $userLocation.val() || null,
+					"birthday": ($userDay.val().length) ? $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(): null,
 					"picture": isDefaultPicture($userPicture) ? "" : $userPicture.attr('src')
 				};
 				$.ajax({

@@ -496,8 +496,6 @@ li.event_header > div > button.SinglePage__button--edit{
   z-index: 102;
   opacity: 0;
   transition: 0.4s;
-  /*bla*/
-  min-width: 1060px;
 }
 .SinglePage__title {
   font: normal 24px 'Open Sans', Arial, Helvetica, sans-serif;
