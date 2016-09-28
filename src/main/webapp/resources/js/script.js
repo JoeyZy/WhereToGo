@@ -97,7 +97,7 @@ $(window).on("load",function () {
 				"location": $editLocation.val(),
 				"cost": $eventCost.val(),
 				"currency": {"id": getCurrencyId(), "name": $eventCostCurrency.val()},
-				"picture": isDefaultPicture() ? "" : $picture.attr('src')
+				"picture": isDefaultPicture($editEventPicture) ? "" : $editEventPicture.attr('src')
 			};
 			saveEvent(eventJson, "addEvent");
 		}
@@ -113,7 +113,7 @@ $(window).on("load",function () {
 				"name": $singlePageTitle.val(),
 				"description": $groupDescription.text(),
 				"location": $groupLocation.val(),
-				"picture": isDefaultPicture() ? "" : $picture.attr('src')
+				"picture": isDefaultPicture($groupPicture) ? "" : $groupPicture.attr('src')
 			};
 			saveGroup(groupJson, "addGroup");
 		}
@@ -124,11 +124,22 @@ $(window).on("load",function () {
 	var $buttonConfirmDelete = $singlePage.find('.SinglePage__button--confirmDelete');
 	var $buttonCancelDelete = $singlePage.find('.SinglePage__button--cancelDelete');
 	var $buttonCancelEditing = $singlePage.find('.SinglePage__button--cancelEditing');
-	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
-	var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
+	// var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
+	// var $pictureUploadPlaceholder = $singlePage.find('.uploadPlaceholderEvent');
 	var $pictureParent = $singlePage.find('li.event_pic');
-	var $picture = $singlePage.find('img.event_pic');
-	
+	// var $picture = $singlePage.find('img.event_pic');
+	var $viewEventPicture = $singlePage.find('.EventPage > .event_header img.event_pic');
+	var $editEventPicture = $singlePage.find('.EditEventPage > .event_header img.event_pic');
+	var $groupPicture = $singlePage.find('.GroupPage > .group_right img.event_pic');
+	var $littleGroupPicture = $('.all-groups > .group_right img.event_pic');
+	var $userPicture = $singlePage.find('.UserPage .user_top_right img.event_pic');
+
+	var $buttonUploadEditEventPicture = $singlePage.find('.EditEventPage > .event_header .SinglePage__button--upload');
+	var $buttonUploadGroupPicture = $singlePage.find('.GroupPage > .group_right .SinglePage__button--upload');
+	var $buttonUploadUserPicture = $singlePage.find('.UserPage .user_top_right .SinglePage__button--upload');
+
+
+
 
 	// Spring security. Attach csrf token to all request
 	$(function () {
@@ -142,7 +153,7 @@ $(window).on("load",function () {
 	var $buttonCancelEditingGroup = $singlePage.find('.SinglePage__button--cancelEditingGroup');
 	var $buttonCancelEditingUser = $singlePage.find('.SinglePage__button--cancelEditingUser');
 
-	var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
+	// var $buttonUploadPicture = $singlePage.find('.SinglePage__button--upload');
 
 	$buttonEdit.on('click', function (event) {
 
@@ -256,8 +267,9 @@ $(window).on("load",function () {
 		return false;
 	});
 
-	$buttonUploadPicture.on('change', function () {
-		var input = ($buttonUploadPicture)[0];
+
+	$buttonUploadEditEventPicture.on('change', function () {
+		var input = ($buttonUploadEditEventPicture)[0];
 		if (input.files && input.files[0]) {
 			if (input.files[0].size / 1024 / 1024 > 3) {
 				alert('You can download file with size less then 3Mb');
@@ -266,14 +278,48 @@ $(window).on("load",function () {
 
 			var reader = new FileReader();
 			reader.onload = function () {
-				$picture.attr('src', reader.result);
+				$editEventPicture.attr('src', reader.result);
 			};
 			reader.readAsDataURL(input.files[0]);
 		}
 	});
 
-	function isDefaultPicture() {
-		return !$picture.attr('src') || ($picture.attr('src') == 'resources/images/camera.png');
+	$buttonUploadGroupPicture.on('change', function () {
+		var input = ($buttonUploadGroupPicture)[0];
+		if (input.files && input.files[0]) {
+			if (input.files[0].size / 1024 / 1024 > 3) {
+				alert('You can download file with size less then 3Mb');
+				return;
+			}
+
+			var reader = new FileReader();
+			reader.onload = function () {
+				$groupPicture.attr('src', reader.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	});
+
+
+	$buttonUploadUserPicture.on('change', function () {
+		var input = ($buttonUploadUserPicture)[0];
+		if (input.files && input.files[0]) {
+			if (input.files[0].size / 1024 / 1024 > 3) {
+				alert('You can download file with size less then 3Mb');
+				return;
+			}
+
+			var reader = new FileReader();
+			reader.onload = function () {
+				$userPicture.attr('src', reader.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	});
+
+
+	function isDefaultPicture(picture) {
+		return !picture.attr('src') || (picture.attr('src') == 'resources/images/camera.png');
 	}
 
 	function renderConfirmationPage() {
@@ -352,7 +398,7 @@ $(window).on("load",function () {
 				"id": $("#currencies option:selected").attr("data-id"),
 				"name": $("#currencies option:selected").text()
 			},
-			"picture": isDefaultPicture() ? "" : $picture.attr('src')
+			"picture": isDefaultPicture($editEventPicture) ? "" : $editEventPicture.attr('src')
 		};
 		deleted ? saveEvent(eventJson, "updateEvent") : saveEvent(eventJson, "deleteEvent");
 	}
@@ -363,7 +409,7 @@ $(window).on("load",function () {
 			"name" : $singlePageTitle.val(),
 			"description" : $groupDescription.text(),
 			"location": $groupLocation.val(),
-			"picture": isDefaultPicture() ? "" : $picture.attr('src')
+			"picture": isDefaultPicture($groupPicture) ? "" : $groupPicture.attr('src')
 		};
 		deleted ? saveGroup(groupJson,"updateGroup") : saveGroup(groupJson,"deleteGroup");
 	}
@@ -383,7 +429,7 @@ $(window).on("load",function () {
 			"phoneNumber": $userPhone.val(),
 			"location": $userLocation.val(),
 			"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
-			"picture": isDefaultPicture() ? "" : $picture.attr('src')
+			"picture": isDefaultPicture($userPicture) ? "" : $userPicture.attr('src')
 		};
 		$.ajax({
 			url: "updateUser",
@@ -436,7 +482,18 @@ $(window).on("load",function () {
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true );
 
-		$picture.attr('src', "resources/images/camera.png");
+		$viewEventPicture.attr('src', "resources/images/camera.png");
+		$editEventPicture.attr('src', "resources/images/camera.png");
+		$groupPicture.attr('src', "resources/images/camera.png");
+		$littleGroupPicture.attr('src', "resources/images/camera.png");
+		$userPicture.attr('src', "resources/images/camera.png");
+
+		$viewEventPicture.hide();
+		$editEventPicture.hide();
+		$groupPicture.hide();
+		$littleGroupPicture.hide();
+		$userPicture.hide();
+
 		$('.SinglePage__title.reset').show();
 		$('.EditEventPage').hide();
 
@@ -874,8 +931,7 @@ $(window).on("load",function () {
 			},
 			'#user': function () {
 
-				$($picture[3]).show();
-				console.log($picture);
+				$($userPicture).show();
 				renderSingleUserPage(user);
 			},
 			'#addUser': function () {
@@ -885,8 +941,6 @@ $(window).on("load",function () {
 			'#event': function () {
 				// Get the index of which event we want to show and call the appropriate function.
 				var index = url.split('#event/')[1].trim();
-				$($picture[2]).hide();
-				$($picture[3]).hide();
 				renderSingleEventPage(index, events);
 			},
 			'#group': function () {
@@ -895,8 +949,6 @@ $(window).on("load",function () {
 
 				$("#groupPicture").removeClass('user_pic');
 				$("#groupPicture").addClass('group_pic');
-				$($picture[2]).show();
-				$($picture[3]).hide();
 				$(".pagination-page").hide();
 				oldLocationHash = "#group/"+index;
 				// $(".clearfix").hide();
@@ -912,12 +964,9 @@ $(window).on("load",function () {
 			// Add event
 			'#addEvent': function () {
 				getEventId();
-				$($picture[3]).hide();
-				$($picture[2]).hide();
 			},
 			'#addGroup': function () {
 				getGroupId();
-				$($picture[3]).hide();
 			},
 			// Calendar
 			'#calendar': function () {
@@ -1926,7 +1975,7 @@ $(window).on("load",function () {
 
 	}
 
-	function makeEventPageEditable() {
+	function makeEventPageEditable(event) {
 		$singlePageTitle.attr('readonly', false);
 		$eventDescription.attr('contenteditable', true);
 		$eventTargetGroup.prop('disabled', false);
@@ -1944,12 +1993,21 @@ $(window).on("load",function () {
 		$eventCategories.multiselect('refresh');
 		$buttonEdit.prop( "disabled", true );
 		$buttonDelete.prop( "disabled", true);
-		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[0].click();
+
+		if(event !== undefined){
+			if (event.picture.length) {
+				$editEventPicture.attr('src', event.picture);
+			}
+		}
+
+		$editEventPicture.show();
+		$editEventPicture.attr('title', 'Best aspect ratio - 2:1 ');
+		$editEventPicture.off();
+		$editEventPicture.on('click', function () {
+			$buttonUploadEditEventPicture.click();
 			return false;
 		});
-		$pictureParent.show();
-		$picture.attr('title', 'Best aspect ratio - 2:1 ');
+
 		$('.EventPage').hide();
 		$('.EditEventPage').show();
 		$('.SinglePage__title.reset').hide();
@@ -1974,14 +2032,14 @@ $(window).on("load",function () {
 		$eventStart.datepicker('disable');
 		$eventEnd.datepicker('disable');
 		$eventCategories.multiselect('refresh');
-		$pictureUploadPlaceholder.off('click');
-		$picture.attr('title', '');
+		$editEventPicture.off('click');
+		// $picture.attr('title', '');
 		$buttonEdit.prop( "disabled", false );
 		$buttonDelete.prop( "disabled", false );
 
-		if (isDefaultPicture()) {
-			$pictureParent.hide();
-		}
+		// if (isDefaultPicture($viewEventPicture)) {
+		// 	$pictureParent.hide();
+		// }
 
 		$('.EventPage').show();
 		$('.EditEventPage').hide();
@@ -1998,12 +2056,12 @@ $(window).on("load",function () {
 		$groupLocation.addClass("disabled-input");
 		$groupDescription.attr('contenteditable', false);
 		$groupPage.find('editable').attr('readonly', true);
-		$pictureUploadPlaceholder.off('click');
-		$picture.attr('title', '');
+		$groupPicture.off('click');
+		$groupPicture.attr('title', '');
 
-		if (isDefaultPicture()) {
-			$pictureParent.hide();
-		}
+		// if (isDefaultPicture($groupPicture)) {
+		// 	$pictureParent.hide();
+		// }
 
 	}
 
@@ -2015,12 +2073,13 @@ $(window).on("load",function () {
 		$groupLocation.removeClass("disabled-input");
 		$groupLocation.addClass("enabled-input");
 		$groupDescription.addClass('editable');
-		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[0].click();
+		$groupPicture.off();
+		$groupPicture.on('click', function () {
+			$buttonUploadGroupPicture.click();
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Best aspect ratio - 2:1 ');
+		$groupPicture.attr('title', 'Best aspect ratio - 2:1 ');
 	}
 
 	function makeUserPageUneditable() {
@@ -2032,8 +2091,8 @@ $(window).on("load",function () {
 		$userPhone.attr("readonly", true);
 		$userPage.find('.UserPage__events').show();
 		$userAboutMe.attr("readonly",true);
-		$pictureUploadPlaceholder.off('click');
-		$picture.attr('title', '');
+		$userPicture.off('click');
+		$userPicture.attr('title', '');
 		$userMonth.parent().hide();
 		$userDay.parent().hide();
 		$userYear.parent().hide();
@@ -2043,15 +2102,18 @@ $(window).on("load",function () {
 		$userLocation.addClass("disabled-input");
 		$userHolder.show()
 
-		if (isDefaultPicture()) {
-			$pictureParent.hide();
-		}
+		// if (isDefaultPicture($userPicture)) {
+		// 	$pictureParent.hide();
+		// }
 
 	}
 
 	function makeUserPageEditable() {
-		$userPage.find('.UserPage__password').show();
-		$userPage.find('.UserPage__password__confirm').show();
+		$('.UserPage').removeClass('viewUserPage');
+		$('.user_top_left_middle.user_blocks').show(); //showing a password field
+		$singlePage.find('.user_bottom_about.user_blocks > textarea').removeAttr('disabled');
+		$singlePage.find('.user_top_view_birthday').hide();
+		$singlePage.find('.user_top_left_bottom_birthday').show();
 		$userFirstName.attr("readonly", false);
 		$userLastName.show();
 		var name = $userFirstName.val();
@@ -2077,13 +2139,13 @@ $(window).on("load",function () {
 
 		downloadInterestingCategoriesForUser(true);
 
-		$pictureUploadPlaceholder.off('click');
-		$pictureUploadPlaceholder.on('click', function () {
-			$buttonUploadPicture[0].click();
+		$userPicture.off('click');
+		$userPicture.on('click', function () {
+			$buttonUploadUserPicture.click();
 			return false;
 		});
 		$pictureParent.show();
-		$picture.attr('title', 'Best aspect ratio - 1:1 ');
+		$userPicture.attr('title', 'Best aspect ratio - 1:1 ');
 	}
 
 	function hideCalendarPage() {
@@ -2102,7 +2164,7 @@ $(window).on("load",function () {
 	function renderSingleGroupPage(addGroup, index, data) {
 		resetSinglePage();
 		hideCalendarPage();
-
+		$groupPicture.show();
 		$(".nav-left").hide();
 
 		$checkboxShowGroupMap.find("input").prop("checked", false);
@@ -2177,7 +2239,7 @@ $(window).on("load",function () {
 				$groupPageParticipants.show();
 				setLocationByAddress(groupMap, group.location, '#show-group-location-map');
 				if (group.picture.length) {
-					$picture.attr('src', group.picture);
+					$groupPicture.attr('src', group.picture);
 					// $picture.attr("src", $picture.attr("src")+ "?" + Math.random());
 					$pictureParent.show();
 				} else {
@@ -2301,10 +2363,6 @@ $(window).on("load",function () {
 
 		}
 
-		function isDefaultPicture() {
-			return !$picture.attr('src') || ($picture.attr('src') == 'resources/images/camera.png');
-		}
-
 		function renderShowEventPage(data) {
 			var result = false;
 			data.forEach(function (item) {
@@ -2391,14 +2449,11 @@ $(window).on("load",function () {
 					$('.event_shared_in_inner').append(event.targetGroup.name);
 					$eventTargetGroup.val(event.targetGroup.name);
 				}
-
 				if (event.picture.length) {
-					$picture.attr('src', event.picture);
-					// $picture.attr("src", $picture.attr("src") + "?" + Math.random());
-					$pictureParent.show();
-				} else {
-					$pictureParent.hide();
+					$viewEventPicture.attr('src', event.picture);
 				}
+				$viewEventPicture.show();
+
 				var owner = 'Created by ' + event.owner.firstName + " " + event.owner.lastName;
 				singlePage.find('.EventPage__owner__name').val(owner);
 				singlePage.find('.EventPage__owner__name').attr('title', owner);
@@ -2447,12 +2502,13 @@ $(window).on("load",function () {
 					});
 					google.maps.event.trigger(map, 'resize');
 				$editEventMapHolder.hide();
-				makeEventPageEditable();
+				makeEventPageEditable(event);
 				$checkboxEditEventMap.find('input').prop('disabled', true);
 				$eventCategories.val('');
 				$eventDescription.val('');
 				$eventPageParticipants.hide();
 				$buttonAddEvent.show();
+				$editEventPicture.show();
 				if (typeof user !== 'undefined') {
 					singlePage.find('.EventPage__owner__name').val(user.firstName + " " + user.lastName);
 				}
@@ -2704,7 +2760,7 @@ $(window).on("load",function () {
 	var $userFirstName = $userPage.find('.UserPage__name__first');
 	var $userLastName = $userPage.find('.UserPage__name__last');
 	var $userPhone = $userPage.find('.UserPage__phone__input');
-	var $userAboutMe = $userPage.find('.UserPage__about__input');
+	var $userAboutMe = $userPage.find('.user_bottom_about.user_blocks textarea');
 
 	var $userMonth = $userPage.find('.UserPage__birthday__month');
 	var $userDay = $userPage.find('.UserPage__birthday__day');
@@ -2715,7 +2771,7 @@ $(window).on("load",function () {
 		if(!checkedCategories){
 			var checkedCategories = [];
 		}
-		var $interestingCategories = $('.SinglePage__inputItem.UserPage__Interesting');
+		var $interestingCategories = $('.user_middle__left_interesting_categories');
 		$interestingCategories.find('div.interesting_categories_for_new_user').remove();
 		$interestingCategories.append('<div class="interesting_categories_for_new_user"><ul></ul></div>');
 		var checkCategoriesDownloaded = false;
@@ -2723,6 +2779,7 @@ $(window).on("load",function () {
 		$('.interestingCategoriesMultiselect').find('div').remove();
 		var currentInterestingCategories = [];
 		if(isUserPageEditable == true){
+			$interestingCategories.find('a').show();
 			currentInterestingCategories = $('.interestingCategoriesMultiselect').html().split(', ');
 			$('.interestingCategoriesMultiselect').html('');
 			$.getJSON('eventsCategories', function (data) {
@@ -2733,7 +2790,6 @@ $(window).on("load",function () {
 						$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + value.id + '"><div class="token_title">' + value.category + '</div><div class="token_del">&#10006;</div></div>')
 					}
 				});
-				$interestingCategories.find('a').css('display', 'inline');
 				if(numberOfChecked === 1){
 					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberOfChecked + ' Categorie')
 				} else if(numberOfChecked > 1){
@@ -2856,7 +2912,7 @@ $(window).on("load",function () {
 	$(document).bind('click', function(e) {
 		var $clicked = $(e.target);
 		if($('.interesting_categories_for_new_user').css('display') == 'block'){
-			if (!$clicked.parents().hasClass("UserPage__Interesting") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
+			if (!$clicked.parents().hasClass("user_middle__left_interesting_categories") && !$clicked.hasClass("interesting_categories_for_new_user")) $(".interesting_categories_for_new_user").slideToggle('slow');
 		}
 	});
 
@@ -2868,6 +2924,7 @@ $(window).on("load",function () {
 		$userMapHolder.hide();
 		$checkboxShowUserMap.find("input").prop("checked", false);
 		$groupPage.hide();
+		$userPicture.show();
 		$('ul.EditEventPage').hide();
 		$singlePage.find('.EventPage').hide();
 		$singlePage.find('.UserPage').show();
@@ -2882,6 +2939,10 @@ $(window).on("load",function () {
 		function renderUserInfoPage(user) {
 			makeUserPageUneditable();
 			$('a.activeBackground').hide();
+			$('.user_top_left_middle.user_blocks').hide(); //hiding a password field
+			$singlePage.find('.user_bottom_about.user_blocks > textarea').attr('disabled', 'true');
+			$singlePage.find('.user_top_view_birthday').show();
+			$singlePage.find('.user_top_left_bottom_birthday').hide();
 			var $userCategories = $userPage.find(".interestingCategoriesMultiselect.display_inline");
 			$userCategories.empty();
 			$userLocation.val("");
@@ -2889,6 +2950,7 @@ $(window).on("load",function () {
 			$userLocation.addClass("disabled-input");
 			$userLocation.attr('readonly', true);
 			$userLocation.attr('disabled', true);
+			$('.UserPage').addClass('viewUserPage');
 			$.getJSON("userInfo", {email: user.email}, function (user) {
 				$userEmail.val(user.email);
 				$userEmail.attr("readonly", true);
@@ -2930,12 +2992,9 @@ $(window).on("load",function () {
 
 				//Display picture
 				if (user.picture.length) {
-					$picture.attr('src', user.picture);
-					// $picture.attr("src", $picture.attr("src").split("?")[0] + "?" + Math.random());
-					$pictureParent.show();
-				} else {
-					$pictureParent.hide();
+					$userPicture.attr('src', user.picture);
 				}
+				$userPicture.show();
 			});
 			$buttonEdit.prop( "disabled", false );
 			if (user) {
@@ -2946,10 +3005,11 @@ $(window).on("load",function () {
 		}
 
 		function renderAddUserPage() {
-			$pictureUploadPlaceholder.on('click', function () {
-				$buttonUploadPicture[0].click();
-				return false;
-			});
+			$('.UserPage').removeClass('viewUserPage');
+			$('.user_top_left_middle.user_blocks').show(); //showing a password field
+			$singlePage.find('.user_bottom_about.user_blocks > textarea').removeAttr('disabled');
+			$singlePage.find('.user_top_view_birthday').hide();
+			$singlePage.find('.user_top_left_bottom_birthday').show();
 			$buttonAddUser.off();
 			$userLocation.attr('readonly', false);
 			$userLocation.attr('disabled', false);
@@ -2973,10 +3033,15 @@ $(window).on("load",function () {
 			$userDay.attr("readonly", false);
 			$userYear.attr("readonly", false);
 
-			$pictureParent.show();
 			var checkedCategories = [];
-
-
+			$userPicture.attr('title', 'Best aspect ration - 1:1');
+			$userPicture.attr('scr', isDefaultPicture($userPicture));
+			$userPicture.show();
+			$userPicture.off('click');
+			$userPicture.on('click', function () {
+				$buttonUploadUserPicture[0].click();
+				return false;
+			});
 
 			downloadInterestingCategoriesForUser(false, checkedCategories);
 			
@@ -2991,12 +3056,12 @@ $(window).on("load",function () {
 					"password": $userPassword.val(),
 					"firstName": $userFirstName.val(),
 					"lastName": $userLastName.val(),
-					"interestingCategoriesMas": checkedCategories || null,
-					"description": $userAboutMe.val() || null,
-					"phoneNumber": $userPhone.val() || null,
-					"location": $userLocation.val() || null,
-					"birthday": ($userDay.val().length) ? $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(): null,
-					"picture": isDefaultPicture() ? "" : $picture.attr('src')
+					"interestingCategoriesMas": checkedCategories,
+					"description": $userAboutMe.val(),
+					"phoneNumber": $userPhone.val(),
+					"location": $userLocation.val(),
+					"birthday": $userDay.val()+"/"+$userMonth.val()+"/"+$userYear.val(),
+					"picture": isDefaultPicture($userPicture) ? "" : $userPicture.attr('src')
 				};
 				$.ajax({
 					url: "addUser",
@@ -3011,7 +3076,8 @@ $(window).on("load",function () {
 						createQueryHash(filters);
 					},
 					error: function (error) {
-						alert("ERROR!" + error);
+						// alert("ERROR!" + error);
+						alert('You input wrong email!(or something else go wrong) ' + error);
 					},
 					complete: function () {
 					}
@@ -3037,7 +3103,12 @@ $(window).on("load",function () {
 		}
 
 		if ($userEmail.val().indexOf('@') == -1) {
-			addErrorListItem("Email must contain @");
+			addErrorListItem("Email must contain '@'");
+			valid = false;
+		}
+
+		if ($userEmail.val().indexOf('@') > $userEmail.val().lastIndexOf('.')) {
+			addErrorListItem("Email must contain '.' after '@'");
 			valid = false;
 		}
 

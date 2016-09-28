@@ -1,17 +1,17 @@
 div.interesting_categories_for_new_user{
     display:none;
     position: relative;
-    left: 40.5%;
+    left: 2%;
     padding: 1% 3% 1% 2%;
-    border-radius: 5px;
-    max-width:60%;
+    border-radius: 2px;
+    max-width:47%;
 
 }
 div.interesting_categories_for_new_user ul>li{
     list-style-type: none;
     padding: 5px;
 }
-.UserPage__Interesting .activeBackground{
+.user_middle__left_interesting_categories .activeBackground{
     background:#ECECEC;
 }
 div.interesting_categories_for_new_user ul>li input{
@@ -30,7 +30,7 @@ div.interesting_categories_for_new_user ul>li input{
     padding-left: 3px;
     cursor: pointer;
 }
-.UserPage__Interesting a, .UserPage__Interesting a:visited, .UserPage__Interesting a:hover{
+.user_middle__left_interesting_categories a, .user_middle__left_interesting_categories a:visited, .user_middle__left_interesting_categories a:hover{
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
@@ -40,7 +40,7 @@ div.interesting_categories_for_new_user ul>li input{
 a.activeBackground{
     position: relative;
     left: -1%;
-    border-radius: 5px;
+    border-radius: 2px;
     display:inline-block;
 }
 div.display_inline{
