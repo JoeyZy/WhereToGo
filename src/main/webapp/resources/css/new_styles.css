@@ -1144,29 +1144,33 @@ div.accordion{
   display: inline-block;
   width: 70%;
 }
+.user_middle_left{
+  /*bla*/
+  width: 50%;
+}
 .user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password, .user_top_left_middle_password_confirm,
 .user_top_left_bottom_phone {
   /*bla*/
   display: inline-block;
   width: 49%;
 }
-.user_top_right{
+.user_top_right {
   /*bla*/
   margin-left: 4%;
   display: inline-block;
   width: 25%;
   vertical-align: top;
 }
-.user_middle_right{
+.user_middle_right {
   /*bla*/
   display: inline-block;
-  width: 29%;
+  width: 49%;
   /*margin-left: 4%;*/
   vertical-align: top;
 }
 #user-location-map-holder > .location-map {
   /*bla*/
-  width: 88%;
+  width: 93.7%;
   height: 150px;
 
 }
@@ -1219,6 +1223,11 @@ div.user_middle_left_city input#user-location {
 div.ui-widget.ui-front {
   /*bla*/
   margin-top:1%;
+}
+.user_middle__left_interesting_categories.user_blocks {
+  /*bla*/
+  margin-top: 5.7%;
+  margin-bottom: 3%;
 }
 .user_middle__left_interesting_categories div.interestingCategoriesMultiselect, .user_middle__left_interesting_categories a{
   /*bla*/
