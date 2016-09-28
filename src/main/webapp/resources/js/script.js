@@ -2777,6 +2777,7 @@ $(window).on("load",function () {
 		$('.interestingCategoriesMultiselect').find('div').remove();
 		var currentInterestingCategories = [];
 		if(isUserPageEditable == true){
+			$interestingCategories.find('a').show();
 			currentInterestingCategories = $('.interestingCategoriesMultiselect').html().split(', ');
 			$('.interestingCategoriesMultiselect').html('');
 			$.getJSON('eventsCategories', function (data) {
@@ -2787,7 +2788,6 @@ $(window).on("load",function () {
 						$('.interestingCategoriesMultiselect').append('<div class="token activeBackground" data-id="' + value.id + '"><div class="token_title">' + value.category + '</div><div class="token_del">&#10006;</div></div>')
 					}
 				});
-				$interestingCategories.find('a').css('display', 'inline');
 				if(numberOfChecked === 1){
 					$('.SinglePage__inputItem__inputField.UserPage__Interesting').text(numberOfChecked + ' Categorie')
 				} else if(numberOfChecked > 1){
