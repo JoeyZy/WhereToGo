@@ -300,7 +300,7 @@
     <div class="Page">
         <div class="Overlay"></div>
         <div class="SinglePage">
-            <form class="SinglePage__inputForm" novalidate>
+            <form class="SinglePage__inputForm">
                 <input class="SinglePage__title reset" placeholder="Event title" required=""/>
                 <ul class="SinglePage__inputItemsList UserPage">
                     <li class="user_top">

@@ -3074,7 +3074,8 @@ $(window).on("load",function () {
 						createQueryHash(filters);
 					},
 					error: function (error) {
-						alert("ERROR!" + error);
+						// alert("ERROR!" + error);
+						alert('You input wrong email!(or something else go wrong) ' + error);
 					},
 					complete: function () {
 					}
@@ -3100,7 +3101,12 @@ $(window).on("load",function () {
 		}
 
 		if ($userEmail.val().indexOf('@') == -1) {
-			addErrorListItem("Email must contain @");
+			addErrorListItem("Email must contain '@'");
+			valid = false;
+		}
+
+		if ($userEmail.val().indexOf('@') > $userEmail.val().lastIndexOf('.')) {
+			addErrorListItem("Email must contain '.' after '@'");
 			valid = false;
 		}
 
