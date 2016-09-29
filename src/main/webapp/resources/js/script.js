@@ -3107,7 +3107,7 @@ $(window).on("load",function () {
 			valid = false;
 		}
 
-		if ($userEmail.val().indexOf('@') > $userEmail.val().lastIndexOf('.')) {
+		if ($userEmail.val().indexOf('@') >= $userEmail.val().lastIndexOf('.') - 1) {
 			addErrorListItem("Email must contain '.' after '@'");
 			valid = false;
 		}
