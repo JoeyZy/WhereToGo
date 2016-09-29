@@ -542,6 +542,10 @@ li.event_header > div > button.SinglePage__button--edit{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.SinglePage form #user-location {
+  /*bla*/
+  padding-left: 12px;
+}
 .SinglePage form #event-location {
   width: 90%;
 }
@@ -853,7 +857,8 @@ div.event_header_center > div.end{
   margin-top: 22px;
 }
 div.event_header_right > div.event_cost{
-  margin-top: 50px;
+  /*bla*/
+  margin-top: 60.5px;
 }
 div.event_header_left > div.location, div.event_header_center > div.created-by{
   text-align: left;
@@ -1178,12 +1183,15 @@ div.accordion{
   width: 49%;
 }
 
-.UserPage.viewUserPage input, .UserPage.viewUserPage textarea {
+.UserPage.viewUserPage input, .UserPage.viewUserPage textarea,
+.interestingCategoriesMultiselect.display_inline {
   /*bla*/
   border: none;
   background: none;
   box-shadow: none;
 }
+
+
 div.ui-widget.ui-front span.custom-combobox:nth-child(2){
   /*bla*/
   margin-left: 2% !important;
@@ -1198,6 +1206,10 @@ div.user_bottom_about textarea{
   /*bla*/
   resize: none;
 }
+.UserPage.viewUserPage textarea.form-control {
+  /*bla*/
+  padding-left: 0px;
+}
 .user_top_left_top_name input, .user_top_left_top_email input,
 .user_top_left_middle_password input, .user_top_left_middle_password_confirm input,
 .user_top_left_bottom_phone input{
@@ -1206,9 +1218,18 @@ div.user_bottom_about textarea{
   margin-top: 2%;
   width: 70%;
 }
+
+.viewUserPage .user_top_left_top_name input, .user_top_left_top_email input,
+.viewUserPage .user_top_left_middle_password input, .viewUserPage .user_top_left_middle_password_confirm input,
+.viewUserPage .user_top_left_bottom_phone input{
+  /*bla*/
+  margin-left: 4%;
+  margin-top: 2%;
+  width: 100%;
+}
 div.user_middle_left_city input#user-location {
   /*bla*/
-  margin-left: 2%;
+  margin-left: 2.6%;
   margin-top: 1%;
   width: 50%;
 }
@@ -1231,6 +1252,15 @@ div.ui-widget.ui-front {
   /*bla*/
   margin-top: 1%;
   margin-left: 1.5%;
+}
+.user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
+  /*bla*/
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.viewUserPage .user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
+  /*bla*/
+padding-left: 12px;
 }
 .user_blocks{
   /*bla*/

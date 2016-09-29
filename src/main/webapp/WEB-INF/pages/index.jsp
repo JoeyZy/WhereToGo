@@ -577,7 +577,7 @@
                             </div>
                             <div class="user_middle__left_interesting_categories user_blocks">
                                 <span><b>Interesting categories</b></span><br>
-                                <div class="interestingCategoriesMultiselect display_inline"></div>
+                                <div class="interestingCategoriesMultiselect display_inline form-control"></div>
                                 <a href="#" class="activeBackground">
                                     <span class="SinglePage__inputItem__inputField UserPage__Interesting reset activeBackground"></span>
                                 </a>

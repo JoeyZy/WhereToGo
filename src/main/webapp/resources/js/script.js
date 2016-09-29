@@ -2120,8 +2120,14 @@ $(window).on("load",function () {
 		$userLastName.val(name.split(" ")[1]);
 		$userFirstName.val(name.split(" ")[0]);
 		$userPhone.attr("readonly", false);
+		if($userPhone.val() === 'No information') {
+			$userPhone.val('');
+		}
 		$userPage.find('.UserPage__events').hide();
 		$userAboutMe.attr("readonly",false);
+		if($userAboutMe.val() === 'No information') {
+			$userAboutMe.val('');
+		}
 
 		$userMonth.parent().show();
 		$userDay.parent().show();
@@ -2130,6 +2136,12 @@ $(window).on("load",function () {
 		$userLocation.attr('disabled', false);
 		$userLocation.removeClass("disabled-input");
 		$userLocation.addClass("enabled-input");
+		if($userLocation.val() === 'No information') {
+			$userLocation.val('');
+		}
+		if($userHolder.val() === 'No information') {
+			$userHolder.val('');
+		}
 		var br = $userHolder.val();
 		$userMonth.val(br.split("/")[0]);
 		$userDay.val(br.split("/")[1]);
@@ -2960,11 +2972,11 @@ $(window).on("load",function () {
 				$userFirstName.attr("readonly", true);
 				$userLastName.hide();
 				setLocationByAddress(usermap, user.location, '#show-user-location-map');
-				$userLocation.val(user.location);
-				$userPhone.val(user.phoneNumber);
+				$userLocation.val(user.location || 'No information');
+				$userPhone.val(user.phoneNumber || 'No information');
 				$userPhone.attr("readonly", true);
 				$userPage.find('.UserPage__events').show();
-				$userAboutMe.val(user.description);
+				$userAboutMe.val(user.description || 'No information');
 				$userAboutMe.attr("readonly",true);
 				var userCategoriesString = '';
 				for(var i in user.interestingCategories){
@@ -2974,7 +2986,7 @@ $(window).on("load",function () {
 						userCategoriesString += ", " + user.interestingCategories[i].name;
 					}
 				}
-				$userCategories.append(userCategoriesString);
+				$userCategories.append(userCategoriesString || 'No information');
 				/*$userMonth.val(user.birthday);
 				$userMonth.attr("readonly", true);
 
@@ -2987,7 +2999,7 @@ $(window).on("load",function () {
 				$userDay.parent().hide();
 				$userYear.parent().hide();
 
-				$userHolder.val(user.birthday);
+				$userHolder.val(user.birthday || 'No information');
 				$userHolder.show();
 
 				//Display picture
