@@ -740,9 +740,14 @@ $(window).on("load",function () {
 
 		$.getJSON(type, {searchFrom: searchFrom, searchTo: searchTo}, function (data) {
 			events = data;
+
 			events.sort(function (a, b) {
-				return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+					return moment(a.startTime, "DD/MM/YY HH:mm")._d.getTime() - moment(b.startTime, "DD/MM/YY HH:mm")._d.getTime();
 			});
+
+			// events.sort(function (a, b) {
+			// 	return moment(a.startTime, "DD/MM/YY HH:mm").isAfter(moment(b.startTime, "DD/MM/YY HH:mm"));
+			// });
 			events.forEach(function (item) {
 				item.actualStartDate = moment(item.startTime, "DD/MM/YY HH:mm").format("DD MMMM YYYY");
 				item.actualStartTime = moment(item.startTime, "DD/MM/YY HH:mm").format("HH:mm");
