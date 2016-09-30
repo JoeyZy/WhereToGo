@@ -1008,11 +1008,13 @@ button.btn-visit{
   background-color: #9ccc65;
   background-image: none;
 }
-button.SinglePage__button--delete, button.SinglePage__button--deleteGroup{
+button.SinglePage__button--delete, button.SinglePage__button--deleteGroup,
+button.SinglePage__button--unsubscribe,
+button.SinglePage__button--cancelAttend {
   background-color: #37474f;
   background-image: none;
+  color: #FFFFFF;
 }
-
 
 .clearfix::after {
   content: "";
@@ -1026,7 +1028,9 @@ button.SinglePage__button--delete, button.SinglePage__button--deleteGroup{
   border-radius: 1px;
   background-color: #edebeb;
 }
-li.event_header > div > button.SinglePage__button--edit{
+li.event_header > div > button.SinglePage__button--edit, .btn.SinglePage__button--cancelEditing,
+.btn.SinglePage__button--cancelEditingGroup, .btn.SinglePage__button--cancelEditingUser,
+button.btn.SinglePage__button--editGroup, button.btn.SinglePage__button--editUser {
   background-color: #FFFFFF;
   color: #666666;
   text-decoration: underline;

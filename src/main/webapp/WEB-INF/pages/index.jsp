@@ -1029,13 +1029,22 @@
                 <%--bla--%>
                 <ul class="errors"></ul>
                 <div class="SinglePage__all_buttons">
-                    <%--<button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--edit"--%>
-                            <%--onclick="this.blur();">Edit event--%>
-                    <%--</button>--%>
-                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editGroup"
+                    <button type="submit"
+                            class="btn btn-action SinglePage__button SinglePage__button--cancelEditing"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action SinglePage__button SinglePage__button--cancelEditingGroup"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit"
+                            class="btn btn-action SinglePage__button SinglePage__button--cancelEditingUser"
+                            onclick="this.blur();">Cancel
+                    </button>
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--editGroup"
                             onclick="this.blur();">Edit group
                     </button>
-                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--editUser"
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--editUser"
                             onclick="this.blur();">Edit user
                     </button>
                     <button type="submit"
@@ -1046,41 +1055,29 @@
                             class="btn btn-action btn-danger SinglePage__button SinglePage__button--deleteGroup"
                             onclick="this.blur();">Delete group
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--apply"
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--apply btn-visit btn-success"
                             onclick="this.blur();">Save changes
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--applyGroup"
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--applyGroup btn-visit btn-success"
                             onclick="this.blur();">Save changes
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--applyUser"
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--applyUser btn-visit btn-success"
                             onclick="this.blur();">Save changes
-                    </button>
-                    <button type="submit"
-                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditing"
-                            onclick="this.blur();">Cancel
-                    </button>
-                    <button type="submit"
-                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingGroup"
-                            onclick="this.blur();">Cancel
-                    </button>
-                    <button type="submit"
-                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelEditingUser"
-                            onclick="this.blur();">Cancel
                     </button>
                     <button type="submit" class="btn btn-action btn-visit SinglePage__button SinglePage__button--attend"
                             onclick="this.blur();">Visit this event
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--subscribe"
+                    <button type="submit" class="btn btn-action btn-visit SinglePage__button SinglePage__button--subscribe"
                             onclick="this.blur();">Subscribe
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--unsubscribe"
+                    <button type="submit" class="btn btn-action btn-danger SinglePage__button SinglePage__button--unsubscribe"
                             onclick="this.blur();">Unsubscribe
                     </button>
                     <button type="submit"
-                            class="btn btn-action btn-info SinglePage__button SinglePage__button--cancelAttend"
+                            class="btn btn-action btn-danger SinglePage__button SinglePage__button--cancelAttend"
                             onclick="this.blur();">Cancel visit
                     </button>
-                    <button type="submit" class="btn btn-action btn-info SinglePage__button SinglePage__button--addUser"
+                    <button type="submit" class="btn btn-action SinglePage__button SinglePage__button--addUser btn-visit btn-success"
                             onclick="this.blur();">Add user
                     </button>
                 </div>
