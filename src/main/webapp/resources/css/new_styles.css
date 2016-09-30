@@ -67,6 +67,10 @@ h1, h3 {
   width: 190px;
   position: absolute;
 }
+a.disabled{
+  pointer-events: none;
+  cursor: default;
+}
 .pagination-page{
   list-style: none;
   margin-left: 225px;
