@@ -528,6 +528,7 @@ li.event_header > div > button.SinglePage__button--edit{
   height: 20px;
   border: none;
   background-color: white;
+  cursor: pointer;
 }
 .SinglePage form #description, .SinglePage form #event-location, .SinglePage form #descriptionGroup, .SinglePage form #target-group, .SinglePage form #GroupDescription, .SinglePage form #group-location, #map, .SinglePage form #user-location {
   padding: 5px;
@@ -541,6 +542,9 @@ li.event_header > div > button.SinglePage__button--edit{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.SinglePage form #user-location {
+  padding-left: 12px;
 }
 .SinglePage form #event-location {
   width: 90%;
@@ -855,19 +859,22 @@ div.event_header_left > div.start, div.event_header_center > div.end, div.event_
   margin-top: 20px;
   padding: 0px;
 }
-div.event_header_center > div.end{
+div.event_header_center > div.end {
   margin-top: 22px;
 }
-div.event_header_right > div.event_cost{
+div.event_header_right > div.event_cost {
+  margin-top: 60.5px;
+}
+div.event_header_right > div.event_cost {
   margin-top: 50px;
 }
-div.event_header_left > div.location, div.event_header_center > div.created-by{
+div.event_header_left > div.location, div.event_header_center > div.created-by {
   text-align: left;
   margin-left: 4%;
 }
 div.event_header_left div.start_date, div.event_header_left div.start_time,
 div.event_header_center div.end_date, div.event_header_center div.end_time,
-div.event_header_right div.event_cost_inner{
+div.event_header_right div.event_cost_inner {
   margin-top: 8px;
 }
 .event_description_inner{
@@ -889,6 +896,7 @@ img.event_pic {
   height: 100%;
   display: block;
   border-radius: 2px;
+  cursor: pointer;
 }
 .total-counter, .total-counter-groups
 {
@@ -1150,6 +1158,114 @@ div.accordion{
   border: none;
   resize: none;
 }
+.user_top_left, .user_middle_left {
+  display: inline-block;
+  width: 70%;
+}
+.user_middle_left {
+  width: 50%;
+}
+.user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password, .user_top_left_middle_password_confirm,
+.user_top_left_bottom_phone {
+  display: inline-block;
+  width: 49%;
+}
+.user_top_right {
+  margin-left: 4%;
+  display: inline-block;
+  width: 25%;
+  vertical-align: top;
+}
+.user_middle_right {
+  display: inline-block;
+  width: 49%;
+  /*margin-left: 4%;*/
+  vertical-align: top;
+}
+#user-location-map-holder > .location-map {
+  width: 93.7%;
+  height: 150px;
+
+}
+.user_top_phone_number, .user_top_view_birthday {
+  display: inline-block;
+  width: 49%;
+}
+
+.UserPage.viewUserPage input, .UserPage.viewUserPage textarea,
+.interestingCategoriesMultiselect.display_inline {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+div.ui-widget.ui-front span.custom-combobox:nth-child(2) {
+  margin-left: 2% !important;
+}
+.user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password
+.user_top_left_middle_password_confirm, .user_top_left_bottom_phone {
+  width: 49%;
+  vertical-align: top;
+}
+div.user_bottom_about textarea {
+  resize: none;
+}
+.UserPage.viewUserPage textarea.form-control {
+  padding-left: 0px;
+}
+.user_top_left_top_name input, .user_top_left_top_email input,
+.user_top_left_middle_password input, .user_top_left_middle_password_confirm input,
+.user_top_left_bottom_phone input {
+  margin-left: 4%;
+  margin-top: 2%;
+  width: 70%;
+}
+
+.viewUserPage .user_top_left_top_name input, .viewUserPage .user_top_left_top_email input,
+.viewUserPage .user_top_left_middle_password input, .viewUserPage .user_top_left_middle_password_confirm input,
+.viewUserPage .user_top_left_bottom_phone input {
+  margin-left: 4%;
+  margin-top: 2%;
+  width: 100%;
+}
+div.user_middle_left_city input#user-location {
+  margin-left: 2.6%;
+  margin-top: 1%;
+  width: 50%;
+}
+.user_bottom_about textarea {
+  margin-left: 1.4%;
+  margin-top: 0.8%;
+  width: 50%;
+}
+div.ui-widget.ui-front {
+  margin-top:1%;
+}
+.viewUserPage .user_middle__left_interesting_categories.user_blocks {
+  margin-top: 5.7%;
+  margin-bottom: 3%;
+}
+.user_middle__left_interesting_categories div.interestingCategoriesMultiselect, .user_middle__left_interesting_categories a{
+  margin-top: 1%;
+  margin-left: 1.5%;
+}
+.user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.viewUserPage .user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
+  padding-left: 12px;
+}
+.user_blocks {
+  width: 100%;
+  margin-top: 2%;
+}
+.user_middle_left_city #show-user-location-map {
+  margin-left: 2%;
+}
+.user_bottom_about.user_blocks {
+  margin-top: 1.4%;
+}
 .event-link{
   width: 30%;
   min-width: 100px;
@@ -1283,26 +1399,26 @@ div.accordion{
   margin-right: 5px;
   width: 100%;
 }
-.single_group_info_block{
+.single_group_info_block {
   display: inline-block;
   width: 55%;
 }
-.group_pic{
+.group_pic {
   width: 230px;
   height: 132px;
   border-radius: 2px;
 }
-.user_pic{
-  width: 150px;
-  height: 150px;
-
+.user_pic {
+  width: 130%;
+  height: 180px;
+  max-width: 200px;
   border-radius: 2px;
 }
 .btn-plus-user-to-group{
   font-size: 18px;
   color: #FFFFFF;
 }
-.accordion_plus{
+.accordion_plus {
   position: absolute;
   top: 0;
   right: 10px;

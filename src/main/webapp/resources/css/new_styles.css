@@ -529,7 +529,6 @@ li.event_header > div > button.SinglePage__button--edit{
   display: inline-block;
 }
 .SinglePage__inputItem__inputField {
-  /*bla*/
   height: 20px;
   border: none;
   background-color: white;
@@ -549,7 +548,6 @@ li.event_header > div > button.SinglePage__button--edit{
   text-overflow: ellipsis;
 }
 .SinglePage form #user-location {
-  /*bla*/
   padding-left: 12px;
 }
 .SinglePage form #event-location {
@@ -863,7 +861,6 @@ div.event_header_center > div.end{
   margin-top: 22px;
 }
 div.event_header_right > div.event_cost{
-  /*bla*/
   margin-top: 60.5px;
 }
 div.event_header_left > div.location, div.event_header_center > div.created-by{
@@ -889,7 +886,6 @@ div.event_pic_min {
   overflow: hidden;
 }
 img.event_pic {
-  /*bla*/
   width: 100%;
   height: 100%;
   display: block;
@@ -1150,78 +1146,65 @@ div.accordion{
   border: none;
   resize: none;
 }
-.user_top_left, .user_middle_left{
-  /*bla*/
+.user_top_left, .user_middle_left {
   display: inline-block;
   width: 70%;
 }
 .user_middle_left{
-  /*bla*/
   width: 50%;
 }
 .user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password, .user_top_left_middle_password_confirm,
 .user_top_left_bottom_phone {
-  /*bla*/
   display: inline-block;
   width: 49%;
 }
 .user_top_right {
-  /*bla*/
   margin-left: 4%;
   display: inline-block;
   width: 25%;
   vertical-align: top;
 }
 .user_middle_right {
-  /*bla*/
   display: inline-block;
   width: 49%;
   /*margin-left: 4%;*/
   vertical-align: top;
 }
 #user-location-map-holder > .location-map {
-  /*bla*/
   width: 93.7%;
   height: 150px;
 
 }
-.user_top_phone_number, .user_top_view_birthday{
-  /*bla*/
+.user_top_phone_number, .user_top_view_birthday {
   display: inline-block;
   width: 49%;
 }
 
 .UserPage.viewUserPage input, .UserPage.viewUserPage textarea,
 .interestingCategoriesMultiselect.display_inline {
-  /*bla*/
   border: none;
   background: none;
   box-shadow: none;
 }
 
 
-div.ui-widget.ui-front span.custom-combobox:nth-child(2){
-  /*bla*/
+div.ui-widget.ui-front span.custom-combobox:nth-child(2) {
   margin-left: 2% !important;
 }
 .user_top_left_top_name, .user_top_left_top_email, .user_top_left_middle_password
 .user_top_left_middle_password_confirm, .user_top_left_bottom_phone {
-  /*bla*/
   width: 49%;
   vertical-align: top;
 }
-div.user_bottom_about textarea{
-  /*bla*/
+div.user_bottom_about textarea {
   resize: none;
 }
 .UserPage.viewUserPage textarea.form-control {
-  /*bla*/
   padding-left: 0px;
 }
 .user_top_left_top_name input, .user_top_left_top_email input,
 .user_top_left_middle_password input, .user_top_left_middle_password_confirm input,
-.user_top_left_bottom_phone input{
-  /*bla*/
+.user_top_left_bottom_phone input {
   margin-left: 4%;
   margin-top: 2%;
   width: 70%;
@@ -1229,57 +1212,47 @@ div.user_bottom_about textarea{
 
 .viewUserPage .user_top_left_top_name input, .viewUserPage .user_top_left_top_email input,
 .viewUserPage .user_top_left_middle_password input, .viewUserPage .user_top_left_middle_password_confirm input,
-.viewUserPage .user_top_left_bottom_phone input{
-  /*bla*/
+.viewUserPage .user_top_left_bottom_phone input {
   margin-left: 4%;
   margin-top: 2%;
   width: 100%;
 }
 div.user_middle_left_city input#user-location {
-  /*bla*/
   margin-left: 2.6%;
   margin-top: 1%;
   width: 50%;
 }
 .user_bottom_about textarea {
-  /*bla*/
   margin-left: 1.4%;
   margin-top: 0.8%;
   width: 50%;
 }
 div.ui-widget.ui-front {
-  /*bla*/
   margin-top:1%;
 }
 .viewUserPage .user_middle__left_interesting_categories.user_blocks {
-  /*bla*/
   margin-top: 5.7%;
   margin-bottom: 3%;
 }
-.user_middle__left_interesting_categories div.interestingCategoriesMultiselect, .user_middle__left_interesting_categories a{
-  /*bla*/
+.user_middle__left_interesting_categories div.interestingCategoriesMultiselect, .user_middle__left_interesting_categories a {
   margin-top: 1%;
   margin-left: 1.5%;
 }
 .user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
-  /*bla*/
   padding-left: 0px;
   padding-right: 0px;
 }
 .viewUserPage .user_middle__left_interesting_categories div.interestingCategoriesMultiselect {
-  /*bla*/
 padding-left: 12px;
 }
-.user_blocks{
-  /*bla*/
+.user_blocks {
   width: 100%;
   margin-top: 2%;
 }
 .user_middle_left_city #show-user-location-map {
-  /*bla*/
   margin-left: 2%;
 }
-.user_bottom_about.user_blocks{
+.user_bottom_about.user_blocks {
   margin-top: 1.4%;
 }
 
@@ -1426,7 +1399,6 @@ padding-left: 12px;
   border-radius: 2px;
 }
 .user_pic{
-  /*bla*/
   width: 130%;
   height: 180px;
   max-width: 200px;
