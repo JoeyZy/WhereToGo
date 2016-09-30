@@ -1352,6 +1352,14 @@ padding-left: 12px;
 .profile{
   cursor: pointer;
 }
+.edit_event_category .btn-group .multiselect-selected-text {
+  position:relative;
+  left: -40%;
+}
+.edit_event_category .btn-group b.caret {
+  position:relative;
+  right: -40%;
+}
 .single_group{
   border-radius: 10px;
   margin-bottom: 10px;
