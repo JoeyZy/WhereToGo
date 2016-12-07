@@ -51,7 +51,7 @@ $(document).ready(function () {
 			xhr.setRequestHeader(header, token);
 		});
 	});
-	
+
 	$buttonEdit.on('click', function (event) {
 		makeEventPageEditable();
 		$buttonEdit.hide();
@@ -175,7 +175,7 @@ $(document).ready(function () {
 	}
 
 	resetSinglePage();
-	
+
 	var $showArchiveCheckbox = $('#show-archive');
 	var archiveDateFilters = $('#archiveDateFilters');
 	$showArchiveCheckbox.on('click', function () {
@@ -333,7 +333,7 @@ $(document).ready(function () {
 			}
 		}
 	});
-	
+
 	function loadEvents(type, searchFrom, searchTo) {
 		var type = type;
 		if (!type) {
@@ -365,7 +365,7 @@ $(document).ready(function () {
 
 		});
 	}
-	
+
 
 	// An event handler with calls the render function on every hashchange.
 	// The render function will show the appropriate content of out $singlePage.
@@ -634,7 +634,7 @@ $(document).ready(function () {
 
 
 	//$('.assign-action-btn.btn-default').on("click",
-	//			assignUnassignEvent('unassignEventFromUser', 
+	//			assignUnassignEvent('unassignEventFromUser',
 	//                       nodeLI.attr('data-index'), inlineAssignmentCallBackFunction));
 
 
@@ -983,7 +983,7 @@ $(document).ready(function () {
 				$singlePageTitle.val(event.name);
 				$eventCategories.val(getEventCategoriesAsList(event.categories));
 				$eventPageParticipants.show();
-				$eventDescription.text(linkify(event.description));
+        $eventDescription.html(linkify(event.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')));
 				$eventLocation.text(linkify(event.location));
 				if (event.picture.length) {
 					$picture.attr('src', event.picture);
